@@ -78,12 +78,13 @@ export function Navbar() {
 )}
     >
       <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav className="grid grid-cols-[auto_1fr_auto] items-center min-h-[80px] gap-3 sm:gap-4 lg:gap-8">
+        <nav className="grid grid-cols-[auto_1fr_auto] items-center min-h-[60px]">
           {/* Logo */}
           <Link
             href="/"
             className="flex items-center shrink-0 transition-opacity duration-300 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
           >
+          <div className="container mx-auto px-5"></div>
           <Image
   src="/clean.png"
   alt="AS Events"
@@ -96,8 +97,8 @@ export function Navbar() {
     isHomePage
       ? (
           isScrolled
-            ? 'h-12 lg:h-14'
-            : 'h-12 sm:h-14 md:h-18 lg:h-22'
+  ? 'h-10'
+  : 'h-12 sm:h-14'
         )
       : 'h-10 lg:h-12'
   )}
@@ -207,60 +208,76 @@ export function Navbar() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 top-[57px] sm:top-[65px] w-full max-w-sm bg-white border-l border-slate-200 shadow-2xl lg:hidden z-50 overflow-y-auto"
+              className="fixed inset-y-0 right-0 top-[70px] w-[85%] max-w-[320px] bg-white border-l border-slate-200 shadow-2xl lg:hidden z-50 overflow-y-auto"
             >
-              <div className="flex flex-col p-6 gap-1 min-h-full pb-safe">
-                <Link href="/">
-  Home
-</Link>
+              <div className="flex flex-col p-6 gap-1 min-h-full">
 
-<Link
-  href="/about"
-  onClick={() => setIsMobileMenuOpen(false)}
-  className="text-base font-semibold text-foreground hover:text-primary py-3.5 min-h-11 flex items-center border-b border-slate-100"
->
-  About
-</Link>
+  <Link
+    href="/"
+    onClick={() => setIsMobileMenuOpen(false)}
+    className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
+  >
+    Home
+  </Link>
 
-<button>
-  Services
-</button>
+  <Link
+    href="/about"
+    onClick={() => setIsMobileMenuOpen(false)}
+    className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
+  >
+    About
+  </Link>
 
-                <AnimatePresence>
-                  {isMobileServicesOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="pl-4 flex flex-col gap-1 pb-2 overflow-hidden"
-                    >
-                      {servicesDropdownItems.map((item) => (
-                        <Link
-                          key={item.label}
-                          href={item.href}
-                          onClick={() => {
-                            setIsMobileMenuOpen(false)
-                            setIsMobileServicesOpen(false)
-                          }}
-                          className="text-sm text-muted-foreground hover:text-primary py-3 min-h-11 flex items-center"
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+  <button
+    onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+    className="flex items-center justify-between text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100 w-full text-left"
+  >
+    Services
 
-                {mainNavLinks.slice(2).map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-base font-semibold text-foreground hover:text-primary py-3.5 min-h-11 flex items-center border-b border-slate-100"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+    <ChevronDown
+      size={18}
+      className={cn(
+        'transition-transform',
+        isMobileServicesOpen && 'rotate-180'
+      )}
+    />
+  </button>
+
+  <AnimatePresence>
+    {isMobileServicesOpen && (
+      <motion.div
+        initial={{ opacity: 0, height: 0 }}
+        animate={{ opacity: 1, height: 'auto' }}
+        exit={{ opacity: 0, height: 0 }}
+        className="pl-4 overflow-hidden"
+      >
+        {servicesDropdownItems.map((item) => (
+          <Link
+            key={item.label}
+            href={item.href}
+            onClick={() => {
+              setIsMobileMenuOpen(false)
+              setIsMobileServicesOpen(false)
+            }}
+            className="block py-3 text-sm text-slate-600 hover:text-primary"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </motion.div>
+    )}
+  </AnimatePresence>
+
+  {mainNavLinks.slice(2).map((link) => (
+    <Link
+      key={link.href}
+      href={link.href}
+      onClick={() => setIsMobileMenuOpen(false)}
+      className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
+    >
+      {link.label}
+    </Link>
+  ))}
 
                 <Button
                   onClick={() => {
