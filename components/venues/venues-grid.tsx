@@ -2,107 +2,108 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Loader2 } from 'lucide-react'
 import { VenueCard } from '@/components/cards/venue-card'
-import { venues, venueCategories, venueCities } from '@/lib/data/venues'
+import { venueCategories, venueCities } from '@/lib/data/venues'
+import { useVenues } from '@/hooks/use-venues'
 import type { VenueCategory, VenueCity } from '@/lib/types/venues'
+import { Section, SectionContainer } from '@/components/layout/section-container'
 
 export function VenuesGrid() {
   const [activeCity, setActiveCity] = useState<VenueCity | 'All'>('All')
   const [activeCategory, setActiveCategory] = useState<VenueCategory | 'All'>('All')
 
-  const filteredVenues = venues.filter((venue) => {
-    const matchesCity = activeCity === 'All' || venue.city === activeCity
-    const matchesCategory = activeCategory === 'All' || venue.category === activeCategory
-    return matchesCity && matchesCategory
+  const { venues, loading, error } = useVenues({
+    city: activeCity === 'All' ? undefined : activeCity,
+    category: activeCategory === 'All' ? undefined : activeCategory,
   })
 
   return (
-    <section className="py-24 bg-background">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* City Filters */}
-        <div className="mb-8">
-          <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Filter by City</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            <button
-              onClick={() => setActiveCity('All')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCity === 'All'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-card border border-border text-foreground hover:border-primary/50'
-              }`}
-            >
-              All Cities
-            </button>
-            {venueCities.map((city) => (
-              <button
-                key={city}
-                onClick={() => setActiveCity(city)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeCity === city
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-card border border-border text-foreground hover:border-primary/50'
-                }`}
-              >
-                {city}
-              </button>
-            ))}
+    <Section className="bg-slate-50">
+      <SectionContainer>
+        <div className="max-w-5xl mx-auto mb-10 sm:mb-16">
+          <div className="bg-white rounded-2xl sm:rounded-3xl shadow-lg border border-slate-200 p-5 sm:p-6 lg:p-8">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-center text-slate-900 mb-2 sm:mb-3">
+              Curate Your Perfect Venue
+            </h3>
+            <p className="text-center text-slate-500 text-small mb-6 sm:mb-8">
+              Explore venues tailored to your event requirements
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="min-w-0">
+                <label htmlFor="venue-city" className="block text-sm font-semibold text-slate-600 mb-2">
+                  Event Destination
+                </label>
+                <select
+                  id="venue-city"
+                  value={activeCity}
+                  onChange={(e) => setActiveCity(e.target.value as VenueCity | 'All')}
+                  className="w-full min-h-11 h-12 sm:h-14 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="All">All Locations</option>
+                  {venueCities.map((city) => (
+                    <option key={city} value={city}>{city}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="min-w-0">
+                <label htmlFor="venue-category" className="block text-sm font-semibold text-slate-600 mb-2">
+                  Venue Collection
+                </label>
+                <select
+                  id="venue-category"
+                  value={activeCategory}
+                  onChange={(e) => setActiveCategory(e.target.value as VenueCategory | 'All')}
+                  className="w-full min-h-11 h-12 sm:h-14 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="All">All Venue Types</option>
+                  {venueCategories.map((category) => (
+                    <option key={category} value={category}>{category}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Category Filters */}
-        <div className="mb-12">
-          <p className="text-sm font-medium text-muted-foreground mb-3 text-center">Filter by Category</p>
-          <div className="flex flex-wrap justify-center gap-2">
-            <button
-              onClick={() => setActiveCategory('All')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === 'All'
-                  ? 'bg-primary text-primary-foreground'
-                  : 'bg-card border border-border text-foreground hover:border-primary/50'
-              }`}
-            >
-              All Venues
-            </button>
-            {venueCategories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === category
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-card border border-border text-foreground hover:border-primary/50'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+        {loading && (
+          <div className="flex justify-center py-16">
+            <Loader2 className="animate-spin text-primary" size={32} />
           </div>
-        </div>
+        )}
 
-        {/* Venues Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <AnimatePresence mode="popLayout">
-            {filteredVenues.map((venue, index) => (
-              <motion.div
-                key={venue.id}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.3 }}
-              >
-                <VenueCard venue={venue} index={index} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+        {error && (
+          <div className="text-center py-12 text-muted-foreground">{error}</div>
+        )}
 
-        {filteredVenues.length === 0 && (
-          <div className="text-center py-16">
+        {!loading && !error && (
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            <AnimatePresence mode="popLayout">
+              {venues.map((venue, index) => (
+                <motion.div
+                  key={venue.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="h-full min-w-0"
+                >
+                  <VenueCard venue={venue} index={index} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
+
+        {!loading && !error && venues.length === 0 && (
+          <div className="text-center py-12 sm:py-16">
             <p className="text-muted-foreground">No venues found matching your criteria.</p>
           </div>
         )}
-      </div>
-    </section>
+      </SectionContainer>
+    </Section>
   )
 }

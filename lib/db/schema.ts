@@ -142,6 +142,24 @@ export const galleryItems = pgTable('galleryItems', {
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 })
 
+// --- AI Consultant Leads ---
+export const leads = pgTable('leads', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull(),
+  phone: text('phone'),
+  city: text('city'),
+  eventType: text('event_type').notNull(),
+  eventDate: text('event_date'),
+  guestCount: text('guest_count'),
+  budget: text('budget'),
+  venuePreference: text('venue_preference'),
+  specialRequirements: text('special_requirements'),
+  aiRecommendation: jsonb('ai_recommendation'),
+  status: text('status').notNull().default('New'),
+  createdAt: timestamp('created_at').notNull().defaultNow(),
+})
+
 // --- Portfolio Items ---
 export const portfolioItems = pgTable('portfolioItems', {
   id: serial('id').primaryKey(),

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { PackagesHero } from '@/components/packages/packages-hero'
 import { PackagesGrid } from '@/components/packages/packages-grid'
-import { CustomPackageBuilder } from '@/components/packages/custom-package-builder'
+//import { CustomPackageBuilder } from '@/components/packages/custom-package-builder'
 import { CTASection } from '@/components/sections/cta-section'
 
 export const metadata: Metadata = {
@@ -29,7 +29,6 @@ export default function PackagesPage() {
     <>
       <PackagesHero />
       <PackagesGrid />
-      <CustomPackageBuilder />
       <CTASection />
     </>
   )

@@ -1,19 +1,19 @@
 export const mainNavLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/venues', label: 'Venues' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { label: 'Home', href: '/' },
+  { label: 'About', href: '/about' },
+  { label: 'Packages', href: '/packages' },
+  { label: 'Venues', href: '/venues' },
+  { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Contact', href: '/contact' },
 ] as const
 
 export const servicesDropdownItems = [
-  { href: '/services', label: 'Wedding Planning' },
-  { href: '/services', label: 'Destination Weddings' },
-  { href: '/services', label: 'Corporate Events' },
-  { href: '/portfolio?category=product-launches', label: 'Product Launches' },
-  { href: '/portfolio?category=exhibitions', label: 'Exhibitions' },
-  { href: '/portfolio?category=birthdays', label: 'Birthday Celebrations' },
-  { href: '/portfolio?category=anniversaries', label: 'Anniversary Events' },
-  { href: '/portfolio?category=entertainment', label: 'Entertainment Management' },
-  { href: '/packages', label: 'Packages' },
+  { href: '/services#wedding-planning', label: 'Wedding Planning' },
+  { href: '/services#destination-weddings', label: 'Destination Weddings' },
+  { href: '/services#corporate-events', label: 'Corporate Events' },
+  { href: '/services#product-launches', label: 'Product Launches' },
+  { href: '/services#exhibitions', label: 'Exhibitions' },
+  { href: '/services#birthday-celebrations', label: 'Birthday Celebrations' },
+  { href: '/services#anniversary-events', label: 'Anniversary Events' },
+  { href: '/services#entertainment-management', label: 'Entertainment Management' },
 ] as const

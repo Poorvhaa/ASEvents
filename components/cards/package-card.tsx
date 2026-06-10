@@ -1,18 +1,52 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Check, Sparkles } from 'lucide-react'
+import { Check, Sparkles, Users, Clock, Bot } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
+import { useAIConsultant } from '@/hooks/use-ai-consultant'
 import type { EventPackage } from '@/lib/types/packages'
+import type { EventType } from '@/lib/ai/types'
 
 interface PackageCardProps {
   pkg: EventPackage
   index?: number
 }
 
+function mapPackageToEventType(title: string, category: EventPackage['category']): EventType | '' {
+  const map: Record<string, EventType> = {
+    'Haldi Ceremony': 'Haldi',
+    'Mehendi Ceremony': 'Mehendi',
+    'Sangeet Night': 'Sangeet',
+    'Reception Celebration': 'Reception',
+    'Complete Wedding Package': 'Wedding',
+    'Corporate Conference': 'Corporate Event',
+    'Product Launch': 'Product Launch',
+    'Trade Exhibition': 'Exhibition',
+    'Birthday Celebration': 'Birthday',
+    'Anniversary Celebration': 'Anniversary',
+    'Cultural Festival': 'Festival Event',
+    'Live Concert': 'Entertainment Event',
+  }
+  if (map[title]) return map[title]
+  if (category === 'wedding') return 'Wedding'
+  if (category === 'corporate') return 'Corporate Event'
+  if (category === 'exhibition') return 'Exhibition'
+  if (category === 'entertainment') return 'Entertainment Event'
+  return 'Birthday'
+}
+
 export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
   const { openModal } = useQuoteModal()
+  const { openChatWithPackage } = useAIConsultant()
+
+  const handleAIPlanner = () => {
+    openChatWithPackage({
+      eventType: mapPackageToEventType(pkg.title, pkg.category),
+      guestCount: pkg.suitableGuests,
+      budget: pkg.price.replace('Starting from ', ''),
+    })
+  }
 
   return (
     <motion.div
@@ -20,44 +54,80 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       viewport={{ once: true }}
-      className={`relative flex flex-col p-8 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${
+      className={`relative flex flex-col h-full p-5 sm:p-6 lg:p-8 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 min-w-0 ${
         pkg.popular
           ? 'border-primary ring-2 ring-primary/20'
           : 'border-slate-200 hover:border-blue-400'
       }`}
     >
       {pkg.popular && (
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-wider">
+        <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
+          <span className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1 rounded-full bg-primary text-primary-foreground text-[10px] sm:text-xs font-semibold uppercase tracking-wider whitespace-nowrap">
             <Sparkles size={12} />
             Most Popular
           </span>
         </div>
       )}
 
-      <span className="text-primary text-sm font-medium capitalize">{pkg.category}</span>
-      <h3 className="text-xl font-semibold text-foreground mt-1 mb-4">{pkg.title}</h3>
+      <span className="text-primary text-xs sm:text-sm font-medium capitalize">
+        {pkg.category === 'wedding' ? 'Weddings' : pkg.category}
+      </span>
+      <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">{pkg.title}</h3>
+
+      <p className="text-base sm:text-lg font-bold text-foreground mb-3">{pkg.price}</p>
+
+      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
+        <span className="inline-flex items-center gap-1">
+          <Users size={14} className="text-primary" />
+          {pkg.suitableGuests} guests
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <Clock size={14} className="text-primary" />
+          {pkg.duration}
+        </span>
+      </div>
 
       {pkg.description && (
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6">{pkg.description}</p>
+        <p className="text-muted-foreground text-small leading-relaxed mb-4">{pkg.description}</p>
       )}
 
-      <ul className="space-y-2.5 mb-8 flex-1">
-        {pkg.includes.map((item) => (
-          <li key={item} className="flex items-start gap-2.5 text-sm text-foreground">
-            <Check size={16} className="text-primary mt-0.5 shrink-0" />
+      <div className="mb-4">
+        <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">Key Highlights</p>
+        <ul className="space-y-1.5">
+          {pkg.highlights.map((item) => (
+            <li key={item} className="flex items-start gap-2 text-small text-foreground">
+              <Check size={14} className="text-primary mt-0.5 shrink-0" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <ul className="space-y-1.5 mb-6 flex-1">
+        <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">Included Services</p>
+        {pkg.includedServices.slice(0, 5).map((item) => (
+          <li key={item} className="flex items-start gap-2 text-small text-muted-foreground">
+            <Check size={14} className="text-primary/70 mt-0.5 shrink-0" />
             <span>{item}</span>
           </li>
         ))}
       </ul>
 
-      <div className="pt-6 border-t border-border">
-        <p className="text-lg font-bold text-foreground mb-4">{pkg.price}</p>
+      <div className="pt-4 border-t border-border mt-auto flex flex-col sm:flex-row gap-2">
         <Button
           onClick={() => openModal({ eventType: pkg.title, step: 2 })}
-          className="w-full bg-primary text-primary-foreground hover:bg-gold-light font-semibold"
+          className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
         >
           Get Quote
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleAIPlanner}
+          className="min-h-11 flex-1 border-primary/50 text-primary hover:bg-primary/5 gap-1.5"
+        >
+          <Bot size={16} />
+          Talk to AI Planner
         </Button>
       </div>
     </motion.div>

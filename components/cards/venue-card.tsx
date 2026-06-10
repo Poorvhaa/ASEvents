@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { MapPin, Users, Star, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
+import { getVenueQuotePrefill } from '@/lib/venues/book-venue'
 import type { Venue } from '@/lib/types/venues'
 
 interface VenueCardProps {
@@ -22,56 +23,61 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       viewport={{ once: true }}
-      className="group flex flex-col rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-blue-400"
+      className="group flex flex-col h-full rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 hover:border-blue-400"
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] overflow-hidden shrink-0">
         <Image
           src={venue.image}
           alt={venue.name}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute top-4 left-4">
-          <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-xs font-medium text-foreground">
+        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 max-w-[70%]">
+          <span className="inline-block px-2.5 sm:px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] sm:text-xs font-medium text-foreground line-clamp-1">
             {venue.category}
           </span>
         </div>
-        <div className="absolute top-4 right-4 flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm">
-          <Star size={14} className="text-primary fill-primary" />
-          <span className="text-sm font-semibold text-foreground">{venue.rating}</span>
+        <div className="absolute top-3 sm:top-4 right-3 sm:right-4 flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm">
+          <Star size={14} className="text-primary fill-primary shrink-0" />
+          <span className="text-xs sm:text-sm font-semibold text-foreground">{venue.rating}</span>
         </div>
       </div>
 
-      <div className="flex flex-col flex-1 p-6">
-        <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
+      <div className="flex flex-col flex-1 p-4 sm:p-6 min-w-0">
+        <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
           {venue.name}
         </h3>
 
-        <div className="flex items-center gap-1.5 mt-2 text-muted-foreground">
-          <MapPin size={14} className="text-primary shrink-0" />
-          <span className="text-sm">{venue.location}</span>
+        <div className="flex items-start gap-1.5 mt-2 text-muted-foreground min-w-0">
+          <MapPin size={14} className="text-primary shrink-0 mt-0.5" />
+          <span className="text-small line-clamp-2">{venue.location}</span>
         </div>
 
-        <div className="flex flex-wrap gap-4 mt-4 text-sm text-muted-foreground">
+        <div className="flex flex-wrap gap-3 sm:gap-4 mt-3 sm:mt-4 text-muted-foreground">
           <div className="flex items-center gap-1.5">
-            <Users size={14} className="text-primary" />
-            <span>{venue.capacity}</span>
+            <Users size={14} className="text-primary shrink-0" />
+            <span className="text-small">{venue.capacity}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Building2 size={14} className="text-primary" />
-            <span>{venue.indoorOutdoor}</span>
+            <Building2 size={14} className="text-primary shrink-0" />
+            <span className="text-small">{venue.indoorOutdoor}</span>
           </div>
         </div>
 
-        <p className="text-lg font-bold text-foreground mt-4">{venue.startingPrice}</p>
+        <p className="text-base sm:text-lg font-bold text-foreground mt-3 sm:mt-4">{venue.startingPrice}</p>
 
-        <div className="flex gap-3 mt-5">
-          <Button asChild variant="outline" className="flex-1 border-primary/50 hover:bg-primary/10">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-5">
+          <Button
+            asChild
+            variant="outline"
+            className="min-h-11 flex-1 border-primary/50 hover:bg-primary/10 text-sm"
+          >
             <Link href={`/venues/${venue.slug}`}>View Details</Link>
           </Button>
           <Button
-            onClick={() => openModal({ eventType: `Venue: ${venue.name}`, step: 2 })}
-            className="flex-1 bg-primary text-primary-foreground hover:bg-gold-light"
+            onClick={() => openModal(getVenueQuotePrefill(venue))}
+            className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 text-sm"
           >
             Book Venue
           </Button>

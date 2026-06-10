@@ -36,20 +36,29 @@ const venuePreferences = [
 ]
 
 const budgetRanges = [
-  'Under Rs.10,000',
-  'Rs.10,000 - Rs.25,000',
-  'Rs.25,000 - Rs.50,000',
-  'Rs.50,000 - Rs.100,000',
-  'Rs.100,000+',
+  'Under ₹10,000',
+  '₹10,000 - ₹25,000',
+  '₹25,000 - ₹50,000',
+  '₹50,000 - ₹1,00,000',
+  '₹1,00,000+',
 ]
 
 export function QuoteModal() {
   const {
-  isOpen,
-  closeModal,
-  initialEventType,
-  initialStep,
-} = useQuoteModal()
+    isOpen,
+    closeModal,
+    initialEventType,
+    initialVenue,
+    initialCity,
+    initialGuestCount,
+    initialStep,
+    initialVenueName,
+    initialVenueCategory,
+    initialVenueCapacity,
+    initialEventDate,
+    bookingBlocked,
+    capacityExceeded,
+  } = useQuoteModal()
   const [step, setStep] = useState(initialStep)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -64,16 +73,36 @@ export function QuoteModal() {
     phone: '',
     eventDate: new Date().toISOString().split('T')[0],
   })
-    useEffect(() => {
+  useEffect(() => {
     if (isOpen) {
       setStep(initialStep)
-
       setFormData((prev) => ({
         ...prev,
-        eventType: initialEventType || '',
+        eventType: initialEventType || prev.eventType,
+        venuePreference: initialVenueName
+          ? `${initialVenueName}${initialVenueCategory ? ` (${initialVenueCategory})` : ''}`
+          : initialVenue || prev.venuePreference,
+        guestCount: initialGuestCount || prev.guestCount,
+        requirements: initialVenueName
+          ? `Venue: ${initialVenueName}, ${initialCity || ''}. Capacity: ${initialVenueCapacity || 'N/A'}.`
+          : prev.requirements,
+        eventDate: initialEventDate || prev.eventDate,
       }))
     }
-  }, [isOpen, initialEventType, initialStep])
+  }, [
+    isOpen,
+    initialEventType,
+    initialVenue,
+    initialVenueName,
+    initialVenueCategory,
+    initialVenueCapacity,
+    initialCity,
+    initialGuestCount,
+    initialEventDate,
+    initialStep,
+  ])
+
+  const submitBlocked = bookingBlocked || capacityExceeded
 
   const totalSteps = 6
 
@@ -122,10 +151,20 @@ export function QuoteModal() {
         name: payload.name,
       })
 
-      const response = await fetch('/api/quotes', {
+      const response = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({
+          name: payload.name,
+          email: payload.email,
+          phone: payload.phone,
+          eventType: payload.eventType,
+          city: formData.venuePreference,
+          guestCount: formData.guestCount || payload.guestCount,
+          budget: payload.budget,
+          venuePreference: formData.venuePreference,
+          requirements: payload.requirements,
+        }),
       })
 
       console.log('[v0] Quote Modal: Response status:', response.status)
@@ -405,6 +444,24 @@ export function QuoteModal() {
 
             {/* Content */}
             <div className="p-6">
+              {initialVenueName && (
+                <div className="mb-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm">
+                  <p className="font-semibold text-foreground">{initialVenueName}</p>
+                  <p className="text-muted-foreground mt-1">
+                    {initialVenueCategory} · {initialCity} · Capacity: {initialVenueCapacity}
+                  </p>
+                </div>
+              )}
+              {submitBlocked && (
+                <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+                  {capacityExceeded && (
+                    <p>⚠ Guest count exceeds venue capacity. Please adjust before submitting.</p>
+                  )}
+                  {bookingBlocked && (
+                    <p>❌ Selected date is unavailable. Please choose another date.</p>
+                  )}
+                </div>
+              )}
               {error && (
                 <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-700">
                   <p className="text-sm font-medium">{error}</p>
@@ -446,7 +503,7 @@ export function QuoteModal() {
               ) : (
                 <Button
                   onClick={handleSubmit}
-                  disabled={!canProceed() || isSubmitting}
+                  disabled={!canProceed() || isSubmitting || submitBlocked}
                   className="bg-primary text-primary-foreground hover:bg-gold-light gap-2"
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Request'}

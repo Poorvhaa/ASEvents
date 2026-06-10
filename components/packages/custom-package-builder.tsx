@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { venueCities } from '@/lib/data/venues'
+import { Section, SectionContainer } from '@/components/layout/section-container'
 
 const eventTypes = [
   'Wedding',
@@ -32,6 +33,9 @@ const budgetRanges = [
   '₹10,00,000+',
 ]
 
+const selectClass =
+  'w-full min-h-11 px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground text-sm sm:text-base focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20'
+
 export function CustomPackageBuilder() {
   const { openModal } = useQuoteModal()
   const [formData, setFormData] = useState({
@@ -50,25 +54,25 @@ export function CustomPackageBuilder() {
   }
 
   return (
-    <section className="py-24 bg-slate-50 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-primary rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary rounded-full blur-3xl" />
+    <Section className="bg-slate-50 relative">
+      <div className="absolute inset-0 opacity-5 pointer-events-none overflow-hidden">
+        <div className="absolute top-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-primary rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-primary rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 lg:px-8 relative z-10">
+      <SectionContainer className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-2xl mx-auto mb-12"
+          className="text-center max-w-2xl mx-auto mb-8 sm:mb-12"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">Custom</span>
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
+          <span className="text-eyebrow">Custom</span>
+          <h2 className="text-section-heading text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
             Build Your Own <span className="text-gold-gradient">Package</span>
           </h2>
-          <p className="text-muted-foreground text-lg leading-relaxed">
+          <p className="text-body text-muted-foreground">
             Tell us about your celebration and we&apos;ll craft a bespoke package
             perfectly suited to your needs and budget.
           </p>
@@ -80,10 +84,10 @@ export function CustomPackageBuilder() {
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true }}
           onSubmit={handleSubmit}
-          className="max-w-3xl mx-auto p-8 md:p-10 rounded-2xl bg-white border border-slate-200 shadow-lg"
+          className="max-w-3xl mx-auto p-5 sm:p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-lg"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+            <div className="min-w-0">
               <label htmlFor="eventType" className="block text-sm font-medium text-foreground mb-2">
                 Event Type
               </label>
@@ -91,7 +95,7 @@ export function CustomPackageBuilder() {
                 id="eventType"
                 value={formData.eventType}
                 onChange={(e) => setFormData({ ...formData, eventType: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground focus:border-primary focus:outline-none"
+                className={selectClass}
                 required
               >
                 <option value="">Select event type</option>
@@ -101,7 +105,7 @@ export function CustomPackageBuilder() {
               </select>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="guestCount" className="block text-sm font-medium text-foreground mb-2">
                 Guest Count
               </label>
@@ -109,7 +113,7 @@ export function CustomPackageBuilder() {
                 id="guestCount"
                 value={formData.guestCount}
                 onChange={(e) => setFormData({ ...formData, guestCount: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground focus:border-primary focus:outline-none"
+                className={selectClass}
                 required
               >
                 <option value="">Select guest count</option>
@@ -119,7 +123,7 @@ export function CustomPackageBuilder() {
               </select>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="location" className="block text-sm font-medium text-foreground mb-2">
                 Location
               </label>
@@ -127,7 +131,7 @@ export function CustomPackageBuilder() {
                 id="location"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground focus:border-primary focus:outline-none"
+                className={selectClass}
                 required
               >
                 <option value="">Select location</option>
@@ -137,7 +141,7 @@ export function CustomPackageBuilder() {
               </select>
             </div>
 
-            <div>
+            <div className="min-w-0">
               <label htmlFor="budgetRange" className="block text-sm font-medium text-foreground mb-2">
                 Budget Range
               </label>
@@ -145,7 +149,7 @@ export function CustomPackageBuilder() {
                 id="budgetRange"
                 value={formData.budgetRange}
                 onChange={(e) => setFormData({ ...formData, budgetRange: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground focus:border-primary focus:outline-none"
+                className={selectClass}
                 required
               >
                 <option value="">Select budget range</option>
@@ -159,12 +163,12 @@ export function CustomPackageBuilder() {
           <Button
             type="submit"
             size="lg"
-            className="w-full mt-8 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold py-6 text-lg"
+            className="min-h-11 w-full mt-6 sm:mt-8 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold text-base sm:text-lg"
           >
             Generate Recommendation
           </Button>
         </motion.form>
-      </div>
-    </section>
+      </SectionContainer>
+    </Section>
   )
 }

@@ -1,19 +1,17 @@
-import { NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { contactSubmissions } from '@/lib/db/schema'
-import { desc } from 'drizzle-orm'
+import { NextRequest, NextResponse } from 'next/server'
+import { verifyAdminRequest } from '@/lib/api-security'
+import { getContactInquiries } from '@/services/leadService'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!verifyAdminRequest(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
-    const contacts = await db
-      .select()
-      .from(contactSubmissions)
-      .orderBy(desc(contactSubmissions.createdAt))
-      .limit(100)
-
+    const contacts = await getContactInquiries()
     return NextResponse.json(contacts)
   } catch (error) {
-    console.error('Error fetching contacts:', error)
+    console.error('[Admin Contacts API] Error:', error)
     return NextResponse.json({ error: 'Failed to fetch contacts' }, { status: 500 })
   }
 }

@@ -5,7 +5,7 @@ import './globals.css'
 import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { QuoteModal } from '@/components/quote-modal'
-import { AIConsultantWidget } from '@/components/ai-consultant/chat-widget'
+import { AIChatWidget } from '@/components/ai/chat-widget'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   title: 'AS Events | Luxury Event Management',
   description: 'Creating extraordinary events that last forever. Luxury weddings, corporate events, destination celebrations, and unforgettable experiences.',
   keywords: ['event management', 'luxury weddings', 'corporate events', 'destination weddings', 'event planning'],
-  generator: 'v0.app',
   icons: {
     icon: [
       {
@@ -52,12 +51,33 @@ export default function RootLayout({
   className={`${inter.variable} ${playfair.variable} bg-background`}
   data-scroll-behavior="smooth"
 >
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased overflow-x-hidden min-w-0">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'EventPlanner',
+              name: 'AS Events',
+              url: 'https://asevents.in',
+              description:
+                'Premium Indian event management — weddings, corporate events, destination celebrations.',
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Vadodara',
+                addressRegion: 'Gujarat',
+                addressCountry: 'IN',
+              },
+              email: 'sales@asevents.in',
+              telephone: '+91-95103-24143',
+            }),
+          }}
+        />
         <Navbar />
-        <main>{children}</main>
+        <main className="min-w-0 overflow-x-hidden">{children}</main>
         <Footer />
         <QuoteModal />
-        <AIConsultantWidget />
+        <AIChatWidget />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

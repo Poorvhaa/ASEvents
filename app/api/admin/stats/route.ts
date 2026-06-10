@@ -1,28 +1,37 @@
-import { NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { quoteRequests, events, contactSubmissions } from '@/lib/db/schema'
-import { eq, count } from 'drizzle-orm'
+import { NextRequest, NextResponse } from 'next/server'
+import { verifyAdminRequest } from '@/lib/api-security'
+import { getLeadCount, getContactInquiries } from '@/services/leadService'
+import { getBookings } from '@/services/bookingService'
+import { getConsultations } from '@/services/consultationService'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!verifyAdminRequest(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
-    const [totalQuotes, pendingQuotesResult, totalEventsResult, totalContactsResult] = await Promise.all([
-      db.select({ count: count() }).from(quoteRequests),
-      db
-        .select({ count: count() })
-        .from(quoteRequests)
-        .where(eq(quoteRequests.status, 'pending')),
-      db.select({ count: count() }).from(events),
-      db.select({ count: count() }).from(contactSubmissions),
+    const [totalLeads, contacts, bookings, consultations] = await Promise.all([
+      getLeadCount(),
+      getContactInquiries(),
+      getBookings(),
+      getConsultations(1000),
     ])
 
+    const pendingBookings = bookings.filter((b) => b.status === 'pending').length
+
     return NextResponse.json({
-      totalQuotes: totalQuotes[0]?.count || 0,
-      pendingQuotes: pendingQuotesResult[0]?.count || 0,
-      totalEvents: totalEventsResult[0]?.count || 0,
-      totalContacts: totalContactsResult[0]?.count || 0,
+      totalQuotes: totalLeads,
+      pendingQuotes: bookings.filter((b) => b.status === 'pending').length,
+      totalEvents: bookings.length,
+      totalContacts: contacts.length,
+      totalLeads,
+      venueBookings: bookings.length,
+      pendingInquiries: contacts.length,
+      aiConsultations: consultations.length,
+      pendingBookings,
     })
   } catch (error) {
-    console.error('Error fetching stats:', error)
+    console.error('[Admin Stats API] Error:', error)
     return NextResponse.json({ error: 'Failed to fetch stats' }, { status: 500 })
   }
 }

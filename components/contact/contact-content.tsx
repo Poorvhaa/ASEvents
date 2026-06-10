@@ -15,11 +15,11 @@ const eventTypes = [
 ]
 
 const budgetRanges = [
-  'Under Rs.10,000',
-  'Rs.10,000 - Rs.25,000',
-  'Rs.25,000 - Rs.50,000',
-  'Rs.50,000 - Rs.100,000',
-  'Rs.100,000+',
+  'Under ₹10,000',
+  '₹10,000 - ₹25,000',
+  '₹25,000 - ₹50,000',
+  '₹50,000 - ₹100,000',
+  '₹100,000+',
 ]
 
 export function ContactContent() {
@@ -50,15 +50,14 @@ export function ContactContent() {
           ? parseInt(formData.message.match(/\d+/)?.[0] || '50') 
           : 50
         
-        await fetch('/api/quotes', {
+        await fetch('/api/quote', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             eventType: formData.eventType,
-            eventDate: formData.eventDate,
+            city: 'TBD',
             guestCount,
             budget: formData.budget,
-            location: 'TBD',
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
@@ -179,7 +178,7 @@ export function ContactContent() {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-                      placeholder="+91 xxxxx xxxxx"
+                      placeholder="+91 95103 24143"
                     />
                   </div>
                   <div>
@@ -286,11 +285,17 @@ export function ContactContent() {
                   <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Visit Us</h3>
-                  <p className="text-muted-foreground">
-                    803-804, Bluechip Complex, Sayajigunj, Vadodara - 390 005
-                  </p>
-                </div>
+  <h3 className="font-semibold text-foreground mb-1">Visit Us</h3>
+
+  <a
+    href="https://maps.app.goo.gl/92BBaz8P4wzcxPMK9"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:underline"
+  >
+    803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007
+  </a>
+</div>
               </div>
 
               <div className="p-6 rounded-xl glass flex items-start gap-4">
@@ -300,7 +305,7 @@ export function ContactContent() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Call Us</h3>
                   <a href="tel:+912345678924" className="text-muted-foreground hover:text-primary transition-colors">
-                    +91 XXXXX XXXXX
+                    +91 95103 24143
                   </a>
                 </div>
               </div>
@@ -333,7 +338,7 @@ export function ContactContent() {
 
             {/* WhatsApp Button */}
             <a
-              href="https://wa.me/1234567890"
+              href="https://wa.me/+919510324143"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 w-full p-4 rounded-xl bg-[#25D366] text-white font-semibold hover:bg-[#128C7E] transition-colors"
@@ -342,16 +347,7 @@ export function ContactContent() {
               Chat on WhatsApp
             </a>
 
-            {/* Map Placeholder */}
-            <div className="relative aspect-video rounded-xl overflow-hidden bg-card border border-border">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-primary mx-auto mb-2" />
-                  <p className="text-muted-foreground">Map Integration</p>
-                  <p className="text-muted-foreground text-sm">803-804, Bluechip Complex, Sayajigunj, Vadodara - 390 005</p>
-                </div>
-              </div>
-            </div>
+            
           </motion.div>
         </div>
       </div>

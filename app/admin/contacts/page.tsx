@@ -4,20 +4,12 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/auth-client'
 import Link from 'next/link'
-
-interface Contact {
-  id: number
-  name: string
-  email: string
-  subject: string
-  message: string
-  status: string
-  createdAt: string
-}
+import type { DbContactInquiry } from '@/types/database'
 
 export default function AdminContacts() {
   const [isLoading, setIsLoading] = useState(true)
-  const [contacts, setContacts] = useState<Contact[]>([])
+  const [contacts, setContacts] = useState<DbContactInquiry[]>([])
+  const [expandedId, setExpandedId] = useState<string | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -35,28 +27,12 @@ export default function AdminContacts() {
 
   const loadContacts = async () => {
     try {
-      const response = await fetch('/api/admin/contacts')
+      const response = await fetch('/api/admin/contacts', { credentials: 'include' })
       if (response.ok) {
-        const data = await response.json()
-        setContacts(data)
+        setContacts(await response.json())
       }
     } catch (error) {
       console.error('Failed to load contacts:', error)
-    }
-  }
-
-  const markAsRead = async (id: number) => {
-    try {
-      const response = await fetch(`/api/admin/contacts/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'read' }),
-      })
-      if (response.ok) {
-        loadContacts()
-      }
-    } catch (error) {
-      console.error('Failed to update contact status:', error)
     }
   }
 
@@ -79,15 +55,14 @@ export default function AdminContacts() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         <div className="bg-card border border-border rounded-lg overflow-hidden">
-          <table className="w-full">
+          <table className="w-full text-sm">
             <thead className="bg-muted">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Email</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Subject</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Date</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Action</th>
+                <th className="px-6 py-3 text-left font-semibold">Name</th>
+                <th className="px-6 py-3 text-left font-semibold">Email</th>
+                <th className="px-6 py-3 text-left font-semibold">Subject</th>
+                <th className="px-6 py-3 text-left font-semibold">Date</th>
+                <th className="px-6 py-3 text-left font-semibold">Message</th>
               </tr>
             </thead>
             <tbody>
@@ -96,32 +71,32 @@ export default function AdminContacts() {
                   <td className="px-6 py-3">{contact.name}</td>
                   <td className="px-6 py-3">{contact.email}</td>
                   <td className="px-6 py-3">{contact.subject}</td>
+                  <td className="px-6 py-3 text-muted-foreground">
+                    {new Date(contact.created_at).toLocaleDateString('en-IN')}
+                  </td>
                   <td className="px-6 py-3">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-medium ${
-                        contact.status === 'new'
-                          ? 'bg-blue-100 text-blue-800'
-                          : 'bg-green-100 text-green-800'
-                      }`}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setExpandedId(expandedId === contact.id ? null : contact.id)
+                      }
+                      className="text-primary hover:underline"
                     >
-                      {contact.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3 text-sm text-muted-foreground">
-                    {new Date(contact.createdAt).toLocaleDateString()}
-                  </td>
-                  <td className="px-6 py-3">
-                    {contact.status === 'new' && (
-                      <button
-                        onClick={() => markAsRead(contact.id)}
-                        className="px-3 py-1 text-sm rounded bg-primary/10 text-primary hover:bg-primary/20"
-                      >
-                        Mark as Read
-                      </button>
+                      {expandedId === contact.id ? 'Hide' : 'View'}
+                    </button>
+                    {expandedId === contact.id && (
+                      <p className="mt-2 text-muted-foreground max-w-md">{contact.message}</p>
                     )}
                   </td>
                 </tr>
               ))}
+              {contacts.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
+                    No contact messages yet
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

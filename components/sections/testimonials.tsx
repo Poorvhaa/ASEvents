@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react'
+import { Section, SectionContainer } from '@/components/layout/section-container'
 
 const testimonials = [
   {
@@ -43,61 +44,55 @@ const testimonials = [
 export function Testimonials() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length)
-  }
-
-  const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
-  }
+  const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length)
+  const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length)
 
   return (
-    <section className="py-24 bg-slate-50 ">
-      <div className="container mx-auto px-4 lg:px-8">
-        {/* Section Header */}
+    <Section className="bg-slate-50">
+      <SectionContainer>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          className="text-center max-w-3xl mx-auto mb-10 sm:mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">Testimonials</span>
-          <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
+          <span className="text-eyebrow">Testimonials</span>
+          <h2 className="text-section-heading text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
             What Our <span className="text-gold-gradient">Clients Say</span>
           </h2>
         </motion.div>
 
-        {/* Testimonial Carousel */}
-        <div className="max-w-4xl mx-auto relative">
+        <div className="max-w-4xl mx-auto relative px-1">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, x: 50 }}
+              initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
+              exit={{ opacity: 0, x: -30 }}
               transition={{ duration: 0.4 }}
-              className="glass rounded-2xl p-8 md:p-12"
+              className="rounded-2xl p-6 sm:p-8 md:p-12 bg-white border border-slate-200 shadow-sm"
             >
-              <Quote className="w-12 h-12 text-primary/30 mb-6" />
-              
-              <p className="text-lg md:text-xl text-foreground leading-relaxed mb-8">
+              <Quote className="w-8 h-8 sm:w-12 sm:h-12 text-primary/30 mb-4 sm:mb-6" />
+
+              <p className="text-body text-foreground mb-6 sm:mb-8">
                 {testimonials[currentIndex].review}
               </p>
 
-              <div className="flex items-center gap-4">
-                <div className="relative w-16 h-16 rounded-full overflow-hidden">
+              <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden shrink-0">
                   <Image
                     src={testimonials[currentIndex].image}
                     alt={testimonials[currentIndex].name}
                     fill
+                    sizes="64px"
                     className="object-cover"
                   />
                 </div>
                 <div>
                   <h4 className="font-semibold text-foreground">{testimonials[currentIndex].name}</h4>
-                  <p className="text-muted-foreground text-sm">{testimonials[currentIndex].role}</p>
-                  <div className="flex gap-1 mt-1">
+                  <p className="text-muted-foreground text-small">{testimonials[currentIndex].role}</p>
+                  <div className="flex gap-1 mt-1 justify-center sm:justify-start">
                     {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (
                       <Star key={i} size={14} className="fill-primary text-primary" />
                     ))}
@@ -107,21 +102,20 @@ export function Testimonials() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation */}
-          <div className="flex justify-center gap-4 mt-8">
+          <div className="flex justify-center items-center gap-3 sm:gap-4 mt-6 sm:mt-8">
             <button
               onClick={prev}
-              className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+              className="touch-target w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               aria-label="Previous testimonial"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={22} />
             </button>
             <div className="flex items-center gap-2">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors ${
+                  className={`min-w-2 min-h-2 rounded-full transition-colors touch-target p-2 ${
                     index === currentIndex ? 'bg-primary' : 'bg-border'
                   }`}
                   aria-label={`Go to testimonial ${index + 1}`}
@@ -130,14 +124,14 @@ export function Testimonials() {
             </div>
             <button
               onClick={next}
-              className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+              className="touch-target w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               aria-label="Next testimonial"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={22} />
             </button>
           </div>
         </div>
-      </div>
-    </section>
+      </SectionContainer>
+    </Section>
   )
 }

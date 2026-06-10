@@ -46,13 +46,12 @@ export function CompanyStory() {
               </p>
               <p>
                 What started as a small team of passionate event enthusiasts has grown into one of 
-                the most sought-after luxury event management companies. We&apos;ve had the privilege 
-                of orchestrating over 500 events, from intimate celebrations to grand galas.
+                the most sought-after luxury event management companies.
               </p>
               <p>
                 Our journey has been defined by our commitment to exceeding expectations. Every event 
                 we create is a testament to our dedication to perfection and our clients&apos; unique 
-                visions. We don&apos;t just plan events; we craft experiences that become cherished memories.
+                visions.
               </p>
             </div>
           </motion.div>

@@ -1,135 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { quoteRequests } from '@/lib/db/schema'
+import { checkRateLimit, sanitizeEmail, sanitizePhone, sanitizeString } from '@/lib/api-security'
+import { quoteSchema } from '@/lib/validations/schemas'
+import { createQuoteLead, getLeads } from '@/services/leadService'
+import { sendQuoteEmails } from '@/services/email'
+import { verifyAdminRequest } from '@/lib/api-security'
 
+/** Legacy endpoint — forwards to Supabase-backed quote flow */
 export async function POST(request: NextRequest) {
-  const startTime = Date.now()
-  console.log('[v0] Quote API: Received POST request')
+  const rateLimited = checkRateLimit(request, 'quote')
+  if (rateLimited) return rateLimited
 
   try {
     const body = await request.json()
-    console.log('[v0] Quote API: Request body:', {
-      eventType: body.eventType,
-      eventDate: body.eventDate,
-      guestCount: body.guestCount,
+
+    const parsed = quoteSchema.safeParse({
       name: body.name,
       email: body.email,
-      location: body.location,
+      phone: body.phone || '+910000000000',
+      eventType: body.eventType,
+      city: body.location || body.city,
+      guestCount: body.guestCount,
+      budget: body.budget,
+      venuePreference: body.location,
+      requirements: body.requirements,
     })
 
-    const {
-      eventType,
-      eventDate,
-      guestCount,
-      budget,
-      location,
-      name,
-      email,
-      phone,
-      requirements,
-    } = body
-
-    // Validate required fields
-    if (!eventType || !eventDate || !guestCount || !location || !name || !email) {
-      console.log('[v0] Quote API: Validation failed - Missing required fields')
+    if (!parsed.success) {
       return NextResponse.json(
-        { 
-          error: 'Missing required fields',
-          details: { eventType, eventDate, guestCount, location, name, email }
-        },
+        { error: 'Validation failed', details: parsed.error.flatten() },
         { status: 400 }
       )
     }
 
-    // Parse and validate guest count
-    const guestCountNum = typeof guestCount === 'string' ? parseInt(guestCount) : guestCount
-    if (isNaN(guestCountNum)) {
-      console.log('[v0] Quote API: Invalid guest count:', guestCount)
-      return NextResponse.json(
-        { error: 'Invalid guest count' },
-        { status: 400 }
-      )
-    }
-
-    // Parse event date
-    const parsedDate = new Date(eventDate)
-    if (isNaN(parsedDate.getTime())) {
-      console.log('[v0] Quote API: Invalid event date:', eventDate)
-      return NextResponse.json(
-        { error: 'Invalid event date' },
-        { status: 400 }
-      )
-    }
-
-    console.log('[v0] Quote API: Inserting into database...')
-    
-    // Insert into database
-    const result = await db
-      .insert(quoteRequests)
-      .values({
-        eventType,
-        eventDate: parsedDate,
-        guestCount: guestCountNum,
-        budget,
-        location,
-        name,
-        email,
-        phone: phone || null,
-        requirements: requirements || null,
-        status: 'pending',
-      })
-      .returning()
-
-    console.log('[v0] Quote API: Database insert successful', {
-      id: result[0]?.id,
-      email: result[0]?.email,
-      status: result[0]?.status,
+    const data = parsed.data
+    await createQuoteLead({
+      name: sanitizeString(data.name, 100),
+      email: sanitizeEmail(data.email),
+      phone: sanitizePhone(data.phone),
+      eventType: sanitizeString(data.eventType, 100),
+      city: data.city ? sanitizeString(data.city, 100) : undefined,
+      guestCount: data.guestCount !== undefined ? String(data.guestCount) : undefined,
+      budget: data.budget ? sanitizeString(data.budget, 100) : undefined,
+      venuePreference: data.venuePreference
+        ? sanitizeString(data.venuePreference, 200)
+        : undefined,
+      requirements: data.requirements ? sanitizeString(data.requirements, 5000) : undefined,
+      source: 'legacy_quotes_api',
     })
 
-    console.log(`[v0] Quote API: Request completed in ${Date.now() - startTime}ms`)
-    
-    return NextResponse.json(
-      { 
-        success: true,
-        message: 'Quote request submitted successfully',
-        id: result[0]?.id 
-      }, 
-      { status: 201 }
-    )
+    await sendQuoteEmails({
+      name: data.name,
+      email: data.email,
+      eventType: data.eventType,
+      city: data.city,
+      guestCount: data.guestCount !== undefined ? String(data.guestCount) : undefined,
+      budget: data.budget,
+    })
+
+    return NextResponse.json({ success: true, message: 'Quote request submitted successfully' }, { status: 201 })
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error('[v0] Quote API: Error -', {
-      message: errorMsg,
-      stack: error instanceof Error ? error.stack : undefined,
-      duration: Date.now() - startTime,
-    })
-    
-    return NextResponse.json(
-      { 
-        error: 'Failed to submit quote request',
-        message: process.env.NODE_ENV === 'development' ? errorMsg : 'Internal server error',
-      },
-      { status: 500 }
-    )
+    console.error('[Quotes API] Error:', error)
+    return NextResponse.json({ error: 'Failed to submit quote request' }, { status: 500 })
   }
 }
 
-export async function GET() {
-  console.log('[v0] Quote API: Received GET request')
-  
+export async function GET(request: NextRequest) {
+  if (!verifyAdminRequest(request)) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
-    const allQuotes = await db.select().from(quoteRequests).limit(50)
-    console.log('[v0] Quote API: Retrieved', allQuotes.length, 'quotes')
-    return NextResponse.json(allQuotes)
+    const leads = await getLeads()
+    return NextResponse.json(leads)
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error('[v0] Quote API: Error fetching quotes -', errorMsg)
-    return NextResponse.json(
-      { 
-        error: 'Failed to fetch quotes',
-        message: process.env.NODE_ENV === 'development' ? errorMsg : 'Internal server error',
-      },
-      { status: 500 }
-    )
+    console.error('[Quotes API] Fetch error:', error)
+    return NextResponse.json({ error: 'Failed to fetch quotes' }, { status: 500 })
   }
 }

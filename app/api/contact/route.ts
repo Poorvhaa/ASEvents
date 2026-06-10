@@ -1,77 +1,52 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { db } from '@/lib/db'
-import { contactSubmissions } from '@/lib/db/schema'
+import { checkRateLimit, sanitizeEmail, sanitizePhone, sanitizeString } from '@/lib/api-security'
+import { contactSchema } from '@/lib/validations/schemas'
+import { createContactInquiry } from '@/services/leadService'
+import { sendContactEmails } from '@/services/email'
 
 export async function POST(request: NextRequest) {
-  const startTime = Date.now()
-  console.log('[v0] Contact API: Received POST request')
+  const rateLimited = checkRateLimit(request, 'contact')
+  if (rateLimited) return rateLimited
 
   try {
     const body = await request.json()
-    console.log('[v0] Contact API: Request body received')
+    const parsed = contactSchema.safeParse(body)
 
-    const { name, email, phone, subject, message } = body
-
-    // Validate required fields
-    if (!name || !email || !subject || !message) {
-      console.log('[v0] Contact API: Validation failed - Missing required fields', {
-        name: !!name,
-        email: !!email,
-        subject: !!subject,
-        message: !!message,
-      })
+    if (!parsed.success) {
       return NextResponse.json(
-        { 
-          error: 'Missing required fields',
-          required: ['name', 'email', 'subject', 'message']
-        },
+        { error: 'Validation failed', details: parsed.error.flatten() },
         { status: 400 }
       )
     }
 
-    console.log('[v0] Contact API: Inserting into database...')
+    const payload = {
+      name: sanitizeString(parsed.data.name, 100),
+      email: sanitizeEmail(parsed.data.email),
+      phone: parsed.data.phone ? sanitizePhone(parsed.data.phone) : undefined,
+      subject: sanitizeString(parsed.data.subject, 200),
+      message: sanitizeString(parsed.data.message, 5000),
+    }
 
-    // Insert into database
-    const result = await db
-      .insert(contactSubmissions)
-      .values({
-        name,
-        email,
-        phone: phone || null,
-        subject,
-        message,
-        status: 'new',
-      })
-      .returning()
+    const inquiry = await createContactInquiry(payload)
 
-    console.log('[v0] Contact API: Database insert successful', {
-      id: result[0]?.id,
-      email: result[0]?.email,
-      status: result[0]?.status,
+    await sendContactEmails({
+      name: payload.name,
+      email: payload.email,
+      subject: payload.subject,
+      message: payload.message,
     })
 
-    console.log(`[v0] Contact API: Request completed in ${Date.now() - startTime}ms`)
-
     return NextResponse.json(
-      { 
-        success: true,
-        message: 'Contact form submitted successfully',
-        id: result[0]?.id 
-      }, 
+      { success: true, id: inquiry?.id },
       { status: 201 }
     )
   } catch (error) {
-    const errorMsg = error instanceof Error ? error.message : String(error)
-    console.error('[v0] Contact API: Error -', {
-      message: errorMsg,
-      stack: error instanceof Error ? error.stack : undefined,
-      duration: Date.now() - startTime,
-    })
-
+    console.error('[Contact API] Error:', error)
+    const message = error instanceof Error ? error.message : 'Internal server error'
     return NextResponse.json(
-      { 
+      {
         error: 'Failed to submit contact form',
-        message: process.env.NODE_ENV === 'development' ? errorMsg : 'Internal server error',
+        message: process.env.NODE_ENV === 'development' ? message : undefined,
       },
       { status: 500 }
     )

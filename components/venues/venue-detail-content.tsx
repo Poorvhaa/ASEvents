@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
+import { getVenueQuotePrefill } from '@/lib/venues/book-venue'
 import { VenueInquiryForm } from '@/components/venues/venue-inquiry-form'
 import type { Venue } from '@/lib/types/venues'
 
@@ -196,7 +197,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 </div>
 
                 <Button
-                  onClick={() => openModal({ eventType: `Venue: ${venue.name}`, step: 2 })}
+                  onClick={() => openModal(getVenueQuotePrefill(venue))}
                   size="lg"
                   className="w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold mb-6"
                 >
