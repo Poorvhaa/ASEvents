@@ -1,12 +1,12 @@
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import type { ProposalDocument } from '@/services/pdfService'
+import { formatINR, computeDisplayTotal } from '@/lib/currency/format-inr'
 
-const LOGO_PATH = '/clean.png'
-const LOGO_WIDTH_MM = 42.3 // ~160px at standard density
 const MARGIN = 14
 const CONTENT_WIDTH = 182
 const PAGE_BOTTOM = 275
+const FONT = 'NotoSans'
 
 const COLORS = {
   navy: [15, 23, 42] as const,
@@ -18,24 +18,46 @@ const COLORS = {
   goldLight: [254, 249, 235] as const,
 }
 
-function formatINR(amount: number): string {
-  return `₹${amount.toLocaleString('en-IN')}`
+let regularFontB64: string | null = null
+let boldFontB64: string | null = null
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer)
+  let binary = ''
+  for (let i = 0; i < bytes.length; i++) {
+    binary += String.fromCharCode(bytes[i])
+  }
+  return btoa(binary)
 }
 
-async function loadImageDataUrl(path: string): Promise<string | null> {
-  try {
-    const response = await fetch(path)
-    if (!response.ok) return null
-    const blob = await response.blob()
-    return await new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onloadend = () => resolve(reader.result as string)
-      reader.onerror = reject
-      reader.readAsDataURL(blob)
-    })
-  } catch {
-    return null
+async function registerUnicodeFonts(doc: jsPDF): Promise<void> {
+  if (!regularFontB64) {
+    const [regularRes, boldRes] = await Promise.all([
+      fetch(
+        'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSans/NotoSans-Regular.ttf'
+      ),
+      fetch(
+        'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSans/NotoSans-Bold.ttf'
+      ),
+    ])
+
+    if (!regularRes.ok || !boldRes.ok) {
+      throw new Error('Failed to load PDF fonts')
+    }
+
+    regularFontB64 = arrayBufferToBase64(await regularRes.arrayBuffer())
+    boldFontB64 = arrayBufferToBase64(await boldRes.arrayBuffer())
   }
+
+  doc.addFileToVFS('NotoSans-Regular.ttf', regularFontB64)
+  doc.addFileToVFS('NotoSans-Bold.ttf', boldFontB64)
+  doc.addFont('NotoSans-Regular.ttf', FONT, 'normal')
+  doc.addFont('NotoSans-Bold.ttf', FONT, 'bold')
+}
+
+function setFont(doc: jsPDF, style: 'normal' | 'bold' = 'normal', size = 10) {
+  doc.setFont(FONT, style)
+  doc.setFontSize(size)
 }
 
 function setNavy(doc: jsPDF) {
@@ -48,6 +70,13 @@ function setGold(doc: jsPDF) {
 
 function setMuted(doc: jsPDF) {
   doc.setTextColor(...COLORS.slate)
+}
+
+function safe(value: string | number | null | undefined): string {
+  if (value === null || value === undefined) return 'N/A'
+  const text = String(value).trim()
+  if (!text || text === 'undefined' || text === 'null' || text === 'NaN') return 'N/A'
+  return text
 }
 
 function ensureSpace(doc: jsPDF, y: number, needed: number): number {
@@ -68,8 +97,7 @@ function drawDivider(doc: jsPDF, y: number): number {
 function drawSectionHeading(doc: jsPDF, title: string, y: number): number {
   y = ensureSpace(doc, y, 14)
   setGold(doc)
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(11)
+  setFont(doc, 'bold', 11)
   doc.text(title.toUpperCase(), MARGIN, y)
   setNavy(doc)
   return y + 6
@@ -89,14 +117,12 @@ function drawKeyValue(
   y: number,
   colWidth: number
 ): number {
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8)
+  setFont(doc, 'bold', 8)
   setMuted(doc)
   doc.text(label, x, y)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(10)
+  setFont(doc, 'normal', 10)
   setNavy(doc)
-  const lines = doc.splitTextToSize(value || '—', colWidth - 2)
+  const lines = doc.splitTextToSize(safe(value), colWidth - 2)
   doc.text(lines, x, y + 4.5)
   return y + 4.5 + lines.length * 4.5 + 3
 }
@@ -105,52 +131,28 @@ function addPageFooters(doc: jsPDF): void {
   const total = doc.getNumberOfPages()
   for (let i = 1; i <= total; i++) {
     doc.setPage(i)
-    doc.setFont('helvetica', 'italic')
-    doc.setFontSize(7)
+    setFont(doc, 'normal', 7)
     setMuted(doc)
     doc.text('Prepared by AS Events AI Consultant', MARGIN + CONTENT_WIDTH / 2, PAGE_BOTTOM - 4, {
       align: 'center',
     })
-    doc.setFont('helvetica', 'normal')
     doc.text(`Page ${i} of ${total}`, MARGIN + CONTENT_WIDTH / 2, PAGE_BOTTOM, {
       align: 'center',
     })
   }
 }
 
-function drawHeader(doc: jsPDF, logoDataUrl: string | null, proposal: ProposalDocument): number {
-  let y = MARGIN
+function drawHeader(doc: jsPDF, proposal: ProposalDocument): number {
+  let y = MARGIN + 4
 
-  if (logoDataUrl) {
-    const x = (210 - LOGO_WIDTH_MM) / 2
-    doc.addImage(logoDataUrl, 'PNG', x, y, LOGO_WIDTH_MM, LOGO_WIDTH_MM * 0.35)
-    y += LOGO_WIDTH_MM * 0.35 + 4
-  }
-
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(18)
-  setNavy(doc)
-  doc.text('AS EVENTS', 105, y, { align: 'center' })
-  y += 6
-
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
-  setGold(doc)
-  doc.text('Luxury Weddings • Corporate Events • Destination Celebrations', 105, y, {
-    align: 'center',
-  })
-  y += 10
-
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(14)
+  setFont(doc, 'bold', 16)
   setNavy(doc)
   doc.text('PERSONALIZED EVENT PROPOSAL', 105, y, { align: 'center' })
-  y += 7
+  y += 9
 
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
+  setFont(doc, 'normal', 9)
   setMuted(doc)
-  doc.text(`Quote: ${proposal.quoteNumber}`, MARGIN, y)
+  doc.text(`Quote Number: ${safe(proposal.quoteNumber)}`, MARGIN, y)
   doc.text(
     `Generated: ${new Date(proposal.generatedAt).toLocaleDateString('en-IN', {
       day: 'numeric',
@@ -171,19 +173,18 @@ function drawClientSection(doc: jsPDF, proposal: ProposalDocument, y: number): n
   const cardTop = y
   const cardHeight = 34
   drawCardBackground(doc, cardTop, cardHeight)
-  y += 5
 
   const colW = CONTENT_WIDTH / 2 - 4
   const leftX = MARGIN + 5
   const rightX = MARGIN + CONTENT_WIDTH / 2 + 2
   const { name, email, phone, city } = proposal.clientDetails
 
-  let leftY = drawKeyValue(doc, 'Name', name, leftX, y, colW)
-  let rightY = drawKeyValue(doc, 'Email', email, rightX, y, colW)
-  y = Math.max(leftY, rightY)
-  leftY = drawKeyValue(doc, 'Phone', phone, leftX, y, colW)
-  rightY = drawKeyValue(doc, 'City', city, rightX, y, colW)
-  y = Math.max(leftY, rightY)
+  let innerY = cardTop + 5
+  let leftY = drawKeyValue(doc, 'Name', name, leftX, innerY, colW)
+  let rightY = drawKeyValue(doc, 'Email', email, rightX, innerY, colW)
+  innerY = Math.max(leftY, rightY)
+  leftY = drawKeyValue(doc, 'Phone', phone, leftX, innerY, colW)
+  rightY = drawKeyValue(doc, 'City', city, rightX, innerY, colW)
 
   return cardTop + cardHeight + 8
 }
@@ -193,107 +194,113 @@ function drawEventSummary(doc: jsPDF, proposal: ProposalDocument, y: number): nu
   const cardTop = y
   const cardHeight = 44
   drawCardBackground(doc, cardTop, cardHeight)
-  y += 5
 
   const colW = CONTENT_WIDTH / 2 - 4
   const leftX = MARGIN + 5
   const rightX = MARGIN + CONTENT_WIDTH / 2 + 2
   const s = proposal.eventSummary
 
-  let leftY = drawKeyValue(doc, 'Event Type', s.eventType, leftX, y, colW)
-  let rightY = drawKeyValue(doc, 'Event Date', s.eventDate, rightX, y, colW)
-  y = Math.max(leftY, rightY)
-  leftY = drawKeyValue(doc, 'Guest Count', s.guestCount, leftX, y, colW)
-  rightY = drawKeyValue(doc, 'Budget', s.budget, rightX, y, colW)
-  y = Math.max(leftY, rightY)
-  leftY = drawKeyValue(doc, 'Venue Preference', s.venuePreference, leftX, y, colW)
-  rightY = drawKeyValue(doc, 'Special Requirements', s.specialRequirements, rightX, y, colW)
-  y = Math.max(leftY, rightY)
+  let innerY = cardTop + 5
+  let leftY = drawKeyValue(doc, 'Event Type', s.eventType, leftX, innerY, colW)
+  let rightY = drawKeyValue(doc, 'Event Date', s.eventDate, rightX, innerY, colW)
+  innerY = Math.max(leftY, rightY)
+  leftY = drawKeyValue(doc, 'Guest Count', s.guestCount, leftX, innerY, colW)
+  rightY = drawKeyValue(doc, 'Budget', s.budget, rightX, innerY, colW)
+  innerY = Math.max(leftY, rightY)
+  leftY = drawKeyValue(doc, 'Venue Preference', s.venuePreference, leftX, innerY, colW)
+  rightY = drawKeyValue(doc, 'Special Requirements', s.specialRequirements, rightX, innerY, colW)
 
   return cardTop + cardHeight + 8
 }
 
-function drawPackageSection(doc: jsPDF, proposal: ProposalDocument, y: number): number {
+function drawRecommendedPackage(doc: jsPDF, proposal: ProposalDocument, y: number): number {
   y = drawSectionHeading(doc, 'Recommended Package', y)
-  const pkg = proposal.packageRecommendation
-  const inclusionsHeight = pkg.inclusions.length * 5 + 8
-  const cardHeight = 18 + inclusionsHeight + 10
-  y = ensureSpace(doc, y, cardHeight + 10)
+  y = ensureSpace(doc, y, 20)
 
   doc.setFillColor(...COLORS.goldLight)
   doc.setDrawColor(...COLORS.gold)
   doc.setLineWidth(0.4)
-  doc.roundedRect(MARGIN, y, CONTENT_WIDTH, cardHeight, 2, 2, 'FD')
+  doc.roundedRect(MARGIN, y, CONTENT_WIDTH, 16, 2, 2, 'FD')
 
-  let innerY = y + 8
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(13)
+  setFont(doc, 'bold', 13)
   setNavy(doc)
-  doc.text(pkg.name, MARGIN + 5, innerY)
-  innerY += 8
+  doc.text(safe(proposal.packageRecommendation.name), MARGIN + 5, y + 10)
 
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(9)
-  setGold(doc)
-  doc.text('Inclusions', MARGIN + 5, innerY)
-  innerY += 5
-
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
-  setNavy(doc)
-  pkg.inclusions.forEach((item) => {
-    doc.text(`• ${item}`, MARGIN + 7, innerY)
-    innerY += 5
-  })
-
-  innerY += 2
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(8)
-  setMuted(doc)
-  doc.text('Timeline', MARGIN + 5, innerY)
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
-  setNavy(doc)
-  doc.text(pkg.timeline, MARGIN + 5, innerY + 4.5)
-
-  return y + cardHeight + 8
+  return y + 24
 }
 
-function drawBudgetSection(doc: jsPDF, proposal: ProposalDocument, y: number): number {
+function drawPackageInclusions(doc: jsPDF, proposal: ProposalDocument, y: number): number {
+  y = drawSectionHeading(doc, 'Package Inclusions', y)
+  const inclusions = proposal.packageRecommendation.inclusions
+
+  if (inclusions.length === 0) {
+    setFont(doc, 'normal', 9)
+    setNavy(doc)
+    doc.text('N/A', MARGIN + 2, y + 2)
+    return y + 8
+  }
+
+  setFont(doc, 'normal', 9)
+  setNavy(doc)
+  inclusions.forEach((item) => {
+    y = ensureSpace(doc, y, 6)
+    doc.text(`• ${safe(item)}`, MARGIN + 2, y)
+    y += 5
+  })
+
+  return y + 4
+}
+
+function drawBudgetRange(doc: jsPDF, proposal: ProposalDocument, y: number): number {
   y = drawSectionHeading(doc, 'Budget Estimate', y)
+  y = drawSectionHeading(doc, 'Recommended Budget Range', y)
+
+  setFont(doc, 'bold', 12)
+  setNavy(doc)
+  doc.text(safe(proposal.budgetRange), MARGIN + 2, y)
+  return y + 10
+}
+
+function drawCostBreakdown(doc: jsPDF, proposal: ProposalDocument, y: number): number {
+  y = drawSectionHeading(doc, 'Estimated Cost Breakdown', y)
+
   const b = proposal.budgetEstimate
-  const cardHeight = 52
-  y = ensureSpace(doc, y, cardHeight + 10)
-  const cardTop = y
-  drawCardBackground(doc, cardTop, cardHeight)
+  const total = computeDisplayTotal(b) ?? b.total
 
-  const colW = CONTENT_WIDTH / 2 - 4
-  const leftX = MARGIN + 5
-  const rightX = MARGIN + CONTENT_WIDTH / 2 + 2
-  let innerY = cardTop + 5
+  const lines = [
+    ['Venue', formatINR(b.venue)],
+    ['Decor', formatINR(b.decor)],
+    ['Catering', formatINR(b.food)],
+    ['Entertainment', formatINR(b.entertainment)],
+    ['Contingency', formatINR(b.contingency)],
+  ]
 
-  innerY = drawKeyValue(doc, 'Recommended Budget Range', proposal.budgetRange, leftX, innerY, colW)
+  setFont(doc, 'normal', 10)
+  setNavy(doc)
 
-  const breakdown = [
-    `Venue: ${formatINR(b.venue)}`,
-    `Decor: ${formatINR(b.decor)}`,
-    `Catering: ${formatINR(b.food)}`,
-    `Entertainment: ${formatINR(b.entertainment)}`,
-    `Contingency: ${formatINR(b.contingency ?? 0)}`,
-    `Total: ${formatINR(b.total)}`,
-  ].join('\n')
+  lines.forEach(([label, amount]) => {
+    y = ensureSpace(doc, y, 6)
+    doc.text(`${label}:`, MARGIN + 2, y)
+    doc.text(safe(amount), MARGIN + 45, y)
+    y += 6
+  })
 
-  drawKeyValue(doc, 'Estimated Cost', breakdown, rightX, cardTop + 5, colW)
-  drawKeyValue(
-    doc,
-    'Event Planning Timeline',
-    proposal.timeline,
-    leftX,
-    cardTop + 30,
-    CONTENT_WIDTH - 10
-  )
+  y = ensureSpace(doc, y, 8)
+  setFont(doc, 'bold', 11)
+  doc.text('Total Event Cost:', MARGIN + 2, y)
+  doc.text(formatINR(total), MARGIN + 45, y)
 
-  return cardTop + cardHeight + 8
+  return y + 10
+}
+
+function drawTimelineSection(doc: jsPDF, proposal: ProposalDocument, y: number): number {
+  y = drawSectionHeading(doc, 'Event Timeline', y)
+
+  setFont(doc, 'bold', 12)
+  setNavy(doc)
+  doc.text(safe(proposal.timeline), MARGIN + 2, y)
+
+  return y + 10
 }
 
 function drawVenueTable(doc: jsPDF, proposal: ProposalDocument, y: number): number {
@@ -302,8 +309,12 @@ function drawVenueTable(doc: jsPDF, proposal: ProposalDocument, y: number): numb
 
   const rows =
     proposal.venueSuggestions.length > 0
-      ? proposal.venueSuggestions.map((v) => [v.name, v.location, v.startingCost])
-      : [['To be shortlisted with our team', proposal.clientDetails.city || 'TBD', 'On request']]
+      ? proposal.venueSuggestions.map((v) => [
+          safe(v.name),
+          safe(v.location),
+          safe(v.startingCost),
+        ])
+      : [['To be shortlisted with our team', safe(proposal.clientDetails.city), 'N/A']]
 
   autoTable(doc, {
     startY: y,
@@ -316,10 +327,12 @@ function drawVenueTable(doc: jsPDF, proposal: ProposalDocument, y: number): numb
       textColor: [...COLORS.white],
       fontStyle: 'bold',
       fontSize: 9,
+      font: FONT,
     },
     bodyStyles: {
       fontSize: 9,
       textColor: [...COLORS.navy],
+      font: FONT,
     },
     alternateRowStyles: {
       fillColor: [...COLORS.cardBg],
@@ -328,6 +341,7 @@ function drawVenueTable(doc: jsPDF, proposal: ProposalDocument, y: number): numb
       cellPadding: 3,
       lineColor: [...COLORS.cardBorder],
       lineWidth: 0.2,
+      font: FONT,
     },
   })
 
@@ -344,14 +358,13 @@ function drawBulletList(
   y = drawSectionHeading(doc, title, y) + 2
   y = ensureSpace(doc, y, items.length * 5 + 8)
 
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
+  setFont(doc, 'normal', 9)
   setNavy(doc)
 
   items.forEach((item, index) => {
     y = ensureSpace(doc, y, 6)
     const prefix = numbered ? `${index + 1}. ` : '• '
-    const lines = doc.splitTextToSize(prefix + item, CONTENT_WIDTH - 4)
+    const lines = doc.splitTextToSize(prefix + safe(item), CONTENT_WIDTH - 4)
     doc.text(lines, MARGIN + 2, y)
     y += lines.length * 4.5 + 1
   })
@@ -363,14 +376,12 @@ function drawContactFooter(doc: jsPDF, y: number): number {
   y = ensureSpace(doc, y, 55)
   y = drawDivider(doc, y)
 
-  doc.setFont('helvetica', 'bold')
-  doc.setFontSize(12)
+  setFont(doc, 'bold', 12)
   setNavy(doc)
   doc.text('AS Events', 105, y, { align: 'center' })
   y += 7
 
-  doc.setFont('helvetica', 'normal')
-  doc.setFontSize(9)
+  setFont(doc, 'normal', 9)
   setNavy(doc)
 
   const contactLines = [
@@ -392,7 +403,7 @@ function drawContactFooter(doc: jsPDF, y: number): number {
   doc.setDrawColor(...COLORS.gold)
   doc.setLineWidth(0.5)
   doc.rect(qrX, y, qrSize, qrSize)
-  doc.setFontSize(7)
+  setFont(doc, 'normal', 7)
   setMuted(doc)
   doc.text('WhatsApp QR', 105, y + qrSize / 2 - 1, { align: 'center' })
   doc.text('(Coming Soon)', 105, y + qrSize / 2 + 3, { align: 'center' })
@@ -400,19 +411,20 @@ function drawContactFooter(doc: jsPDF, y: number): number {
   return y + qrSize + 6
 }
 
-/**
- * Generates a luxury-branded PDF proposal from a ProposalDocument.
- * Client-side only — call from browser after user interaction.
- */
 export async function generateProposalPDF(proposal: ProposalDocument): Promise<Blob> {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-  const logoDataUrl = await loadImageDataUrl(LOGO_PATH)
+  await registerUnicodeFonts(doc)
+  setFont(doc, 'normal', 10)
+  setNavy(doc)
 
-  let y = drawHeader(doc, logoDataUrl, proposal)
+  let y = drawHeader(doc, proposal)
   y = drawClientSection(doc, proposal, y)
   y = drawEventSummary(doc, proposal, y)
-  y = drawPackageSection(doc, proposal, y)
-  y = drawBudgetSection(doc, proposal, y) + 4
+  y = drawRecommendedPackage(doc, proposal, y)
+  y = drawPackageInclusions(doc, proposal, y)
+  y = drawBudgetRange(doc, proposal, y)
+  y = drawCostBreakdown(doc, proposal, y)
+  y = drawTimelineSection(doc, proposal, y)
   y = drawVenueTable(doc, proposal, y) + 8
   y = drawBulletList(doc, 'Planning Tips', proposal.planningTips, y)
   y = drawBulletList(doc, 'Next Steps', proposal.nextSteps, y, true)

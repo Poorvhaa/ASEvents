@@ -9,7 +9,8 @@ import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { mainNavLinks, servicesDropdownItems } from '@/lib/nav-config'
 import { cn } from '@/lib/utils'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { parseHashHref, scrollToHash } from '@/lib/scroll-to-hash'
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -19,7 +20,35 @@ export function Navbar() {
   const dropdownRef = useRef<HTMLDivElement>(null)
   const { openModal } = useQuoteModal()
   const pathname = usePathname()
+  const router = useRouter()
   const isHomePage = pathname === '/'
+
+  const closeAllMenus = () => {
+    setIsServicesOpen(false)
+    setIsMobileMenuOpen(false)
+    setIsMobileServicesOpen(false)
+  }
+
+  const handleServiceLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    closeAllMenus()
+
+    const { path, hash } = parseHashHref(href)
+
+    if (pathname === path && hash) {
+      e.preventDefault()
+      window.history.pushState(null, '', href)
+      scrollToHash(hash)
+      return
+    }
+
+    if (hash) {
+      e.preventDefault()
+      router.push(href)
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -84,7 +113,6 @@ export function Navbar() {
             href="/"
             className="flex items-center shrink-0 transition-opacity duration-300 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
           >
-          <div className="container mx-auto px-5"></div>
           <Image
   src="/clean.png"
   alt="AS Events"
@@ -97,8 +125,8 @@ export function Navbar() {
     isHomePage
       ? (
           isScrolled
-  ? 'h-10'
-  : 'h-12 sm:h-14'
+  ? 'h-8'
+  : 'h-10 sm:h-12'
         )
       : 'h-10 lg:h-12'
   )}
@@ -146,7 +174,7 @@ export function Navbar() {
                       <Link
                         key={item.label}
                         href={item.href}
-                        onClick={() => setIsServicesOpen(false)}
+                        onClick={(e) => handleServiceLinkClick(e, item.href)}
                         className="block px-4 py-3 text-sm text-foreground hover:bg-slate-50 hover:text-primary transition-colors"
                       >
                         {item.label}
@@ -255,10 +283,7 @@ export function Navbar() {
           <Link
             key={item.label}
             href={item.href}
-            onClick={() => {
-              setIsMobileMenuOpen(false)
-              setIsMobileServicesOpen(false)
-            }}
+            onClick={(e) => handleServiceLinkClick(e, item.href)}
             className="block py-3 text-sm text-slate-600 hover:text-primary"
           >
             {item.label}

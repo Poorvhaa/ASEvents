@@ -23,8 +23,11 @@ export function parseBudgetMax(budget: string): number {
 }
 
 export function formatINR(amount: number): string {
+  if (!amount || Number.isNaN(amount)) return 'N/A'
   return `₹${amount.toLocaleString('en-IN')}`
 }
+
+export { parseINRString, formatINRRange, formatVenueStartingCost, formatTimeline } from '@/lib/currency/format-inr'
 
 export function answersSummary(answers: ConsultantAnswers): string {
   const parts = [

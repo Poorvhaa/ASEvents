@@ -65,7 +65,7 @@ export function ProposalPdfDocument({ doc }: ProposalPdfProps) {
         ))}
 
         <Text style={styles.footer}>
-          AS Events · sales@asevents.in · Vadodara, Gujarat
+          AS Events · as.eventmanagement2829@gmail.com · Vadodara, Gujarat
         </Text>
       </Page>
     </Document>

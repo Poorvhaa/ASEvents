@@ -14,7 +14,7 @@ export function Hero() {
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="https://i.pinimg.com/1200x/7d/41/90/7d4190744201d3773e563feff30d64cf.jpg"
+          src="/herobg.jpeg"
           alt="Luxury event celebration"
           fill
           priority
