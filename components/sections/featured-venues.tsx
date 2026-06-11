@@ -7,9 +7,11 @@ import { MapPin, ArrowRight, Star, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useFeaturedVenues } from '@/hooks/use-venues'
 import { Section, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function FeaturedVenues() {
   const { venues: featuredVenues, loading } = useFeaturedVenues()
+  const { t } = useTranslation()
 
   return (
     <Section className="bg-background">
@@ -22,9 +24,10 @@ export function FeaturedVenues() {
           className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-6"
         >
           <div className="text-center md:text-left">
-            <span className="text-eyebrow">Venues</span>
+            <span className="text-eyebrow">{t('featuredVenues.eyebrow')}</span>
             <h2 className="text-section-heading text-foreground mt-3 sm:mt-4">
-              Featured <span className="text-gold-gradient">Venues</span>
+              {t('featuredVenues.headingPart1')}{' '}
+              <span className="text-gold-gradient">{t('featuredVenues.headingPart2')}</span>
             </h2>
           </div>
           <Button
@@ -33,7 +36,7 @@ export function FeaturedVenues() {
             className="min-h-11 border-primary/50 text-foreground hover:bg-primary/10 gap-2 w-full sm:w-fit mx-auto md:mx-0"
           >
             <Link href="/venues">
-              View All Venues
+              {t('featuredVenues.viewAll')}
               <ArrowRight size={18} />
             </Link>
           </Button>

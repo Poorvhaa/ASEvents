@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { PageHero, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function PortfolioHero() {
+  const { t } = useTranslation()
+
   return (
     <PageHero>
       <div className="absolute inset-0 opacity-5 pointer-events-none overflow-hidden">
@@ -18,13 +21,13 @@ export function PortfolioHero() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="text-eyebrow">Portfolio</span>
+          <span className="text-eyebrow">{t('portfolioPage.hero.eyebrow')}</span>
           <h1 className="text-hero text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
-            Our <span className="text-gold-gradient">Work</span>
+            {t('portfolioPage.hero.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('portfolioPage.hero.titlePart2')}</span>
           </h1>
           <p className="text-body text-muted-foreground">
-            Browse our portfolio of extraordinary events and stunning gallery photography.
-            Each project represents our commitment to excellence and attention to detail.
+            {t('portfolioPage.hero.description')}
           </p>
         </motion.div>
       </SectionContainer>

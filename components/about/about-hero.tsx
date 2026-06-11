@@ -1,8 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function AboutHero() {
+  const { t } = useTranslation()
+
   return (
     <section className="relative pt-32 pb-20 bg-gradient-to-b from-slate-50 to-white overflow-hidden">
       {/* Background Pattern */}
@@ -18,13 +21,16 @@ export function AboutHero() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">About Us</span>
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">
+            {t('about.hero.eyebrow')}
+          </span>
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
-            Crafting <span className="text-gold-gradient">Unforgettable</span> Experiences
+            {t('about.hero.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('about.hero.titlePart2')}</span>{' '}
+            {t('about.hero.titlePart3')}
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-            For over a decade, AS Events has been transforming dreams into reality, 
-            creating luxury experiences that leave lasting impressions.
+            {t('about.hero.description')}
           </p>
         </motion.div>
       </div>

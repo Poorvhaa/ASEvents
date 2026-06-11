@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const partners = [
   { name: 'Four Seasons', logo: 'Four Seasons' },
@@ -12,6 +13,8 @@ const partners = [
 ]
 
 export function Partners() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -23,13 +26,13 @@ export function Partners() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">Partners</span>
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">{t('about.partners.eyebrow')}</span>
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
-            Trusted <span className="text-gold-gradient">Partners</span>
+            {t('about.partners.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('about.partners.titlePart2')}</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            We collaborate with the world&apos;s finest venues and service providers to deliver 
-            exceptional experiences.
+            {t('about.partners.description')}
           </p>
         </motion.div>
 

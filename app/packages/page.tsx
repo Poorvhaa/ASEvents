@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { PackagesHero } from '@/components/packages/packages-hero'
 import { PackagesGrid } from '@/components/packages/packages-grid'
 //import { CustomPackageBuilder } from '@/components/packages/custom-package-builder'
@@ -28,7 +29,9 @@ export default function PackagesPage() {
   return (
     <>
       <PackagesHero />
-      <PackagesGrid />
+      <Suspense fallback={<div className="py-24 text-center text-muted-foreground">Loading packages...</div>}>
+        <PackagesGrid />
+      </Suspense>
       <CTASection />
     </>
   )

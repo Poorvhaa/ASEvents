@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { Target, Eye } from 'lucide-react'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function MissionVision() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-24 bg-slate-50">
       <div className="container mx-auto px-4 lg:px-8">
@@ -19,12 +22,9 @@ export function MissionVision() {
             <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
               <Target className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-foreground mb-4">Our Mission</h3>
+            <h3 className="text-2xl font-serif font-bold text-foreground mb-4">{t('about.mission.title')}</h3>
             <p className="text-muted-foreground leading-relaxed">
-              To create extraordinary events that exceed expectations and leave lasting impressions. 
-              We are committed to delivering personalized, luxury experiences with impeccable attention 
-              to detail, innovative concepts, and flawless execution. Every celebration we touch becomes 
-              a masterpiece of memories.
+              {t('about.mission.desc')}
             </p>
           </motion.div>
 
@@ -39,12 +39,9 @@ export function MissionVision() {
             <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
               <Eye className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-foreground mb-4">Our Vision</h3>
+            <h3 className="text-2xl font-serif font-bold text-foreground mb-4">{t('about.vision.title')}</h3>
             <p className="text-muted-foreground leading-relaxed">
-              To be the world&apos;s most trusted and innovative event management company, setting new 
-              standards for luxury celebrations. We envision a future where every event we create 
-              inspires joy, connects people, and transforms moments into timeless memories that 
-              transcend generations.
+              {t('about.vision.desc')}
             </p>
           </motion.div>
         </div>
@@ -57,7 +54,7 @@ export function MissionVision() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <h3 className="text-2xl font-serif font-bold text-foreground mb-8">Our Core Values</h3>
+          <h3 className="text-2xl font-serif font-bold text-foreground mb-8">{t('about.values.title')}</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {['Excellence', 'Creativity', 'Integrity', 'Passion', 'Innovation'].map((value, index) => (
               <motion.span
@@ -68,7 +65,7 @@ export function MissionVision() {
                 viewport={{ once: true }}
                 className="px-6 py-3 rounded-full border border-primary/30 text-foreground hover:bg-primary/10 transition-colors"
               >
-                {value}
+                {t(`about.values.items.${value}`)}
               </motion.span>
             ))}
           </div>

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { venueCities } from '@/lib/data/venues'
 import { Section, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const eventTypes = [
   'Wedding',
@@ -38,6 +39,7 @@ const selectClass =
 
 export function CustomPackageBuilder() {
   const { openModal } = useQuoteModal()
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     eventType: '',
     guestCount: '',
@@ -68,13 +70,13 @@ export function CustomPackageBuilder() {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-8 sm:mb-12"
         >
-          <span className="text-eyebrow">Custom</span>
+          <span className="text-eyebrow">{t('packagesPage.builder.eyebrow')}</span>
           <h2 className="text-section-heading text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
-            Build Your Own <span className="text-gold-gradient">Package</span>
+            {t('packagesPage.builder.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('packagesPage.builder.titlePart2')}</span>
           </h2>
           <p className="text-body text-muted-foreground">
-            Tell us about your celebration and we&apos;ll craft a bespoke package
-            perfectly suited to your needs and budget.
+            {t('packagesPage.builder.description')}
           </p>
         </motion.div>
 
@@ -89,7 +91,7 @@ export function CustomPackageBuilder() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div className="min-w-0">
               <label htmlFor="eventType" className="block text-sm font-medium text-foreground mb-2">
-                Event Type
+                {t('packagesPage.builder.eventType')}
               </label>
               <select
                 id="eventType"
@@ -98,16 +100,18 @@ export function CustomPackageBuilder() {
                 className={selectClass}
                 required
               >
-                <option value="">Select event type</option>
+                <option value="">{t('packagesPage.builder.selectEventType')}</option>
                 {eventTypes.map((type) => (
-                  <option key={type} value={type}>{type}</option>
+                  <option key={type} value={type}>
+                    {t(`packagesPage.builder.types.${type}`) || type}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="min-w-0">
               <label htmlFor="guestCount" className="block text-sm font-medium text-foreground mb-2">
-                Guest Count
+                {t('packagesPage.builder.guestCount')}
               </label>
               <select
                 id="guestCount"
@@ -116,16 +120,18 @@ export function CustomPackageBuilder() {
                 className={selectClass}
                 required
               >
-                <option value="">Select guest count</option>
+                <option value="">{t('packagesPage.builder.selectGuestCount')}</option>
                 {guestCounts.map((count) => (
-                  <option key={count} value={count}>{count}</option>
+                  <option key={count} value={count}>
+                    {t(`packagesPage.builder.counts.${count}`) || count}
+                  </option>
                 ))}
               </select>
             </div>
 
             <div className="min-w-0">
               <label htmlFor="location" className="block text-sm font-medium text-foreground mb-2">
-                Location
+                {t('packagesPage.builder.location')}
               </label>
               <select
                 id="location"
@@ -134,7 +140,7 @@ export function CustomPackageBuilder() {
                 className={selectClass}
                 required
               >
-                <option value="">Select location</option>
+                <option value="">{t('packagesPage.builder.selectLocation')}</option>
                 {venueCities.map((city) => (
                   <option key={city} value={city}>{city}</option>
                 ))}
@@ -143,7 +149,7 @@ export function CustomPackageBuilder() {
 
             <div className="min-w-0">
               <label htmlFor="budgetRange" className="block text-sm font-medium text-foreground mb-2">
-                Budget Range
+                {t('packagesPage.builder.budgetRange')}
               </label>
               <select
                 id="budgetRange"
@@ -152,9 +158,11 @@ export function CustomPackageBuilder() {
                 className={selectClass}
                 required
               >
-                <option value="">Select budget range</option>
+                <option value="">{t('packagesPage.builder.selectBudget')}</option>
                 {budgetRanges.map((range) => (
-                  <option key={range} value={range}>{range}</option>
+                  <option key={range} value={range}>
+                    {t(`packagesPage.builder.ranges.${range}`) || range}
+                  </option>
                 ))}
               </select>
             </div>
@@ -165,7 +173,7 @@ export function CustomPackageBuilder() {
             size="lg"
             className="min-h-11 w-full mt-6 sm:mt-8 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold text-base sm:text-lg"
           >
-            Generate Recommendation
+            {t('packagesPage.builder.button')}
           </Button>
         </motion.form>
       </SectionContainer>

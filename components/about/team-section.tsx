@@ -3,35 +3,38 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Linkedin, Twitter } from 'lucide-react'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const team = [
   {
     name: 'Apurva Shah',
-    role: 'Founder & CEO',
+    roleKey: 'about.team.members.apurva.role',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
-    bio: 'With 15+ years in luxury events, Victoria leads our vision for exceptional experiences.',
+    bioKey: 'about.team.members.apurva.bio',
   },
   {
     name: 'Rahul Patel',
-    role: 'Creative Director',
+    roleKey: 'about.team.members.rahul.role',
     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop',
-    bio: 'Rahul brings innovative design concepts that transform ordinary spaces into extraordinary venues.',
+    bioKey: 'about.team.members.rahul.bio',
   },
   {
     name: 'Riya Modi',
-    role: 'Head of Operations',
+    roleKey: 'about.team.members.riya.role',
     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop',
-    bio: 'Riya ensures flawless execution with her meticulous attention to detail and logistics expertise.',
+    bioKey: 'about.team.members.riya.bio',
   },
   {
     name: 'Ajay Aggrawal',
-    role: 'Client Relations Director',
+    roleKey: 'about.team.members.ajay.role',
     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop',
-    bio: 'Ajay builds lasting relationships with clients, ensuring their visions are perfectly realized.',
+    bioKey: 'about.team.members.ajay.bio',
   },
 ]
 
 export function TeamSection() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -43,13 +46,13 @@ export function TeamSection() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">Our Team</span>
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">{t('about.team.eyebrow')}</span>
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
-            Meet the <span className="text-gold-gradient">Experts</span>
+            {t('about.team.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('about.team.titlePart2')}</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Our talented team brings together decades of experience in event planning, 
-            design, and hospitality.
+            {t('about.team.description')}
           </p>
         </motion.div>
 
@@ -92,8 +95,8 @@ export function TeamSection() {
                 </div>
               </div>
               <h3 className="text-xl font-semibold text-foreground">{member.name}</h3>
-              <p className="text-primary text-sm font-medium mt-1">{member.role}</p>
-              <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{member.bio}</p>
+              <p className="text-primary text-sm font-medium mt-1">{t(member.roleKey)}</p>
+              <p className="text-muted-foreground text-sm mt-2 leading-relaxed">{t(member.bioKey)}</p>
             </motion.div>
           ))}
         </div>

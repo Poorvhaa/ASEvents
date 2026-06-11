@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function CompanyStory() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
@@ -35,23 +38,20 @@ export function CompanyStory() {
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <span className="text-primary font-medium tracking-widest uppercase text-sm">Our Story</span>
+            <span className="text-primary font-medium tracking-widest uppercase text-sm">{t('about.story.eyebrow')}</span>
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
-              A Legacy of <span className="text-gold-gradient">Excellence</span>
+              {t('about.story.titlePart1')}{' '}
+              <span className="text-gold-gradient">{t('about.story.titlePart2')}</span>
             </h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                Founded in 2014, AS Events began with a simple vision: to revolutionize the event 
-                planning industry by combining creativity, precision, and unparalleled service.
+                {t('about.story.paragraph1')}
               </p>
               <p>
-                What started as a small team of passionate event enthusiasts has grown into one of 
-                the most sought-after luxury event management companies.
+                {t('about.story.paragraph2')}
               </p>
               <p>
-                Our journey has been defined by our commitment to exceeding expectations. Every event 
-                we create is a testament to our dedication to perfection and our clients&apos; unique 
-                visions.
+                {t('about.story.paragraph3')}
               </p>
             </div>
           </motion.div>

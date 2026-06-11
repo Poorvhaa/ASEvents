@@ -13,6 +13,7 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { Section, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const services = [
   {
@@ -66,6 +67,8 @@ const services = [
 ]
 
 export function Services() {
+  const { t } = useTranslation()
+
   return (
     <Section className="bg-background">
       <SectionContainer>
@@ -76,20 +79,20 @@ export function Services() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
         >
-          <span className="text-eyebrow">What We Offer</span>
+          <span className="text-eyebrow">{t('services.eyebrow')}</span>
           <h2 className="text-section-heading text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
-            Our Premium <span className="text-gold-gradient">Services</span>
+            {t('services.headingPart1')}{' '}
+            <span className="text-gold-gradient">{t('services.headingPart2')}</span>
           </h2>
           <p className="text-body text-muted-foreground">
-            From intimate gatherings to grand celebrations, we bring your vision to life
-            with creativity, precision, and an unwavering commitment to excellence.
+            {t('services.description')}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {services.map((service, index) => (
             <motion.div
-              key={service.title}
+              key={service.slug}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.05 }}
@@ -102,10 +105,10 @@ export function Services() {
                     <service.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                   </div>
                   <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors">
-                    {service.title}
+                    {t(`services.${service.slug}.title`)}
                   </h3>
                   <p className="text-small text-slate-600 leading-relaxed flex-1">
-                    {service.description}
+                    {t(`services.${service.slug}.desc`)}
                   </p>
                 </div>
               </Link>

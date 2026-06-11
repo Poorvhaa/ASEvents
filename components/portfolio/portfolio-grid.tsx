@@ -14,8 +14,10 @@ import {
   type GalleryImage,
 } from '@/lib/data/portfolio'
 import { Section, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function PortfolioGrid() {
+  const { t } = useTranslation()
   const searchParams = useSearchParams()
   const [activeTab, setActiveTab] = useState<'events' | 'gallery'>('events')
   const [activeCategory, setActiveCategory] = useState('All')
@@ -59,7 +61,7 @@ export function PortfolioGrid() {
               }`}
             >
               <LayoutGrid size={18} />
-              Events
+              {t('portfolioPage.grid.events')}
             </button>
             <button
               onClick={() => setActiveTab('gallery')}
@@ -70,7 +72,7 @@ export function PortfolioGrid() {
               }`}
             >
               <Images size={18} />
-              Gallery
+              {t('portfolioPage.grid.gallery')}
             </button>
           </div>
         </div>
@@ -87,7 +89,7 @@ export function PortfolioGrid() {
                     : 'bg-white border border-slate-200 text-foreground hover:border-primary/50'
                 }`}
               >
-                {category}
+                {t(`portfolioPage.categories.${category}`) || category}
               </button>
             ))}
           </div>
@@ -97,7 +99,7 @@ export function PortfolioGrid() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
               <input
                 type="search"
-                placeholder="Search events..."
+                placeholder={t('portfolioPage.grid.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full min-h-11 pl-12 pr-4 py-2.5 rounded-full bg-white border border-slate-200 text-foreground text-sm sm:text-base placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
@@ -130,7 +132,9 @@ export function PortfolioGrid() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   </div>
-                  <span className="text-primary text-xs sm:text-sm font-medium">{item.category}</span>
+                  <span className="text-primary text-xs sm:text-sm font-medium">
+                    {t(`portfolioPage.categories.${item.category}`) || item.category}
+                  </span>
                   <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 group-hover:text-primary transition-colors line-clamp-2">
                     {item.title}
                   </h3>
@@ -169,7 +173,9 @@ export function PortfolioGrid() {
                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 sm:p-4">
-                    <span className="text-white text-xs sm:text-sm font-medium">{image.category}</span>
+                    <span className="text-white text-xs sm:text-sm font-medium">
+                      {t(`portfolioPage.categories.${image.category}`) || image.category}
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -179,13 +185,13 @@ export function PortfolioGrid() {
 
         {activeTab === 'events' && filteredItems.length === 0 && (
           <div className="text-center py-12 sm:py-16">
-            <p className="text-muted-foreground">No events found matching your criteria.</p>
+            <p className="text-muted-foreground">{t('portfolioPage.grid.noEvents')}</p>
           </div>
         )}
 
         {activeTab === 'gallery' && filteredGallery.length === 0 && (
           <div className="text-center py-12 sm:py-16">
-            <p className="text-muted-foreground">No gallery images found in this category.</p>
+            <p className="text-muted-foreground">{t('portfolioPage.grid.noImages')}</p>
           </div>
         )}
 
@@ -215,14 +221,16 @@ export function PortfolioGrid() {
                   />
                   <button
                     onClick={() => setSelectedEvent(null)}
-                    className="absolute top-3 right-3 sm:top-4 sm:right-4 touch-target w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-foreground hover:bg-white transition-colors"
-                    aria-label="Close modal"
+                    className="touch-target w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-foreground hover:bg-white transition-colors"
+                    aria-label={t('quoteModal.close')}
                   >
                     <X size={20} />
                   </button>
                 </div>
                 <div className="p-5 sm:p-8">
-                  <span className="text-primary text-sm font-medium">{selectedEvent.category}</span>
+                  <span className="text-primary text-sm font-medium">
+                    {t(`portfolioPage.categories.${selectedEvent.category}`) || selectedEvent.category}
+                  </span>
                   <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground mt-2 mb-4">
                     {selectedEvent.title}
                   </h2>
@@ -237,11 +245,11 @@ export function PortfolioGrid() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Users size={18} className="text-primary shrink-0" />
-                      <span>{selectedEvent.guests} Guests</span>
+                      <span>{selectedEvent.guests} {t('portfolioPage.grid.guestsLabel')}</span>
                     </div>
                   </div>
                   <p className="text-body text-muted-foreground mb-6 sm:mb-8">{selectedEvent.description}</p>
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4">Event Gallery</h3>
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4">{t('portfolioPage.grid.eventGallery')}</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                     {selectedEvent.gallery.map((img, i) => (
                       <div key={i} className="relative aspect-square rounded-lg overflow-hidden">
@@ -273,7 +281,7 @@ export function PortfolioGrid() {
               <button
                 className="absolute top-4 right-4 sm:top-6 sm:right-6 touch-target text-white hover:text-primary transition-colors z-10"
                 onClick={() => setSelectedImage(null)}
-                aria-label="Close lightbox"
+                aria-label={t('portfolioPage.grid.closeLightbox')}
               >
                 <X size={28} />
               </button>

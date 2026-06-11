@@ -4,13 +4,41 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { Menu, X, ChevronDown, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { mainNavLinks, servicesDropdownItems } from '@/lib/nav-config'
 import { cn } from '@/lib/utils'
 import { usePathname, useRouter } from 'next/navigation'
 import { parseHashHref, scrollToHash } from '@/lib/scroll-to-hash'
+import { useTranslation } from '@/src/hooks/useTranslation'
+import { Language } from '@/src/context/LanguageContext'
+
+const getNavLinkTranslationKey = (label: string): string => {
+  switch (label.toLowerCase()) {
+    case 'home': return 'nav.home'
+    case 'about': return 'nav.about'
+    case 'packages': return 'nav.packages'
+    case 'venues': return 'nav.venues'
+    case 'portfolio': return 'nav.portfolio'
+    case 'contact': return 'nav.contact'
+    default: return `nav.${label.toLowerCase()}`
+  }
+}
+
+const getServiceTranslationKey = (label: string): string => {
+  switch (label) {
+    case 'Wedding Planning': return 'nav.dropdown.wedding'
+    case 'Destination Weddings': return 'nav.dropdown.destination'
+    case 'Corporate Events': return 'nav.dropdown.corporate'
+    case 'Product Launches': return 'nav.dropdown.products'
+    case 'Exhibitions': return 'nav.dropdown.exhibitions'
+    case 'Birthday Celebrations': return 'nav.dropdown.birthdays'
+    case 'Anniversary Events': return 'nav.dropdown.anniversaries'
+    case 'Entertainment Management': return 'nav.dropdown.entertainment'
+    default: return 'nav.services'
+  }
+}
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -18,6 +46,11 @@ export function Navbar() {
   const [isServicesOpen, setIsServicesOpen] = useState(false)
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+  
+  const { t, language, setLanguage } = useTranslation()
+  const [isLangOpen, setIsLangOpen] = useState(false)
+  const langRef = useRef<HTMLDivElement>(null)
+
   const { openModal } = useQuoteModal()
   const pathname = usePathname()
   const router = useRouter()
@@ -60,6 +93,16 @@ export function Navbar() {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsServicesOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setIsLangOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -136,30 +179,30 @@ export function Navbar() {
           {/* Desktop Navigation — centered */}
           <div className="hidden lg:flex items-center justify-center gap-5 xl:gap-8 min-w-0">
             <Link href="/" className={linkClass}>
-  Home
-  <span className={underlineClass} />
-</Link>
+              {t('nav.home')}
+              <span className={underlineClass} />
+            </Link>
 
-<Link href="/about" className={linkClass}>
-  About
-  <span className={underlineClass} />
-</Link>
+            <Link href="/about" className={linkClass}>
+              {t('nav.about')}
+              <span className={underlineClass} />
+            </Link>
 
-<div className="relative" ref={dropdownRef}>
-  <button
-    onClick={() => setIsServicesOpen(!isServicesOpen)}
-    className={cn(linkClass, 'flex items-center gap-1 touch-target')}
-  >
-    Services
-    <ChevronDown
-      size={14}
-      className={cn(
-        'transition-transform duration-200',
-        isServicesOpen && 'rotate-180'
-      )}
-    />
-    <span className={underlineClass} />
-  </button>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+                className={cn(linkClass, 'flex items-center gap-1 touch-target')}
+              >
+                {t('nav.services')}
+                <ChevronDown
+                  size={14}
+                  className={cn(
+                    'transition-transform duration-200',
+                    isServicesOpen && 'rotate-180'
+                  )}
+                />
+                <span className={underlineClass} />
+              </button>
 
               <AnimatePresence>
                 {isServicesOpen && (
@@ -177,7 +220,7 @@ export function Navbar() {
                         onClick={(e) => handleServiceLinkClick(e, item.href)}
                         className="block px-4 py-3 text-sm text-foreground hover:bg-slate-50 hover:text-primary transition-colors"
                       >
-                        {item.label}
+                        {t(getServiceTranslationKey(item.label))}
                       </Link>
                     ))}
                   </motion.div>
@@ -187,20 +230,70 @@ export function Navbar() {
 
             {mainNavLinks.slice(2).map((link) => (
               <Link key={link.href} href={link.href} className={linkClass}>
-                {link.label}
+                {t(getNavLinkTranslationKey(link.label))}
                 <span className={underlineClass} />
               </Link>
             ))}
           </div>
 
-          {/* CTA + Mobile Toggle */}
+          {/* CTA + Language Selector + Mobile Toggle */}
           <div className="flex items-center justify-end gap-2 sm:gap-3">
+            {/* Language Switcher Dropdown (Desktop) */}
+            <div className="hidden lg:block relative" ref={langRef}>
+              <button
+                onClick={() => setIsLangOpen(!isLangOpen)}
+                className={cn(
+                  'flex items-center gap-1.5 touch-target px-3 py-2 rounded-lg border border-transparent transition-all font-semibold text-sm',
+                  isHomePage && !isScrolled
+                    ? 'text-white hover:bg-white/10'
+                    : 'text-slate-700 hover:bg-slate-100'
+                )}
+                aria-label="Select Language"
+              >
+                <Globe size={16} />
+                <span className="uppercase">{language}</span>
+                <ChevronDown size={12} className={cn('transition-transform duration-200', isLangOpen && 'rotate-180')} />
+              </button>
+
+              <AnimatePresence>
+                {isLangOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute right-0 mt-2 w-36 py-1 bg-white rounded-xl shadow-lg border border-slate-200 z-[60]"
+                  >
+                    {[
+                      { code: 'en', label: 'English' },
+                      { code: 'hi', label: 'हिन्दी' },
+                      { code: 'gu', label: 'ગુજરાતી' },
+                    ].map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => {
+                          setLanguage(lang.code as Language)
+                          setIsLangOpen(false)
+                        }}
+                        className={cn(
+                          'w-full text-left px-4 py-2.5 text-sm transition-colors hover:bg-slate-50',
+                          language === lang.code ? 'text-primary font-semibold' : 'text-slate-700'
+                        )}
+                      >
+                        {lang.label}
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <div className="hidden lg:block">
               <Button
                 onClick={openModal}
                 className="min-h-11 bg-blue-600 hover:bg-blue-700 text-white shadow-md hover:shadow-lg transition-all duration-300 font-semibold px-5 xl:px-6 rounded-xl"
               >
-                Get Free Quote
+                {t('nav.getQuote')}
               </Button>
             </div>
 
@@ -239,70 +332,95 @@ export function Navbar() {
               className="fixed inset-y-0 right-0 top-[70px] w-[85%] max-w-[320px] bg-white border-l border-slate-200 shadow-2xl lg:hidden z-50 overflow-y-auto"
             >
               <div className="flex flex-col p-6 gap-1 min-h-full">
+                {/* Language Selector (Mobile Drawer) */}
+                <div className="py-4 border-b border-slate-100 flex flex-col gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                    <Globe size={14} /> Language / भाषा / ભાષા
+                  </span>
+                  <div className="grid grid-cols-3 gap-2 mt-1">
+                    {[
+                      { code: 'en', label: 'English' },
+                      { code: 'hi', label: 'हिन्दी' },
+                      { code: 'gu', label: 'ગુજરાતી' },
+                    ].map((lang) => (
+                      <button
+                        key={lang.code}
+                        onClick={() => setLanguage(lang.code as Language)}
+                        className={cn(
+                          'py-2 px-1 text-center text-xs font-semibold rounded-lg border transition-all',
+                          language === lang.code
+                            ? 'bg-blue-50 border-primary text-primary shadow-sm'
+                            : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100'
+                        )}
+                      >
+                        {lang.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-  <Link
-    href="/"
-    onClick={() => setIsMobileMenuOpen(false)}
-    className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
-  >
-    Home
-  </Link>
+                <Link
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
+                >
+                  {t('nav.home')}
+                </Link>
 
-  <Link
-    href="/about"
-    onClick={() => setIsMobileMenuOpen(false)}
-    className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
-  >
-    About
-  </Link>
+                <Link
+                  href="/about"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
+                >
+                  {t('nav.about')}
+                </Link>
 
-  <button
-    onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
-    className="flex items-center justify-between text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100 w-full text-left"
-  >
-    Services
+                <button
+                  onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                  className="flex items-center justify-between text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100 w-full text-left"
+                >
+                  {t('nav.services')}
+                  <ChevronDown
+                    size={18}
+                    className={cn(
+                      'transition-transform',
+                      isMobileServicesOpen && 'rotate-180'
+                    )}
+                  />
+                </button>
 
-    <ChevronDown
-      size={18}
-      className={cn(
-        'transition-transform',
-        isMobileServicesOpen && 'rotate-180'
-      )}
-    />
-  </button>
+                <AnimatePresence>
+                  {isMobileServicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="pl-4 overflow-hidden"
+                    >
+                      {servicesDropdownItems.map((item) => (
+                        <Link
+                          key={item.label}
+                          href={item.href}
+                          onClick={(e) => handleServiceLinkClick(e, item.href)}
+                          className="block py-3 text-sm text-slate-600 hover:text-primary"
+                        >
+                          {t(getServiceTranslationKey(item.label))}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
-  <AnimatePresence>
-    {isMobileServicesOpen && (
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={{ opacity: 1, height: 'auto' }}
-        exit={{ opacity: 0, height: 0 }}
-        className="pl-4 overflow-hidden"
-      >
-        {servicesDropdownItems.map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            onClick={(e) => handleServiceLinkClick(e, item.href)}
-            className="block py-3 text-sm text-slate-600 hover:text-primary"
-          >
-            {item.label}
-          </Link>
-        ))}
-      </motion.div>
-    )}
-  </AnimatePresence>
-
-  {mainNavLinks.slice(2).map((link) => (
-    <Link
-      key={link.href}
-      href={link.href}
-      onClick={() => setIsMobileMenuOpen(false)}
-      className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
-    >
-      {link.label}
-    </Link>
-  ))}
+                {mainNavLinks.slice(2).map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="text-base font-semibold text-foreground hover:text-primary py-4 border-b border-slate-100"
+                  >
+                    {t(getNavLinkTranslationKey(link.label))}
+                  </Link>
+                ))}
 
                 <Button
                   onClick={() => {
@@ -311,7 +429,7 @@ export function Navbar() {
                   }}
                   className="min-h-11 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl mt-6 w-full"
                 >
-                  Get Free Quote
+                  {t('nav.getQuote')}
                 </Button>
               </div>
             </motion.div>

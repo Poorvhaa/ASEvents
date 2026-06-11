@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { VenueAvailability } from '@/components/venues/venue-availability'
 import type { Venue } from '@/lib/types/venues'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 interface VenueInquiryFormProps {
   venue: Venue
 }
 
 export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
+  const { t } = useTranslation()
   const maxGuests = parseInt(venue.capacity.replace(/\D/g, ''), 10) || 0
   const [guestError, setGuestError] = useState('')
   const [dateAvailable, setDateAvailable] = useState(true)
@@ -63,19 +65,22 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
   if (submitted) {
     return (
       <div className="rounded-xl border border-green-200 bg-green-50 p-6 text-center">
-        <p className="text-green-800 font-medium">Booking request submitted!</p>
+        <p className="text-green-800 font-medium">{t('venuesPage.inquiry.submitted')}</p>
         <p className="text-sm text-green-700 mt-2">
-          We&apos;ll contact you shortly.
+          {t('venuesPage.inquiry.contactShort')}
         </p>
       </div>
     )
   }
 
+  const localizedGuestsLabel = t('portfolioPage.grid.guestsLabel')
+  const localizedCapacity = venue.capacity.replace(' Guests', ' ' + localizedGuestsLabel)
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">
-          Full Name
+          {t('venuesPage.inquiry.fullName')}
         </label>
         <input
           id="name"
@@ -84,13 +89,13 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
-          placeholder="Your name"
+          placeholder={t('venuesPage.inquiry.namePlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1.5">
-          Email
+          {t('venuesPage.inquiry.email')}
         </label>
         <input
           id="email"
@@ -99,13 +104,13 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
-          placeholder="your@email.com"
+          placeholder={t('venuesPage.inquiry.emailPlaceholder')}
         />
       </div>
 
       <div>
         <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-1.5">
-          Phone
+          {t('venuesPage.inquiry.phone')}
         </label>
         <input
           id="phone"
@@ -114,14 +119,14 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
-          placeholder="+91 95103 24143"
+          placeholder={t('venuesPage.inquiry.phonePlaceholder')}
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label htmlFor="eventDate" className="block text-sm font-medium text-foreground mb-1.5">
-            Event Date
+            {t('venuesPage.inquiry.eventDate')}
           </label>
           <input
             id="eventDate"
@@ -140,7 +145,7 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
         </div>
         <div>
           <label htmlFor="guests" className="block text-sm font-medium text-foreground mb-1.5">
-            Guests
+            {t('venuesPage.inquiry.guests')}
           </label>
           <input
             id="guests"
@@ -154,7 +159,7 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
               const guestCount = parseInt(value, 10)
               if (!Number.isNaN(guestCount) && guestCount > maxGuests) {
                 setGuestError(
-                  `Guest count exceeds venue capacity. Maximum Capacity: ${venue.capacity}`
+                  `${t('venuesPage.inquiry.errorCapacity')} ${localizedCapacity}`
                 )
               } else {
                 setGuestError('')
@@ -165,11 +170,11 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
                 ? 'border-2 border-red-500 bg-red-50/30'
                 : 'border border-slate-200 focus:border-primary'
             }`}
-            placeholder={`Maximum ${venue.capacity}`}
+            placeholder={`${t('venuesPage.inquiry.guestsMax')} ${localizedCapacity}`}
           />
           {guestError && (
             <div className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5">
-              <p className="text-sm text-red-700 font-medium">⚠ Guest count exceeds venue capacity.</p>
+              <p className="text-sm text-red-700 font-medium">{t('venuesPage.inquiry.errorCapacityShort')}</p>
             </div>
           )}
         </div>
@@ -177,7 +182,7 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
 
       <div>
         <label htmlFor="message" className="block text-sm font-medium text-foreground mb-1.5">
-          Message
+          {t('venuesPage.inquiry.message')}
         </label>
         <textarea
           id="message"
@@ -185,7 +190,7 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none resize-none"
-          placeholder={`I'm interested in booking ${venue.name}...`}
+          placeholder={`${t('venuesPage.inquiry.messagePlaceholder')} ${venue.name}...`}
         />
       </div>
 
@@ -197,7 +202,7 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
         size="lg"
         className="w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold disabled:opacity-50"
       >
-        {isSubmitting ? 'Submitting…' : 'Request Booking'}
+        {isSubmitting ? t('venuesPage.inquiry.submitting') : t('venuesPage.inquiry.requestButton')}
       </Button>
     </form>
   )

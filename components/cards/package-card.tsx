@@ -7,10 +7,19 @@ import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { useAIConsultant } from '@/hooks/use-ai-consultant'
 import type { EventPackage } from '@/lib/types/packages'
 import type { EventType } from '@/lib/ai/types'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 interface PackageCardProps {
   pkg: EventPackage
   index?: number
+}
+
+const categoryNames: Record<string, string> = {
+  wedding: 'Weddings',
+  corporate: 'Corporate',
+  social: 'Social Events',
+  exhibition: 'Exhibitions',
+  entertainment: 'Entertainment',
 }
 
 function mapPackageToEventType(title: string, category: EventPackage['category']): EventType | '' {
@@ -39,6 +48,7 @@ function mapPackageToEventType(title: string, category: EventPackage['category']
 export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
   const { openModal } = useQuoteModal()
   const { openChatWithPackage } = useAIConsultant()
+  const { t } = useTranslation()
 
   const handleAIPlanner = () => {
     openChatWithPackage({
@@ -64,13 +74,13 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10">
           <span className="inline-flex items-center gap-1.5 px-3 sm:px-4 py-1 rounded-full bg-primary text-primary-foreground text-[10px] sm:text-xs font-semibold uppercase tracking-wider whitespace-nowrap">
             <Sparkles size={12} />
-            Most Popular
+            {t('packagesPreview.popular')}
           </span>
         </div>
       )}
 
       <span className="text-primary text-xs sm:text-sm font-medium capitalize">
-        {pkg.category === 'wedding' ? 'Weddings' : pkg.category}
+        {t(`packagesPage.categories.${categoryNames[pkg.category] || pkg.category}`) || pkg.category}
       </span>
       <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">{pkg.title}</h3>
 
@@ -79,7 +89,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
         <span className="inline-flex items-center gap-1">
           <Users size={14} className="text-primary" />
-          {pkg.suitableGuests} guests
+          {pkg.suitableGuests} {t('packagesPage.guests')}
         </span>
         <span className="inline-flex items-center gap-1">
           <Clock size={14} className="text-primary" />
@@ -92,7 +102,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       )}
 
       <div className="mb-4">
-        <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">Key Highlights</p>
+        <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">{t('packagesPage.keyHighlights')}</p>
         <ul className="space-y-1.5">
           {pkg.highlights.map((item) => (
             <li key={item} className="flex items-start gap-2 text-small text-foreground">
@@ -104,7 +114,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       </div>
 
       <ul className="space-y-1.5 mb-6 flex-1">
-        <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">Included Services</p>
+        <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">{t('packagesPage.includedServices')}</p>
         {pkg.includedServices.slice(0, 5).map((item) => (
           <li key={item} className="flex items-start gap-2 text-small text-muted-foreground">
             <Check size={14} className="text-primary/70 mt-0.5 shrink-0" />
@@ -118,7 +128,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
           onClick={() => openModal({ eventType: pkg.title, step: 2 })}
           className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
         >
-          Get Quote
+          {t('nav.getQuote')}
         </Button>
         <Button
           type="button"
@@ -127,7 +137,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
           className="min-h-11 flex-1 border-primary/50 text-primary hover:bg-primary/5 gap-1.5"
         >
           <Bot size={16} />
-          Talk to AI Planner
+          {t('packagesPage.aiPlanner')}
         </Button>
       </div>
     </motion.div>

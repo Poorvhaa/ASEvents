@@ -6,9 +6,11 @@ import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import Link from 'next/link'
 import { SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function Hero() {
   const { openModal } = useQuoteModal()
+  const { t } = useTranslation()
 
   return (
     <section className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
@@ -37,17 +39,16 @@ export function Hero() {
             transition={{ duration: 0.6 }}
             className="inline-block text-white/90 font-semibold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-xs sm:text-sm md:text-base mb-6 sm:mb-8"
           >
-            Luxury Event Management
+            {t('hero.subtitle')}
           </motion.span>
 
           <h1 className="text-hero text-white mb-6 sm:mb-8 px-2">
-            Creating Extraordinary Events{' '}
-            <span className="text-gold-gradient">That Last Forever</span>
+            {t('hero.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('hero.titlePart2')}</span>
           </h1>
 
           <p className="text-body text-slate-200 max-w-xl mx-auto mb-8 sm:mb-12 px-2">
-            Luxury weddings, corporate events, destination celebrations, and unforgettable experiences
-            crafted with elegance and precision.
+            {t('hero.description')}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center max-w-md sm:max-w-none mx-auto px-2">
@@ -56,7 +57,7 @@ export function Hero() {
               size="lg"
               className="min-h-11 w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 font-semibold px-8 text-base sm:text-lg rounded-xl"
             >
-              Get Free Quote
+              {t('hero.getQuote')}
             </Button>
             <Button
               asChild
@@ -64,7 +65,7 @@ export function Hero() {
               size="lg"
               className="min-h-11 w-full sm:w-auto border-white/80 bg-white/10 text-white hover:bg-white/20 hover:text-white hover:border-white px-8 text-base sm:text-lg rounded-xl backdrop-blur-sm"
             >
-              <Link href="/portfolio">View Portfolio</Link>
+              <Link href="/portfolio">{t('hero.viewPortfolio')}</Link>
             </Button>
           </div>
         </motion.div>

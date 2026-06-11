@@ -86,9 +86,13 @@ export async function createVenueBooking(input: {
     .single()
 
   if (error) {
-    console.error('[BookingService] Insert error:', error.message)
-    return { booking: null, error: 'Failed to create booking' }
+  console.error('[BookingService] Full Insert Error:', error)
+
+  return {
+    booking: null,
+    error: `${error.code} - ${error.message}`
   }
+}
 
   return { booking: data as DbVenueBooking }
 }

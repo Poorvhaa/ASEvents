@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Trophy, Award, Star, Crown } from 'lucide-react'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const achievements = [
   {
@@ -9,28 +10,34 @@ const achievements = [
     title: 'Best Event Planner',
     year: '2023',
     organization: 'Luxury Events Association',
+    key: 'about.recognition.award1',
   },
   {
     icon: Award,
     title: 'Excellence in Design',
     year: '2023',
     organization: 'Wedding Industry Awards',
+    key: 'about.recognition.award2',
   },
   {
     icon: Star,
     title: 'Top 10 Event Companies',
     year: '2022',
     organization: 'Event Professional Magazine',
+    key: 'about.recognition.award3',
   },
   {
     icon: Crown,
     title: 'Platinum Service Award',
     year: '2022',
     organization: 'Client Choice Awards',
+    key: 'about.recognition.award4',
   },
 ]
 
 export function Achievements() {
+  const { t } = useTranslation()
+
   return (
     <section className="py-24 bg-slate-50">
       <div className="container mx-auto px-4 lg:px-8">
@@ -42,12 +49,13 @@ export function Achievements() {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">Recognition</span>
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">{t('about.recognition.eyebrow')}</span>
           <h2 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
-            Awards & <span className="text-gold-gradient">Achievements</span>
+            {t('about.recognition.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('about.recognition.titlePart2')}</span>
           </h2>
           <p className="text-muted-foreground text-lg leading-relaxed">
-            Our commitment to excellence has been recognized by leading industry organizations.
+            {t('about.recognition.description')}
           </p>
         </motion.div>
 
@@ -55,7 +63,7 @@ export function Achievements() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {achievements.map((achievement, index) => (
             <motion.div
-              key={achievement.title}
+              key={achievement.key}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -66,7 +74,7 @@ export function Achievements() {
                 <achievement.icon className="w-8 h-8 text-primary" />
               </div>
               <span className="text-primary font-medium">{achievement.year}</span>
-              <h3 className="text-xl font-semibold text-foreground mt-2 mb-2">{achievement.title}</h3>
+              <h3 className="text-xl font-semibold text-foreground mt-2 mb-2">{t(achievement.key)}</h3>
               <p className="text-muted-foreground text-sm">{achievement.organization}</p>
             </motion.div>
           ))}

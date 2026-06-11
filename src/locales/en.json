@@ -1,0 +1,512 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "packages": "Packages",
+    "venues": "Venues",
+    "portfolio": "Portfolio",
+    "contact": "Contact",
+    "getQuote": "Get Free Quote",
+    "dropdown": {
+      "wedding": "Wedding Planning",
+      "destination": "Destination Weddings",
+      "corporate": "Corporate Events",
+      "products": "Product Launches",
+      "exhibitions": "Exhibitions",
+      "birthdays": "Birthday Celebrations",
+      "anniversaries": "Anniversary Events",
+      "entertainment": "Entertainment Management"
+    }
+  },
+  "footer": {
+    "description": "Creating extraordinary events that last forever. We specialize in luxury weddings, corporate events, and destination celebrations.",
+    "ourServices": "Our Services",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "address": "803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007",
+    "rights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "hero": {
+    "subtitle": "Luxury Event Management",
+    "titlePart1": "Creating Extraordinary Events",
+    "titlePart2": "That Last Forever",
+    "description": "Luxury weddings, corporate events, destination celebrations, and unforgettable experiences crafted with elegance and precision.",
+    "getQuote": "Get Free Quote",
+    "viewPortfolio": "View Portfolio"
+  },
+  "cta": {
+    "getStarted": "Get Started",
+    "headingPart1": "Let's Create Your",
+    "headingPart2": "Dream Event",
+    "description": "Ready to turn your vision into reality? Our team is here to make your next event an unforgettable experience.",
+    "bookConsultation": "Book Consultation",
+    "contactUs": "Contact Us"
+  },
+  "services": {
+    "eyebrow": "What We Offer",
+    "headingPart1": "Our Premium",
+    "headingPart2": "Services",
+    "description": "From intimate gatherings to grand celebrations, we bring your vision to life with creativity, precision, and an unwavering commitment to excellence.",
+    "wedding": {
+      "title": "Wedding Planning",
+      "desc": "Exquisite wedding experiences tailored to your unique love story with meticulous attention to detail."
+    },
+    "destination": {
+      "title": "Destination Weddings",
+      "desc": "Transform your dream location into the perfect wedding venue with our global expertise."
+    },
+    "corporate": {
+      "title": "Corporate Events",
+      "desc": "Professional corporate gatherings that reflect your brand excellence and leave lasting impressions."
+    },
+    "product-launches": {
+      "title": "Product Launches",
+      "desc": "Create buzz-worthy product launch events that captivate audiences and drive engagement."
+    },
+    "exhibitions": {
+      "title": "Exhibitions",
+      "desc": "Immersive exhibition experiences that showcase your vision with stunning visual impact."
+    },
+    "birthdays": {
+      "title": "Birthday Celebrations",
+      "desc": "Unforgettable birthday parties from intimate gatherings to grand milestone celebrations."
+    },
+    "anniversaries": {
+      "title": "Anniversary Events",
+      "desc": "Celebrate love milestones with elegant anniversary events that honor your journey."
+    },
+    "entertainment": {
+      "title": "Entertainment Management",
+      "desc": "World-class entertainment coordination featuring top performers and spectacular productions."
+    }
+  },
+  "whyChooseUs": {
+    "eyebrow": "Why AS Events",
+    "headingPart1": "Why Choose",
+    "headingPart2": "Us",
+    "description": "We don't just plan events, we create experiences that leave lasting impressions and become cherished memories.",
+    "stats": {
+      "events": "Events Delivered",
+      "experience": "Years Experience",
+      "partners": "Vendor Partners",
+      "satisfaction": "Client Satisfaction"
+    },
+    "features": {
+      "team": {
+        "title": "Experienced Team",
+        "desc": "Our dedicated team brings decades of combined experience in crafting memorable events across all scales and styles."
+      },
+      "concepts": {
+        "title": "Creative Concepts",
+        "desc": "We transform your vision into reality with innovative designs and unique themes that set your event apart."
+      },
+      "management": {
+        "title": "End-to-End Management",
+        "desc": "From initial concept to final execution, we handle every detail so you can enjoy your special moments stress-free."
+      },
+      "vendors": {
+        "title": "Trusted Vendors",
+        "desc": "Our network of premium vendors ensures the highest quality services for catering, decor, entertainment, and more."
+      }
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "headingPart1": "What Our",
+    "headingPart2": "Clients Say",
+    "items": {
+      "wedding": "Wedding Clients",
+      "corporate": "CEO, TechCorp",
+      "birthday": "Birthday Celebration",
+      "destination": "Destination Wedding",
+      "review1": "AS Events transformed our wedding into a fairy tale. Every detail was perfect, from the stunning floral arrangements to the seamless coordination. They truly exceeded our expectations.",
+      "review2": "Our company summit was a huge success thanks to AS Events. Their professionalism and attention to detail made our corporate event truly memorable for all attendees.",
+      "review3": "They planned my 50th birthday celebration and it was absolutely magical. The team went above and beyond to make sure everything was perfect. Highly recommended!",
+      "review4": "Planning a destination wedding seemed daunting, but AS Events made it effortless. They handled everything from vendor coordination to travel logistics flawlessly."
+    }
+  },
+  "featuredVenues": {
+    "eyebrow": "Venues",
+    "headingPart1": "Featured",
+    "headingPart2": "Venues",
+    "description": "Discover our handpicked selection of premium venues, from luxurious banquet halls to breathtaking outdoor lawns.",
+    "viewAll": "View All Venues",
+    "capacity": "Capacity",
+    "location": "Location",
+    "bookNow": "Book Now",
+    "details": "View Details"
+  },
+  "packagesPreview": {
+    "eyebrow": "Packages",
+    "headingPart1": "Our Event",
+    "headingPart2": "Packages",
+    "description": "Choose from our curated packages or build a custom package tailored to your exact event requirements.",
+    "viewAll": "View All Packages",
+    "popular": "Most Popular",
+    "custom": {
+      "title": "Custom Package",
+      "desc": "Build your own bespoke package from our full catalog of premium services, tailored exactly to your requirements.",
+      "button": "Build Custom Package"
+    },
+    "select": "Select Package",
+    "featuresTitle": "Includes:"
+  },
+  "quoteModal": {
+    "step": "Step",
+    "of": "of",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit Request",
+    "submitting": "Submitting...",
+    "close": "Close modal",
+    "errors": {
+      "capacity": "Guest count exceeds venue capacity. Please adjust before submitting.",
+      "date": "Selected date is unavailable. Please choose another date."
+    },
+    "step1": {
+      "heading": "What type of event are you planning?",
+      "sub": "Select the event type that best describes your celebration",
+      "types": {
+        "Wedding": "Wedding",
+        "Corporate Event": "Corporate Event",
+        "Birthday Celebration": "Birthday Celebration",
+        "Anniversary": "Anniversary",
+        "Product Launch": "Product Launch",
+        "Exhibition": "Exhibition",
+        "Destination Event": "Destination Event",
+        "Other": "Other"
+      }
+    },
+    "step2": {
+      "heading": "How many guests are you expecting?",
+      "sub": "This helps us recommend the right venues and packages",
+      "counts": {
+        "Less than 50": "Less than 50",
+        "50 - 100": "50 - 100",
+        "100 - 200": "100 - 200",
+        "200 - 500": "200 - 500",
+        "500+": "500+"
+      }
+    },
+    "step3": {
+      "heading": "What is your venue preference?",
+      "sub": "Choose your ideal event setting",
+      "venues": {
+        "Indoor Venue": "Indoor Venue",
+        "Outdoor Venue": "Outdoor Venue",
+        "Beach/Destination": "Beach/Destination",
+        "Hotel/Resort": "Hotel/Resort",
+        "Private Estate": "Private Estate",
+        "No Preference": "No Preference"
+      }
+    },
+    "step4": {
+      "heading": "What is your budget range?",
+      "sub": "This helps us tailor our recommendations",
+      "ranges": {
+        "Under ₹3,00,000": "Under ₹3,00,000",
+        "₹3,00,000 - ₹8,00,000": "₹3,00,000 - ₹8,00,000",
+        "₹8,00,000 - ₹15,00,000": "₹8,00,000 - ₹15,00,000",
+        "₹15,00,000 - ₹30,00,000": "₹15,00,000 - ₹30,00,000",
+        "₹30,00,000+": "₹30,00,000+"
+      }
+    },
+    "step5": {
+      "heading": "Any specific requirements?",
+      "sub": "Tell us about your vision (optional)",
+      "placeholder": "Share your ideas, themes, special requests..."
+    },
+    "step6": {
+      "heading": "Almost there! Your contact details",
+      "sub": "We'll get back to you within 24 hours",
+      "name": "Your Name *",
+      "email": "Your Email *",
+      "phone": "Your Phone",
+      "summaryTitle": "Your Selection Summary",
+      "eventType": "Event Type:",
+      "guestCount": "Guest Count:",
+      "venue": "Venue:",
+      "budget": "Budget:"
+    },
+    "success": "✓ Quote request submitted successfully! We will contact you within 24 hours."
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "About Us",
+      "titlePart1": "Crafting",
+      "titlePart2": "Unforgettable",
+      "titlePart3": "Experiences",
+      "description": "For over a decade, AS Events has been transforming dreams into reality, creating luxury experiences that leave lasting impressions."
+    },
+    "story": {
+      "eyebrow": "Our Story",
+      "titlePart1": "A Legacy of",
+      "titlePart2": "Excellence",
+      "paragraph1": "Founded in 2014, AS Events began with a simple vision: to revolutionize the event planning industry by combining creativity, precision, and unparalleled service.",
+      "paragraph2": "What started as a small team of passionate event enthusiasts has grown into one of the most sought-after luxury event management companies.",
+      "paragraph3": "Our journey has been defined by our commitment to exceeding expectations. Every event we create is a testament to our dedication to perfection and our clients' unique visions."
+    },
+    "mission": {
+      "title": "Our Mission",
+      "desc": "To create extraordinary events that exceed expectations and leave lasting impressions. We are committed to delivering personalized, luxury experiences with impeccable attention to detail, innovative concepts, and flawless execution. Every celebration we touch becomes a masterpiece of memories."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "desc": "To be the world's most trusted and innovative event management company, setting new standards for luxury celebrations. We envision a future where every event we create inspires joy, connects people, and transforms moments into timeless memories that transcend generations."
+    },
+    "values": {
+      "title": "Our Core Values",
+      "items": {
+        "Excellence": "Excellence",
+        "Creativity": "Creativity",
+        "Integrity": "Integrity",
+        "Passion": "Passion",
+        "Innovation": "Innovation"
+      }
+    },
+    "recognition": {
+      "eyebrow": "Recognition",
+      "titlePart1": "Awards &",
+      "titlePart2": "Achievements",
+      "description": "Our commitment to excellence has been recognized by leading industry organizations.",
+      "award1": "Best Event Planner",
+      "award2": "Excellence in Design",
+      "award3": "Top 10 Event Companies",
+      "award4": "Platinum Service Award"
+    },
+    "team": {
+      "eyebrow": "Our Team",
+      "titlePart1": "Meet the",
+      "titlePart2": "Experts",
+      "description": "Our talented team brings together decades of experience in event planning, design, and hospitality.",
+      "members": {
+        "apurva": {
+          "role": "Founder & CEO",
+          "bio": "With 15+ years in luxury events, Apurva leads our vision for exceptional experiences."
+        },
+        "rahul": {
+          "role": "Creative Director",
+          "bio": "Rahul brings innovative design concepts that transform ordinary spaces into extraordinary venues."
+        },
+        "riya": {
+          "role": "Head of Operations",
+          "bio": "Riya ensures flawless execution with her meticulous attention to detail and logistics expertise."
+        },
+        "ajay": {
+          "role": "Client Relations Director",
+          "bio": "Ajay builds lasting relationships with clients, ensuring their visions are perfectly realized."
+        }
+      }
+    },
+    "partners": {
+      "eyebrow": "Partners",
+      "titlePart1": "Trusted",
+      "titlePart2": "Partners",
+      "description": "We collaborate with the world's finest venues and service providers to deliver exceptional experiences."
+    }
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Contact Us",
+      "titlePart1": "Let's Start",
+      "titlePart2": "Planning",
+      "description": "Ready to create your dream event? Get in touch with our team and let's bring your vision to life."
+    },
+    "content": {
+      "sendMessage": "Send Us a Message",
+      "getInTouch": "Get in Touch",
+      "description": "Have questions or ready to start planning? Reach out to us through any of the channels below, and our team will get back to you promptly.",
+      "name": "Your Name *",
+      "email": "Email Address *",
+      "phone": "Phone Number",
+      "eventType": "Event Type *",
+      "eventDate": "Event Date",
+      "budget": "Budget Range",
+      "message": "Your Message *",
+      "messagePlaceholder": "Tell us about your event vision...",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "successTitle": "Message Sent!",
+      "successDesc": "Thank you for reaching out. We'll get back to you within 24 hours.",
+      "sendAnother": "Send Another Message",
+      "visit": "Visit Us",
+      "call": "Call Us",
+      "emailUs": "Email Us",
+      "hours": "Business Hours",
+      "whatsapp": "Chat on WhatsApp"
+    }
+  },
+  "servicesPage": {
+    "hero": {
+      "eyebrow": "Our Services",
+      "titlePart1": "Premium Event",
+      "titlePart2": "Services",
+      "description": "From intimate gatherings to grand celebrations, we offer comprehensive event management services tailored to your unique vision."
+    },
+    "getQuoteFor": "Get Quote for"
+  },
+  "packagesPage": {
+    "aiPlanner": "Talk to AI Planner",
+    "hero": {
+      "eyebrow": "Packages",
+      "titlePart1": "Event Packages Designed Around Your",
+      "titlePart2": "Celebrations",
+      "description": "Choose from curated event packages or create a fully customized experience."
+    },
+    "guests": "guests",
+    "keyHighlights": "Key Highlights",
+    "includedServices": "Included Services",
+    "noPackages": "No packages found in this category.",
+    "builder": {
+      "eyebrow": "Custom",
+      "titlePart1": "Build Your Own",
+      "titlePart2": "Package",
+      "description": "Tell us about your celebration and we'll craft a bespoke package perfectly suited to your needs and budget.",
+      "eventType": "Event Type",
+      "guestCount": "Guest Count",
+      "location": "Location",
+      "budgetRange": "Budget Range",
+      "selectEventType": "Select event type",
+      "selectGuestCount": "Select guest count",
+      "selectLocation": "Select location",
+      "selectBudget": "Select budget range",
+      "button": "Generate Recommendation",
+      "types": {
+        "Wedding": "Wedding",
+        "Engagement": "Engagement",
+        "Corporate Event": "Corporate Event",
+        "Birthday Celebration": "Birthday Celebration",
+        "Festival Event": "Festival Event",
+        "Other": "Other"
+      },
+      "counts": {
+        "Less than 50": "Less than 50",
+        "50 - 100": "50 - 100",
+        "100 - 200": "100 - 200",
+        "200 - 500": "200 - 500",
+        "500 - 1000": "500 - 1,000",
+        "1000+": "1,000+"
+      },
+      "ranges": {
+        "Under ₹1,00,000": "Under ₹1,00,000",
+        "₹1,00,000 - ₹3,00,000": "₹1,00,000 - ₹3,00,000",
+        "₹3,00,000 - ₹5,00,000": "₹3,00,000 - ₹5,00,000",
+        "₹5,00,000 - ₹10,00,000": "₹5,00,000 - ₹10,00,000",
+        "₹10,00,000+": "₹10,00,000+"
+      }
+    },
+    "categories": {
+      "All": "All",
+      "Weddings": "Weddings",
+      "Corporate": "Corporate",
+      "Social Events": "Social Events",
+      "Exhibitions": "Exhibitions",
+      "Entertainment": "Entertainment"
+    }
+  },
+  "venuesPage": {
+    "hero": {
+      "eyebrow": "Venues",
+      "titlePart1": "Discover Premium Event",
+      "titlePart2": "Venues",
+      "description": "Explore wedding halls, luxury resorts, banquet venues and corporate spaces across India."
+    },
+    "grid": {
+      "title": "Curate Your Perfect Venue",
+      "subtitle": "Explore venues tailored to your event requirements",
+      "destination": "Event Destination",
+      "allLocations": "All Locations",
+      "collection": "Venue Collection",
+      "allTypes": "All Venue Types",
+      "noVenues": "No venues found matching your criteria."
+    },
+    "categories": {
+      "Wedding Halls": "Wedding Halls",
+      "Banquet Halls": "Banquet Halls",
+      "Luxury Resorts": "Luxury Resorts",
+      "Destination Venues": "Destination Venues",
+      "Farmhouses": "Farmhouses",
+      "Beach Venues": "Beach Venues",
+      "Corporate Venues": "Corporate Venues",
+      "Exhibition Venues": "Exhibition Venues",
+      "Open Lawns": "Open Lawns"
+    },
+    "labels": {
+      "bookVenue": "Book Venue",
+      "indoor": "Indoor",
+      "outdoor": "Outdoor",
+      "indoorOutdoor": "Indoor & Outdoor"
+    },
+    "detail": {
+      "back": "Back to Venues",
+      "about": "About This Venue",
+      "facilities": "Facilities",
+      "gallery": "Photo Gallery",
+      "location": "Location",
+      "mapSoon": "Google Maps integration coming soon",
+      "startingFrom": "Starting from",
+      "capacity": "Capacity",
+      "type": "Type",
+      "parking": "Parking",
+      "rooms": "Rooms Available",
+      "bookThis": "Book This Venue",
+      "inquiry": "Inquiry Form"
+    },
+    "inquiry": {
+      "submitted": "Booking request submitted!",
+      "contactShort": "We'll contact you shortly.",
+      "fullName": "Full Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "your@email.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+91 95103 24143",
+      "eventDate": "Event Date",
+      "guests": "Guests",
+      "guestsMax": "Maximum",
+      "errorCapacity": "Guest count exceeds venue capacity. Maximum Capacity:",
+      "errorCapacityShort": "⚠ Guest count exceeds venue capacity.",
+      "message": "Message",
+      "messagePlaceholder": "I'm interested in booking",
+      "submitting": "Submitting...",
+      "requestButton": "Request Booking"
+    },
+    "availability": {
+      "available": "Venue available",
+      "unavailable": "Venue unavailable on selected date",
+      "chooseAnother": "Please choose another date."
+    }
+  },
+  "portfolioPage": {
+    "hero": {
+      "eyebrow": "Portfolio",
+      "titlePart1": "Our",
+      "titlePart2": "Work",
+      "description": "Browse our portfolio of extraordinary events and stunning gallery photography. Each project represents our commitment to excellence and attention to detail."
+    },
+    "grid": {
+      "events": "Events",
+      "gallery": "Gallery",
+      "searchPlaceholder": "Search events...",
+      "noEvents": "No events found matching your criteria.",
+      "noImages": "No gallery images found in this category.",
+      "guestsLabel": "Guests",
+      "eventGallery": "Event Gallery",
+      "closeLightbox": "Close lightbox"
+    },
+    "categories": {
+      "All": "All",
+      "Wedding": "Wedding",
+      "Corporate": "Corporate",
+      "Destination": "Destination",
+      "Product Launches": "Product Launches",
+      "Exhibitions": "Exhibitions",
+      "Birthdays": "Birthdays",
+      "Anniversaries": "Anniversaries",
+      "Entertainment": "Entertainment"
+    }
+  }
+}

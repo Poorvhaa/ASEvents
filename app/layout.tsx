@@ -6,6 +6,7 @@ import { Navbar } from '@/components/navbar'
 import { Footer } from '@/components/footer'
 import { QuoteModal } from '@/components/quote-modal'
 import { AIChatWidget } from '@/components/ai/chat-widget'
+import { LanguageProvider } from '@/src/context/LanguageContext'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -52,33 +53,35 @@ export default function RootLayout({
   data-scroll-behavior="smooth"
 >
       <body className="font-sans antialiased overflow-x-hidden min-w-0">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'EventPlanner',
-              name: 'AS Events',
-              url: 'https://asevents.in',
-              description:
-                'Premium Indian event management — weddings, corporate events, destination celebrations.',
-              address: {
-                '@type': 'PostalAddress',
-                addressLocality: 'Vadodara',
-                addressRegion: 'Gujarat',
-                addressCountry: 'IN',
-              },
-              email: 'sales@asevents.in',
-              telephone: '+91-95103-24143',
-            }),
-          }}
-        />
-        <Navbar />
-        <main className="min-w-0 overflow-x-hidden">{children}</main>
-        <Footer />
-        <QuoteModal />
-        <AIChatWidget />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <LanguageProvider>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'EventPlanner',
+                name: 'AS Events',
+                url: 'https://asevents.in',
+                description:
+                  'Premium Indian event management — weddings, corporate events, destination celebrations.',
+                address: {
+                  '@type': 'PostalAddress',
+                  addressLocality: 'Vadodara',
+                  addressRegion: 'Gujarat',
+                  addressCountry: 'IN',
+                },
+                email: 'sales@asevents.in',
+                telephone: '+91-95103-24143',
+              }),
+            }}
+          />
+          <Navbar />
+          <main className="min-w-0 overflow-x-hidden">{children}</main>
+          <Footer />
+          <QuoteModal />
+          <AIChatWidget />
+          {process.env.NODE_ENV === 'production' && <Analytics />}
+        </LanguageProvider>
       </body>
     </html>
   )

@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { PageHero, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function PackagesHero() {
+  const { t } = useTranslation()
+
   return (
     <PageHero>
       <div className="absolute inset-0 opacity-5 pointer-events-none overflow-hidden">
@@ -18,13 +21,13 @@ export function PackagesHero() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="text-eyebrow">Packages</span>
+          <span className="text-eyebrow">{t('packagesPage.hero.eyebrow')}</span>
           <h1 className="text-hero text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
-            Event Packages Designed Around Your{' '}
-            <span className="text-gold-gradient">Celebrations</span>
+            {t('packagesPage.hero.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('packagesPage.hero.titlePart2')}</span>
           </h1>
           <p className="text-body text-muted-foreground">
-            Choose from curated event packages or create a fully customized experience.
+            {t('packagesPage.hero.description')}
           </p>
         </motion.div>
       </SectionContainer>

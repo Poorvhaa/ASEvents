@@ -1,24 +1,27 @@
+'use client'
+
 import Link from 'next/link'
 import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react'
 import { SectionContainer } from '@/components/layout/section-container'
 import Image from 'next/image'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const services = [
-  { href: '/services', label: 'Wedding Planning' },
-  { href: '/services', label: 'Destination Weddings' },
-  { href: '/services', label: 'Corporate Events' },
-  { href: '/packages', label: 'Event Packages' },
-  { href: '/venues', label: 'Venue Booking' },
-  { href: '/portfolio', label: 'Our Portfolio' },
+  { href: '/services', label: 'Wedding Planning', key: 'services.wedding.title' },
+  { href: '/services', label: 'Destination Weddings', key: 'services.destination.title' },
+  { href: '/services', label: 'Corporate Events', key: 'services.corporate.title' },
+  { href: '/packages', label: 'Event Packages', key: 'nav.packages' },
+  { href: '/venues', label: 'Venue Booking', key: 'nav.venues' },
+  { href: '/portfolio', label: 'Our Portfolio', key: 'nav.portfolio' },
 ]
 
 const quickLinks = [
-  { href: '/about', label: 'About Us' },
-  { href: '/services', label: 'Services' },
-  { href: '/portfolio', label: 'Portfolio' },
-  { href: '/venues', label: 'Venues' },
-  { href: '/packages', label: 'Packages' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/about', label: 'About Us', key: 'nav.about' },
+  { href: '/services', label: 'Services', key: 'nav.services' },
+  { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
+  { href: '/venues', label: 'Venues', key: 'nav.venues' },
+  { href: '/packages', label: 'Packages', key: 'nav.packages' },
+  { href: '/contact', label: 'Contact', key: 'nav.contact' },
 ]
 
 const socialLinks = [
@@ -29,23 +32,24 @@ const socialLinks = [
 ]
 
 export function Footer() {
+  const { t } = useTranslation()
+
   return (
     <footer className="bg-slate-50 border-t border-border overflow-hidden">
       <SectionContainer className="py-12 sm:py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 text-center sm:text-left">
           <div className="flex flex-col items-center sm:items-start">
             <div className="mb-4">
-  <Image
-    src="/clean.png"
-    alt="AS Events"
-    width={180}
-    height={60}
-    className="h-12 w-auto object-contain"
-  />
-</div>
+              <Image
+                src="/clean.png"
+                alt="AS Events"
+                width={180}
+                height={60}
+                className="h-12 w-auto object-contain"
+              />
+            </div>
             <p className="text-muted-foreground text-small leading-relaxed mb-6 max-w-sm">
-              Creating extraordinary events that last forever. We specialize in luxury weddings,
-              corporate events, and destination celebrations.
+              {t('footer.description')}
             </p>
             <div className="flex gap-3 sm:gap-4 justify-center sm:justify-start">
               {socialLinks.map((social) => (
@@ -62,7 +66,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">Our Services</h4>
+            <h4 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">{t('footer.ourServices')}</h4>
             <ul className="space-y-2.5 sm:space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -70,7 +74,7 @@ export function Footer() {
                     href={service.href}
                     className="text-muted-foreground text-small hover:text-primary transition-colors"
                   >
-                    {service.label}
+                    {t(service.key)}
                   </Link>
                 </li>
               ))}
@@ -78,7 +82,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">Quick Links</h4>
+            <h4 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2.5 sm:space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href + link.label}>
@@ -86,7 +90,7 @@ export function Footer() {
                     href={link.href}
                     className="text-muted-foreground text-small hover:text-primary transition-colors"
                   >
-                    {link.label}
+                    {t(link.key)}
                   </Link>
                 </li>
               ))}
@@ -94,7 +98,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">Contact Us</h4>
+            <h4 className="text-base sm:text-lg font-semibold text-foreground mb-4 sm:mb-6">{t('footer.contactUs')}</h4>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 justify-center sm:justify-start">
                 <MapPin size={20} className="text-primary mt-1 shrink-0" />
@@ -104,7 +108,7 @@ export function Footer() {
                   rel="noopener noreferrer"
                   className="text-muted-foreground text-small hover:text-primary transition-colors text-left"
                 >
-                  803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007
+                  {t('footer.address')}
                 </a>
               </li>
               <li className="flex items-center gap-3 justify-center sm:justify-start">
@@ -125,14 +129,14 @@ export function Footer() {
 
         <div className="border-t border-border mt-10 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center">
           <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} AS Events. All rights reserved.
+            &copy; {new Date().getFullYear()} AS Events. {t('footer.rights')}
           </p>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm">
             <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors min-h-11 inline-flex items-center">
-              Privacy Policy
+              {t('footer.privacy')}
             </Link>
             <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors min-h-11 inline-flex items-center">
-              Terms of Service
+              {t('footer.terms')}
             </Link>
           </div>
         </div>

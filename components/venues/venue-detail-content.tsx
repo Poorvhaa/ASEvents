@@ -15,17 +15,23 @@ import {
   Map,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useQuoteModal } from '@/hooks/use-quote-modal'
-import { getVenueQuotePrefill } from '@/lib/venues/book-venue'
 import { VenueInquiryForm } from '@/components/venues/venue-inquiry-form'
 import type { Venue } from '@/lib/types/venues'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 interface VenueDetailContentProps {
   venue: Venue
 }
 
 export function VenueDetailContent({ venue }: VenueDetailContentProps) {
-  const { openModal } = useQuoteModal()
+  const { t } = useTranslation()
+
+  const indoorOutdoorKey =
+    venue.indoorOutdoor === 'Indoor'
+      ? 'indoor'
+      : venue.indoorOutdoor === 'Outdoor'
+      ? 'outdoor'
+      : 'indoorOutdoor'
 
   return (
     <>
@@ -47,14 +53,16 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-4"
               >
                 <ArrowLeft size={16} />
-                Back to Venues
+                {t('venuesPage.detail.back')}
               </Link>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <span className="text-primary text-sm font-medium">{venue.category}</span>
+                <span className="text-primary text-sm font-medium">
+                  {t(`venuesPage.categories.${venue.category}`) || venue.category}
+                </span>
                 <h1 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-2">
                   {venue.name}
                 </h1>
@@ -85,7 +93,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-2xl font-serif font-bold text-foreground mb-4">About This Venue</h2>
+                <h2 className="text-2xl font-serif font-bold text-foreground mb-4">{t('venuesPage.detail.about')}</h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">{venue.description}</p>
               </motion.div>
 
@@ -97,7 +105,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 viewport={{ once: true }}
                 className="mt-12"
               >
-                <h2 className="text-2xl font-serif font-bold text-foreground mb-6">Facilities</h2>
+                <h2 className="text-2xl font-serif font-bold text-foreground mb-6">{t('venuesPage.detail.facilities')}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {venue.amenities.map((amenity) => (
                     <div
@@ -119,7 +127,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 viewport={{ once: true }}
                 className="mt-12"
               >
-                <h2 className="text-2xl font-serif font-bold text-foreground mb-6">Photo Gallery</h2>
+                <h2 className="text-2xl font-serif font-bold text-foreground mb-6">{t('venuesPage.detail.gallery')}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {venue.gallery.map((img, i) => (
                     <div key={i} className="relative aspect-square rounded-xl overflow-hidden">
@@ -142,12 +150,12 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 viewport={{ once: true }}
                 className="mt-12"
               >
-                <h2 className="text-2xl font-serif font-bold text-foreground mb-6">Location</h2>
+                <h2 className="text-2xl font-serif font-bold text-foreground mb-6">{t('venuesPage.detail.location')}</h2>
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center">
                   <div className="text-center p-8">
                     <Map size={48} className="text-primary mx-auto mb-4" />
                     <p className="text-muted-foreground">{venue.location}, {venue.city}</p>
-                    <p className="text-sm text-muted-foreground mt-2">Google Maps integration coming soon</p>
+                    <p className="text-sm text-muted-foreground mt-2">{t('venuesPage.detail.mapSoon')}</p>
                   </div>
                 </div>
               </motion.div>
@@ -162,49 +170,45 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 viewport={{ once: true }}
                 className="sticky top-28 p-8 rounded-2xl bg-white border border-slate-200 shadow-lg"
               >
-                <p className="text-sm text-muted-foreground">Starting from</p>
+                <p className="text-sm text-muted-foreground">{t('venuesPage.detail.startingFrom')}</p>
                 <p className="text-3xl font-bold text-foreground mt-1 mb-6">{venue.startingPrice}</p>
 
                 <div className="space-y-4 mb-8">
                   <div className="flex items-center gap-3">
                     <Users size={20} className="text-primary shrink-0" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Capacity</p>
-                      <p className="font-medium text-foreground">{venue.capacity}</p>
+                      <p className="text-sm text-muted-foreground">{t('venuesPage.detail.capacity')}</p>
+                      <p className="font-medium text-foreground">
+                        {venue.capacity.replace(' Guests', ' ' + t('portfolioPage.grid.guestsLabel'))}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Building2 size={20} className="text-primary shrink-0" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Type</p>
-                      <p className="font-medium text-foreground">{venue.indoorOutdoor}</p>
+                      <p className="text-sm text-muted-foreground">{t('venuesPage.detail.type')}</p>
+                      <p className="font-medium text-foreground">
+                        {t(`venuesPage.labels.${indoorOutdoorKey}`) || venue.indoorOutdoor}
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Car size={20} className="text-primary shrink-0" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Parking</p>
+                      <p className="text-sm text-muted-foreground">{t('venuesPage.detail.parking')}</p>
                       <p className="font-medium text-foreground">{venue.parking}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Bed size={20} className="text-primary shrink-0" />
                     <div>
-                      <p className="text-sm text-muted-foreground">Rooms Available</p>
+                      <p className="text-sm text-muted-foreground">{t('venuesPage.detail.rooms')}</p>
                       <p className="font-medium text-foreground">{venue.rooms}</p>
                     </div>
                   </div>
                 </div>
 
-                <Button
-                  onClick={() => openModal(getVenueQuotePrefill(venue))}
-                  size="lg"
-                  className="w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold mb-6"
-                >
-                  Book This Venue
-                </Button>
-
-                <h3 className="text-lg font-semibold text-foreground mb-4">Inquiry Form</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-4">{t('venuesPage.detail.inquiry')}</h3>
                 <VenueInquiryForm venue={venue} />
               </motion.div>
             </div>

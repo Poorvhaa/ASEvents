@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const eventTypes = [
   'Wedding',
@@ -15,14 +16,15 @@ const eventTypes = [
 ]
 
 const budgetRanges = [
-  'Under ₹10,000',
-  '₹10,000 - ₹25,000',
-  '₹25,000 - ₹50,000',
-  '₹50,000 - ₹100,000',
-  '₹100,000+',
+  'Under ₹3,00,000',
+  '₹3,00,000 - ₹8,00,000',
+  '₹8,00,000 - ₹15,00,000',
+  '₹15,00,000 - ₹30,00,000',
+  '₹30,00,000+',
 ]
 
 export function ContactContent() {
+  const { t } = useTranslation()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -37,6 +39,18 @@ export function ContactContent() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
+  const translateEventType = (val: string) => {
+    const key = `quoteModal.step1.types.${val}`
+    const translated = t(key)
+    return translated === key ? val : translated
+  }
+
+  const translateBudgetRange = (val: string) => {
+    const key = `quoteModal.step4.ranges.${val}`
+    const translated = t(key)
+    return translated === key ? val : translated
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -108,7 +122,7 @@ export function ContactContent() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl font-serif font-bold text-foreground mb-6">
-              Send Us a Message
+              {t('contact.content.sendMessage')}
             </h2>
             
             {isSubmitted ? (
@@ -120,15 +134,17 @@ export function ContactContent() {
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                   <Send className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">Message Sent!</h3>
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  {t('contact.content.successTitle')}
+                </h3>
                 <p className="text-muted-foreground">
-                  Thank you for reaching out. We&apos;ll get back to you within 24 hours.
+                  {t('contact.content.successDesc')}
                 </p>
                 <Button
                   onClick={() => setIsSubmitted(false)}
                   className="mt-6 bg-primary text-primary-foreground hover:bg-gold-light"
                 >
-                  Send Another Message
+                  {t('contact.content.sendAnother')}
                 </Button>
               </motion.div>
             ) : (
@@ -136,7 +152,7 @@ export function ContactContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
-                      Your Name *
+                      {t('contact.content.name')}
                     </label>
                     <input
                       type="text"
@@ -151,7 +167,7 @@ export function ContactContent() {
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                      Email Address *
+                      {t('contact.content.email')}
                     </label>
                     <input
                       type="email"
@@ -169,7 +185,7 @@ export function ContactContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
-                      Phone Number
+                      {t('contact.content.phone')}
                     </label>
                     <input
                       type="tel"
@@ -183,7 +199,7 @@ export function ContactContent() {
                   </div>
                   <div>
                     <label htmlFor="eventType" className="block text-sm font-medium text-foreground mb-2">
-                      Event Type *
+                      {t('contact.content.eventType')}
                     </label>
                     <select
                       id="eventType"
@@ -195,7 +211,7 @@ export function ContactContent() {
                     >
                       <option value="">Select event type</option>
                       {eventTypes.map((type) => (
-                        <option key={type} value={type}>{type}</option>
+                        <option key={type} value={type}>{translateEventType(type)}</option>
                       ))}
                     </select>
                   </div>
@@ -204,7 +220,7 @@ export function ContactContent() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="eventDate" className="block text-sm font-medium text-foreground mb-2">
-                      Event Date
+                      {t('contact.content.eventDate')}
                     </label>
                     <input
                       type="date"
@@ -217,7 +233,7 @@ export function ContactContent() {
                   </div>
                   <div>
                     <label htmlFor="budget" className="block text-sm font-medium text-foreground mb-2">
-                      Budget Range
+                      {t('contact.content.budget')}
                     </label>
                     <select
                       id="budget"
@@ -228,7 +244,7 @@ export function ContactContent() {
                     >
                       <option value="">Select budget range</option>
                       {budgetRanges.map((range) => (
-                        <option key={range} value={range}>{range}</option>
+                        <option key={range} value={range}>{translateBudgetRange(range)}</option>
                       ))}
                     </select>
                   </div>
@@ -236,7 +252,7 @@ export function ContactContent() {
 
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
-                    Your Message *
+                    {t('contact.content.message')}
                   </label>
                   <textarea
                     id="message"
@@ -246,7 +262,7 @@ export function ContactContent() {
                     required
                     rows={5}
                     className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none resize-none"
-                    placeholder="Tell us about your event vision..."
+                    placeholder={t('contact.content.messagePlaceholder')}
                   />
                 </div>
 
@@ -255,7 +271,7 @@ export function ContactContent() {
                   disabled={isSubmitting}
                   className="w-full bg-primary text-primary-foreground hover:bg-gold-light font-semibold py-6 text-lg"
                 >
-                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                  {isSubmitting ? t('contact.content.sending') : t('contact.content.send')}
                 </Button>
               </form>
             )}
@@ -270,11 +286,10 @@ export function ContactContent() {
           >
             <div>
               <h2 className="text-3xl font-serif font-bold text-foreground mb-6">
-                Get in Touch
+                {t('contact.content.getInTouch')}
               </h2>
               <p className="text-muted-foreground leading-relaxed">
-                Have questions or ready to start planning? Reach out to us through any of the 
-                channels below, and our team will get back to you promptly.
+                {t('contact.content.description')}
               </p>
             </div>
 
@@ -285,17 +300,16 @@ export function ContactContent() {
                   <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-  <h3 className="font-semibold text-foreground mb-1">Visit Us</h3>
-
-  <a
-    href="https://maps.app.goo.gl/92BBaz8P4wzcxPMK9"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:underline"
-  >
-    803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007
-  </a>
-</div>
+                  <h3 className="font-semibold text-foreground mb-1">{t('contact.content.visit')}</h3>
+                  <a
+                    href="https://maps.app.goo.gl/92BBaz8P4wzcxPMK9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors duration-300 hover:underline"
+                  >
+                    {t('footer.address')}
+                  </a>
+                </div>
               </div>
 
               <div className="p-6 rounded-xl glass flex items-start gap-4">
@@ -303,8 +317,8 @@ export function ContactContent() {
                   <Phone className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Call Us</h3>
-                  <a href="tel:+912345678924" className="text-muted-foreground hover:text-primary transition-colors">
+                  <h3 className="font-semibold text-foreground mb-1">{t('contact.content.call')}</h3>
+                  <a href="tel:+919510324143" className="text-muted-foreground hover:text-primary transition-colors">
                     +91 95103 24143
                   </a>
                 </div>
@@ -315,8 +329,8 @@ export function ContactContent() {
                   <Mail className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Email Us</h3>
-                  <a href="mailto:info@asevents.com" className="text-muted-foreground hover:text-primary transition-colors">
+                  <h3 className="font-semibold text-foreground mb-1">{t('contact.content.emailUs')}</h3>
+                  <a href="mailto:as.eventmanagement2829@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                     as.eventmanagement2829@gmail.com
                   </a>
                 </div>
@@ -327,7 +341,7 @@ export function ContactContent() {
                   <Clock className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">Business Hours</h3>
+                  <h3 className="font-semibold text-foreground mb-1">{t('contact.content.hours')}</h3>
                   <p className="text-muted-foreground">
                     Mon - Fri: 9:00 AM - 6:00 PM<br />
                     Sat: 10:00 AM - 4:00 PM
@@ -344,10 +358,8 @@ export function ContactContent() {
               className="flex items-center justify-center gap-3 w-full p-4 rounded-xl bg-[#25D366] text-white font-semibold hover:bg-[#128C7E] transition-colors"
             >
               <MessageCircle className="w-6 h-6" />
-              Chat on WhatsApp
+              {t('contact.content.whatsapp')}
             </a>
-
-            
           </motion.div>
         </div>
       </div>

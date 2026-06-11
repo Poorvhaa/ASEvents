@@ -1,11 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PackageCard } from '@/components/cards/package-card'
 import { packages, packageCategories } from '@/lib/data/packages'
 import type { PackageCategoryFilter } from '@/lib/types/packages'
 import { Section, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const categoryMap: Record<PackageCategoryFilter, string | null> = {
   All: null,
@@ -17,7 +19,33 @@ const categoryMap: Record<PackageCategoryFilter, string | null> = {
 }
 
 export function PackagesGrid() {
+  const { t } = useTranslation()
+  const searchParams = useSearchParams()
   const [activeCategory, setActiveCategory] = useState<PackageCategoryFilter>('All')
+
+  useEffect(() => {
+    const categoryQuery = searchParams.get('category')
+    if (categoryQuery) {
+      const queryToCategoryMap: Record<string, PackageCategoryFilter> = {
+        weddings: 'Weddings',
+        corporate: 'Corporate',
+        birthday: 'Social Events',
+        exhibitions: 'Exhibitions',
+        entertainment: 'Entertainment',
+      }
+      const matchedCategory = queryToCategoryMap[categoryQuery.toLowerCase()]
+      if (matchedCategory) {
+        setActiveCategory(matchedCategory)
+        
+        const element = document.getElementById('packages-grid-section')
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }, 100)
+        }
+      }
+    }
+  }, [searchParams])
 
   const filteredPackages = packages.filter((pkg) => {
     const category = categoryMap[activeCategory]
@@ -25,7 +53,7 @@ export function PackagesGrid() {
   })
 
   return (
-    <Section className="bg-background">
+    <Section id="packages-grid-section" className="bg-background">
       <SectionContainer>
         <div className="filter-scroll justify-center sm:justify-start mb-8 sm:mb-12">
           {packageCategories.map((category) => (
@@ -39,7 +67,7 @@ export function PackagesGrid() {
                   : 'bg-white border border-slate-200 text-foreground hover:border-primary/50'
               }`}
             >
-              {category}
+              {t(`packagesPage.categories.${category}`) || category}
             </button>
           ))}
         </div>
@@ -64,7 +92,7 @@ export function PackagesGrid() {
 
         {filteredPackages.length === 0 && (
           <div className="text-center py-12 sm:py-16">
-            <p className="text-muted-foreground">No packages found in this category.</p>
+            <p className="text-muted-foreground">{t('packagesPage.noPackages')}</p>
           </div>
         )}
       </SectionContainer>

@@ -2,8 +2,11 @@
 
 import { motion } from 'framer-motion'
 import { PageHero, SectionContainer } from '@/components/layout/section-container'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function VenuesHero() {
+  const { t } = useTranslation()
+
   return (
     <PageHero>
       <div className="absolute inset-0 opacity-5 pointer-events-none overflow-hidden">
@@ -18,12 +21,13 @@ export function VenuesHero() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="text-eyebrow">Venues</span>
+          <span className="text-eyebrow">{t('venuesPage.hero.eyebrow')}</span>
           <h1 className="text-hero text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6">
-            Discover Premium Event <span className="text-gold-gradient">Venues</span>
+            {t('venuesPage.hero.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('venuesPage.hero.titlePart2')}</span>
           </h1>
           <p className="text-body text-muted-foreground">
-            Explore wedding halls, luxury resorts, banquet venues and corporate spaces across India.
+            {t('venuesPage.hero.description')}
           </p>
         </motion.div>
       </SectionContainer>

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const eventTypes = [
   'Wedding',
@@ -44,6 +45,7 @@ const budgetRanges = [
 ]
 
 export function QuoteModal() {
+  const { t } = useTranslation()
   const {
     isOpen,
     closeModal,
@@ -73,6 +75,7 @@ export function QuoteModal() {
     phone: '',
     eventDate: new Date().toISOString().split('T')[0],
   })
+
   useEffect(() => {
     if (isOpen) {
       setStep(initialStep)
@@ -116,6 +119,30 @@ export function QuoteModal() {
 
   const handlePrev = () => {
     if (step > 1) setStep(step - 1)
+  }
+
+  const translateEventType = (val: string) => {
+    const key = `quoteModal.step1.types.${val}`
+    const translated = t(key)
+    return translated === key ? val : translated
+  }
+
+  const translateGuestCount = (val: string) => {
+    const key = `quoteModal.step2.counts.${val}`
+    const translated = t(key)
+    return translated === key ? val : translated
+  }
+
+  const translateVenuePreference = (val: string) => {
+    const key = `quoteModal.step3.venues.${val}`
+    const translated = t(key)
+    return translated === key ? val : translated
+  }
+
+  const translateBudgetRange = (val: string) => {
+    const key = `quoteModal.step4.ranges.${val}`
+    const translated = t(key)
+    return translated === key ? val : translated
   }
 
   const handleSubmit = async () => {
@@ -187,7 +214,7 @@ export function QuoteModal() {
           phone: '',
           eventDate: new Date().toISOString().split('T')[0],
         })
-        alert('✓ Quote request submitted successfully! We will contact you within 24 hours.')
+        alert(t('quoteModal.success'))
       } else {
         const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
         const errorMsg = errorData.error || `HTTP ${response.status}`
@@ -231,9 +258,9 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                What type of event are you planning?
+                {t('quoteModal.step1.heading')}
               </h3>
-              <p className="text-muted-foreground">Select the event type that best describes your celebration</p>
+              <p className="text-muted-foreground">{t('quoteModal.step1.sub')}</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {eventTypes.map((type) => (
@@ -246,7 +273,7 @@ export function QuoteModal() {
                       : 'border-border hover:border-primary/50 text-foreground'
                   }`}
                 >
-                  {type}
+                  {translateEventType(type)}
                 </button>
               ))}
             </div>
@@ -257,9 +284,9 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                How many guests are you expecting?
+                {t('quoteModal.step2.heading')}
               </h3>
-              <p className="text-muted-foreground">This helps us recommend the right venues and packages</p>
+              <p className="text-muted-foreground">{t('quoteModal.step2.sub')}</p>
             </div>
             <div className="grid grid-cols-1 gap-4">
               {guestCounts.map((count) => (
@@ -272,7 +299,7 @@ export function QuoteModal() {
                       : 'border-border hover:border-primary/50 text-foreground'
                   }`}
                 >
-                  {count}
+                  {translateGuestCount(count)}
                 </button>
               ))}
             </div>
@@ -283,9 +310,9 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                What is your venue preference?
+                {t('quoteModal.step3.heading')}
               </h3>
-              <p className="text-muted-foreground">Choose your ideal event setting</p>
+              <p className="text-muted-foreground">{t('quoteModal.step3.sub')}</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               {venuePreferences.map((venue) => (
@@ -298,7 +325,7 @@ export function QuoteModal() {
                       : 'border-border hover:border-primary/50 text-foreground'
                   }`}
                 >
-                  {venue}
+                  {translateVenuePreference(venue)}
                 </button>
               ))}
             </div>
@@ -309,9 +336,9 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                What is your budget range?
+                {t('quoteModal.step4.heading')}
               </h3>
-              <p className="text-muted-foreground">This helps us tailor our recommendations</p>
+              <p className="text-muted-foreground">{t('quoteModal.step4.sub')}</p>
             </div>
             <div className="grid grid-cols-1 gap-4">
               {budgetRanges.map((budget) => (
@@ -324,7 +351,7 @@ export function QuoteModal() {
                       : 'border-border hover:border-primary/50 text-foreground'
                   }`}
                 >
-                  {budget}
+                  {translateBudgetRange(budget)}
                 </button>
               ))}
             </div>
@@ -335,14 +362,14 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                Any specific requirements?
+                {t('quoteModal.step5.heading')}
               </h3>
-              <p className="text-muted-foreground">Tell us about your vision (optional)</p>
+              <p className="text-muted-foreground">{t('quoteModal.step5.sub')}</p>
             </div>
             <textarea
               value={formData.requirements}
               onChange={(e) => handleSelect('requirements', e.target.value)}
-              placeholder="Share your ideas, themes, special requests..."
+              placeholder={t('quoteModal.step5.placeholder')}
               className="w-full h-40 p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none resize-none"
             />
           </div>
@@ -352,46 +379,46 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                Almost there! Your contact details
+                {t('quoteModal.step6.heading')}
               </h3>
-              <p className="text-muted-foreground">We&apos;ll get back to you within 24 hours</p>
+              <p className="text-muted-foreground">{t('quoteModal.step6.sub')}</p>
             </div>
             <div className="space-y-4">
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => handleSelect('name', e.target.value)}
-                placeholder="Your Name *"
+                placeholder={t('quoteModal.step6.name')}
                 className="w-full p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
               />
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => handleSelect('email', e.target.value)}
-                placeholder="Your Email *"
+                placeholder={t('quoteModal.step6.email')}
                 className="w-full p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
               />
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => handleSelect('phone', e.target.value)}
-                placeholder="Your Phone (optional)"
+                placeholder={t('quoteModal.step6.phone')}
                 className="w-full p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
               />
             </div>
             
             {/* Summary */}
             <div className="mt-8 p-4 rounded-lg bg-secondary/50 space-y-2">
-              <h4 className="font-semibold text-foreground mb-3">Your Selection Summary</h4>
+              <h4 className="font-semibold text-foreground mb-3">{t('quoteModal.step6.summaryTitle')}</h4>
               <div className="grid grid-cols-2 gap-2 text-sm">
-                <span className="text-muted-foreground">Event Type:</span>
-                <span className="text-foreground">{formData.eventType}</span>
-                <span className="text-muted-foreground">Guest Count:</span>
-                <span className="text-foreground">{formData.guestCount}</span>
-                <span className="text-muted-foreground">Venue:</span>
-                <span className="text-foreground">{formData.venuePreference}</span>
-                <span className="text-muted-foreground">Budget:</span>
-                <span className="text-foreground">{formData.budgetRange}</span>
+                <span className="text-muted-foreground">{t('quoteModal.step6.eventType')}</span>
+                <span className="text-foreground">{translateEventType(formData.eventType)}</span>
+                <span className="text-muted-foreground">{t('quoteModal.step6.guestCount')}</span>
+                <span className="text-foreground">{translateGuestCount(formData.guestCount)}</span>
+                <span className="text-muted-foreground">{t('quoteModal.step6.venue')}</span>
+                <span className="text-foreground">{translateVenuePreference(formData.venuePreference)}</span>
+                <span className="text-muted-foreground">{t('quoteModal.step6.budget')}</span>
+                <span className="text-foreground">{translateBudgetRange(formData.budgetRange)}</span>
               </div>
             </div>
           </div>
@@ -421,7 +448,9 @@ export function QuoteModal() {
             {/* Header */}
             <div className="sticky top-0 bg-card border-b border-border p-6 flex items-center justify-between">
               <div>
-                <span className="text-sm text-primary font-medium">Step {step} of {totalSteps}</span>
+                <span className="text-sm text-primary font-medium">
+                  {t('quoteModal.step')} {step} {t('quoteModal.of')} {totalSteps}
+                </span>
                 <div className="flex gap-1 mt-2">
                   {Array.from({ length: totalSteps }).map((_, i) => (
                     <div
@@ -436,7 +465,7 @@ export function QuoteModal() {
               <button
                 onClick={closeModal}
                 className="text-muted-foreground hover:text-foreground transition-colors"
-                aria-label="Close modal"
+                aria-label={t('quoteModal.close')}
               >
                 <X size={24} />
               </button>
@@ -455,10 +484,10 @@ export function QuoteModal() {
               {submitBlocked && (
                 <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
                   {capacityExceeded && (
-                    <p>⚠ Guest count exceeds venue capacity. Please adjust before submitting.</p>
+                    <p>⚠ {t('quoteModal.errors.capacity')}</p>
                   )}
                   {bookingBlocked && (
-                    <p>❌ Selected date is unavailable. Please choose another date.</p>
+                    <p>❌ {t('quoteModal.errors.date')}</p>
                   )}
                 </div>
               )}
@@ -489,7 +518,7 @@ export function QuoteModal() {
                 className="gap-2"
               >
                 <ChevronLeft size={18} />
-                Back
+                {t('quoteModal.back')}
               </Button>
               {step < totalSteps ? (
                 <Button
@@ -497,7 +526,7 @@ export function QuoteModal() {
                   disabled={!canProceed()}
                   className="bg-primary text-primary-foreground hover:bg-gold-light gap-2"
                 >
-                  Next
+                  {t('quoteModal.next')}
                   <ChevronRight size={18} />
                 </Button>
               ) : (
@@ -506,7 +535,7 @@ export function QuoteModal() {
                   disabled={!canProceed() || isSubmitting || submitBlocked}
                   className="bg-primary text-primary-foreground hover:bg-gold-light gap-2"
                 >
-                  {isSubmitting ? 'Submitting...' : 'Submit Request'}
+                  {isSubmitting ? t('quoteModal.submitting') : t('quoteModal.submit')}
                   {!isSubmitting && <Check size={18} />}
                 </Button>
               )}

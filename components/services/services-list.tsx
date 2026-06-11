@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const services = [
   {
@@ -131,71 +132,93 @@ const services = [
 
 export function ServicesList() {
   const { openModal } = useQuoteModal()
+  const { t } = useTranslation()
+
+  const getLocaleSlug = (slug: string): string => {
+    switch (slug) {
+      case 'wedding-planning': return 'wedding'
+      case 'destination-weddings': return 'destination'
+      case 'corporate-events': return 'corporate'
+      case 'birthday-celebrations': return 'birthdays'
+      case 'anniversary-events': return 'anniversaries'
+      case 'entertainment-management': return 'entertainment'
+      default: return slug
+    }
+  }
 
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
         <div className="space-y-24">
-          {services.map((service, index) => (
-            <motion.div
-              id={service.slug}
-              key={service.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className={`scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${
-                index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-              }`}
-            >
-              {/* Image */}
-              <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover"
-                  />
+          {services.map((service, index) => {
+            const localeSlug = getLocaleSlug(service.slug)
+            return (
+              <motion.div
+                id={service.slug}
+                key={service.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className={`scroll-mt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${
+                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                }`}
+              >
+                {/* Image */}
+                <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                    <Image
+                      src={service.image}
+                      alt={t(`services.${localeSlug}.title`)}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                  {/* Decorative Element */}
+                  <div className={`absolute -bottom-6 ${index % 2 === 1 ? '-left-6' : '-right-6'} w-48 h-48 bg-primary/10 rounded-2xl -z-10`} />
                 </div>
-                {/* Decorative Element */}
-                <div className={`absolute -bottom-6 ${index % 2 === 1 ? '-left-6' : '-right-6'} w-48 h-48 bg-primary/10 rounded-2xl -z-10`} />
-              </div>
 
-              {/* Content */}
-              <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <span className="text-primary font-medium text-sm">0{service.id}</span>
-                <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mt-2 mb-4">
-                  {service.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  {service.description}
-                </p>
+                {/* Content */}
+                <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                  <span className="text-primary font-medium text-sm">0{service.id}</span>
+                  <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mt-2 mb-4">
+                    {t(`services.${localeSlug}.title`)}
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {t(`services.${localeSlug}.desc`)}
+                  </p>
 
-                {/* Features */}
-                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-foreground">
-                      <Check className="w-5 h-5 text-primary shrink-0" />
-                      <span className="text-sm">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+                  {/* Features */}
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                    {service.features.map((feature, fIndex) => {
+                      const featureKey = `services.${localeSlug}.features.${fIndex}`
+                      const translatedFeature = t(featureKey)
+                      return (
+                        <li key={feature} className="flex items-center gap-2 text-foreground">
+                          <Check className="w-5 h-5 text-primary shrink-0" />
+                          <span className="text-sm">
+                            {translatedFeature === featureKey ? feature : translatedFeature}
+                          </span>
+                        </li>
+                      )
+                    })}
+                  </ul>
 
-                <Button
-  onClick={() =>
-    openModal({
-      eventType: service.title,
-      step: 2,
-    })
-  }
-  className="bg-primary text-primary-foreground hover:bg-gold-light"
->
-  Get Quote for {service.title}
-</Button>
-              </div>
-            </motion.div>
-          ))}
+                  <Button
+                    onClick={() =>
+                      openModal({
+                        eventType: service.title,
+                        step: 2,
+                      })
+                    }
+                    className="bg-primary text-primary-foreground hover:bg-gold-light"
+                  >
+                    {t('servicesPage.getQuoteFor')} {t(`services.${localeSlug}.title`)}
+                  </Button>
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

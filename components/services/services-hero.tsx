@@ -1,8 +1,11 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function ServicesHero() {
+  const { t } = useTranslation()
+
   return (
     <section className="relative pt-32 pb-20 bg-slate-50 overflow-hidden">
       {/* Background Pattern */}
@@ -18,13 +21,13 @@ export function ServicesHero() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="text-primary font-medium tracking-widest uppercase text-sm">Our Services</span>
+          <span className="text-primary font-medium tracking-widest uppercase text-sm">{t('servicesPage.hero.eyebrow')}</span>
           <h1 className="text-4xl md:text-6xl font-serif font-bold text-foreground mt-4 mb-6 text-balance">
-            Premium Event <span className="text-gold-gradient">Services</span>
+            {t('servicesPage.hero.titlePart1')}{' '}
+            <span className="text-gold-gradient">{t('servicesPage.hero.titlePart2')}</span>
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl leading-relaxed">
-            From intimate gatherings to grand celebrations, we offer comprehensive event management 
-            services tailored to your unique vision.
+            {t('servicesPage.hero.description')}
           </p>
         </motion.div>
       </div>

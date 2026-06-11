@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { getVenueQuotePrefill } from '@/lib/venues/book-venue'
 import type { Venue } from '@/lib/types/venues'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 interface VenueCardProps {
   venue: Venue
@@ -16,6 +17,14 @@ interface VenueCardProps {
 
 export function VenueCard({ venue, index = 0 }: VenueCardProps) {
   const { openModal } = useQuoteModal()
+  const { t } = useTranslation()
+
+  const indoorOutdoorKey =
+    venue.indoorOutdoor === 'Indoor'
+      ? 'indoor'
+      : venue.indoorOutdoor === 'Outdoor'
+      ? 'outdoor'
+      : 'indoorOutdoor'
 
   return (
     <motion.div
@@ -35,7 +44,7 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
         />
         <div className="absolute top-3 sm:top-4 left-3 sm:left-4 max-w-[70%]">
           <span className="inline-block px-2.5 sm:px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-[10px] sm:text-xs font-medium text-foreground line-clamp-1">
-            {venue.category}
+            {t(`venuesPage.categories.${venue.category}`) || venue.category}
           </span>
         </div>
         <div className="absolute top-3 sm:top-4 right-3 sm:right-4 flex items-center gap-1 px-2 sm:px-2.5 py-1 rounded-full bg-white/90 backdrop-blur-sm">
@@ -57,11 +66,15 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
         <div className="flex flex-wrap gap-3 sm:gap-4 mt-3 sm:mt-4 text-muted-foreground">
           <div className="flex items-center gap-1.5">
             <Users size={14} className="text-primary shrink-0" />
-            <span className="text-small">{venue.capacity}</span>
+            <span className="text-small">
+              {venue.capacity.replace(' Guests', ' ' + t('portfolioPage.grid.guestsLabel'))}
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
             <Building2 size={14} className="text-primary shrink-0" />
-            <span className="text-small">{venue.indoorOutdoor}</span>
+            <span className="text-small">
+              {t(`venuesPage.labels.${indoorOutdoorKey}`) || venue.indoorOutdoor}
+            </span>
           </div>
         </div>
 
@@ -73,13 +86,13 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
             variant="outline"
             className="min-h-11 flex-1 border-primary/50 hover:bg-primary/10 text-sm"
           >
-            <Link href={`/venues/${venue.slug}`}>View Details</Link>
+            <Link href={`/venues/${venue.slug}`}>{t('featuredVenues.details')}</Link>
           </Button>
           <Button
             onClick={() => openModal(getVenueQuotePrefill(venue))}
             className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 text-sm"
           >
-            Book Venue
+            {t('venuesPage.labels.bookVenue')}
           </Button>
         </div>
       </div>
