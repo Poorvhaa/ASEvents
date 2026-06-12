@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { NAVBAR_SCROLL_OFFSET, scrollToHash } from '@/lib/scroll-to-hash'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 /**
  * Scrolls to the URL hash when on a given path.
@@ -13,6 +14,7 @@ export function useHashScroll(
   offset = NAVBAR_SCROLL_OFFSET
 ): void {
   const pathname = usePathname()
+  const { language } = useTranslation()
 
   useEffect(() => {
     if (!pathname.startsWith(pathPrefix)) return
@@ -30,5 +32,5 @@ export function useHashScroll(
 
     window.addEventListener('hashchange', scrollToCurrentHash)
     return () => window.removeEventListener('hashchange', scrollToCurrentHash)
-  }, [pathname, pathPrefix, offset])
+  }, [pathname, pathPrefix, offset, language])
 }

@@ -107,7 +107,7 @@ export function ContactContent() {
     } catch (error) {
       console.error('Submission error:', error)
       setIsSubmitting(false)
-      alert('Failed to submit form. Please try again.')
+      alert(t('contactExtra.submissionFailed'))
     }
   }
 
@@ -162,7 +162,7 @@ export function ContactContent() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-                      placeholder="Apurva Shah"
+                      placeholder={t('contactExtra.placeholders.name')}
                     />
                   </div>
                   <div>
@@ -177,7 +177,7 @@ export function ContactContent() {
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-                      placeholder="apurva@example.com"
+                      placeholder={t('contactExtra.placeholders.email')}
                     />
                   </div>
                 </div>
@@ -194,7 +194,7 @@ export function ContactContent() {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-                      placeholder="+91 95103 24143"
+                      placeholder={t('contactExtra.placeholders.phone')}
                     />
                   </div>
                   <div>
@@ -209,7 +209,7 @@ export function ContactContent() {
                       required
                       className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground focus:border-primary focus:outline-none"
                     >
-                      <option value="">Select event type</option>
+                      <option value="">{t('contactExtra.selectType')}</option>
                       {eventTypes.map((type) => (
                         <option key={type} value={type}>{translateEventType(type)}</option>
                       ))}
@@ -242,7 +242,7 @@ export function ContactContent() {
                       onChange={handleChange}
                       className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground focus:border-primary focus:outline-none"
                     >
-                      <option value="">Select budget range</option>
+                      <option value="">{t('contactExtra.selectBudget')}</option>
                       {budgetRanges.map((range) => (
                         <option key={range} value={range}>{translateBudgetRange(range)}</option>
                       ))}
@@ -343,8 +343,8 @@ export function ContactContent() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">{t('contact.content.hours')}</h3>
                   <p className="text-muted-foreground">
-                    Mon - Fri: 9:00 AM - 6:00 PM<br />
-                    Sat: 10:00 AM - 4:00 PM
+                    {t('contactExtra.monFri')}<br />
+                    {t('contactExtra.sat')}
                   </p>
                 </div>
               </div>

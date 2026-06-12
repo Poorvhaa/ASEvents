@@ -190,7 +190,7 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
           className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none resize-none"
-          placeholder={`${t('venuesPage.inquiry.messagePlaceholder')} ${venue.name}...`}
+          placeholder={`${t('venuesPage.inquiry.messagePlaceholder')} ${t(`venues.${venue.slug}.name`) || venue.name}...`}
         />
       </div>
 

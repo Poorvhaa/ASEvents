@@ -45,7 +45,7 @@ const budgetRanges = [
 ]
 
 export function QuoteModal() {
-  const { t } = useTranslation()
+  const { t, language } = useTranslation()
   const {
     isOpen,
     closeModal,
@@ -87,7 +87,7 @@ export function QuoteModal() {
           : initialVenue || prev.venuePreference,
         guestCount: initialGuestCount || prev.guestCount,
         requirements: initialVenueName
-          ? `Venue: ${initialVenueName}, ${initialCity || ''}. Capacity: ${initialVenueCapacity || 'N/A'}.`
+          ? `${t('quoteModalExtra.prefillVenue')} ${initialVenueName}, ${initialCity || ''}. ${t('quoteModalExtra.prefillCapacity')} ${initialVenueCapacity || 'N/A'}.`
           : prev.requirements,
         eventDate: initialEventDate || prev.eventDate,
       }))
@@ -103,6 +103,7 @@ export function QuoteModal() {
     initialGuestCount,
     initialEventDate,
     initialStep,
+    language,
   ])
 
   const submitBlocked = bookingBlocked || capacityExceeded
@@ -220,13 +221,13 @@ export function QuoteModal() {
         const errorMsg = errorData.error || `HTTP ${response.status}`
         console.error('[v0] Quote Modal: Error response:', errorData)
         setError(errorMsg)
-        alert(`Failed to submit quote request: ${errorMsg}. Please try again.`)
+        alert(`${t('quoteModalExtra.submissionFailed')} ${errorMsg}.`)
       }
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : String(err)
       console.error('[v0] Quote Modal: Submission error:', errorMsg)
       setError(errorMsg)
-      alert(`Error submitting quote request: ${errorMsg}. Please check your connection and try again.`)
+      alert(`${t('quoteModalExtra.connectionError')}`)
     } finally {
       setIsSubmitting(false)
     }
@@ -477,7 +478,7 @@ export function QuoteModal() {
                 <div className="mb-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm">
                   <p className="font-semibold text-foreground">{initialVenueName}</p>
                   <p className="text-muted-foreground mt-1">
-                    {initialVenueCategory} · {initialCity} · Capacity: {initialVenueCapacity}
+                    {initialVenueCategory} · {initialCity} · {t('quoteModalExtra.prefillCapacity')} {initialVenueCapacity}
                   </p>
                 </div>
               )}

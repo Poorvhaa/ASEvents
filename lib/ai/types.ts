@@ -42,6 +42,7 @@ export interface ConsultantAnswers {
 }
 
 export interface PackageRecommendation {
+  id?: string
   name: string
   category: string
   inclusions: string[]
@@ -65,6 +66,7 @@ export interface VenueAvailabilitySuggestion {
 }
 
 export interface VenueRecommendation {
+  slug?: string
   name: string
   type: string
   capacity: string
@@ -95,6 +97,7 @@ export interface AIConsultationResult {
   planningTips: string[]
   nextSteps: string[]
   summary: string
+  answers?: ConsultantAnswers
 }
 
 export interface ChatMessage {

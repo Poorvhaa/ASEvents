@@ -1,8 +1,8 @@
-'use client'
-
 import { Bot, User } from 'lucide-react'
 import type { ChatMessage } from '@/lib/ai/types'
 import { RecommendationCard } from '@/components/ai/recommendation-card'
+import { useTranslation } from '@/src/hooks/useTranslation'
+import { formatConsultationMessage } from '@/lib/ai/consultant-engine'
 
 interface MessageBubbleProps {
   message: ChatMessage
@@ -24,6 +24,20 @@ function renderMarkdownBold(text: string) {
 
 export function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user'
+  const { t } = useTranslation()
+
+  let content = message.content
+  if (message.id === 'welcome') {
+    if (content.startsWith('Great choice') || content.includes('package')) {
+      const match = content.match(/\*\*(.*?)\*\*/)
+      const pkgTitle = match ? match[1] : ''
+      content = t('aiPlanner.prefillWelcome').replace('{eventType}', pkgTitle)
+    } else {
+      content = t('aiPlanner.welcome')
+    }
+  } else if (message.recommendation) {
+    content = formatConsultationMessage(message.recommendation, t)
+  }
 
   return (
     <div className={`flex gap-2.5 ${isUser ? 'justify-end' : 'justify-start'}`}>
@@ -41,7 +55,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
               : 'bg-slate-100 text-foreground rounded-bl-md'
           }`}
         >
-          {renderMarkdownBold(message.content)}
+          {renderMarkdownBold(content)}
         </div>
 
         {message.recommendation && (

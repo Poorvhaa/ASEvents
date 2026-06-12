@@ -40,7 +40,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
         <div className="relative h-[50vh] min-h-[400px]">
           <Image
             src={venue.image}
-            alt={venue.name}
+            alt={t(`venues.${venue.slug}.name`) || venue.name}
             fill
             priority
             className="object-cover"
@@ -64,12 +64,12 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                   {t(`venuesPage.categories.${venue.category}`) || venue.category}
                 </span>
                 <h1 className="text-3xl md:text-5xl font-serif font-bold text-foreground mt-2">
-                  {venue.name}
+                  {t(`venues.${venue.slug}.name`) || venue.name}
                 </h1>
                 <div className="flex flex-wrap items-center gap-4 mt-4">
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <MapPin size={16} className="text-primary" />
-                    <span>{venue.location}, {venue.city}</span>
+                    <span>{t(`venues.${venue.slug}.location`) || venue.location}, {t(`cities.${venue.city}`) || venue.city}</span>
                   </div>
                   <div className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary/10">
                     <Star size={14} className="text-primary fill-primary" />
@@ -81,7 +81,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
           </div>
         </div>
       </section>
-
+ 
       {/* Details */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4 lg:px-8">
@@ -94,7 +94,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 viewport={{ once: true }}
               >
                 <h2 className="text-2xl font-serif font-bold text-foreground mb-4">{t('venuesPage.detail.about')}</h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">{venue.description}</p>
+                <p className="text-muted-foreground text-lg leading-relaxed">{t(`venues.${venue.slug}.description`) || venue.description}</p>
               </motion.div>
 
               {/* Amenities */}
@@ -107,15 +107,21 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
               >
                 <h2 className="text-2xl font-serif font-bold text-foreground mb-6">{t('venuesPage.detail.facilities')}</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {venue.amenities.map((amenity) => (
-                    <div
-                      key={amenity}
-                      className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200"
-                    >
-                      <Check size={18} className="text-primary shrink-0" />
-                      <span className="text-foreground">{amenity}</span>
-                    </div>
-                  ))}
+                  {venue.amenities.map((amenity, index) => {
+                    const amenityKey = `venues.${venue.slug}.amenities.${index}`
+                    const translatedAmenity = t(amenityKey)
+                    return (
+                      <div
+                        key={amenity}
+                        className="flex items-center gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200"
+                      >
+                        <Check size={18} className="text-primary shrink-0" />
+                        <span className="text-foreground">
+                          {translatedAmenity === amenityKey ? amenity : translatedAmenity}
+                        </span>
+                      </div>
+                    )
+                  })}
                 </div>
               </motion.div>
 
@@ -133,7 +139,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                     <div key={i} className="relative aspect-square rounded-xl overflow-hidden">
                       <Image
                         src={img}
-                        alt={`${venue.name} gallery ${i + 1}`}
+                        alt={`${t(`venues.${venue.slug}.name`) || venue.name} gallery ${i + 1}`}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-300"
                       />
@@ -154,7 +160,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                 <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center">
                   <div className="text-center p-8">
                     <Map size={48} className="text-primary mx-auto mb-4" />
-                    <p className="text-muted-foreground">{venue.location}, {venue.city}</p>
+                    <p className="text-muted-foreground">{t(`venues.${venue.slug}.location`) || venue.location}, {t(`cities.${venue.city}`) || venue.city}</p>
                     <p className="text-sm text-muted-foreground mt-2">{t('venuesPage.detail.mapSoon')}</p>
                   </div>
                 </div>
@@ -196,14 +202,14 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                     <Car size={20} className="text-primary shrink-0" />
                     <div>
                       <p className="text-sm text-muted-foreground">{t('venuesPage.detail.parking')}</p>
-                      <p className="font-medium text-foreground">{venue.parking}</p>
+                      <p className="font-medium text-foreground">{t(`venues.${venue.slug}.parking`) || venue.parking}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Bed size={20} className="text-primary shrink-0" />
                     <div>
                       <p className="text-sm text-muted-foreground">{t('venuesPage.detail.rooms')}</p>
-                      <p className="font-medium text-foreground">{venue.rooms}</p>
+                      <p className="font-medium text-foreground">{t(`venues.${venue.slug}.rooms`) || venue.rooms}</p>
                     </div>
                   </div>
                 </div>

@@ -6,8 +6,10 @@ import { useAIConsultant } from '@/hooks/use-ai-consultant'
 import { buildProposalDocument } from '@/services/pdfService'
 import { DownloadProposalButton } from '@/components/pdf/download-proposal-button'
 import type { LeadPayload } from '@/lib/ai/types'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function LeadForm() {
+  const { t, language } = useTranslation()
   const { answers, recommendation } = useAIConsultant()
   const [formData, setFormData] = useState({ name: '', phone: '', email: '', city: answers.city || '' })
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -66,14 +68,15 @@ export function LeadForm() {
         venuePreference: answers.venuePreference,
         specialRequirements: answers.specialRequirements,
       },
-      recommendation
+      recommendation,
+      language
     )
 
   if (submitted) {
     return (
       <div className="p-4 border-t border-slate-200 bg-slate-50 text-center space-y-3">
-        <p className="text-sm font-semibold text-foreground">Thank you! Your proposal request has been received.</p>
-        <p className="text-xs text-muted-foreground">Our team will contact you within 24 hours.</p>
+        <p className="text-sm font-semibold text-foreground">{t('leadForm.successTitle')}</p>
+        <p className="text-xs text-muted-foreground">{t('leadForm.successDesc')}</p>
         {proposalDoc && (
           <DownloadProposalButton
             document={proposalDoc}
@@ -86,13 +89,13 @@ export function LeadForm() {
 
   return (
     <div className="p-4 border-t border-slate-200 bg-slate-50">
-      <h3 className="text-sm font-semibold text-foreground mb-1">Receive Your Personalized Proposal</h3>
-      <p className="text-xs text-muted-foreground mb-4">Get a detailed plan sent to your inbox.</p>
+      <h3 className="text-sm font-semibold text-foreground mb-1">{t('leadForm.title')}</h3>
+      <p className="text-xs text-muted-foreground mb-4">{t('leadForm.desc')}</p>
 
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="text"
-          placeholder="Full Name"
+          placeholder={t('leadForm.placeholders.name')}
           required
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -100,7 +103,7 @@ export function LeadForm() {
         />
         <input
           type="tel"
-          placeholder="Phone Number"
+          placeholder={t('leadForm.placeholders.phone')}
           required
           value={formData.phone}
           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -108,7 +111,7 @@ export function LeadForm() {
         />
         <input
           type="email"
-          placeholder="Email Address"
+          placeholder={t('leadForm.placeholders.email')}
           required
           value={formData.email}
           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -116,7 +119,7 @@ export function LeadForm() {
         />
         <input
           type="text"
-          placeholder="City"
+          placeholder={t('leadForm.placeholders.city')}
           required
           value={formData.city}
           onChange={(e) => setFormData({ ...formData, city: e.target.value })}
@@ -130,7 +133,7 @@ export function LeadForm() {
           disabled={isSubmitting}
           className="w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
         >
-          {isSubmitting ? 'Submitting...' : 'Get My Proposal'}
+          {isSubmitting ? t('leadForm.submitting') : t('leadForm.getProposal')}
         </Button>
       </form>
     </div>

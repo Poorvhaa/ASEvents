@@ -22,6 +22,7 @@ function catalogPackage(title: string): Partial<PackageRecommendation> | null {
   const match = packages.find((p) => p.title === title)
   if (!match) return null
   return {
+    id: match.id,
     name: match.title,
     category: match.category,
     inclusions: match.includedServices ?? match.includes,
@@ -180,7 +181,9 @@ function finalize(
   defaultInclusions: string[]
 ): PackageRecommendationResult {
   const name = catalog?.name ?? fallbackName
+  const id = catalog?.id ?? (fallbackName === 'Complete Wedding Package' ? 'complete-wedding' : fallbackName.toLowerCase().replace(/\s+/g, '-'))
   return {
+    id,
     name,
     category: catalog?.category ?? 'General',
     inclusions: catalog?.inclusions ?? defaultInclusions,

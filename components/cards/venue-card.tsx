@@ -37,7 +37,7 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
       <div className="relative aspect-[4/3] overflow-hidden shrink-0">
         <Image
           src={venue.image}
-          alt={venue.name}
+          alt={t(`venues.${venue.slug}.name`) || venue.name}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -55,12 +55,12 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
 
       <div className="flex flex-col flex-1 p-4 sm:p-6 min-w-0">
         <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
-          {venue.name}
+          {t(`venues.${venue.slug}.name`) || venue.name}
         </h3>
 
         <div className="flex items-start gap-1.5 mt-2 text-muted-foreground min-w-0">
           <MapPin size={14} className="text-primary shrink-0 mt-0.5" />
-          <span className="text-small line-clamp-2">{venue.location}</span>
+          <span className="text-small line-clamp-2">{t(`venues.${venue.slug}.location`) || venue.location}</span>
         </div>
 
         <div className="flex flex-wrap gap-3 sm:gap-4 mt-3 sm:mt-4 text-muted-foreground">

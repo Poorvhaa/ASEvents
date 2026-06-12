@@ -45,7 +45,9 @@ export function VenuesGrid() {
                 >
                   <option value="All">{t('venuesPage.grid.allLocations')}</option>
                   {venueCities.map((city) => (
-                    <option key={city} value={city}>{city}</option>
+                    <option key={city} value={city}>
+                      {t(`cities.${city}`) || city}
+                    </option>
                   ))}
                 </select>
               </div>

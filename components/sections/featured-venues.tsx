@@ -61,7 +61,7 @@ export function FeaturedVenues() {
                   <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
                     <Image
                       src={venue.image}
-                      alt={venue.name}
+                      alt={t(`venues.${venue.slug}.name`) || venue.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -71,13 +71,15 @@ export function FeaturedVenues() {
                       <span className="text-xs font-semibold">{venue.rating}</span>
                     </div>
                   </div>
-                  <span className="text-primary text-xs sm:text-sm font-medium">{venue.category}</span>
+                  <span className="text-primary text-xs sm:text-sm font-medium">
+                    {t(`venuesPage.categories.${venue.category}`) || venue.category}
+                  </span>
                   <h3 className="text-base sm:text-lg font-semibold text-foreground mt-1 group-hover:text-primary transition-colors line-clamp-2">
-                    {venue.name}
+                    {t(`venues.${venue.slug}.name`) || venue.name}
                   </h3>
                   <div className="flex items-center gap-1.5 mt-2 text-muted-foreground">
                     <MapPin size={14} className="shrink-0" />
-                    <span className="text-small">{venue.city}</span>
+                    <span className="text-small">{t(`cities.${venue.city}`) || venue.city}</span>
                   </div>
                   <p className="text-small font-semibold text-foreground mt-2">{venue.startingPrice}</p>
                 </Link>

@@ -82,9 +82,13 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
       <span className="text-primary text-xs sm:text-sm font-medium capitalize">
         {t(`packagesPage.categories.${categoryNames[pkg.category] || pkg.category}`) || pkg.category}
       </span>
-      <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">{pkg.title}</h3>
+      <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">
+        {t(`packages.${pkg.id}.title`) || pkg.title}
+      </h3>
 
-      <p className="text-base sm:text-lg font-bold text-foreground mb-3">{pkg.price}</p>
+      <p className="text-base sm:text-lg font-bold text-foreground mb-3">
+        {t(`packages.${pkg.id}.price`) || pkg.price}
+      </p>
 
       <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
         <span className="inline-flex items-center gap-1">
@@ -93,39 +97,49 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         </span>
         <span className="inline-flex items-center gap-1">
           <Clock size={14} className="text-primary" />
-          {pkg.duration}
+          {t(`packages.${pkg.id}.duration`) || pkg.duration}
         </span>
       </div>
 
-      {pkg.description && (
-        <p className="text-muted-foreground text-small leading-relaxed mb-4">{pkg.description}</p>
+      {(t(`packages.${pkg.id}.description`) || pkg.description) && (
+        <p className="text-muted-foreground text-small leading-relaxed mb-4">
+          {t(`packages.${pkg.id}.description`) || pkg.description}
+        </p>
       )}
 
       <div className="mb-4">
         <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">{t('packagesPage.keyHighlights')}</p>
         <ul className="space-y-1.5">
-          {pkg.highlights.map((item) => (
-            <li key={item} className="flex items-start gap-2 text-small text-foreground">
-              <Check size={14} className="text-primary mt-0.5 shrink-0" />
-              <span>{item}</span>
-            </li>
-          ))}
+          {pkg.highlights.map((item, hIndex) => {
+            const highlightKey = `packages.${pkg.id}.highlights.${hIndex}`
+            const translatedItem = t(highlightKey)
+            return (
+              <li key={item} className="flex items-start gap-2 text-small text-foreground">
+                <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                <span>{translatedItem === highlightKey ? item : translatedItem}</span>
+              </li>
+            )
+          })}
         </ul>
       </div>
 
       <ul className="space-y-1.5 mb-6 flex-1">
         <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">{t('packagesPage.includedServices')}</p>
-        {pkg.includedServices.slice(0, 5).map((item) => (
-          <li key={item} className="flex items-start gap-2 text-small text-muted-foreground">
-            <Check size={14} className="text-primary/70 mt-0.5 shrink-0" />
-            <span>{item}</span>
-          </li>
-        ))}
+        {pkg.includedServices.slice(0, 5).map((item, sIndex) => {
+          const serviceKey = `packages.${pkg.id}.includedServices.${sIndex}`
+          const translatedItem = t(serviceKey)
+          return (
+            <li key={item} className="flex items-start gap-2 text-small text-muted-foreground">
+              <Check size={14} className="text-primary/70 mt-0.5 shrink-0" />
+              <span>{translatedItem === serviceKey ? item : translatedItem}</span>
+            </li>
+          )
+        })}
       </ul>
 
       <div className="pt-4 border-t border-border mt-auto flex flex-col sm:flex-row gap-2">
         <Button
-          onClick={() => openModal({ eventType: pkg.title, step: 2 })}
+          onClick={() => openModal({ eventType: t(`packages.${pkg.id}.title`) || pkg.title, step: 2 })}
           className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
         >
           {t('nav.getQuote')}

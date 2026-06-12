@@ -60,6 +60,7 @@ export function recommendVenues(answers: ConsultantAnswers): VenueRecommendation
   scored.sort((a, b) => b.score - a.score)
 
   const top = scored.slice(0, 3).map(({ venue }) => ({
+    slug: venue.slug,
     name: venue.name,
     type: venue.category,
     capacity: venue.capacity,
@@ -70,6 +71,7 @@ export function recommendVenues(answers: ConsultantAnswers): VenueRecommendation
   if (top.length === 0) {
     return [
       {
+        slug: 'crystal-banquet-rajkot',
         name: 'Premium Banquet Hall',
         type: 'Banquet Hall',
         capacity: `${guests + 100} Guests`,
@@ -77,6 +79,7 @@ export function recommendVenues(answers: ConsultantAnswers): VenueRecommendation
         startingCost: '₹1,50,000',
       },
       {
+        slug: 'azure-luxury-resort-udaipur',
         name: 'Luxury Resort Venue',
         type: 'Resort',
         capacity: `${guests + 200} Guests`,

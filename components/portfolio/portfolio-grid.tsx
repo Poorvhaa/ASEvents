@@ -125,7 +125,7 @@ export function PortfolioGrid() {
                   <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-3 sm:mb-4">
                     <Image
                       src={item.image}
-                      alt={item.title}
+                      alt={t(`portfolio.${item.id}.title`) || item.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -136,11 +136,11 @@ export function PortfolioGrid() {
                     {t(`portfolioPage.categories.${item.category}`) || item.category}
                   </span>
                   <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 group-hover:text-primary transition-colors line-clamp-2">
-                    {item.title}
+                    {t(`portfolio.${item.id}.title`) || item.title}
                   </h3>
                   <div className="flex items-center gap-1.5 mt-2 text-muted-foreground">
                     <MapPin size={14} className="shrink-0" />
-                    <span className="text-small truncate">{item.location}</span>
+                    <span className="text-small truncate">{t(`portfolio.${item.id}.location`) || item.location}</span>
                   </div>
                 </motion.div>
               ))}
@@ -166,7 +166,7 @@ export function PortfolioGrid() {
                 <div className="relative overflow-hidden rounded-xl">
                   <Image
                     src={image.src}
-                    alt={image.alt}
+                    alt={t(`portfolio.gallery.${image.id}.alt`) || image.alt}
                     width={400}
                     height={index % 3 === 0 ? 500 : index % 3 === 1 ? 300 : 400}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
@@ -232,30 +232,30 @@ export function PortfolioGrid() {
                     {t(`portfolioPage.categories.${selectedEvent.category}`) || selectedEvent.category}
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-serif font-bold text-foreground mt-2 mb-4">
-                    {selectedEvent.title}
+                    {t(`portfolio.${selectedEvent.id}.title`) || selectedEvent.title}
                   </h2>
                   <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-6 mb-6 text-muted-foreground text-small">
                     <div className="flex items-center gap-2">
                       <MapPin size={18} className="text-primary shrink-0" />
-                      <span>{selectedEvent.location}</span>
+                      <span>{t(`portfolio.${selectedEvent.id}.location`) || selectedEvent.location}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Calendar size={18} className="text-primary shrink-0" />
-                      <span>{selectedEvent.date}</span>
+                      <span>{t(`portfolio.${selectedEvent.id}.date`) || selectedEvent.date}</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <Users size={18} className="text-primary shrink-0" />
                       <span>{selectedEvent.guests} {t('portfolioPage.grid.guestsLabel')}</span>
                     </div>
                   </div>
-                  <p className="text-body text-muted-foreground mb-6 sm:mb-8">{selectedEvent.description}</p>
+                  <p className="text-body text-muted-foreground mb-6 sm:mb-8">{t(`portfolio.${selectedEvent.id}.description`) || selectedEvent.description}</p>
                   <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4">{t('portfolioPage.grid.eventGallery')}</h3>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
                     {selectedEvent.gallery.map((img, i) => (
                       <div key={i} className="relative aspect-square rounded-lg overflow-hidden">
                         <Image
                           src={img}
-                          alt={`${selectedEvent.title} gallery ${i + 1}`}
+                          alt={`${t(`portfolio.${selectedEvent.id}.title`) || selectedEvent.title} gallery ${i + 1}`}
                           fill
                           sizes="(max-width: 640px) 50vw, 200px"
                           className="object-cover"
@@ -294,7 +294,7 @@ export function PortfolioGrid() {
               >
                 <Image
                   src={selectedImage.src}
-                  alt={selectedImage.alt}
+                  alt={t(`portfolio.gallery.${selectedImage.id}.alt`) || selectedImage.alt}
                   width={1200}
                   height={800}
                   sizes="100vw"

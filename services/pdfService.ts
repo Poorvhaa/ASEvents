@@ -37,6 +37,7 @@ export interface ProposalDocument {
   nextSteps: string[]
   quoteNumber: string
   generatedAt: string
+  language?: string
 }
 
 function safeText(value: string | null | undefined, fallback = 'N/A'): string {
@@ -46,7 +47,8 @@ function safeText(value: string | null | undefined, fallback = 'N/A'): string {
 
 export function buildProposalDocument(
   lead: LeadPayload,
-  recommendation: AIConsultationResult
+  recommendation: AIConsultationResult,
+  language?: string
 ): ProposalDocument {
   const quote = generateQuote(lead, recommendation)
   const b = recommendation.budgetEstimate
@@ -83,6 +85,7 @@ export function buildProposalDocument(
     nextSteps: recommendation.nextSteps.length > 0 ? recommendation.nextSteps : ['N/A'],
     quoteNumber: quote.quoteNumber,
     generatedAt: new Date().toISOString(),
+    language,
   }
 }
 

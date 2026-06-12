@@ -1,4 +1,5 @@
 'use client'
+// Touched to invalidate next.js json bundle cache
 
 import React, { createContext, useState, useEffect } from 'react'
 import en from '../locales/en.json'
@@ -28,7 +29,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedLang = localStorage.getItem('language') as Language
+      const savedLang = localStorage.getItem('as-events-language') as Language
       if (savedLang && ['en', 'hi', 'gu'].includes(savedLang)) {
         setLanguageState(savedLang)
       }
@@ -38,7 +39,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang)
     if (typeof window !== 'undefined') {
-      localStorage.setItem('language', lang)
+      localStorage.setItem('as-events-language', lang)
     }
   }
 

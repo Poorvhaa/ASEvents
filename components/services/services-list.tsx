@@ -207,7 +207,7 @@ export function ServicesList() {
                   <Button
                     onClick={() =>
                       openModal({
-                        eventType: service.title,
+                        eventType: t(`services.${localeSlug}.title`),
                         step: 2,
                       })
                     }

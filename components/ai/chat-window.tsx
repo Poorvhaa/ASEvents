@@ -12,6 +12,7 @@ import { venueCities } from '@/lib/data/venues'
 import { getVenueTypeSuggestions } from '@/lib/venue-engine'
 import { generateWhatsAppUrl } from '@/services/whatsappService'
 import { generateConsultation, formatConsultationMessage } from '@/lib/ai/consultant-engine'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 const STEP_PROMPTS: Record<string, string> = {
   eventDate: 'Wonderful choice! When is your event planned? (e.g. December 2025, or type a specific date)',
@@ -33,6 +34,7 @@ const BUDGET_OPTIONS = [
 const GUEST_OPTIONS = ['50-100', '100-200', '200-500', '500-1000', '1000+']
 
 export function ChatWindow() {
+  const { t, language } = useTranslation()
   const {
     messages,
     step,
@@ -63,7 +65,7 @@ export function ChatWindow() {
         setStep('generating')
         try {
           let recommendation = generateConsultation(merged)
-          let message = formatConsultationMessage(recommendation)
+          let message = formatConsultationMessage(recommendation, t)
 
           try {
             const res = await fetch('/api/chat', {
@@ -74,7 +76,7 @@ export function ChatWindow() {
             const data = await res.json()
             if (data.success && data.recommendation) {
               recommendation = data.recommendation
-              message = formatConsultationMessage(recommendation)
+              message = formatConsultationMessage(recommendation, t)
             }
           } catch {
             // Use local engine recommendation
@@ -86,7 +88,7 @@ export function ChatWindow() {
         } catch {
           const fallback = generateConsultation(merged)
           setRecommendation(fallback)
-          addMessage('assistant', formatConsultationMessage(fallback), fallback)
+          addMessage('assistant', formatConsultationMessage(fallback, t), fallback)
           setStep('complete')
         } finally {
           setTyping(false)
@@ -96,10 +98,10 @@ export function ChatWindow() {
 
       await new Promise((r) => setTimeout(r, 600))
       setTyping(false)
-      addMessage('assistant', STEP_PROMPTS[nextStep] || '')
+      addMessage('assistant', t('aiPlanner.prompts.' + nextStep) || '')
       setStep(nextStep)
     },
-    [answers, addMessage, setAnswer, setStep, setTyping, setRecommendation]
+    [answers, addMessage, setAnswer, setStep, setTyping, setRecommendation, t]
   )
 
   const handleEventType = (type: string) => {
@@ -172,7 +174,7 @@ export function ChatWindow() {
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#25D366] text-white text-sm font-semibold hover:bg-[#20BD5A] transition-colors"
         >
-          Chat on WhatsApp
+          {t('aiPlanner.chatOnWhatsApp')}
         </a>
       </div>
     )}
@@ -184,31 +186,58 @@ export function ChatWindow() {
 
       {/* Quick replies */}
       {step === 'eventType' && !isTyping && (
-        <QuickReplies options={[...EVENT_TYPES]} onSelect={handleEventType} />
+        <QuickReplies options={[...EVENT_TYPES]} onSelect={handleEventType} t={t} step={step} language={language} />
       )}
 
       {step === 'city' && !isTyping && (
-        <QuickReplies options={[...venueCities]} onSelect={(c) => { setAnswer('city', c); advance(c, 'guestCount', { city: c }) }} />
+        <QuickReplies
+          options={[...venueCities]}
+          onSelect={(c) => {
+            setAnswer('city', c)
+            advance(c, 'guestCount', { city: c })
+          }}
+          t={t}
+          step={step}
+          language={language}
+        />
       )}
 
       {step === 'guestCount' && !isTyping && (
         <QuickReplies
           options={GUEST_OPTIONS}
-          onSelect={(g) => { setAnswer('guestCount', g); advance(`${g} guests`, 'budget', { guestCount: g }) }}
+          onSelect={(g) => {
+            setAnswer('guestCount', g)
+            advance(`${g} ${t('packagesPage.guests')}`, 'budget', { guestCount: g })
+          }}
+          t={t}
+          step={step}
+          language={language}
         />
       )}
 
       {step === 'budget' && !isTyping && (
         <QuickReplies
           options={BUDGET_OPTIONS}
-          onSelect={(b) => { setAnswer('budget', b); advance(b, 'venuePreference', { budget: b }) }}
+          onSelect={(b) => {
+            setAnswer('budget', b)
+            advance(b, 'venuePreference', { budget: b })
+          }}
+          t={t}
+          step={step}
+          language={language}
         />
       )}
 
       {step === 'venuePreference' && !isTyping && venueSuggestions.length > 0 && (
         <QuickReplies
           options={venueSuggestions}
-          onSelect={(v) => { setAnswer('venuePreference', v); advance(v, 'specialRequirements', { venuePreference: v }) }}
+          onSelect={(v) => {
+            setAnswer('venuePreference', v)
+            advance(v, 'specialRequirements', { venuePreference: v })
+          }}
+          t={t}
+          step={step}
+          language={language}
         />
       )}
 
@@ -219,9 +248,9 @@ export function ChatWindow() {
             ref={inputRef}
             type="text"
             placeholder={
-              step === 'eventDate' ? 'e.g. March 2026...' :
-              step === 'specialRequirements' ? 'Your vision or type None...' :
-              'Type your answer...'
+              step === 'eventDate' ? t('aiPlanner.datePlaceholder') :
+              step === 'specialRequirements' ? t('aiPlanner.specialPlaceholder') :
+              t('aiPlanner.inputPlaceholder')
             }
             className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none bg-white"
           />
@@ -234,7 +263,63 @@ export function ChatWindow() {
   )
 }
 
-function QuickReplies({ options, onSelect }: { options: string[]; onSelect: (v: string) => void }) {
+function QuickReplies({
+  options,
+  onSelect,
+  t,
+  step,
+  language,
+}: {
+  options: string[]
+  onSelect: (v: string) => void
+  t: (key: string) => string
+  step: string
+  language: string
+}) {
+  const translateOption = (opt: string) => {
+    if (step === 'eventType') {
+      const key = `quoteModal.step1.types.${opt}`
+      const val = t(key)
+      return val === key ? opt : val
+    }
+    if (step === 'city') {
+      const key = `cities.${opt}`
+      const val = t(key)
+      return val === key ? opt : val
+    }
+    if (step === 'budget') {
+      const key = `quoteModal.step4.ranges.${opt}`
+      const val = t(key)
+      return val === key ? opt : val
+    }
+    if (step === 'venuePreference') {
+      const hiMap: Record<string, string> = {
+        'Banquet Hall': 'बैंक्वेट हॉल',
+        'Resort': 'रिसॉर्ट',
+        'Palace': 'महल (पैलेस)',
+        'Farmhouse': 'फार्महाउस',
+        'Convention Center': 'कन्वेंशन सेंटर',
+        'Hotel Ballroom': 'होटल बॉलरूम',
+        'Exhibition Hall': 'प्रदर्शनी हॉल',
+        'Open Lawn': 'खुला लॉन',
+      }
+      const guMap: Record<string, string> = {
+        'Banquet Hall': 'બેન્ક્વેટ હોલ',
+        'Resort': 'રિસોર્ટ',
+        'Palace': 'મહેલ (પેલેસ)',
+        'Farmhouse': 'ફાર્મહાઉસ',
+        'Convention Center': 'કન્વેન્શન સેન્ટર',
+        'Hotel Ballroom': 'હોટેલ બોલરૂમ',
+        'Exhibition Hall': 'પ્રદર્શન હોલ',
+        'Open Lawn': 'ખુલ્લું લોન',
+      }
+      if (language === 'hi') return hiMap[opt] || opt
+      if (language === 'gu') return guMap[opt] || opt
+      return opt
+    }
+    return opt
+  }
+
   return (
     <div className="px-4 pb-2 flex flex-wrap gap-1.5 max-h-28 overflow-y-auto">
       {options.map((opt) => (
@@ -243,7 +328,7 @@ function QuickReplies({ options, onSelect }: { options: string[]; onSelect: (v: 
           onClick={() => onSelect(opt)}
           className="px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 bg-white hover:border-primary hover:text-primary transition-colors"
         >
-          {opt}
+          {translateOption(opt)}
         </button>
       ))}
     </div>

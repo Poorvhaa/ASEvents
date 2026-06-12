@@ -16,6 +16,14 @@ const categoryParamMap: Record<string, string> = {
   entertainment: 'entertainment',
 }
 
+const categoryNames: Record<string, string> = {
+  wedding: 'Weddings',
+  corporate: 'Corporate',
+  social: 'Social Events',
+  exhibition: 'Exhibitions',
+  entertainment: 'Entertainment',
+}
+
 const previewPackages = packages.filter(
   (p) => p.popular || ['sangeet', 'product-launch', 'live-concert'].includes(p.id)
 )
@@ -79,17 +87,27 @@ export function PackagesPreview() {
                       {t('packagesPreview.popular')}
                     </span>
                   )}
-                  <span className="text-primary text-xs font-medium capitalize">{pkg.category}</span>
-                  <h3 className="text-base sm:text-lg font-semibold text-foreground mt-1 mb-3">{pkg.title}</h3>
+                  <span className="text-primary text-xs font-medium capitalize">
+                    {t(`packagesPage.categories.${categoryNames[pkg.category] || pkg.category}`) || pkg.category}
+                  </span>
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground mt-1 mb-3">
+                    {t(`packages.${pkg.id}.title`) || pkg.title}
+                  </h3>
                   <ul className="space-y-1.5 mb-4 flex-1">
-                    {pkg.includes.slice(0, 4).map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
-                        <Check size={12} className="text-primary mt-0.5 shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
+                    {pkg.highlights.slice(0, 4).map((item, hIndex) => {
+                      const highlightKey = `packages.${pkg.id}.highlights.${hIndex}`
+                      const translatedItem = t(highlightKey)
+                      return (
+                        <li key={item} className="flex items-start gap-2 text-xs text-muted-foreground">
+                          <Check size={12} className="text-primary mt-0.5 shrink-0" />
+                          <span>{translatedItem === highlightKey ? item : translatedItem}</span>
+                        </li>
+                      )
+                    })}
                   </ul>
-                  <p className="text-sm font-bold text-foreground">{pkg.price}</p>
+                  <p className="text-sm font-bold text-foreground">
+                    {t(`packages.${pkg.id}.price`) || pkg.price}
+                  </p>
                 </Link>
               </motion.div>
             )
