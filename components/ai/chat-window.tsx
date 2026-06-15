@@ -106,7 +106,10 @@ export function ChatWindow() {
 
   const handleEventType = (type: string) => {
     setAnswer('eventType', type)
-    advance(type, 'eventDate', { eventType: type as typeof answers.eventType })
+    const key = `quoteModal.step1.types.${type}`
+    const translated = t(key)
+    const userMsg = translated === key ? type : translated
+    advance(userMsg, 'eventDate', { eventType: type as typeof answers.eventType })
   }
 
   const handleTextSubmit = (e: React.FormEvent) => {
@@ -194,7 +197,10 @@ export function ChatWindow() {
           options={[...venueCities]}
           onSelect={(c) => {
             setAnswer('city', c)
-            advance(c, 'guestCount', { city: c })
+            const key = `cities.${c}`
+            const translated = t(key)
+            const userMsg = translated === key ? c : translated
+            advance(userMsg, 'guestCount', { city: c })
           }}
           t={t}
           step={step}
@@ -207,7 +213,11 @@ export function ChatWindow() {
           options={GUEST_OPTIONS}
           onSelect={(g) => {
             setAnswer('guestCount', g)
-            advance(`${g} ${t('packagesPage.guests')}`, 'budget', { guestCount: g })
+            const normalizedG = g.replace(/(\d+)-(\d+)/, '$1 - $2')
+            const key = `packagesPage.builder.counts.${normalizedG}`
+            const translatedG = t(key)
+            const displayG = translatedG === key ? g : translatedG
+            advance(`${displayG} ${t('packagesPage.guests')}`, 'budget', { guestCount: g })
           }}
           t={t}
           step={step}
@@ -220,7 +230,10 @@ export function ChatWindow() {
           options={BUDGET_OPTIONS}
           onSelect={(b) => {
             setAnswer('budget', b)
-            advance(b, 'venuePreference', { budget: b })
+            const key = `quoteModal.step4.ranges.${b}`
+            const translated = t(key)
+            const userMsg = translated === key ? b : translated
+            advance(userMsg, 'venuePreference', { budget: b })
           }}
           t={t}
           step={step}
@@ -233,7 +246,10 @@ export function ChatWindow() {
           options={venueSuggestions}
           onSelect={(v) => {
             setAnswer('venuePreference', v)
-            advance(v, 'specialRequirements', { venuePreference: v })
+            const key = `aiPlanner.venuePreferences.${v}`
+            const translated = t(key)
+            const userMsg = translated === key ? v : translated
+            advance(userMsg, 'specialRequirements', { venuePreference: v })
           }}
           t={t}
           step={step}
@@ -287,35 +303,21 @@ function QuickReplies({
       const val = t(key)
       return val === key ? opt : val
     }
+    if (step === 'guestCount') {
+      const normalizedOpt = opt.replace(/(\d+)-(\d+)/, '$1 - $2')
+      const key = `packagesPage.builder.counts.${normalizedOpt}`
+      const val = t(key)
+      return val === key ? opt : val
+    }
     if (step === 'budget') {
       const key = `quoteModal.step4.ranges.${opt}`
       const val = t(key)
       return val === key ? opt : val
     }
     if (step === 'venuePreference') {
-      const hiMap: Record<string, string> = {
-        'Banquet Hall': 'बैंक्वेट हॉल',
-        'Resort': 'रिसॉर्ट',
-        'Palace': 'महल (पैलेस)',
-        'Farmhouse': 'फार्महाउस',
-        'Convention Center': 'कन्वेंशन सेंटर',
-        'Hotel Ballroom': 'होटल बॉलरूम',
-        'Exhibition Hall': 'प्रदर्शनी हॉल',
-        'Open Lawn': 'खुला लॉन',
-      }
-      const guMap: Record<string, string> = {
-        'Banquet Hall': 'બેન્ક્વેટ હોલ',
-        'Resort': 'રિસોર્ટ',
-        'Palace': 'મહેલ (પેલેસ)',
-        'Farmhouse': 'ફાર્મહાઉસ',
-        'Convention Center': 'કન્વેન્શન સેન્ટર',
-        'Hotel Ballroom': 'હોટેલ બોલરૂમ',
-        'Exhibition Hall': 'પ્રદર્શન હોલ',
-        'Open Lawn': 'ખુલ્લું લોન',
-      }
-      if (language === 'hi') return hiMap[opt] || opt
-      if (language === 'gu') return guMap[opt] || opt
-      return opt
+      const key = `aiPlanner.venuePreferences.${opt}`
+      const val = t(key)
+      return val === key ? opt : val
     }
     return opt
   }

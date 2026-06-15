@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+import { cookies } from 'next/headers'
+import { getTranslationServer } from '@/lib/i18n-server'
 import { VenueDetailContent } from '@/components/venues/venue-detail-content'
 import { CTASection } from '@/components/sections/cta-section'
 import { venues } from '@/lib/data/venues'
@@ -21,21 +23,38 @@ export async function generateMetadata({ params }: VenuePageProps): Promise<Meta
     return { title: 'Venue Not Found | AS Events' }
   }
 
+  const cookieStore = await cookies()
+  const lang = cookieStore.get('as-events-language')?.value || 'en'
+
+  const transNameKey = `venues.${venue.slug}.name`
+  const transDescKey = `venues.${venue.slug}.description`
+  const nameVal = getTranslationServer(lang, transNameKey)
+  const descVal = getTranslationServer(lang, transDescKey)
+
+  const displayName = nameVal === transNameKey ? venue.name : nameVal
+  const displayDesc = descVal === transDescKey ? venue.description : descVal
+
   return {
-    title: `${venue.name} | AS Events Venues`,
-    description: venue.description,
+    title: `${displayName} | AS Events Venues`,
+    description: displayDesc,
     keywords: [
-      venue.name,
+      displayName,
       venue.category,
       venue.city,
       'event venue',
       'wedding venue India',
     ],
     openGraph: {
-      title: `${venue.name} | AS Events`,
-      description: venue.description,
+      title: `${displayName} | AS Events`,
+      description: displayDesc,
       images: [{ url: venue.image }],
       type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${displayName} | AS Events`,
+      description: displayDesc,
+      images: [venue.image],
     },
   }
 }

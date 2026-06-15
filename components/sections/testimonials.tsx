@@ -109,7 +109,7 @@ export function Testimonials() {
             <button
               onClick={prev}
               className="touch-target w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              aria-label="Previous testimonial"
+              aria-label={t('testimonials.prev')}
             >
               <ChevronLeft size={22} />
             </button>
@@ -121,14 +121,14 @@ export function Testimonials() {
                   className={`min-w-2 min-h-2 rounded-full transition-colors touch-target p-2 ${
                     index === currentIndex ? 'bg-primary' : 'bg-border'
                   }`}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  aria-label={t('testimonials.goTo').replace('{num}', (index + 1).toString())}
                 />
               ))}
             </div>
             <button
               onClick={next}
               className="touch-target w-11 h-11 rounded-full bg-white border border-slate-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-              aria-label="Next testimonial"
+              aria-label={t('testimonials.next')}
             >
               <ChevronRight size={22} />
             </button>

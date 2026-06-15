@@ -1,36 +1,51 @@
 import type { Metadata } from 'next'
+import { cookies } from 'next/headers'
+import { getTranslationServer } from '@/lib/i18n-server'
 import { Suspense } from 'react'
 import { PortfolioHero } from '@/components/portfolio/portfolio-hero'
 import { PortfolioGrid } from '@/components/portfolio/portfolio-grid'
 import { CTASection } from '@/components/sections/cta-section'
 
-export const metadata: Metadata = {
-  title: 'Portfolio & Gallery | AS Events',
-  description:
-    'Explore our portfolio of luxury weddings, corporate events, destination celebrations, exhibitions, birthdays, and entertainment events across India.',
-  keywords: [
-    'event portfolio India',
-    'wedding portfolio',
-    'corporate events gallery',
-    'destination weddings',
-    'product launches',
-    'exhibitions',
-    'birthday events',
-    'anniversary celebrations',
-    'entertainment events',
-  ],
-  openGraph: {
-    title: 'Portfolio & Gallery | AS Events',
-    description: 'Browse our collection of extraordinary events and stunning event photography.',
-    type: 'website',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const cookieStore = await cookies()
+  const lang = cookieStore.get('as-events-language')?.value || 'en'
+  const title = getTranslationServer(lang, 'seo.portfolio.title')
+  const description = getTranslationServer(lang, 'seo.portfolio.description')
+  return {
+    title,
+    description,
+    keywords: [
+      'event portfolio India',
+      'wedding portfolio',
+      'corporate events gallery',
+      'destination weddings',
+      'product launches',
+      'exhibitions',
+      'birthday events',
+      'anniversary celebrations',
+      'entertainment events',
+    ],
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  }
 }
 
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const cookieStore = await cookies()
+  const lang = cookieStore.get('as-events-language')?.value || 'en'
+
   return (
     <>
       <PortfolioHero />
-      <Suspense fallback={<div className="py-24 text-center text-muted-foreground">Loading portfolio...</div>}>
+      <Suspense fallback={<div className="py-24 text-center text-muted-foreground">{getTranslationServer(lang, 'loading.portfolio')}</div>}>
         <PortfolioGrid />
       </Suspense>
       <CTASection />

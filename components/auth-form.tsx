@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card } from '@/components/ui/card'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
+  const { t } = useTranslation()
   const router = useRouter()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -31,7 +33,7 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
     setLoading(false)
 
     if (error) {
-      setError(error.message ?? 'Something went wrong')
+      setError(error.message ?? t('auth.errorFallback'))
       return
     }
 
@@ -44,19 +46,17 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
       <Card className="w-full max-w-sm p-6">
         <div className="mb-6">
           <h1 className="text-2xl font-semibold tracking-tight text-foreground">
-            {isSignUp ? 'Create an account' : 'Welcome back'}
+            {isSignUp ? t('auth.titleSignUp') : t('auth.titleSignIn')}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {isSignUp
-              ? 'Sign up to get started'
-              : 'Sign in to your account to continue'}
+            {isSignUp ? t('auth.descSignUp') : t('auth.descSignIn')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           {isSignUp && (
             <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">{t('auth.name')}</Label>
               <Input
                 id="name"
                 value={name}
@@ -67,7 +67,7 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t('auth.email')}</Label>
             <Input
               id="email"
               type="email"
@@ -78,7 +78,7 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">{t('auth.password')}</Label>
             <Input
               id="password"
               type="password"
@@ -98,20 +98,20 @@ export function AuthForm({ mode }: { mode: 'sign-in' | 'sign-up' }) {
 
           <Button type="submit" disabled={loading} className="w-full">
             {loading
-              ? 'Please wait...'
+              ? t('auth.submitting')
               : isSignUp
-                ? 'Create account'
-                : 'Sign in'}
+                ? t('auth.createAccount')
+                : t('auth.signIn')}
           </Button>
         </form>
 
         <p className="text-sm text-muted-foreground text-center mt-6">
-          {isSignUp ? 'Already have an account? ' : "Don't have an account? "}
+          {isSignUp ? t('auth.alreadyHaveAccount') : t('auth.dontHaveAccount')}
           <Link
             href={isSignUp ? '/sign-in' : '/sign-up'}
             className="text-foreground font-medium underline-offset-4 hover:underline"
           >
-            {isSignUp ? 'Sign in' : 'Sign up'}
+            {isSignUp ? t('auth.signInLink') : t('auth.signUpLink')}
           </Link>
         </p>
       </Card>

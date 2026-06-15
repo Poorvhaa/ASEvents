@@ -248,7 +248,7 @@ export function Navbar() {
                     ? 'text-white hover:bg-white/10'
                     : 'text-slate-700 hover:bg-slate-100'
                 )}
-                aria-label="Select Language"
+                aria-label={t('nav.selectLanguage')}
               >
                 <Globe size={16} />
                 <span className="uppercase">{language}</span>

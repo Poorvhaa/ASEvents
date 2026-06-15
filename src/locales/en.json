@@ -17,7 +17,8 @@
       "birthdays": "Birthday Celebrations",
       "anniversaries": "Anniversary Events",
       "entertainment": "Entertainment Management"
-    }
+    },
+    "selectLanguage": "Select Language"
   },
   "footer": {
     "description": "Creating extraordinary events that last forever. We specialize in luxury weddings, corporate events, and destination celebrations.",
@@ -190,7 +191,10 @@
       "review2": "Our company summit was a huge success thanks to AS Events. Their professionalism and attention to detail made our corporate event truly memorable for all attendees.",
       "review3": "They planned my 50th birthday celebration and it was absolutely magical. The team went above and beyond to make sure everything was perfect. Highly recommended!",
       "review4": "Planning a destination wedding seemed daunting, but AS Events made it effortless. They handled everything from vendor coordination to travel logistics flawlessly."
-    }
+    },
+    "prev": "Previous testimonial",
+    "next": "Next testimonial",
+    "goTo": "Go to testimonial {num}"
   },
   "featuredVenues": {
     "eyebrow": "Venues",
@@ -235,11 +239,20 @@
       "sub": "Select the event type that best describes your celebration",
       "types": {
         "Wedding": "Wedding",
+        "Engagement": "Engagement",
+        "Haldi": "Haldi",
+        "Mehendi": "Mehendi",
+        "Sangeet": "Sangeet",
+        "Reception": "Reception",
+        "Destination Wedding": "Destination Wedding",
         "Corporate Event": "Corporate Event",
-        "Birthday Celebration": "Birthday Celebration",
-        "Anniversary": "Anniversary",
         "Product Launch": "Product Launch",
         "Exhibition": "Exhibition",
+        "Birthday": "Birthday",
+        "Birthday Celebration": "Birthday Celebration",
+        "Anniversary": "Anniversary",
+        "Festival Event": "Festival Event",
+        "Entertainment Event": "Entertainment Event",
         "Destination Event": "Destination Event",
         "Other": "Other"
       }
@@ -1332,7 +1345,17 @@
     "contingencyLabel": "Contingency",
     "estimatedTotal": "Estimated Total",
     "venueSuggestions": "Venue Suggestions",
-    "planningTips": "Planning Tips"
+    "planningTips": "Planning Tips",
+    "venuePreferences": {
+      "Banquet Hall": "Banquet Hall",
+      "Resort": "Resort",
+      "Palace": "Palace",
+      "Farmhouse": "Farmhouse",
+      "Convention Center": "Convention Center",
+      "Hotel Ballroom": "Hotel Ballroom",
+      "Exhibition Hall": "Exhibition Hall",
+      "Open Lawn": "Open Lawn"
+    }
   },
   "pdf": {
     "proposalTitle": "Personalized Event Proposal",
@@ -1407,5 +1430,52 @@
     "prefillCapacity": "Capacity:",
     "submissionFailed": "Failed to submit quote request:",
     "connectionError": "Error submitting quote request. Please check your connection and try again."
+  },
+  "seo": {
+    "default": {
+      "title": "AS Events | Luxury Event Management & Wedding Planner",
+      "description": "AS Events is a luxury event management company specializing in Indian weddings, corporate events, destination celebrations, and theme decor in Vadodara, Gujarat."
+    },
+    "about": {
+      "title": "About Us | AS Events",
+      "description": "Learn about AS Events, a leading event management company in Gujarat. Meet our team and discover our journey of creating extraordinary celebrations."
+    },
+    "packages": {
+      "title": "Event Packages | AS Events",
+      "description": "Explore premium event packages for Indian Weddings, Corporate events, Social celebrations, and Festivals. Tailored to your requirements and budget."
+    },
+    "venues": {
+      "title": "Discover Premium Event Venues | AS Events",
+      "description": "Explore and book premium wedding halls, luxury resorts, banquet halls, and lawns across India. Find the perfect venue for your next big celebration."
+    },
+    "portfolio": {
+      "title": "Our Portfolio & Event Gallery | AS Events",
+      "description": "Browse our portfolio of luxury weddings, corporate launches, theme decors, and cultural events executed with elegance and precision."
+    },
+    "contact": {
+      "title": "Contact Us | AS Events",
+      "description": "Get in touch with AS Events for free consultation and quotes. Let us help you plan your next celebration in Vadodara, Ahmedabad, Surat, and across India."
+    }
+  },
+  "loading": {
+    "packages": "Loading packages...",
+    "portfolio": "Loading portfolio..."
+  },
+  "auth": {
+    "titleSignIn": "Welcome back",
+    "titleSignUp": "Create an account",
+    "descSignIn": "Sign in to your account to continue",
+    "descSignUp": "Sign up to get started",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "submitting": "Please wait...",
+    "createAccount": "Create account",
+    "signIn": "Sign in",
+    "alreadyHaveAccount": "Already have an account? ",
+    "dontHaveAccount": "Don't have an account? ",
+    "signUpLink": "Sign up",
+    "signInLink": "Sign in",
+    "errorFallback": "Something went wrong"
   }
 }

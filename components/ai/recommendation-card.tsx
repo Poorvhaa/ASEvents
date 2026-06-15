@@ -126,29 +126,10 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
           }
         })
       : recommendedVenueTypes.map((tVal) => {
-          const hiMap: Record<string, string> = {
-            'Banquet Hall': 'बैंक्वेट हॉल',
-            'Resort': 'रिसॉर्ट',
-            'Palace': 'महल (पैलेस)',
-            'Farmhouse': 'फार्महाउस',
-            'Convention Center': 'कन्वेंशन सेंटर',
-            'Hotel Ballroom': 'होटल बॉलरूम',
-            'Exhibition Hall': 'प्रदर्शनी हॉल',
-            'Open Lawn': 'खुला लॉन',
-          }
-          const guMap: Record<string, string> = {
-            'Banquet Hall': 'બેન્ક્વેટ હોલ',
-            'Resort': 'રિસોર્ટ',
-            'Palace': 'મહેલ (પેલેસ)',
-            'Farmhouse': 'ફાર્મહાઉસ',
-            'Convention Center': 'કન્વેન્શન સેન્ટર',
-            'Hotel Ballroom': 'હોટેલ બોલરૂમ',
-            'Exhibition Hall': 'પ્રદર્શન હોલ',
-            'Open Lawn': 'ખુલ્લું લોન',
-          }
-          const transVal = language === 'hi' ? hiMap[tVal] : language === 'gu' ? guMap[tVal] : tVal
+          const transKey = `aiPlanner.venuePreferences.${tVal}`
+          const transVal = t(transKey)
           return {
-            name: transVal || tVal,
+            name: transVal === transKey ? tVal : transVal,
             location: ''
           }
         })
@@ -173,30 +154,11 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
           <p className="text-xs font-medium text-muted-foreground mb-1.5">{t('aiPlanner.recommendedVenueTypes')}</p>
           <div className="flex flex-wrap gap-1.5">
             {recommendedVenueTypes.map((tVal) => {
-              const hiMap: Record<string, string> = {
-                'Banquet Hall': 'बैंक्वेट हॉल',
-                'Resort': 'रिसॉर्ट',
-                'Palace': 'महल (पैलेस)',
-                'Farmhouse': 'फार्महाउस',
-                'Convention Center': 'कन्वेंशन सेंटर',
-                'Hotel Ballroom': 'होटल बॉलरूम',
-                'Exhibition Hall': 'प्रदर्शनी हॉल',
-                'Open Lawn': 'खुला लॉन',
-              }
-              const guMap: Record<string, string> = {
-                'Banquet Hall': 'બેન્ક્વેટ હોલ',
-                'Resort': 'રિસોર્ટ',
-                'Palace': 'મહેલ (પેલેસ)',
-                'Farmhouse': 'ફાર્મહાઉસ',
-                'Convention Center': 'કન્વેન્શન સેન્ટર',
-                'Hotel Ballroom': 'હોટેલ બોલરૂમ',
-                'Exhibition Hall': 'પ્રદર્શન હોલ',
-                'Open Lawn': 'ખુલ્લું લોન',
-              }
-              const transVal = language === 'hi' ? hiMap[tVal] : language === 'gu' ? guMap[tVal] : tVal
+              const transKey = `aiPlanner.venuePreferences.${tVal}`
+              const transVal = t(transKey)
               return (
                 <span key={tVal} className="px-2 py-0.5 rounded-full bg-blue-50 text-primary text-xs">
-                  {transVal || tVal}
+                  {transVal === transKey ? tVal : transVal}
                 </span>
               )
             })}

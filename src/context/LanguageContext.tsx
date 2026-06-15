@@ -32,6 +32,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       const savedLang = localStorage.getItem('as-events-language') as Language
       if (savedLang && ['en', 'hi', 'gu'].includes(savedLang)) {
         setLanguageState(savedLang)
+        document.cookie = `as-events-language=${savedLang};path=/;max-age=31536000`
       }
     }
   }, [])
@@ -40,6 +41,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setLanguageState(lang)
     if (typeof window !== 'undefined') {
       localStorage.setItem('as-events-language', lang)
+      document.cookie = `as-events-language=${lang};path=/;max-age=31536000`
     }
   }
 
