@@ -2,7 +2,8 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { VenueDetailContent } from '@/components/venues/venue-detail-content'
 import { CTASection } from '@/components/sections/cta-section'
-import { venues, getVenueBySlug } from '@/lib/data/venues'
+import { venues } from '@/lib/data/venues'
+import { getDisplayVenueBySlug } from '@/services/venueService'
 
 interface VenuePageProps {
   params: Promise<{ slug: string }>
@@ -14,7 +15,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: VenuePageProps): Promise<Metadata> {
   const { slug } = await params
-  const venue = getVenueBySlug(slug)
+  const venue = await getDisplayVenueBySlug(slug)
 
   if (!venue) {
     return { title: 'Venue Not Found | AS Events' }
@@ -41,7 +42,7 @@ export async function generateMetadata({ params }: VenuePageProps): Promise<Meta
 
 export default async function VenueDetailPage({ params }: VenuePageProps) {
   const { slug } = await params
-  const venue = getVenueBySlug(slug)
+  const venue = await getDisplayVenueBySlug(slug)
 
   if (!venue) {
     notFound()

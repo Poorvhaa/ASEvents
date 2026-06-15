@@ -5,8 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MapPin, Users, Star, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useQuoteModal } from '@/hooks/use-quote-modal'
-import { getVenueQuotePrefill } from '@/lib/venues/book-venue'
 import type { Venue } from '@/lib/types/venues'
 import { useTranslation } from '@/src/hooks/useTranslation'
 
@@ -16,7 +14,6 @@ interface VenueCardProps {
 }
 
 export function VenueCard({ venue, index = 0 }: VenueCardProps) {
-  const { openModal } = useQuoteModal()
   const { t } = useTranslation()
 
   const indoorOutdoorKey =
@@ -80,19 +77,12 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
 
         <p className="text-base sm:text-lg font-bold text-foreground mt-3 sm:mt-4">{venue.startingPrice}</p>
 
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 mt-4 sm:mt-5">
+        <div className="mt-4 sm:mt-5">
           <Button
             asChild
-            variant="outline"
-            className="min-h-11 flex-1 border-primary/50 hover:bg-primary/10 text-sm"
+            className="min-h-11 w-full bg-primary text-primary-foreground hover:bg-blue-700 text-sm font-semibold"
           >
             <Link href={`/venues/${venue.slug}`}>{t('featuredVenues.details')}</Link>
-          </Button>
-          <Button
-            onClick={() => openModal(getVenueQuotePrefill(venue))}
-            className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 text-sm"
-          >
-            {t('venuesPage.labels.bookVenue')}
           </Button>
         </div>
       </div>

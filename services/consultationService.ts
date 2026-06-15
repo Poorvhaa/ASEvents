@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from '@/lib/supabase'
+import { createServerSupabaseClient, createAdminSupabaseClient } from '@/lib/supabase'
 import type { DbAiConsultation } from '@/types/database'
 
 export async function saveConsultation(input: {
@@ -31,7 +31,7 @@ export async function saveConsultation(input: {
 }
 
 export async function getConsultations(limit = 100): Promise<DbAiConsultation[]> {
-  const supabase = createServerSupabaseClient()
+  const supabase = createAdminSupabaseClient()
   if (!supabase) return []
 
   const { data, error } = await supabase

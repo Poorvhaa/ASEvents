@@ -45,27 +45,34 @@ CREATE INDEX IF NOT EXISTS idx_contact_inquiries_created_at ON contact_inquiries
 -- venues
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS venues (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id TEXT PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
+  location TEXT NOT NULL,
   city TEXT NOT NULL,
   category TEXT NOT NULL,
   capacity INTEGER NOT NULL,
-  price_range TEXT,
-  description TEXT,
-  image TEXT,
-  gallery JSONB DEFAULT '[]'::jsonb
+  indoor_outdoor TEXT NOT NULL,
+  rating NUMERIC(3, 2) DEFAULT 5.0,
+  starting_price TEXT NOT NULL,
+  image TEXT NOT NULL,
+  description TEXT NOT NULL,
+  parking TEXT NOT NULL,
+  rooms TEXT NOT NULL,
+  amenities JSONB DEFAULT '[]'::jsonb,
+  gallery JSONB DEFAULT '[]'::jsonb,
+  featured BOOLEAN DEFAULT false
 );
 
 CREATE INDEX IF NOT EXISTS idx_venues_city ON venues (city);
 CREATE INDEX IF NOT EXISTS idx_venues_category ON venues (category);
-CREATE INDEX IF NOT EXISTS idx_venues_capacity ON venues (capacity);
 
 -- ---------------------------------------------------------------------------
 -- venue_bookings
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS venue_bookings (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  venue_id UUID NOT NULL REFERENCES venues (id) ON DELETE CASCADE,
+  venue_id TEXT NOT NULL REFERENCES venues (id) ON DELETE CASCADE,
   event_date DATE NOT NULL,
   customer_name TEXT NOT NULL,
   email TEXT NOT NULL,
@@ -82,12 +89,18 @@ CREATE INDEX IF NOT EXISTS idx_venue_bookings_status ON venue_bookings (status);
 -- packages
 -- ---------------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS packages (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name TEXT NOT NULL,
+  id TEXT PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  title TEXT NOT NULL,
   category TEXT NOT NULL,
-  price NUMERIC(12, 2) NOT NULL,
-  description TEXT,
-  features JSONB DEFAULT '[]'::jsonb
+  includes JSONB DEFAULT '[]'::jsonb,
+  included_services JSONB DEFAULT '[]'::jsonb,
+  highlights JSONB DEFAULT '[]'::jsonb,
+  suitable_guests TEXT,
+  duration TEXT,
+  price TEXT NOT NULL,
+  popular BOOLEAN DEFAULT false,
+  description TEXT
 );
 
 CREATE INDEX IF NOT EXISTS idx_packages_category ON packages (category);
@@ -115,6 +128,15 @@ ALTER TABLE venue_bookings ENABLE ROW LEVEL SECURITY;
 ALTER TABLE packages ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ai_consultations ENABLE ROW LEVEL SECURITY;
 
+-- Clean existing policies
+DROP POLICY IF EXISTS "venues_public_read" ON venues;
+DROP POLICY IF EXISTS "packages_public_read" ON packages;
+DROP POLICY IF EXISTS "leads_public_insert" ON leads;
+DROP POLICY IF EXISTS "contact_inquiries_public_insert" ON contact_inquiries;
+DROP POLICY IF EXISTS "venue_bookings_public_insert" ON venue_bookings;
+DROP POLICY IF EXISTS "ai_consultations_public_insert" ON ai_consultations;
+DROP POLICY IF EXISTS "venue_bookings_public_read" ON venue_bookings;
+
 -- Public read for venues and packages
 CREATE POLICY "venues_public_read" ON venues FOR SELECT USING (true);
 CREATE POLICY "packages_public_read" ON packages FOR SELECT USING (true);
@@ -125,5 +147,5 @@ CREATE POLICY "contact_inquiries_public_insert" ON contact_inquiries FOR INSERT 
 CREATE POLICY "venue_bookings_public_insert" ON venue_bookings FOR INSERT WITH CHECK (true);
 CREATE POLICY "ai_consultations_public_insert" ON ai_consultations FOR INSERT WITH CHECK (true);
 
--- Public read bookings for availability checks (date conflict only)
+-- Public read bookings for availability checks
 CREATE POLICY "venue_bookings_public_read" ON venue_bookings FOR SELECT USING (true);

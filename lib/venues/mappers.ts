@@ -2,32 +2,27 @@ import { venues as staticVenues } from '@/lib/data/venues'
 import type { DbVenue } from '@/types/database'
 import type { Venue, VenueCategory, VenueCity } from '@/lib/types/venues'
 
-function slugify(name: string, city: string): string {
-  return `${name}-${city}`
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-}
+
 
 function dbToMinimalVenue(db: DbVenue): Venue {
-  const gallery = Array.isArray(db.gallery) ? db.gallery : []
   return {
     id: db.id,
-    slug: slugify(db.name, db.city),
+    slug: db.slug,
     name: db.name,
-    location: db.city,
+    location: db.location,
     city: db.city as VenueCity,
     category: db.category as VenueCategory,
     capacity: `${db.capacity} Guests`,
-    indoorOutdoor: 'Indoor',
-    rating: 4.5,
-    startingPrice: db.price_range || 'On Request',
-    image: db.image || '/placeholder-venue.jpg',
-    description: db.description || '',
-    parking: 'Available',
-    rooms: 'On Request',
-    amenities: [],
-    gallery: gallery.length > 0 ? gallery : [db.image || '/placeholder-venue.jpg'],
+    indoorOutdoor: db.indoor_outdoor as Venue['indoorOutdoor'],
+    rating: Number(db.rating),
+    startingPrice: db.starting_price,
+    image: db.image,
+    description: db.description,
+    parking: db.parking,
+    rooms: db.rooms,
+    amenities: Array.isArray(db.amenities) ? db.amenities : [],
+    gallery: Array.isArray(db.gallery) ? db.gallery : [],
+    featured: db.featured,
   }
 }
 

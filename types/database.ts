@@ -26,14 +26,22 @@ export interface DbContactInquiry {
 
 export interface DbVenue {
   id: string
+  slug: string
   name: string
+  location: string
   city: string
   category: string
   capacity: number
-  price_range: string | null
-  description: string | null
-  image: string | null
+  indoor_outdoor: string
+  rating: number
+  starting_price: string
+  image: string
+  description: string
+  parking: string
+  rooms: string
+  amenities: string[] | null
   gallery: string[] | null
+  featured?: boolean
 }
 
 export interface DbVenueBooking {
@@ -50,11 +58,17 @@ export interface DbVenueBooking {
 
 export interface DbPackage {
   id: string
-  name: string
+  slug: string
+  title: string
   category: string
-  price: number
+  includes: string[] | null
+  included_services: string[] | null
+  highlights: string[] | null
+  suitable_guests: string | null
+  duration: string | null
+  price: string
+  popular?: boolean
   description: string | null
-  features: string[] | null
 }
 
 export interface DbAiConsultation {

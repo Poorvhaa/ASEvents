@@ -50,16 +50,7 @@ export function QuoteModal() {
     isOpen,
     closeModal,
     initialEventType,
-    initialVenue,
-    initialCity,
-    initialGuestCount,
     initialStep,
-    initialVenueName,
-    initialVenueCategory,
-    initialVenueCapacity,
-    initialEventDate,
-    bookingBlocked,
-    capacityExceeded,
   } = useQuoteModal()
   const [step, setStep] = useState(initialStep)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -82,31 +73,15 @@ export function QuoteModal() {
       setFormData((prev) => ({
         ...prev,
         eventType: initialEventType || prev.eventType,
-        venuePreference: initialVenueName
-          ? `${initialVenueName}${initialVenueCategory ? ` (${initialVenueCategory})` : ''}`
-          : initialVenue || prev.venuePreference,
-        guestCount: initialGuestCount || prev.guestCount,
-        requirements: initialVenueName
-          ? `${t('quoteModalExtra.prefillVenue')} ${initialVenueName}, ${initialCity || ''}. ${t('quoteModalExtra.prefillCapacity')} ${initialVenueCapacity || 'N/A'}.`
-          : prev.requirements,
-        eventDate: initialEventDate || prev.eventDate,
       }))
     }
   }, [
     isOpen,
     initialEventType,
-    initialVenue,
-    initialVenueName,
-    initialVenueCategory,
-    initialVenueCapacity,
-    initialCity,
-    initialGuestCount,
-    initialEventDate,
     initialStep,
-    language,
   ])
 
-  const submitBlocked = bookingBlocked || capacityExceeded
+
 
   const totalSteps = 6
 
@@ -474,24 +449,7 @@ export function QuoteModal() {
 
             {/* Content */}
             <div className="p-6">
-              {initialVenueName && (
-                <div className="mb-4 rounded-xl border border-primary/20 bg-primary/5 p-4 text-sm">
-                  <p className="font-semibold text-foreground">{initialVenueName}</p>
-                  <p className="text-muted-foreground mt-1">
-                    {initialVenueCategory} · {initialCity} · {t('quoteModalExtra.prefillCapacity')} {initialVenueCapacity}
-                  </p>
-                </div>
-              )}
-              {submitBlocked && (
-                <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-                  {capacityExceeded && (
-                    <p>⚠ {t('quoteModal.errors.capacity')}</p>
-                  )}
-                  {bookingBlocked && (
-                    <p>❌ {t('quoteModal.errors.date')}</p>
-                  )}
-                </div>
-              )}
+
               {error && (
                 <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-700">
                   <p className="text-sm font-medium">{error}</p>
@@ -533,7 +491,7 @@ export function QuoteModal() {
               ) : (
                 <Button
                   onClick={handleSubmit}
-                  disabled={!canProceed() || isSubmitting || submitBlocked}
+                  disabled={!canProceed() || isSubmitting}
                   className="bg-primary text-primary-foreground hover:bg-gold-light gap-2"
                 >
                   {isSubmitting ? t('quoteModal.submitting') : t('quoteModal.submit')}

@@ -12,14 +12,22 @@ function parseCapacity(capacity: string): number {
 function staticToDbVenue(venue: (typeof staticVenues)[0]): DbVenue {
   return {
     id: venue.id,
+    slug: venue.slug,
     name: venue.name,
+    location: venue.location,
     city: venue.city,
     category: venue.category,
     capacity: parseCapacity(venue.capacity),
-    price_range: venue.startingPrice,
-    description: venue.description,
+    indoor_outdoor: venue.indoorOutdoor,
+    rating: venue.rating,
+    starting_price: venue.startingPrice,
     image: venue.image,
+    description: venue.description,
+    parking: venue.parking,
+    rooms: venue.rooms,
+    amenities: venue.amenities,
     gallery: venue.gallery,
+    featured: venue.featured,
   }
 }
 

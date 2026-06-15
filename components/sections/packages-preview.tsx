@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { packages } from '@/lib/data/packages'
+import { usePackages } from '@/hooks/use-packages'
 import { Section, SectionContainer } from '@/components/layout/section-container'
 import { useTranslation } from '@/src/hooks/useTranslation'
 
@@ -24,12 +24,16 @@ const categoryNames: Record<string, string> = {
   entertainment: 'Entertainment',
 }
 
-const previewPackages = packages.filter(
-  (p) => p.popular || ['sangeet', 'product-launch', 'live-concert'].includes(p.id)
-)
 
 export function PackagesPreview() {
   const { t } = useTranslation()
+  const { packages: allPackages, loading } = usePackages()
+
+  if (loading) return null
+
+  const previewPackages = allPackages.filter(
+    (p) => p.popular || ['sangeet', 'product-launch', 'live-concert'].includes(p.id)
+  )
 
   return (
     <Section className="bg-slate-50">
