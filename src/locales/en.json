@@ -1352,6 +1352,9 @@
     "nextSteps": "Next Steps",
     "preparedBy": "Prepared by AS Events AI Consultant",
     "pageOf": "Page {page} of {total}",
+    "downloadProposal": "Download Proposal PDF",
+    "generating": "Generating PDF...",
+    "failed": "Failed to generate PDF. Please try again.",
     "labels": {
       "name": "Name",
       "email": "Email",

@@ -71,7 +71,7 @@ export function ChatWindow() {
             const res = await fetch('/api/chat', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(merged),
+              body: JSON.stringify({ ...merged, language }),
             })
             const data = await res.json()
             if (data.success && data.recommendation) {

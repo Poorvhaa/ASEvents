@@ -5,6 +5,7 @@ import { Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { downloadProposalAsPDF } from '@/services/pdfService'
 import type { ProposalDocument } from '@/services/pdfService'
+import { useTranslation } from '@/src/hooks/useTranslation'
 
 interface DownloadProposalButtonProps {
   document: ProposalDocument
@@ -12,6 +13,7 @@ interface DownloadProposalButtonProps {
 }
 
 export function DownloadProposalButton({ document, className }: DownloadProposalButtonProps) {
+  const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -22,7 +24,7 @@ export function DownloadProposalButton({ document, className }: DownloadProposal
       await downloadProposalAsPDF(document)
     } catch (err) {
       console.error('PDF generation failed:', err)
-      setError('Failed to generate PDF. Please try again.')
+      setError(t('pdf.failed'))
     } finally {
       setLoading(false)
     }
@@ -38,7 +40,7 @@ export function DownloadProposalButton({ document, className }: DownloadProposal
         className={className}
       >
         <Download size={16} className="mr-2" />
-        {loading ? 'Generating PDF…' : 'Download Proposal PDF'}
+        {loading ? t('pdf.generating') : t('pdf.downloadProposal')}
       </Button>
       {error && <p className="text-xs text-red-500">{error}</p>}
     </div>

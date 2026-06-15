@@ -20,7 +20,7 @@ export function AIChatWidget() {
             exit={{ scale: 0, opacity: 0 }}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            onClick={openChat}
+            onClick={() => openChat(t('aiPlanner.welcome'))}
             className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 min-h-11 px-4 sm:px-5 py-3 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 transition-colors duration-300 max-w-[calc(100vw-2rem)]"
             aria-label={t('aiPlanner.askAI')}
           >

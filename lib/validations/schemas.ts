@@ -37,6 +37,7 @@ export const chatSchema = z.object({
   venuePreference: z.string().max(200).optional(),
   specialRequirements: z.string().max(5000).optional(),
   leadId: z.string().uuid().optional(),
+  language: z.string().max(10).optional(),
 })
 
 export const availabilityQuerySchema = z.object({

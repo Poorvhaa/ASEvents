@@ -68,8 +68,7 @@ const COLORS = {
   goldLight: [254, 249, 235] as const,
 }
 
-let regularFontB64: string | null = null
-let boldFontB64: string | null = null
+const fontCache: Record<string, { regular: string; bold: string }> = {}
 
 function arrayBufferToBase64(buffer: ArrayBuffer): string {
   const bytes = new Uint8Array(buffer)
@@ -80,27 +79,39 @@ function arrayBufferToBase64(buffer: ArrayBuffer): string {
   return btoa(binary)
 }
 
-async function registerUnicodeFonts(doc: jsPDF): Promise<void> {
-  if (!regularFontB64) {
+async function registerUnicodeFonts(doc: jsPDF, lang?: string): Promise<void> {
+  const language = (lang && ['en', 'hi', 'gu'].includes(lang) ? lang : 'en') as 'en' | 'hi' | 'gu'
+  
+  if (!fontCache[language]) {
+    let regularUrl = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSans/NotoSans-Regular.ttf'
+    let boldUrl = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSans/NotoSans-Bold.ttf'
+    
+    if (language === 'hi') {
+      regularUrl = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Regular.ttf'
+      boldUrl = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSansDevanagari/NotoSansDevanagari-Bold.ttf'
+    } else if (language === 'gu') {
+      regularUrl = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Regular.ttf'
+      boldUrl = 'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSansGujarati/NotoSansGujarati-Bold.ttf'
+    }
+    
     const [regularRes, boldRes] = await Promise.all([
-      fetch(
-        'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSans/NotoSans-Regular.ttf'
-      ),
-      fetch(
-        'https://cdn.jsdelivr.net/gh/googlefonts/noto-fonts@main/hinted/ttf/NotoSans/NotoSans-Bold.ttf'
-      ),
+      fetch(regularUrl),
+      fetch(boldUrl),
     ])
 
     if (!regularRes.ok || !boldRes.ok) {
-      throw new Error('Failed to load PDF fonts')
+      throw new Error(`Failed to load PDF fonts for ${language}`)
     }
 
-    regularFontB64 = arrayBufferToBase64(await regularRes.arrayBuffer())
-    boldFontB64 = arrayBufferToBase64(await boldRes.arrayBuffer())
+    fontCache[language] = {
+      regular: arrayBufferToBase64(await regularRes.arrayBuffer()),
+      bold: arrayBufferToBase64(await boldRes.arrayBuffer()),
+    }
   }
 
-  doc.addFileToVFS('NotoSans-Regular.ttf', regularFontB64)
-  doc.addFileToVFS('NotoSans-Bold.ttf', boldFontB64)
+  const cache = fontCache[language]
+  doc.addFileToVFS('NotoSans-Regular.ttf', cache.regular)
+  doc.addFileToVFS('NotoSans-Bold.ttf', cache.bold)
   doc.addFont('NotoSans-Regular.ttf', FONT, 'normal')
   doc.addFont('NotoSans-Bold.ttf', FONT, 'bold')
 }
@@ -542,11 +553,34 @@ function drawContactFooter(doc: jsPDF, y: number, t: (key: string) => string, la
 
 export async function generateProposalPDF(proposal: ProposalDocument): Promise<Blob> {
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-  await registerUnicodeFonts(doc)
+  await registerUnicodeFonts(doc, proposal.language)
   setFont(doc, 'normal', 10)
   setNavy(doc)
 
   const t = getTranslator(proposal.language)
+
+  const localizedTips = proposal.planningTips.map((tip) => {
+    if (tip.includes('Book your venue')) return t('aiPlanner.tips.bookEarly')
+    if (tip.includes('Allocate 40-50%')) return t('aiPlanner.tips.allocateBudget')
+    if (tip.includes('Confirm vendor availability')) return t('aiPlanner.tips.confirmVendor')
+    if (tip.includes('Plan haldi')) return t('aiPlanner.tips.coordinateWeddingEvents')
+    if (tip.includes('Consider a backup')) return t('aiPlanner.tips.backupIndoor')
+    if (tip.includes('Finalize AV')) return t('aiPlanner.tips.finalizeAV')
+    if (tip.includes('Schedule a venue walkthrough')) return t('aiPlanner.tips.scheduleWalkthrough')
+    if (tip.startsWith("We'll accommodate")) {
+      const reqText = tip.replace("We'll accommodate: \"", "").replace("...\"", "")
+      return t('aiPlanner.tips.specialRequirements').replace('{req}', reqText)
+    }
+    return tip
+  })
+
+  const localizedSteps = proposal.nextSteps.map((step) => {
+    if (step.includes('Submit your details')) return t('aiPlanner.nextSteps.submitDetails')
+    if (step.includes('Schedule a free consultation')) return t('aiPlanner.nextSteps.scheduleConsultation')
+    if (step.includes('Visit shortlisted venues')) return t('aiPlanner.nextSteps.visitVenues')
+    if (step.includes('Review package inclusions')) return t('aiPlanner.nextSteps.reviewPackage')
+    return step
+  })
 
   let y = drawHeader(doc, proposal, t)
   y = drawClientSection(doc, proposal, y, t)
@@ -557,8 +591,8 @@ export async function generateProposalPDF(proposal: ProposalDocument): Promise<B
   y = drawCostBreakdown(doc, proposal, y, t)
   y = drawTimelineSection(doc, proposal, y, t)
   y = drawVenueTable(doc, proposal, y, t) + 8
-  y = drawBulletList(doc, t('pdf.planningTips'), proposal.planningTips, y)
-  y = drawBulletList(doc, t('pdf.nextSteps'), proposal.nextSteps, y, true)
+  y = drawBulletList(doc, t('pdf.planningTips'), localizedTips, y)
+  y = drawBulletList(doc, t('pdf.nextSteps'), localizedSteps, y, true)
   drawContactFooter(doc, y, t, proposal.language)
 
   addPageFooters(doc, t)

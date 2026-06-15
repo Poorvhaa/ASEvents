@@ -51,11 +51,13 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
   const { t } = useTranslation()
 
   const handleAIPlanner = () => {
+    const titleTrans = t(`packages.${pkg.id}.title`) || pkg.title
+    const msg = t('aiPlanner.prefillWelcome').replace('{eventType}', titleTrans)
     openChatWithPackage({
       eventType: mapPackageToEventType(pkg.title, pkg.category),
       guestCount: pkg.suitableGuests,
       budget: pkg.price.replace('Starting from ', ''),
-    })
+    }, msg)
   }
 
   return (
@@ -137,10 +139,10 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         })}
       </ul>
 
-      <div className="pt-4 border-t border-border mt-auto flex flex-col sm:flex-row gap-2">
+      <div className="pt-4 border-t border-border mt-auto flex flex-col gap-2.5 w-full">
         <Button
           onClick={() => openModal({ eventType: t(`packages.${pkg.id}.title`) || pkg.title, step: 2 })}
-          className="min-h-11 flex-1 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
+          className="min-h-11 w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
         >
           {t('nav.getQuote')}
         </Button>
@@ -148,7 +150,7 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
           type="button"
           variant="outline"
           onClick={handleAIPlanner}
-          className="min-h-11 flex-1 border-primary/50 text-primary hover:bg-primary/5 gap-1.5"
+          className="min-h-11 w-full border-primary/50 text-primary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 gap-1.5 disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:opacity-100"
         >
           <Bot size={16} />
           {t('packagesPage.aiPlanner')}

@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
       specialRequirements: parsed.data.specialRequirements
         ? sanitizeString(parsed.data.specialRequirements, 5000)
         : undefined,
+      language: parsed.data.language ? sanitizeString(parsed.data.language, 10) : undefined,
     }
 
     const structured = await generateEventConsultation(input)

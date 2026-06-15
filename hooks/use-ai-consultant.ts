@@ -14,8 +14,8 @@ interface AIConsultantStore {
   isTyping: boolean
   recommendation: AIConsultationResult | null
 
-  openChat: () => void
-  openChatWithPackage: (prefill: Partial<ConsultantAnswers>) => void
+  openChat: (welcomeMessage?: string) => void
+  openChatWithPackage: (prefill: Partial<ConsultantAnswers>, welcomeMessage?: string) => void
   closeChat: () => void
   addMessage: (role: 'assistant' | 'user', content: string, recommendation?: AIConsultationResult) => void
   setAnswer: (field: keyof ConsultantAnswers, value: string) => void
@@ -49,7 +49,7 @@ export const useAIConsultant = create<AIConsultantStore>((set) => ({
   isTyping: false,
   recommendation: null,
 
-  openChat: () =>
+  openChat: (welcomeMessage) =>
     set({
       isOpen: true,
       step: 'eventType',
@@ -59,13 +59,13 @@ export const useAIConsultant = create<AIConsultantStore>((set) => ({
         {
           id: 'welcome',
           role: 'assistant',
-          content: WELCOME_MESSAGE,
+          content: welcomeMessage || WELCOME_MESSAGE,
           timestamp: new Date(),
         },
       ],
     }),
 
-  openChatWithPackage: (prefill) => {
+  openChatWithPackage: (prefill, welcomeMessage) => {
     const answers = { ...initialAnswers, ...prefill }
     set({
       isOpen: true,
@@ -76,9 +76,9 @@ export const useAIConsultant = create<AIConsultantStore>((set) => ({
         {
           id: 'welcome',
           role: 'assistant',
-          content: prefill.eventType
+          content: welcomeMessage || (prefill.eventType
             ? `Great choice — the **${prefill.eventType}** package! Let me tailor a recommendation. How many guests are you expecting?`
-            : WELCOME_MESSAGE,
+            : WELCOME_MESSAGE),
           timestamp: new Date(),
         },
       ],

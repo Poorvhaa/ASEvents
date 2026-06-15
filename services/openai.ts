@@ -29,6 +29,7 @@ export interface ChatInput {
   budget?: string
   venuePreference?: string
   specialRequirements?: string
+  language?: string
 }
 
 function engineFallback(input: ChatInput): StructuredAIResponse {
@@ -57,13 +58,18 @@ export async function generateEventConsultation(input: ChatInput): Promise<Struc
   const apiKey = process.env.OPENAI_API_KEY
   if (!apiKey) return engineFallback(input)
 
+  const targetLang = input.language === 'hi' ? 'Hindi' : input.language === 'gu' ? 'Gujarati' : 'English'
+
   const userPrompt = `Event consultation request:
 - Event Type: ${input.eventType}
 - City: ${input.city || 'Not specified'}
 - Guest Count: ${input.guestCount || 'Not specified'}
 - Budget: ${input.budget || 'Not specified'}
 - Venue Preference: ${input.venuePreference || 'Not specified'}
-- Special Requirements: ${input.specialRequirements || 'None'}`
+- Special Requirements: ${input.specialRequirements || 'None'}
+- Required Output Language: ${targetLang}
+
+IMPORTANT: You MUST generate all text fields in the structured response (including summary, recommendedPackage, suggestedVenues, eventTimeline, nextSteps) in ${targetLang}. Do NOT return any English text, english labels or english translations for these fields if the language is Hindi or Gujarati.`
 
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
