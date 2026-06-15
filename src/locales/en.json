@@ -530,7 +530,9 @@
       "parking": "Parking",
       "rooms": "Rooms Available",
       "bookThis": "Book This Venue",
-      "inquiry": "Inquiry Form"
+      "inquiry": "Inquiry Form",
+      "relatedTitle": "Discover Similar Venues",
+      "relatedSub": "Handpicked premium options that match your style and requirements."
     },
     "inquiry": {
       "submitted": "Booking request submitted!",
