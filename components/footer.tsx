@@ -97,40 +97,46 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="flex flex-col items-center sm:items-start">
             <h4 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h4>
-            <ul className="space-y-4">
-              <li className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3">
-                <MapPin size={20} className="text-primary mt-0.5 shrink-0" aria-hidden="true" />
-                <a
-                  href="https://maps.app.goo.gl/92BBaz8P4wzcxPMK9"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-slate-400 text-sm hover:text-white transition-colors text-center sm:text-left"
-                  aria-label={`${t('footer.address')}, opens in new tab`}
-                >
-                  {t('footer.address')}
-                </a>
+            <ul className="space-y-4 w-full max-w-[290px] sm:max-w-none">
+              <li className="flex items-start gap-3 text-left min-w-0">
+                <MapPin size={20} className="text-primary mt-1 shrink-0" aria-hidden="true" />
+                <div className="min-w-0 flex-1">
+                  <a
+                    href="https://maps.app.goo.gl/92BBaz8P4wzcxPMK9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-slate-400 text-sm hover:text-white transition-colors block leading-relaxed"
+                    aria-label={`${t('footer.address')}, opens in new tab`}
+                  >
+                    {t('footer.address')}
+                  </a>
+                </div>
               </li>
-              <li className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3">
-                <Phone size={20} className="text-primary shrink-0" aria-hidden="true" />
-                <a 
-                  href="tel:+919510324143" 
-                  className="text-slate-400 text-sm hover:text-white transition-colors"
-                  aria-label="Call us at +91 95103 24143"
-                >
-                  +91 95103 24143
-                </a>
+              <li className="flex items-start gap-3 text-left min-w-0">
+                <Phone size={20} className="text-primary mt-1 shrink-0" aria-hidden="true" />
+                <div className="min-w-0 flex-1">
+                  <a 
+                    href="tel:+919510324143" 
+                    className="text-slate-400 text-sm hover:text-white transition-colors block leading-relaxed"
+                    aria-label="Call us at +91 95103 24143"
+                  >
+                    +91 95103 24143
+                  </a>
+                </div>
               </li>
-              <li className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-2 sm:gap-3 max-w-full overflow-hidden">
-                <Mail size={20} className="text-primary shrink-0" aria-hidden="true" />
-                <a 
-                  href="mailto:as.eventmanagement2829@gmail.com" 
-                  className="text-slate-400 text-xs sm:text-sm hover:text-white transition-colors break-all sm:break-normal"
-                  aria-label="Email us at as.eventmanagement2829@gmail.com"
-                >
-                  as.eventmanagement2829@gmail.com
-                </a>
+              <li className="flex items-start gap-3 text-left min-w-0">
+                <Mail size={20} className="text-primary mt-1 shrink-0" aria-hidden="true" />
+                <div className="min-w-0 flex-1">
+                  <a 
+                    href="mailto:as.eventmanagement2829@gmail.com" 
+                    className="text-slate-400 text-sm hover:text-white transition-colors block break-all sm:break-normal leading-relaxed"
+                    aria-label="Email us at as.eventmanagement2829@gmail.com"
+                  >
+                    as.eventmanagement2829@gmail.com
+                  </a>
+                </div>
               </li>
             </ul>
           </div>
