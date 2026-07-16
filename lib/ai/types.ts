@@ -4,15 +4,16 @@ export const EVENT_TYPES = [
   'Haldi',
   'Mehendi',
   'Sangeet',
+  'Carnival',
   'Reception',
   'Destination Wedding',
   'Corporate Event',
-  'Product Launch',
-  'Exhibition',
+  //'Product Launch',
+  //'Exhibition',
   'Birthday',
   'Anniversary',
-  'Festival Event',
-  'Entertainment Event',
+  //'Festival Event',
+  //'Entertainment Event',
 ] as const
 
 export type EventType = (typeof EVENT_TYPES)[number]
@@ -88,8 +89,8 @@ export interface BudgetBreakdown {
 
 export interface AIConsultationResult {
   recommendedPackage: PackageRecommendation
-  budgetEstimate: BudgetBreakdown
-  budgetRangeLabel: string
+  //budgetEstimate: BudgetBreakdown
+  //budgetRangeLabel: string
   venueSuggestions: VenueRecommendation[]
   recommendedVenueTypes: string[]
   guestCapacityValidation: GuestCapacityValidation

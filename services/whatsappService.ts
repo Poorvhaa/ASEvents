@@ -15,7 +15,6 @@ export function generateWhatsAppUrl(
     eventType: answers.eventType,
     city: answers.city,
     guestCount: answers.guestCount,
-    budget: answers.budget || recommendation?.budgetRangeLabel,
     requirements: answers.specialRequirements,
   })
 }

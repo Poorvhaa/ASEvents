@@ -11,7 +11,7 @@ const eventTypes = [
   'Corporate Event',
   'Birthday Celebration',
   'Anniversary',
-  'Product Launch',
+  //'Product Launch',
   'Other',
 ]
 

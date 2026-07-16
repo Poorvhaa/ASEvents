@@ -1,3 +1,9 @@
+import { notFound } from 'next/navigation'
+export default async function VenueDetailPage() {
+  notFound()
+}
+
+/*
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cookies } from 'next/headers'
@@ -74,3 +80,4 @@ export default async function VenueDetailPage({ params }: VenuePageProps) {
     </>
   )
 }
+*/

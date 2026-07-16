@@ -1,4 +1,9 @@
-import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+
+export default function VenuesPage() {
+  notFound()
+}
+/*import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { getTranslationServer } from '@/lib/i18n-server'
 import { VenuesHero } from '@/components/venues/venues-hero'
@@ -43,3 +48,4 @@ export default function VenuesPage() {
     </>
   )
 }
+*/

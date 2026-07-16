@@ -4,7 +4,6 @@ import type { DbVenueBooking } from '@/types/database'
 
 const COMPANY_NAME = 'AS Events'
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'sales@asevents.in'
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev'
 
 function getResend(): Resend | null {
   const apiKey = process.env.RESEND_API_KEY
@@ -13,6 +12,12 @@ function getResend(): Resend | null {
 }
 
 async function sendEmail(to: string[], subject: string, html: string): Promise<boolean> {
+  const fromEmail = process.env.RESEND_FROM_EMAIL
+  if (!fromEmail) {
+    console.error('[Email] Configuration Error: RESEND_FROM_EMAIL environment variable is missing.')
+    return false
+  }
+
   const resend = getResend()
   if (!resend) {
     console.log('[Email] RESEND_API_KEY not set — preview:', { to, subject })
@@ -21,7 +26,7 @@ async function sendEmail(to: string[], subject: string, html: string): Promise<b
 
   try {
     const { error } = await resend.emails.send({
-      from: `${COMPANY_NAME} <${FROM_EMAIL}>`,
+      from: fromEmail,
       to,
       subject,
       html,

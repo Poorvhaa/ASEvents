@@ -16,8 +16,6 @@ const categoryMap: Record<PackageCategoryFilter, string | null> = {
   Weddings: 'wedding',
   Corporate: 'corporate',
   'Social Events': 'social',
-  Exhibitions: 'exhibition',
-  Entertainment: 'entertainment',
 }
 
 export function PackagesGrid() {
@@ -32,8 +30,6 @@ export function PackagesGrid() {
         weddings: 'Weddings',
         corporate: 'Corporate',
         birthday: 'Social Events',
-        exhibitions: 'Exhibitions',
-        entertainment: 'Entertainment',
       }
       const matchedCategory = queryToCategoryMap[categoryQuery.toLowerCase()]
       if (matchedCategory) {
@@ -57,7 +53,8 @@ export function PackagesGrid() {
     <Section id="packages-grid-section" className="bg-background">
       <SectionContainer>
         <div className="filter-scroll justify-center sm:justify-start mb-8 sm:mb-12">
-          {packageCategories.map((category) => (
+          {packageCategories
+  .map((category) => (
             <button
               key={category}
               type="button"

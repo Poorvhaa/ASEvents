@@ -31,11 +31,11 @@ const getServiceTranslationKey = (label: string): string => {
     case 'Wedding Planning': return 'nav.dropdown.wedding'
     case 'Destination Weddings': return 'nav.dropdown.destination'
     case 'Corporate Events': return 'nav.dropdown.corporate'
-    case 'Product Launches': return 'nav.dropdown.products'
-    case 'Exhibitions': return 'nav.dropdown.exhibitions'
+    //case 'Product Launches': return 'nav.dropdown.products'
+    //case 'Exhibitions': return 'nav.dropdown.exhibitions'
     case 'Birthday Celebrations': return 'nav.dropdown.birthdays'
     case 'Anniversary Events': return 'nav.dropdown.anniversaries'
-    case 'Entertainment Management': return 'nav.dropdown.entertainment'
+    //case 'Entertainment Management': return 'nav.dropdown.entertainment'
     default: return 'nav.services'
   }
 }
@@ -157,22 +157,21 @@ export function Navbar() {
             className="flex items-center shrink-0 transition-opacity duration-300 hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
           >
           <Image
-  src="/clean.png"
+  src="/as.png"
   alt="AS Events"
-  width={360}
+  width={560}
   height={745}
   priority
   className={cn(
-    'w-auto object-contain transition-all duration-300',
-
-    isHomePage
-      ? (
-          isScrolled
-  ? 'h-8'
-  : 'h-10 sm:h-12'
-        )
-      : 'h-10 lg:h-12'
-  )}
+  'w-auto object-contain transition-all duration-300',
+  isHomePage
+    ? (
+        isScrolled
+          ? 'h-12'
+          : 'h-16 sm:h-20'
+      )
+    : 'h-16 sm:h-20'
+)}
 />
           </Link>
 

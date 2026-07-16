@@ -26,13 +26,7 @@ const guestCounts = [
   '1000+',
 ]
 
-const budgetRanges = [
-  'Under ₹1,00,000',
-  '₹1,00,000 - ₹3,00,000',
-  '₹3,00,000 - ₹5,00,000',
-  '₹5,00,000 - ₹10,00,000',
-  '₹10,00,000+',
-]
+
 
 const selectClass =
   'w-full min-h-11 px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground text-sm sm:text-base focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20'
@@ -44,7 +38,6 @@ export function CustomPackageBuilder() {
     eventType: '',
     guestCount: '',
     location: '',
-    budgetRange: '',
   })
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -88,7 +81,7 @@ export function CustomPackageBuilder() {
           onSubmit={handleSubmit}
           className="max-w-3xl mx-auto p-5 sm:p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-lg"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
             <div className="min-w-0">
               <label htmlFor="eventType" className="block text-sm font-medium text-foreground mb-2">
                 {t('packagesPage.builder.eventType')}
@@ -143,26 +136,6 @@ export function CustomPackageBuilder() {
                 <option value="">{t('packagesPage.builder.selectLocation')}</option>
                 {venueCities.map((city) => (
                   <option key={city} value={city}>{city}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="min-w-0">
-              <label htmlFor="budgetRange" className="block text-sm font-medium text-foreground mb-2">
-                {t('packagesPage.builder.budgetRange')}
-              </label>
-              <select
-                id="budgetRange"
-                value={formData.budgetRange}
-                onChange={(e) => setFormData({ ...formData, budgetRange: e.target.value })}
-                className={selectClass}
-                required
-              >
-                <option value="">{t('packagesPage.builder.selectBudget')}</option>
-                {budgetRanges.map((range) => (
-                  <option key={range} value={range}>
-                    {t(`packagesPage.builder.ranges.${range}`) || range}
-                  </option>
                 ))}
               </select>
             </div>

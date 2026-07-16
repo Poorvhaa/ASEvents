@@ -12,11 +12,9 @@
       "wedding": "Wedding Planning",
       "destination": "Destination Weddings",
       "corporate": "Corporate Events",
-      "products": "Product Launches",
-      "exhibitions": "Exhibitions",
+
       "birthdays": "Birthday Celebrations",
-      "anniversaries": "Anniversary Events",
-      "entertainment": "Entertainment Management"
+      "anniversaries": "Anniversary Events"
     },
     "selectLanguage": "Select Language"
   },
@@ -87,30 +85,7 @@
         "Audio-visual production"
       ]
     },
-    "product-launches": {
-      "title": "Product Launches",
-      "desc": "Create buzz-worthy product launch events that captivate audiences and drive engagement.",
-      "features": [
-        "Creative concept development",
-        "Media and PR coordination",
-        "Influencer management",
-        "Brand experience design",
-        "Live streaming capabilities",
-        "Post-event analytics"
-      ]
-    },
-    "exhibitions": {
-      "title": "Exhibitions",
-      "desc": "Immersive exhibition experiences that showcase your vision with stunning visual impact.",
-      "features": [
-        "Booth design and fabrication",
-        "Interactive displays",
-        "Staff training and management",
-        "Lead capture systems",
-        "Logistics and shipping",
-        "Setup and teardown"
-      ]
-    },
+
     "birthdays": {
       "title": "Birthday Celebrations",
       "desc": "Unforgettable birthday parties from intimate gatherings to grand milestone celebrations.",
@@ -246,13 +221,11 @@
         "Reception": "Reception",
         "Destination Wedding": "Destination Wedding",
         "Corporate Event": "Corporate Event",
-        "Product Launch": "Product Launch",
-        "Exhibition": "Exhibition",
+
         "Birthday": "Birthday",
         "Birthday Celebration": "Birthday Celebration",
         "Anniversary": "Anniversary",
-        "Festival Event": "Festival Event",
-        "Entertainment Event": "Entertainment Event",
+
         "Destination Event": "Destination Event",
         "Other": "Other"
       }
@@ -479,9 +452,7 @@
       "All": "All",
       "Weddings": "Weddings",
       "Corporate": "Corporate",
-      "Social Events": "Social Events",
-      "Exhibitions": "Exhibitions",
-      "Entertainment": "Entertainment"
+      "Social Events": "Social Events"
     }
   },
   "venuesPage": {
@@ -580,12 +551,9 @@
       "All": "All",
       "Wedding": "Wedding",
       "Corporate": "Corporate",
-      "Destination": "Destination",
-      "Product Launches": "Product Launches",
-      "Exhibitions": "Exhibitions",
       "Birthdays": "Birthdays",
       "Anniversaries": "Anniversaries",
-      "Entertainment": "Entertainment"
+      "Others": "Others"
     }
   },
   "cities": {
@@ -604,7 +572,6 @@
     "haldi": {
       "title": "Haldi Ceremony",
       "description": "A vibrant haldi ceremony with traditional aesthetics and joyful ambiance.",
-      "price": "Starting from ₹75,000",
       "duration": "4-6 hours",
       "highlights": [
         "Yellow theme decor",
@@ -623,7 +590,6 @@
     "complete-wedding": {
       "title": "Complete Wedding Package",
       "description": "The ultimate all-in-one wedding experience covering every ceremony from haldi to reception.",
-      "price": "Starting from ₹10,00,000",
       "duration": "3-7 days",
       "highlights": [
         "All ceremonies covered",
@@ -643,7 +609,6 @@
     "mehendi": {
       "title": "Mehendi Ceremony",
       "description": "A colourful mehendi celebration with artists, live music, and themed decor.",
-      "price": "Starting from ₹1,00,000",
       "duration": "5-7 hours",
       "highlights": [
         "Colourful lounge setup",
@@ -662,7 +627,6 @@
     "sangeet": {
       "title": "Sangeet Night",
       "description": "A high-energy sangeet night with professional stage, sound, and dance floor setup.",
-      "price": "Starting from ₹2,00,000",
       "duration": "6-8 hours",
       "highlights": [
         "Professional stage",
@@ -678,10 +642,29 @@
         "Guest hospitality"
       ]
     },
+    "carnival": {
+      "title": "Carnival  Event",
+      "description": "A vibrant carnival-style celebration with themed decor, interactive games, live performers, food counters, photo booths, and entertainment for guests of all ages.",
+      "price": "Starting from ₹3,00,000",
+      "duration": "6-8 hours",
+      "highlights": [
+        "Colourful carnival-themed decor",
+        "Interactive games for all age groups",
+        "Live entertainers and performers"
+      ],
+      "includedServices": [
+        "Event planning and coordination",
+        "Carnival theme design",
+        "Game stall management",
+        "Artist and performer coordination",
+        "Food counter coordination",
+        "Photography and videography",
+        "Guest hospitality"
+      ]
+    },
     "baarat": {
       "title": "Baraat Management",
       "description": "A grand baarat procession with traditional music, decor, and seamless coordination.",
-      "price": "Starting from ₹1,50,000",
       "duration": "3-5 hours",
       "highlights": [
         "Royal procession",
@@ -700,7 +683,6 @@
     "reception": {
       "title": "Reception Celebration",
       "description": "A grand reception with luxury staging, lighting, and premium entertainment.",
-      "price": "Starting from ₹2,50,000",
       "duration": "5-7 hours",
       "highlights": [
         "Grand stage design",
@@ -719,7 +701,6 @@
     "corporate-conference": {
       "title": "Corporate Conference",
       "description": "Professional conference planning with branding, AV, and hospitality management.",
-      "price": "Starting from ₹2,00,000",
       "duration": "1-3 days",
       "highlights": [
         "Keynote production",
@@ -735,66 +716,10 @@
         "Hospitality"
       ]
     },
-    "product-launch": {
-      "title": "Product Launch",
-      "description": "Impactful product launches with immersive branding and media-ready production.",
-      "price": "Starting from ₹3,50,000",
-      "duration": "4-8 hours",
-      "highlights": [
-        "Immersive branding",
-        "Media-ready production",
-        "Influencer zones"
-      ],
-      "includedServices": [
-        "Planning",
-        "Venue Coordination",
-        "Branding",
-        "AV Setup",
-        "Photography",
-        "Hospitality"
-      ]
-    },
-    "awards-night": {
-      "title": "Awards Night",
-      "description": "Prestigious award ceremonies with elegant staging and flawless hospitality.",
-      "price": "Starting from ₹2,50,000",
-      "duration": "4-6 hours",
-      "highlights": [
-        "Elegant staging",
-        "Award ceremony flow",
-        "Celebrity coordination"
-      ],
-      "includedServices": [
-        "Planning",
-        "Venue Coordination",
-        "Branding",
-        "AV Setup",
-        "Photography",
-        "Hospitality"
-      ]
-    },
-    "team-building": {
-      "title": "Team Building Event",
-      "description": "Engaging team building experiences designed to strengthen collaboration and morale.",
-      "price": "Starting from ₹1,50,000",
-      "duration": "Half / Full day",
-      "highlights": [
-        "Custom activities",
-        "Outdoor & indoor options",
-        "Team engagement focus"
-      ],
-      "includedServices": [
-        "Planning",
-        "Venue Coordination",
-        "Activity design",
-        "Catering",
-        "Photography"
-      ]
-    },
+
     "birthday": {
       "title": "Birthday Celebration",
       "description": "Memorable birthday parties with themed decor, entertainment, and photography.",
-      "price": "Starting from ₹75,000",
       "duration": "4-6 hours",
       "highlights": [
         "Custom themes",
@@ -812,13 +737,8 @@
     "anniversary": {
       "title": "Anniversary Celebration",
       "description": "Romantic anniversary celebrations with elegant styling and curated entertainment.",
-      "price": "Starting from ₹1,00,000",
       "duration": "4-6 hours",
-      "highlights": [
-        "Romantic styling",
-        "Memory wall",
-        "Live musicians"
-      ],
+      "highlights": ["Romantic styling", "Memory wall", "Live musicians"],
       "includedServices": [
         "Planning",
         "Decor & Styling",
@@ -830,141 +750,14 @@
     "baby-shower": {
       "title": "Baby Shower",
       "description": "Charming baby shower events with delightful decor and thoughtful hospitality.",
-      "price": "Starting from ₹60,000",
       "duration": "3-5 hours",
-      "highlights": [
-        "Pastel themes",
-        "Game coordination",
-        "Custom favours"
-      ],
+      "highlights": ["Pastel themes", "Game coordination", "Custom favours"],
       "includedServices": [
         "Planning",
         "Decor",
         "Entertainment",
         "Photography",
         "Catering"
-      ]
-    },
-    "housewarming": {
-      "title": "Housewarming Ceremony",
-      "description": "Warm housewarming celebrations with traditional decor and seamless coordination.",
-      "price": "Starting from ₹50,000",
-      "duration": "3-5 hours",
-      "highlights": [
-        "Traditional rituals",
-        "Home styling",
-        "Intimate gatherings"
-      ],
-      "includedServices": [
-        "Planning",
-        "Decor",
-        "Catering",
-        "Photography",
-        "Hospitality"
-      ]
-    },
-    "trade-exhibition": {
-      "title": "Trade Exhibition",
-      "description": "Large-scale trade exhibitions with professional booth design and visitor management.",
-      "price": "Starting from ₹5,00,000",
-      "duration": "2-5 days",
-      "highlights": [
-        "Custom booth design",
-        "Lead capture systems",
-        "Sponsor branding"
-      ],
-      "includedServices": [
-        "Planning",
-        "Booth fabrication",
-        "Branding",
-        "AV",
-        "Visitor hospitality"
-      ]
-    },
-    "expo-management": {
-      "title": "Expo Management",
-      "description": "Full expo management from floor planning to on-ground operations.",
-      "price": "Starting from ₹8,00,000",
-      "duration": "3-7 days",
-      "highlights": [
-        "Multi-hall coordination",
-        "Exhibitor onboarding",
-        "Live operations desk"
-      ],
-      "includedServices": [
-        "End-to-end expo planning",
-        "Vendor management",
-        "Branding",
-        "Operations"
-      ]
-    },
-    "product-showcase": {
-      "title": "Product Showcase",
-      "description": "Focused product showcases with immersive display design and demo experiences.",
-      "price": "Starting from ₹2,50,000",
-      "duration": "1-3 days",
-      "highlights": [
-        "Interactive demo zones",
-        "Product-focused staging",
-        "Media lounge"
-      ],
-      "includedServices": [
-        "Planning",
-        "Display fabrication",
-        "Branding",
-        "AV",
-        "Media"
-      ]
-    },
-    "live-concert": {
-      "title": "Live Concert",
-      "description": "Large-scale live concerts with professional production and crowd management.",
-      "price": "Starting from ₹5,00,000",
-      "duration": "4-6 hours",
-      "highlights": [
-        "Professional stage",
-        "Concert-grade sound",
-        "Artist hospitality"
-      ],
-      "includedServices": [
-        "Production",
-        "Technical crew",
-        "Artist liaison",
-        "Safety & crowd control"
-      ]
-    },
-    "celebrity-night": {
-      "title": "Celebrity Night",
-      "description": "Exclusive celebrity nights with premium hospitality and flawless production.",
-      "price": "Starting from ₹8,00,000",
-      "duration": "3-5 hours",
-      "highlights": [
-        "Celebrity appearances",
-        "Red carpet setup",
-        "VIP lounge"
-      ],
-      "includedServices": [
-        "Celebrity coordination",
-        "Production",
-        "VIP hosting",
-        "Security"
-      ]
-    },
-    "cultural-festival": {
-      "title": "Cultural Festival",
-      "description": "Vibrant cultural festivals with multi-stage entertainment and crowd coordination.",
-      "price": "Starting from ₹3,00,000",
-      "duration": "1-3 days",
-      "highlights": [
-        "Multi-stage setup",
-        "Cultural performances",
-        "Food festival zones"
-      ],
-      "includedServices": [
-        "Festival planning",
-        "Entertainment booking",
-        "Operations",
-        "Safety"
       ]
     }
   },
@@ -1339,13 +1132,11 @@
     "recommendedPackage": "Recommended Package",
     "reasonLabel": "Reason:",
     "recommendedVenueTypes": "Recommended Venue Types",
-    "budgetBreakdown": "Budget Breakdown",
     "venueLabel": "Venue",
     "decorLabel": "Decor",
     "cateringLabel": "Catering",
     "entertainmentLabel": "Entertainment",
     "contingencyLabel": "Contingency",
-    "estimatedTotal": "Estimated Total",
     "venueSuggestions": "Venue Suggestions",
     "planningTips": "Planning Tips",
     "venuePreferences": {
@@ -1367,7 +1158,7 @@
     "eventSummary": "Event Summary",
     "recommendedPackage": "Recommended Package",
     "packageInclusions": "Package Inclusions",
-    "budgetEstimate": "Budget Estimate",
+    
     "recommendedBudgetRange": "Recommended Budget Range",
     "estimatedCostBreakdown": "Estimated Cost Breakdown",
     "totalEventCost": "Total Event Cost",
@@ -1422,8 +1213,8 @@
     "monFri": "Mon - Fri: 9:00 AM - 6:00 PM",
     "sat": "Sat: 10:00 AM - 4:00 PM",
     "placeholders": {
-      "name": "Apurva Shah",
-      "email": "apurva@example.com",
+      "name": "Apurv Shah",
+      "email": "apurv@example.com",
       "phone": "+91 95103 24143"
     }
   },

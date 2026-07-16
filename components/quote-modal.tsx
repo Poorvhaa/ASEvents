@@ -13,7 +13,7 @@ const eventTypes = [
   'Corporate Event',
   'Birthday Celebration',
   'Anniversary',
-  'Product Launch',
+  //'Product Launch',
   'Exhibition',
   'Destination Event',
   'Other',
@@ -83,7 +83,7 @@ export function QuoteModal() {
 
 
 
-  const totalSteps = 6
+  const totalSteps = 5
 
   const handleSelect = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -139,7 +139,6 @@ export function QuoteModal() {
         eventType: formData.eventType,
         eventDate: formData.eventDate,
         guestCount: guestCountMap[formData.guestCount] || 50,
-        budget: formData.budgetRange,
         location: formData.venuePreference,
         name: formData.name,
         email: formData.email,
@@ -164,7 +163,6 @@ export function QuoteModal() {
           eventType: payload.eventType,
           city: formData.venuePreference,
           guestCount: formData.guestCount || payload.guestCount,
-          budget: payload.budget,
           venuePreference: formData.venuePreference,
           requirements: payload.requirements,
         }),
@@ -217,10 +215,8 @@ export function QuoteModal() {
       case 3:
         return formData.venuePreference !== ''
       case 4:
-        return formData.budgetRange !== ''
-      case 5:
         return true // Requirements is optional
-      case 6:
+      case 5:
         return formData.name !== '' && formData.email !== ''
       default:
         return false
@@ -312,32 +308,6 @@ export function QuoteModal() {
           <div className="space-y-6">
             <div className="text-center">
               <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
-                {t('quoteModal.step4.heading')}
-              </h3>
-              <p className="text-muted-foreground">{t('quoteModal.step4.sub')}</p>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              {budgetRanges.map((budget) => (
-                <button
-                  key={budget}
-                  onClick={() => handleSelect('budgetRange', budget)}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    formData.budgetRange === budget
-                      ? 'border-primary bg-primary/10 text-primary'
-                      : 'border-border hover:border-primary/50 text-foreground'
-                  }`}
-                >
-                  {translateBudgetRange(budget)}
-                </button>
-              ))}
-            </div>
-          </div>
-        )
-      case 5:
-        return (
-          <div className="space-y-6">
-            <div className="text-center">
-              <h3 className="text-2xl font-serif font-bold text-foreground mb-2">
                 {t('quoteModal.step5.heading')}
               </h3>
               <p className="text-muted-foreground">{t('quoteModal.step5.sub')}</p>
@@ -350,7 +320,7 @@ export function QuoteModal() {
             />
           </div>
         )
-      case 6:
+      case 5:
         return (
           <div className="space-y-6">
             <div className="text-center">
@@ -393,8 +363,6 @@ export function QuoteModal() {
                 <span className="text-foreground">{translateGuestCount(formData.guestCount)}</span>
                 <span className="text-muted-foreground">{t('quoteModal.step6.venue')}</span>
                 <span className="text-foreground">{translateVenuePreference(formData.venuePreference)}</span>
-                <span className="text-muted-foreground">{t('quoteModal.step6.budget')}</span>
-                <span className="text-foreground">{translateBudgetRange(formData.budgetRange)}</span>
               </div>
             </div>
           </div>

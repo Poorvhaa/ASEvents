@@ -20,7 +20,6 @@ function staticToDbVenue(venue: (typeof staticVenues)[0]): DbVenue {
     capacity: parseCapacity(venue.capacity),
     indoor_outdoor: venue.indoorOutdoor,
     rating: venue.rating,
-    starting_price: venue.startingPrice,
     image: venue.image,
     description: venue.description,
     parking: venue.parking,

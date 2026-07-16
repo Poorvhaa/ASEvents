@@ -20,8 +20,6 @@ const categoryNames: Record<string, string> = {
   wedding: 'Weddings',
   corporate: 'Corporate',
   social: 'Social Events',
-  exhibition: 'Exhibitions',
-  entertainment: 'Entertainment',
 }
 
 
@@ -109,9 +107,9 @@ export function PackagesPreview() {
                       )
                     })}
                   </ul>
-                  <p className="text-sm font-bold text-foreground">
+                  {/* <p className="text-sm font-bold text-foreground">
                     {t(`packages.${pkg.id}.price`) || pkg.price}
-                  </p>
+                  </p>*/}
                 </Link>
               </motion.div>
             )

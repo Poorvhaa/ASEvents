@@ -276,10 +276,9 @@ function drawEventSummary(doc: jsPDF, proposal: ProposalDocument, y: number, t: 
   let rightY = drawKeyValue(doc, t('pdf.labels.eventDate'), s.eventDate, rightX, innerY, colW)
   innerY = Math.max(leftY, rightY)
   leftY = drawKeyValue(doc, t('pdf.labels.guestCount'), s.guestCount, leftX, innerY, colW)
-  rightY = drawKeyValue(doc, t('pdf.labels.budget'), s.budget, rightX, innerY, colW)
+  rightY = drawKeyValue(doc, t('pdf.labels.venuePreference'), s.venuePreference, rightX, innerY, colW)
   innerY = Math.max(leftY, rightY)
-  leftY = drawKeyValue(doc, t('pdf.labels.venuePreference'), s.venuePreference, leftX, innerY, colW)
-  rightY = drawKeyValue(doc, t('pdf.labels.specialRequirements'), s.specialRequirements, rightX, innerY, colW)
+  leftY = drawKeyValue(doc, t('pdf.labels.specialRequirements'), s.specialRequirements, leftX, innerY, CONTENT_WIDTH - 10)
 
   return cardTop + cardHeight + 8
 }
@@ -329,29 +328,21 @@ function drawPackageInclusions(doc: jsPDF, proposal: ProposalDocument, y: number
   return y + 4
 }
 
-function drawBudgetRange(doc: jsPDF, proposal: ProposalDocument, y: number, t: (key: string) => string): number {
-  y = drawSectionHeading(doc, t('pdf.budgetEstimate'), y)
-  y = drawSectionHeading(doc, t('pdf.recommendedBudgetRange'), y)
+// Recommended budget range section removed
 
-  setFont(doc, 'bold', 12)
-  setNavy(doc)
-  doc.text(safe(proposal.budgetRange), MARGIN + 2, y)
-  return y + 10
-}
-
-function drawCostBreakdown(doc: jsPDF, proposal: ProposalDocument, y: number, t: (key: string) => string): number {
+/*function drawCostBreakdown(doc: jsPDF, proposal: ProposalDocument, y: number, t: (key: string) => string): number {
   y = drawSectionHeading(doc, t('pdf.estimatedCostBreakdown'), y)
 
   const b = proposal.budgetEstimate
   const total = computeDisplayTotal(b) ?? b.total
 
-  const lines = [
+   const lines = [
     [t('pdf.labels.venue'), formatINR(b.venue)],
     [t('pdf.labels.decor'), formatINR(b.decor)],
     [t('pdf.labels.catering'), formatINR(b.food)],
     [t('pdf.labels.entertainment'), formatINR(b.entertainment)],
     [t('pdf.labels.contingency'), formatINR(b.contingency)],
-  ]
+  ] 
 
   setFont(doc, 'normal', 10)
   setNavy(doc)
@@ -369,7 +360,7 @@ function drawCostBreakdown(doc: jsPDF, proposal: ProposalDocument, y: number, t:
   doc.text(formatINR(total), MARGIN + 45, y)
 
   return y + 10
-}
+}*/
 
 function drawTimelineSection(doc: jsPDF, proposal: ProposalDocument, y: number, t: (key: string) => string): number {
   y = drawSectionHeading(doc, t('pdf.eventTimeline'), y)
@@ -587,8 +578,6 @@ export async function generateProposalPDF(proposal: ProposalDocument): Promise<B
   y = drawEventSummary(doc, proposal, y, t)
   y = drawRecommendedPackage(doc, proposal, y, t)
   y = drawPackageInclusions(doc, proposal, y, t)
-  y = drawBudgetRange(doc, proposal, y, t)
-  y = drawCostBreakdown(doc, proposal, y, t)
   y = drawTimelineSection(doc, proposal, y, t)
   y = drawVenueTable(doc, proposal, y, t) + 8
   y = drawBulletList(doc, t('pdf.planningTips'), localizedTips, y)

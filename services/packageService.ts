@@ -14,7 +14,6 @@ function dbToPackage(db: DbPackage): EventPackage {
     highlights: Array.isArray(db.highlights) ? db.highlights : [],
     suitableGuests: db.suitable_guests || '',
     duration: db.duration || '',
-    price: db.price,
     popular: db.popular || false,
     description: db.description || undefined,
   }
@@ -45,7 +44,6 @@ export async function getPackages(category?: string): Promise<DbPackage[]> {
     highlights: pkg.highlights,
     suitable_guests: pkg.suitableGuests,
     duration: pkg.duration,
-    price: pkg.price,
     popular: pkg.popular || false,
     description: pkg.description || null,
   }))

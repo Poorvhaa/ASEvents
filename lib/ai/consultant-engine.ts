@@ -18,7 +18,7 @@ function getPlanningTips(answers: ConsultantAnswers): string[] {
     tips.push('Consider a backup indoor space for outdoor ceremonies.')
   }
 
-  if (['Corporate Event', 'Product Launch'].includes(answers.eventType)) {
+  if (['Corporate Event'].includes(answers.eventType)) {
     tips.push('Finalize AV and branding requirements early with your team.')
     tips.push('Schedule a venue walkthrough before signing contracts.')
   }
@@ -41,23 +41,22 @@ function getNextSteps(): string[] {
 
 export function generateConsultation(answers: ConsultantAnswers): AIConsultationResult {
   const recommendedPackage = recommendPackage(answers)
-  const budgetEstimate = estimateBudget(answers)
+  //const budgetEstimate = estimateBudget(answers)
   const venueSuggestions = recommendVenues(answers)
   const recommendedVenueTypes = getVenueTypeSuggestions(answers.eventType)
   const guestCapacityValidation = validateGuestCapacity(answers)
   const venueAvailabilitySuggestion = suggestVenueAvailability(answers)
-  const budgetRangeLabel = formatBudgetRange(budgetEstimate)
   const planningTips = getPlanningTips(answers)
   const nextSteps = getNextSteps()
 
   const cityLabel = answers.city || 'your preferred city'
   const guestLabel = answers.guestCount || `${guestCapacityValidation.guestCount} guests`
-  const summary = `${answers.eventType} in ${cityLabel} · ${guestLabel} · Budget ${answers.budget || budgetRangeLabel}. Recommended: **${recommendedPackage.name}**.`
+  const summary = `${answers.eventType} in ${cityLabel} · ${guestLabel} . Recommended: **${recommendedPackage.name}**.`
 
   return {
     recommendedPackage,
-    budgetEstimate,
-    budgetRangeLabel,
+    //budgetEstimate,
+    //budgetRangeLabel,
     venueSuggestions,
     recommendedVenueTypes,
     guestCapacityValidation,
@@ -80,8 +79,6 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
     if (key === 'aiPlanner.recommendedPackage') return "Recommended Package"
     if (key === 'aiPlanner.reasonLabel') return "Reason:"
     if (key === 'aiPlanner.venueSuggestions') return "Venue Suggestions"
-    if (key === 'aiPlanner.budgetBreakdown') return "Budget Estimate"
-    if (key === 'aiPlanner.estimatedTotal') return "Estimated Total"
     if (key === 'aiPlanner.guestCapacity') return "Guest Capacity"
     if (key === 'aiPlanner.availability') return "Availability"
     if (key === 'aiPlanner.planningTips') return "Planning Tips"
@@ -96,7 +93,7 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
     return lastPart
   })
 
-  const { recommendedPackage: pkg, budgetEstimate, venueSuggestions, planningTips, nextSteps } = result
+  const { recommendedPackage: pkg, venueSuggestions, planningTips, nextSteps } = result
 
   const venueList =
     venueSuggestions.length > 0
@@ -137,7 +134,7 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
 
   if (answers) {
     const guestCount = parseInt(answers.guestCount.match(/\d+/)?.[0] || '0') || 50
-    const budgetMax = parseInt(answers.budget.replace(/[^\d]/g, '')) || 0
+    const budgetMax = answers.budget ? (parseInt(answers.budget.replace(/[^\d]/g, '')) || 0) : 0
 
     // Localize capacity message
     if (guestCount > 500) {
@@ -188,9 +185,8 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
     const inWord = lang === 'hi' ? 'में' : lang === 'gu' ? 'માં' : 'in'
     const cityLabel = answers.city || translate('aiPlanner.placeholders.city')
     const guestLabel = answers.guestCount || `${guestCount} ${translate('packagesPage.guests')}`
-    const budgetLabel = answers.budget || result.budgetRangeLabel
 
-    displaySummary = `${displayEventType} ${inWord} ${cityLabel} · ${guestLabel} · Budget ${budgetLabel}. Recommended: **${displayName}**.`
+    displaySummary = `${displayEventType} ${inWord} ${cityLabel} · ${guestLabel}. Recommended: **${displayName}**.`
 
     // Localize reason
     const parts: string[] = [translate('aiPlanner.reason.suitableGuests').replace('{guests}', guestCount.toString())]
@@ -239,14 +235,6 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
 
 **${translate('aiPlanner.venueSuggestions')}:**
 ${venueList}
-
-**${translate('aiPlanner.budgetBreakdown')}:**
-• ${translate('pdf.labels.venue')}: ${formatINR(budgetEstimate.venue)}
-• ${translate('pdf.labels.decor')}: ${formatINR(budgetEstimate.decor)}
-• ${translate('pdf.labels.catering')}: ${formatINR(budgetEstimate.food)}
-• ${translate('pdf.labels.entertainment')}: ${formatINR(budgetEstimate.entertainment)}
-• ${translate('pdf.labels.contingency')}: ${formatINR(budgetEstimate.contingency)}
-• **${translate('aiPlanner.estimatedTotal')}: ${formatINR(budgetEstimate.total)}**
 
 **${translate('aiPlanner.guestCapacity') || 'Guest Capacity'}:** ${displayCapacity}
 

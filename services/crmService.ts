@@ -47,7 +47,7 @@ export function prepareCRMPayload(lead: LeadPayload): CRMLeadPayload {
       event_date: lead.eventDate || '',
       venue_preference: lead.venuePreference || '',
       ai_package: lead.aiRecommendation?.recommendedPackage?.name || '',
-      ai_budget: lead.aiRecommendation?.budgetRangeLabel || '',
+      ai_budget: '',
     },
   }
 }

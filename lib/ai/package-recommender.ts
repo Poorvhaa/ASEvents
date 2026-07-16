@@ -8,11 +8,12 @@ const WEDDING_TYPES = new Set([
   'Haldi',
   'Mehendi',
   'Sangeet',
+  'Carnival',
   'Reception',
   'Destination Wedding',
 ])
 
-const CORPORATE_TYPES = new Set(['Corporate Event', 'Product Launch', 'Exhibition'])
+const CORPORATE_TYPES = new Set(['Corporate Event'])
 
 export interface PackageRecommendationResult extends PackageRecommendation {
   reason: string
@@ -26,7 +27,7 @@ function catalogPackage(title: string): Partial<PackageRecommendation> | null {
     name: match.title,
     category: match.category,
     inclusions: match.includedServices ?? match.includes,
-    estimatedBudget: match.price.replace('Starting from ', ''),
+    //estimatedBudget: match.price.replace('Starting from ', ''),
     timeline: match.duration,
     suggestedAddons: match.highlights.slice(0, 3),
   }
@@ -75,6 +76,21 @@ export function recommendPackage(answers: ConsultantAnswers): PackageRecommendat
       'Dance floor',
     ])
   }
+  if (eventType === 'Carnival') {
+  return finalize(
+    catalogPackage('Carnival Event'),
+    'Carnival Event',
+    guests,
+    budgetMax,
+    eventType,
+    [
+      'Carnival theme decor',
+      'Interactive game stalls',
+      'Live performers',
+      'Food and dessert counters',
+    ]
+  )
+}
   if (eventType === 'Reception') {
     return finalize(catalogPackage('Reception Celebration'), 'Reception Celebration', guests, budgetMax, eventType, [
       'Luxury stage',
@@ -114,7 +130,7 @@ export function recommendPackage(answers: ConsultantAnswers): PackageRecommendat
     )
   }
 
-  if (eventType === 'Product Launch') {
+  /*if (eventType === 'Product Launch') {
     return finalize(catalogPackage('Product Launch'), 'Product Launch', guests, budgetMax, eventType, [
       'Branding & stage',
       'AV setup',
@@ -128,7 +144,7 @@ export function recommendPackage(answers: ConsultantAnswers): PackageRecommendat
       'Visitor management',
       'Branding',
     ])
-  }
+  }*/
 
   if (CORPORATE_TYPES.has(eventType)) {
     return finalize(catalogPackage('Corporate Conference'), 'Corporate Conference', guests, budgetMax, eventType, [
@@ -157,13 +173,7 @@ export function recommendPackage(answers: ConsultantAnswers): PackageRecommendat
     )
   }
 
-  if (eventType === 'Festival Event' || eventType === 'Entertainment Event') {
-    return finalize(catalogPackage('Cultural Festival'), 'Cultural Festival', guests, budgetMax, eventType, [
-      'Stage & lighting',
-      'Entertainment',
-      'Crowd management',
-    ])
-  }
+
 
   return finalize(null, 'Custom Event Package', guests, budgetMax, eventType, [
     'Event planning',

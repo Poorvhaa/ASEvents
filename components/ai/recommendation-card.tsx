@@ -13,7 +13,6 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
   const { t, language } = useTranslation()
   const {
     recommendedPackage: pkg,
-    budgetEstimate,
     venueSuggestions,
     recommendedVenueTypes,
     guestCapacityValidation,
@@ -173,7 +172,7 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
 
       {!compact && (
         <>
-          <div>
+          {/*<div>
             <p className="text-xs font-medium text-muted-foreground mb-2">{t('aiPlanner.budgetBreakdown')}</p>
             <div className="grid grid-cols-2 gap-1.5 text-xs">
               <span>{t('aiPlanner.venueLabel')}: ₹{budgetEstimate.venue.toLocaleString('en-IN')}</span>
@@ -185,7 +184,7 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
                 {t('aiPlanner.estimatedTotal')}: ₹{budgetEstimate.total.toLocaleString('en-IN')}
               </span>
             </div>
-          </div>
+          </div>*/}
 
           <div className="flex items-start gap-2 text-xs">
             <Users size={14} className="text-primary shrink-0 mt-0.5" />

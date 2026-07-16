@@ -34,7 +34,7 @@ const services = [
     slug: 'corporate',
     description: 'Professional corporate gatherings that reflect your brand excellence and leave lasting impressions.',
   },
-  {
+  /*{
     icon: Rocket,
     title: 'Product Launches',
     slug: 'product-launches',
@@ -45,7 +45,7 @@ const services = [
     title: 'Exhibitions',
     slug: 'exhibitions',
     description: 'Immersive exhibition experiences that showcase your vision with stunning visual impact.',
-  },
+  },*/
   {
     icon: Cake,
     title: 'Birthday Celebrations',
@@ -58,12 +58,12 @@ const services = [
     slug: 'anniversaries',
     description: 'Celebrate love milestones with elegant anniversary events that honor your journey.',
   },
-  {
+  /*{
     icon: Music,
     title: 'Entertainment Management',
     slug: 'entertainment',
     description: 'World-class entertainment coordination featuring top performers and spectacular productions.',
-  },
+  },*/
 ]
 
 export function Services() {

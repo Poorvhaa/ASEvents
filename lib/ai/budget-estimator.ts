@@ -7,13 +7,13 @@ const SOCIAL_MULTIPLIER = 0.7
 
 function getEventMultiplier(eventType: string): number {
   if (
-    ['Wedding', 'Engagement', 'Haldi', 'Mehendi', 'Sangeet', 'Reception', 'Destination Wedding'].includes(
+    ['Wedding', 'Engagement', 'Haldi', 'Mehendi', 'Sangeet','Carnival Wedding', 'Reception', 'Destination Wedding'].includes(
       eventType
     )
   ) {
     return WEDDING_MULTIPLIER
   }
-  if (['Corporate Event', 'Product Launch', 'Exhibition'].includes(eventType)) {
+  if (['Corporate Event'].includes(eventType)) {
     return CORPORATE_MULTIPLIER
   }
   return SOCIAL_MULTIPLIER
@@ -94,7 +94,6 @@ export function formatBudgetBreakdown(breakdown: BudgetBreakdown): string {
     `Entertainment: ${formatINR(breakdown.entertainment)}`,
     `Photography: ${formatINR(breakdown.photography)}`,
     `Contingency: ${formatINR(breakdown.contingency)}`,
-    `Estimated Total: ${formatINR(breakdown.total)}`,
   ].join('\n')
 }
 

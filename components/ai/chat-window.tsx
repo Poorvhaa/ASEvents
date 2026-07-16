@@ -121,8 +121,7 @@ export function ChatWindow() {
     const flow: Record<string, { next: typeof step; field: keyof typeof answers }> = {
       eventDate: { next: 'city', field: 'eventDate' },
       city: { next: 'guestCount', field: 'city' },
-      guestCount: { next: 'budget', field: 'guestCount' },
-      budget: { next: 'venuePreference', field: 'budget' },
+      guestCount: { next: 'venuePreference', field: 'guestCount' },
       venuePreference: { next: 'specialRequirements', field: 'venuePreference' },
       specialRequirements: { next: 'generating', field: 'specialRequirements' },
     }
@@ -217,23 +216,7 @@ export function ChatWindow() {
             const key = `packagesPage.builder.counts.${normalizedG}`
             const translatedG = t(key)
             const displayG = translatedG === key ? g : translatedG
-            advance(`${displayG} ${t('packagesPage.guests')}`, 'budget', { guestCount: g })
-          }}
-          t={t}
-          step={step}
-          language={language}
-        />
-      )}
-
-      {step === 'budget' && !isTyping && (
-        <QuickReplies
-          options={BUDGET_OPTIONS}
-          onSelect={(b) => {
-            setAnswer('budget', b)
-            const key = `quoteModal.step4.ranges.${b}`
-            const translated = t(key)
-            const userMsg = translated === key ? b : translated
-            advance(userMsg, 'venuePreference', { budget: b })
+            advance(`${displayG} ${t('packagesPage.guests')}`, 'venuePreference', { guestCount: g })
           }}
           t={t}
           step={step}
@@ -258,7 +241,7 @@ export function ChatWindow() {
       )}
 
       {/* Text input for open-ended steps */}
-      {['eventDate', 'city', 'guestCount', 'budget', 'venuePreference', 'specialRequirements'].includes(step) && !isTyping && (
+      {['eventDate', 'city', 'guestCount', 'venuePreference', 'specialRequirements'].includes(step) && !isTyping && (
         <form onSubmit={handleTextSubmit} className="px-4 pb-3 flex gap-2 border-t border-slate-100 pt-3">
           <input
             ref={inputRef}

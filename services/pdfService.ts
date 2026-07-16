@@ -2,11 +2,8 @@ import type { AIConsultationResult, LeadPayload } from '@/lib/ai/types'
 import { generateQuote } from '@/services/quoteService'
 import { generateProposalPDF } from '@/services/pdfProposalService'
 import {
-  formatINR,
-  formatINRRange,
   formatTimeline,
   formatVenueStartingCost,
-  computeDisplayTotal,
 } from '@/lib/currency/format-inr'
 
 /**
@@ -24,13 +21,10 @@ export interface ProposalDocument {
     eventType: string
     eventDate: string
     guestCount: string
-    budget: string
     venuePreference: string
     specialRequirements: string
   }
   packageRecommendation: AIConsultationResult['recommendedPackage']
-  budgetEstimate: AIConsultationResult['budgetEstimate']
-  budgetRange: string
   timeline: string
   venueSuggestions: AIConsultationResult['venueSuggestions']
   planningTips: string[]
@@ -51,9 +45,6 @@ export function buildProposalDocument(
   language?: string
 ): ProposalDocument {
   const quote = generateQuote(lead, recommendation)
-  const b = recommendation.budgetEstimate
-  const displayTotal = computeDisplayTotal(b) ?? b.total
-
   return {
     title: `Event Proposal — ${lead.eventType}`,
     clientDetails: {
@@ -66,16 +57,9 @@ export function buildProposalDocument(
       eventType: safeText(lead.eventType),
       eventDate: safeText(lead.eventDate, 'Flexible'),
       guestCount: safeText(lead.guestCount, 'TBD'),
-      budget: formatINR(displayTotal),
       venuePreference: safeText(lead.venuePreference, 'Open'),
       specialRequirements: safeText(lead.specialRequirements, 'None'),
     },
-    packageRecommendation: recommendation.recommendedPackage,
-    budgetEstimate: {
-      ...b,
-      total: displayTotal,
-    },
-    budgetRange: formatINRRange(b.rangeMin, b.rangeMax),
     timeline: formatTimeline(recommendation.recommendedPackage.timeline),
     venueSuggestions: recommendation.venueSuggestions.map((v) => ({
       ...v,

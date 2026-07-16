@@ -26,7 +26,7 @@ function getPreferredCategories(eventType: string, venuePreference: string): str
   if (pref.includes('convention') || pref.includes('corporate'))
     return ['Corporate Venues', 'Exhibition Venues']
 
-  if (['Corporate Event', 'Product Launch', 'Exhibition'].includes(eventType)) {
+  if (['Corporate Event'].includes(eventType)) {
     return ['Corporate Venues', 'Exhibition Venues', 'Banquet Halls']
   }
   if (['Wedding', 'Engagement', 'Reception', 'Destination Wedding'].includes(eventType)) {
@@ -96,7 +96,7 @@ export function getVenueTypeSuggestions(eventType: string): string[] {
   if (['Wedding', 'Engagement', 'Reception', 'Destination Wedding'].includes(eventType)) {
     return ['Banquet Hall', 'Resort', 'Palace', 'Farmhouse']
   }
-  if (['Corporate Event', 'Product Launch', 'Exhibition'].includes(eventType)) {
+  if (['Corporate Event'].includes(eventType)) {
     return ['Convention Center', 'Hotel Ballroom', 'Exhibition Hall']
   }
   return ['Banquet Hall', 'Open Lawn', 'Farmhouse']

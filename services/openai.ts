@@ -47,7 +47,7 @@ function engineFallback(input: ChatInput): StructuredAIResponse {
   return {
     summary: result.summary,
     recommendedPackage: result.recommendedPackage.name,
-    estimatedBudget: result.budgetRangeLabel,
+    estimatedBudget: '',
     suggestedVenues: result.venueSuggestions.map((v) => `${v.name} — ${v.location}`),
     eventTimeline: [result.recommendedPackage.timeline],
     nextSteps: result.nextSteps,

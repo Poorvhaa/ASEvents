@@ -10,8 +10,6 @@ export type PackageCategoryFilter =
   | 'Weddings'
   | 'Corporate'
   | 'Social Events'
-  | 'Exhibitions'
-  | 'Entertainment'
 
 export interface EventPackage {
   id: string
@@ -23,7 +21,6 @@ export interface EventPackage {
   highlights: string[]
   suitableGuests: string
   duration: string
-  price: string
   popular?: boolean
   description?: string
 }

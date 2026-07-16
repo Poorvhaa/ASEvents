@@ -17,7 +17,6 @@ I would like to plan an event.
 Event Type: ${input.eventType}
 City: ${input.city || 'TBD'}
 Guests: ${input.guestCount || 'TBD'}
-Budget: ${input.budget || 'TBD'}
 Requirements: ${input.requirements || 'None'}
 ${input.name ? `Name: ${input.name}` : ''}
 

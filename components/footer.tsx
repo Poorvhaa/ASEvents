@@ -11,7 +11,7 @@ const services = [
   { href: '/services', label: 'Destination Weddings', key: 'services.destination.title' },
   { href: '/services', label: 'Corporate Events', key: 'services.corporate.title' },
   { href: '/packages', label: 'Event Packages', key: 'nav.packages' },
-  { href: '/venues', label: 'Venue Booking', key: 'nav.venues' },
+  //{ href: '/venues', label: 'Venue Booking', key: 'nav.venues' },
   { href: '/portfolio', label: 'Our Portfolio', key: 'nav.portfolio' },
 ]
 
@@ -19,7 +19,7 @@ const quickLinks = [
   { href: '/about', label: 'About Us', key: 'nav.about' },
   { href: '/services', label: 'Services', key: 'nav.services' },
   { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
-  { href: '/venues', label: 'Venues', key: 'nav.venues' },
+  //{ href: '/venues', label: 'Venues', key: 'nav.venues' },
   { href: '/packages', label: 'Packages', key: 'nav.packages' },
   { href: '/contact', label: 'Contact', key: 'nav.contact' },
 ]
@@ -41,7 +41,7 @@ export function Footer() {
           <div className="flex flex-col items-center sm:items-start">
             <div className="mb-4">
               <Image
-                src="/clean.png"
+                src="/as.png"
                 alt="AS Events"
                 width={180}
                 height={60}

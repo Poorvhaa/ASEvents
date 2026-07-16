@@ -28,7 +28,6 @@ export function ProposalPdfDocument({ doc }: ProposalPdfProps) {
         <Text style={styles.row}>Type: {doc.eventSummary.eventType}</Text>
         <Text style={styles.row}>Date: {doc.eventSummary.eventDate}</Text>
         <Text style={styles.row}>Guests: {doc.eventSummary.guestCount}</Text>
-        <Text style={styles.row}>Budget: {doc.eventSummary.budget}</Text>
         <Text style={styles.row}>Venue Preference: {doc.eventSummary.venuePreference}</Text>
 
         <Text style={styles.sectionTitle}>Recommended Package</Text>
@@ -39,8 +38,6 @@ export function ProposalPdfDocument({ doc }: ProposalPdfProps) {
           </Text>
         ))}
 
-        <Text style={styles.sectionTitle}>Budget Estimate</Text>
-        <Text style={styles.row}>{doc.budgetRange}</Text>
         <Text style={styles.row}>Timeline: {doc.timeline}</Text>
 
         <Text style={styles.sectionTitle}>Venue Suggestions</Text>

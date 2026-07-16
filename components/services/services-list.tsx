@@ -54,36 +54,6 @@ const services = [
     ],
   },
   {
-    id: 4,
-    slug: 'product-launches',
-    title: 'Product Launches',
-    description: 'Make your product debut unforgettable. We create buzz-worthy launch events that captivate media, influencers, and your target audience.',
-    image: 'https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200&auto=format&fit=crop',
-    features: [
-      'Creative concept development',
-      'Media and PR coordination',
-      'Influencer management',
-      'Brand experience design',
-      'Live streaming capabilities',
-      'Post-event analytics',
-    ],
-  },
-  {
-    id: 5,
-    slug: 'exhibitions',
-    title: 'Exhibitions & Trade Shows',
-    description: 'Stand out at exhibitions and trade shows with stunning booth designs and seamless execution that attracts visitors and generates leads.',
-    image: 'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=1200&auto=format&fit=crop',
-    features: [
-      'Booth design and fabrication',
-      'Interactive displays',
-      'Staff training and management',
-      'Lead capture systems',
-      'Logistics and shipping',
-      'Setup and teardown',
-    ],
-  },
-  {
     id: 6,
     slug: 'birthday-celebrations',
     title: 'Birthday & Milestone Celebrations',
@@ -113,7 +83,7 @@ const services = [
       'Guest coordination',
     ],
   },
-  {
+  /*{
     id: 8,
     slug: 'entertainment-management',
     title: 'Entertainment Management',
@@ -127,7 +97,7 @@ const services = [
       'Hospitality riders',
       'Performance coordination',
     ],
-  },
+  },*/
 ]
 
 export function ServicesList() {

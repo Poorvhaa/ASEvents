@@ -18,8 +18,6 @@ const categoryNames: Record<string, string> = {
   wedding: 'Weddings',
   corporate: 'Corporate',
   social: 'Social Events',
-  exhibition: 'Exhibitions',
-  entertainment: 'Entertainment',
 }
 
 function mapPackageToEventType(title: string, category: EventPackage['category']): EventType | '' {
@@ -27,21 +25,20 @@ function mapPackageToEventType(title: string, category: EventPackage['category']
     'Haldi Ceremony': 'Haldi',
     'Mehendi Ceremony': 'Mehendi',
     'Sangeet Night': 'Sangeet',
+    'Carnival Event': 'Carnival',
     'Reception Celebration': 'Reception',
     'Complete Wedding Package': 'Wedding',
     'Corporate Conference': 'Corporate Event',
-    'Product Launch': 'Product Launch',
-    'Trade Exhibition': 'Exhibition',
+    //'Product Launch': 'Product Launch',
+    //'Trade Exhibition': 'Exhibition',
     'Birthday Celebration': 'Birthday',
     'Anniversary Celebration': 'Anniversary',
-    'Cultural Festival': 'Festival Event',
-    'Live Concert': 'Entertainment Event',
+    //'Cultural Festival': 'Festival Event',
+    //'Live Concert': 'Entertainment Event',
   }
   if (map[title]) return map[title]
   if (category === 'wedding') return 'Wedding'
   if (category === 'corporate') return 'Corporate Event'
-  if (category === 'exhibition') return 'Exhibition'
-  if (category === 'entertainment') return 'Entertainment Event'
   return 'Birthday'
 }
 
@@ -49,14 +46,19 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
   const { openModal } = useQuoteModal()
   const { openChatWithPackage } = useAIConsultant()
   const { t } = useTranslation()
-
+const translateOrFallback = (key: string, fallback: string) => {
+    const translated = t(key)
+    return translated === key ? fallback : translated
+  }
   const handleAIPlanner = () => {
-    const titleTrans = t(`packages.${pkg.id}.title`) || pkg.title
+    const titleTrans = translateOrFallback(
+  `packages.${pkg.id}.title`,
+  pkg.title
+)
     const msg = t('aiPlanner.prefillWelcome').replace('{eventType}', titleTrans)
     openChatWithPackage({
       eventType: mapPackageToEventType(pkg.title, pkg.category),
       guestCount: pkg.suitableGuests,
-      budget: pkg.price.replace('Starting from ', ''),
     }, msg)
   }
 
@@ -85,12 +87,8 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         {t(`packagesPage.categories.${categoryNames[pkg.category] || pkg.category}`) || pkg.category}
       </span>
       <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">
-        {t(`packages.${pkg.id}.title`) || pkg.title}
+        {translateOrFallback(`packages.${pkg.id}.title`, pkg.title)}
       </h3>
-
-      <p className="text-base sm:text-lg font-bold text-foreground mb-3">
-        {t(`packages.${pkg.id}.price`) || pkg.price}
-      </p>
 
       <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
         <span className="inline-flex items-center gap-1">
@@ -99,15 +97,24 @@ export function PackageCard({ pkg, index = 0 }: PackageCardProps) {
         </span>
         <span className="inline-flex items-center gap-1">
           <Clock size={14} className="text-primary" />
-          {t(`packages.${pkg.id}.duration`) || pkg.duration}
+          {translateOrFallback(
+  `packages.${pkg.id}.duration`,
+  pkg.duration
+)}
         </span>
       </div>
 
-      {(t(`packages.${pkg.id}.description`) || pkg.description) && (
-        <p className="text-muted-foreground text-small leading-relaxed mb-4">
-          {t(`packages.${pkg.id}.description`) || pkg.description}
-        </p>
-      )}
+      {translateOrFallback(
+  `packages.${pkg.id}.description`,
+  pkg.description
+) && (
+  <p className="text-muted-foreground text-small leading-relaxed mb-4">
+    {translateOrFallback(
+      `packages.${pkg.id}.description`,
+      pkg.description
+    )}
+  </p>
+)}
 
       <div className="mb-4">
         <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">{t('packagesPage.keyHighlights')}</p>

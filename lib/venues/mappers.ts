@@ -15,7 +15,6 @@ function dbToMinimalVenue(db: DbVenue): Venue {
     capacity: `${db.capacity} Guests`,
     indoorOutdoor: db.indoor_outdoor as Venue['indoorOutdoor'],
     rating: Number(db.rating),
-    startingPrice: db.starting_price,
     image: db.image,
     description: db.description,
     parking: db.parking,

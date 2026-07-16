@@ -18,32 +18,24 @@ export interface GeneratedQuote {
   createdAt: string
 }
 
-/**
- * Auto Quote System — Phase 3 placeholder
- */
 export function generateQuote(
   lead: LeadPayload,
   recommendation: AIConsultationResult
 ): GeneratedQuote {
-  const b = recommendation.budgetEstimate
-  const subtotal = b.total
-  const tax = Math.round(subtotal * 0.18)
-  const total = subtotal + tax
-
   return {
     quoteNumber: `ASE-${Date.now().toString(36).toUpperCase()}`,
     clientName: lead.name,
     packageName: recommendation.recommendedPackage.name,
     services: recommendation.recommendedPackage.inclusions,
     priceBreakdown: {
-      venue: b.venue,
-      decor: b.decor,
-      food: b.food,
-      photography: b.photography,
-      entertainment: b.entertainment,
-      subtotal,
-      tax,
-      total,
+      venue: 0,
+      decor: 0,
+      food: 0,
+      photography: 0,
+      entertainment: 0,
+      subtotal: 0,
+      tax: 0,
+      total: 0,
     },
     createdAt: new Date().toISOString(),
   }
