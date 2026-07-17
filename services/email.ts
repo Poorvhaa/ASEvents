@@ -3,7 +3,7 @@ import type { LeadPayload, AIConsultationResult } from '@/lib/ai/types'
 import type { DbVenueBooking } from '@/types/database'
 
 const COMPANY_NAME = 'AS Events'
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'sales@asevents.in'
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'as.eventmanagement2829@gmail.com'
 
 function getResend(): Resend | null {
   const apiKey = process.env.RESEND_API_KEY

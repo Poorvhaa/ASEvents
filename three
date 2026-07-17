@@ -1,0 +1,25 @@
+[1mdiff --git a/components/sections/hero.tsx b/components/sections/hero.tsx[m
+[1mindex 6b25604..a054d48 100644[m
+[1m--- a/components/sections/hero.tsx[m
+[1m+++ b/components/sections/hero.tsx[m
+[36m@@ -7,6 +7,12 @@[m [mimport { useQuoteModal } from '@/hooks/use-quote-modal'[m
+ import Link from 'next/link'[m
+ import { SectionContainer } from '@/components/layout/section-container'[m
+ import { useTranslation } from '@/src/hooks/useTranslation'[m
+[32m+[m[32mimport dynamic from 'next/dynamic'[m
+[32m+[m
+[32m+[m[32mconst HeroScene = dynamic([m
+[32m+[m[32m  () => import('@/components/three/hero-scene').then((mod) => mod.HeroScene),[m
+[32m+[m[32m  { ssr: false }[m
+[32m+[m[32m)[m
+ [m
+ export function Hero() {[m
+   const { openModal } = useQuoteModal()[m
+[36m@@ -23,6 +29,7 @@[m [mexport function Hero() {[m
+           sizes="100vw"[m
+           className="object-cover object-center"[m
+         />[m
+[32m+[m[32m        <HeroScene />[m
+         <div className="absolute inset-0 bg-black/40 sm:bg-black/35 z-10" />[m
+       </div>[m
+ [m

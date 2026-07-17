@@ -4,9 +4,9 @@ import { getTranslationServer } from '@/lib/i18n-server'
 import { AboutHero } from '@/components/about/about-hero'
 import { CompanyStory } from '@/components/about/company-story'
 import { MissionVision } from '@/components/about/mission-vision'
-import { TeamSection } from '@/components/about/team-section'
+//import { TeamSection } from '@/components/about/team-section'
 import { Achievements } from '@/components/about/achievements'
-import { Partners } from '@/components/about/partners'
+//import { Partners } from '@/components/about/partners'
 import { CTASection } from '@/components/sections/cta-section'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,9 +36,10 @@ export default function AboutPage() {
       <AboutHero />
       <CompanyStory />
       <MissionVision />
-      <TeamSection />
-      <Achievements />
-      <Partners />
+      {/*<TeamSection />
+      
+      <Partners />*/}
+<Achievements />
       <CTASection />
     </>
   )

@@ -7,6 +7,7 @@ import { Footer } from '@/components/footer'
 import { QuoteModal } from '@/components/quote-modal'
 import { AIChatWidget } from '@/components/ai/chat-widget'
 import { LanguageProvider } from '@/src/context/LanguageContext'
+import { WhatsAppButton } from '@/components/whatsapp-button'
 
 import { cookies } from 'next/headers'
 import { getTranslationServer } from '@/lib/i18n-server'
@@ -80,7 +81,7 @@ export default async function RootLayout({
                   addressRegion: 'Gujarat',
                   addressCountry: 'IN',
                 },
-                email: 'sales@asevents.in',
+                email: 'as.eventmanagement2829@gmail.com',
                 telephone: '+91-95103-24143',
               }),
             }}
@@ -90,6 +91,7 @@ export default async function RootLayout({
           <Footer />
           <QuoteModal />
           <AIChatWidget />
+          {/*<WhatsAppButton />*/}
           {process.env.NODE_ENV === 'production' && <Analytics />}
         </LanguageProvider>
       </body>

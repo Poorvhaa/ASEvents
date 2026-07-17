@@ -4,39 +4,41 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #F8FAFC;
-  --foreground: #0F172A;
+  --background: #FAF8F5;
+  --foreground: #0B1325;
 
-  --gold: #2563EB;
-  --gold-light: #3B82F6;
+  --gold: #C5A880;
+  --gold-light: #EADBC8;
+  --navy: #0B1325;
+  --navy-light: #1A284C;
 
   --card: #FFFFFF;
-  --card-foreground: #0F172A;
+  --card-foreground: #0B1325;
 
   --popover: #FFFFFF;
-  --popover-foreground: #0F172A;
+  --popover-foreground: #0B1325;
 
-  --primary: #2563EB;
-  --primary-foreground: #FFFFFF;
+  --primary: #C5A880;
+  --primary-foreground: #0B1325;
 
-  --secondary: #E2E8F0;
-  --secondary-foreground: #0F172A;
+  --secondary: #FAF8F5;
+  --secondary-foreground: #0B1325;
 
-  --muted: #F1F5F9;
-  --muted-foreground: #475569;
+  --muted: #F5EFEB;
+  --muted-foreground: #64748B;
 
-  --accent: #06B6D4;
+  --accent: #0B1325;
   --accent-foreground: #FFFFFF;
 
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
 
-  --border: #CBD5E1;
+  --border: #EADBC8;
   --input: #FFFFFF;
-  --ring: #2563EB;
+  --ring: #C5A880;
 
-  --chart-1: #2563EB;
-  --chart-2: #06B6D4;
+  --chart-1: #C5A880;
+  --chart-2: #0B1325;
   --chart-3: #10B981;
   --chart-4: #8B5CF6;
   --chart-5: #F97316;
@@ -95,7 +97,7 @@
 
   body {
     @apply bg-background text-foreground overflow-x-hidden min-w-0;
-    background: linear-gradient(to bottom, #ffffff, #f8fafc);
+    background: linear-gradient(to bottom, #faf8f5, #f3efea);
   }
 
   img,
@@ -137,6 +139,7 @@
     @apply flex overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible sm:pb-0 gap-2;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   .filter-scroll::-webkit-scrollbar {
@@ -150,25 +153,35 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0F172A;
+  background: #0B1325;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2563EB;
+  background: #C5A880;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #06B6D4;
+  background: #EADBC8;
 }
 
 /* Gold gradient text */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #2563EB 0%, #06B6D4 50%, #3B82F6 100%);
+  background: linear-gradient(135deg, #C5A880 0%, #EADBC8 50%, #9A7B56 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
 html {
   scroll-behavior: smooth;
 }

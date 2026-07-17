@@ -46,6 +46,20 @@
     "bookConsultation": "પરામર્શ બુક કરો",
     "contactUs": "અમારો સંપર્ક કરો"
   },
+  "valueProps": {
+    "planning": {
+      "title": "Bespoke Planning",
+      "desc": "Tailoring every detail to your story, crafting unique designs and seamless schedules that reflect your personal vision."
+    },
+    "venues": {
+      "title": "Elite Venue Curation",
+      "desc": "Unlocking access to the finest luxury destinations, boutique heritage properties, and stunning beachfront spots across India."
+    },
+    "execution": {
+      "title": "Flawless Execution",
+      "desc": "Orchestrating every vendor, cue, and logistical detail with calm, professional precision so you can fully live your moment."
+    }
+  },
   "services": {
     "eyebrow": "અમે શું પ્રદાન કરીએ છીએ",
     "headingPart1": "અમારી પ્રીમિયમ",
