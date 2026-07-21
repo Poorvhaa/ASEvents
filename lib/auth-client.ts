@@ -31,7 +31,7 @@ export const authClient = {
     },
   },
   signUp: {
-    email: async () => ({
+    email: async (options?: { email?: string; password?: string; name?: string }) => ({
       error: { message: 'Sign up is disabled. Contact administrator.' },
     }),
   },

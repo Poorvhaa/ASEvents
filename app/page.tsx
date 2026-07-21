@@ -1,3 +1,4 @@
+import { IntroExperience } from '@/components/intro/IntroExperience'
 import { Hero } from '@/components/sections/hero'
 import { ValueProps } from '@/components/sections/value-props'
 import { Services } from '@/components/sections/services'
@@ -10,14 +11,18 @@ import { CTASection } from '@/components/sections/cta-section'
 export default function HomePage() {
   return (
     <>
-      <Hero />
-      <ValueProps />
-      <Services />
-      {/*<FeaturedVenues />*/}
-      <PackagesPreview />
-      <WhyChooseUs />
-      <Testimonials />
-      <CTASection />
+      <IntroExperience />
+      <div id="homepage-content">
+        <Hero />
+        <ValueProps />
+        <Services />
+        {/*<FeaturedVenues />*/}
+        <PackagesPreview />
+        <WhyChooseUs />
+        <Testimonials />
+        <CTASection />
+      </div>
     </>
   )
 }
+

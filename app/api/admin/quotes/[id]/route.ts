@@ -3,12 +3,16 @@ import { db } from '@/lib/db'
 import { quoteRequests } from '@/lib/db/schema'
 import { eq } from 'drizzle-orm'
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const { id } = await params
     const quote = await db
       .select()
       .from(quoteRequests)
-      .where(eq(quoteRequests.id, parseInt(params.id)))
+      .where(eq(quoteRequests.id, parseInt(id)))
 
     if (!quote.length) {
       return NextResponse.json({ error: 'Quote not found' }, { status: 404 })
@@ -21,8 +25,12 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
+    const { id } = await params
     const body = await request.json()
     const { status, quote } = body
 
@@ -34,7 +42,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     const result = await db
       .update(quoteRequests)
       .set(updateData)
-      .where(eq(quoteRequests.id, parseInt(params.id)))
+      .where(eq(quoteRequests.id, parseInt(id)))
       .returning()
 
     return NextResponse.json(result[0])

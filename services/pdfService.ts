@@ -60,6 +60,7 @@ export function buildProposalDocument(
       venuePreference: safeText(lead.venuePreference, 'Open'),
       specialRequirements: safeText(lead.specialRequirements, 'None'),
     },
+    packageRecommendation: recommendation.recommendedPackage,
     timeline: formatTimeline(recommendation.recommendedPackage.timeline),
     venueSuggestions: recommendation.venueSuggestions.map((v) => ({
       ...v,

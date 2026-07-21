@@ -111,7 +111,7 @@ export const portfolioItems: PortfolioItem[] = [
       'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800',
       'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=800',
     ],
-  }*/,
+  }*/
   {
     id: 6,
     title: 'Enchanted Forest Reception',
@@ -186,7 +186,7 @@ export const portfolioItems: PortfolioItem[] = [
       'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=800',
       'https://images.unsplash.com/photo-1531058020387-3be344556be6?q=80&w=800',
     ],
-  }*/,
+  }*/
   {
     id: 11,
     title: 'Royal Birthday Celebration',

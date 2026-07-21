@@ -177,3 +177,19 @@ export const portfolioItems = pgTable('portfolioItems', {
   order: integer('order').notNull().default(0),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
 })
+
+// --- Blog Posts ---
+export const blogPosts = pgTable('blogPosts', {
+  id: serial('id').primaryKey(),
+  userId: text('userId').notNull(),
+  title: text('title').notNull(),
+  slug: text('slug').notNull(),
+  excerpt: text('excerpt').notNull(),
+  content: text('content').notNull(),
+  image: text('image'),
+  category: text('category').notNull(),
+  tags: text('tags'),
+  published: boolean('published').notNull().default(false),
+  createdAt: timestamp('createdAt').notNull().defaultNow(),
+  updatedAt: timestamp('updatedAt').notNull().defaultNow(),
+})

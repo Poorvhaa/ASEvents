@@ -17,9 +17,9 @@ const categoryParamMap: Record<string, string> = {
 }
 
 const categoryNames: Record<string, string> = {
-  wedding: 'Weddings',
-  corporate: 'Corporate',
-  social: 'Social Events',
+  wedding: 'weddings',
+  corporate: 'corporate',
+  social: 'socialEvents',
 }
 
 

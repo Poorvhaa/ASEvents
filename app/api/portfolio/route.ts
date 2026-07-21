@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { portfolioItems } from '@/lib/db/schema'
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, and } from 'drizzle-orm'
 
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
     const category = searchParams.get('category')
 
-    let query = db.select().from(portfolioItems)
-
+    const conditions = []
     if (category) {
-      query = db.select().from(portfolioItems).where(eq(portfolioItems.category, category))
+      conditions.push(eq(portfolioItems.category, category))
+    }
+
+    let query = db.select().from(portfolioItems)
+    if (conditions.length > 0) {
+      const items = await query.where(and(...conditions)).orderBy(desc(portfolioItems.createdAt)).limit(100)
+      return NextResponse.json(items)
     }
 
     const items = await query.orderBy(desc(portfolioItems.createdAt)).limit(100)

@@ -1,0 +1,130 @@
+.container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 30; /* Sits directly in front of closed invitation cover */
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+
+  /* Bind design system variables */
+  --ribbon-gold: var(--primary);
+  --ribbon-gold-light: var(--gold-light);
+  --ribbon-gold-dark: color-mix(in srgb, var(--primary) 70%, #000000 30%);
+  --ribbon-highlight: var(--secondary);
+}
+
+/* Horizontal ribbon band wrapping invitation */
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 30px;
+  transform: translateY(-50%);
+  background: linear-gradient(to bottom, #7e633d 0%, #C5A880 20%, #FAF8F5 45%, #EADBC8 55%, #C5A880 80%, #7e633d 100%);
+  box-shadow: 
+    0 8px 18px rgba(11, 19, 37, 0.25), 
+    0 2px 4px rgba(197, 168, 128, 0.15);
+  z-index: 10;
+  will-change: transform;
+}
+
+/* Fine luxury stitching along the ribbon edges */
+.band::before,
+.band::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.3) 50%, transparent 50%);
+  background-size: 4px 1px;
+  background-repeat: repeat-x;
+}
+.band::before {
+  top: 3px;
+}
+.band::after {
+  bottom: 3px;
+}
+
+/* Center knot */
+.knot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, #FAF8F5 0%, #C5A880 40%, #A4855C 70%, #7e633d 100%);
+  border-radius: 6px;
+  box-shadow: 0 6px 14px rgba(11, 19, 37, 0.3);
+  z-index: 40;
+  will-change: transform;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Ribbon Loops */
+.loopLeft,
+.loopRight {
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 36px;
+  box-shadow: 0 8px 18px rgba(11, 19, 37, 0.28);
+  z-index: 20;
+  will-change: transform;
+}
+
+.loopLeft {
+  right: 50%;
+  margin-right: 6px;
+  transform: translateY(-50%);
+  transform-origin: right center;
+  border-radius: 20px 6px 6px 20px;
+  background: linear-gradient(to right, #7e633d 0%, #C5A880 40%, #FAF8F5 65%, #C5A880 85%, #7e633d 100%);
+}
+
+.loopRight {
+  left: 50%;
+  margin-left: 6px;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  border-radius: 6px 20px 20px 6px;
+  background: linear-gradient(to left, #7e633d 0%, #C5A880 40%, #FAF8F5 65%, #C5A880 85%, #7e633d 100%);
+}
+
+/* Ribbon Tails */
+.tailLeft,
+.tailRight {
+  position: absolute;
+  width: 15px;
+  height: 75px;
+  box-shadow: 2px 6px 12px rgba(11, 19, 37, 0.2);
+  z-index: 15;
+  will-change: transform;
+  /* Cutout notch in tail end */
+  clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 50% 100%, 0% 90%);
+}
+
+.tailLeft {
+  right: 50%;
+  margin-right: 4px;
+  top: 50%;
+  margin-top: 6px;
+  background: linear-gradient(to bottom, #C5A880 0%, #FAF8F5 25%, #C5A880 60%, #7e633d 100%);
+  transform-origin: right top;
+  transform: rotate(32deg);
+}
+
+.tailRight {
+  left: 50%;
+  margin-left: 4px;
+  top: 50%;
+  margin-top: 6px;
+  background: linear-gradient(to bottom, #C5A880 0%, #FAF8F5 25%, #C5A880 60%, #7e633d 100%);
+  transform-origin: left top;
+  transform: rotate(-32deg);
+}

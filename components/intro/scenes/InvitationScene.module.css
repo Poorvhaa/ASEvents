@@ -1,0 +1,237 @@
+.container {
+  position: relative;
+  width: 500px;
+  height: 350px;
+  perspective: 1500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transform: scale(1);
+  will-change: transform, opacity;
+  user-select: none;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 75vw;
+    height: 52vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 88vw;
+    height: 62vw;
+  }
+}
+
+.cardWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Base envelope folders backing */
+.base {
+  position: absolute;
+  inset: 0;
+  background-color: var(--muted); /* Re-themed: soft warm cream/beige */
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 45px rgba(197, 168, 128, 0.1); /* Soft champagne glow shadow */
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+/* Interior card sits flat in the base, slides forward on Z axis */
+.interiorCard {
+  position: absolute;
+  inset: 12px;
+  background: radial-gradient(circle at 50% 50%, #FAF8F5 0%, #FAF6F0 100%);
+  border: 1.5px solid rgba(197, 168, 128, 0.25);
+  border-radius: calc(var(--radius) - 2px);
+  padding: 2.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 
+    inset 0 0 45px rgba(197, 168, 128, 0.08), 
+    0 15px 35px rgba(11, 19, 37, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  transform-style: preserve-3d;
+  opacity: 0.2;
+  will-change: transform, opacity;
+}
+
+/* Cotton paper subtle fiber overlay */
+.interiorCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+.brand {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-serif), serif;
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--foreground); /* Re-themed: deep navy text */
+  letter-spacing: 0.04em;
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.25rem;
+  }
+}
+
+.tagline {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--foreground) 70%, transparent); /* Re-themed */
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/* Cover panel hinges on the left edge */
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.coverFront,
+.coverBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(197, 168, 128, 0.08);
+}
+
+.coverFront {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coverBack {
+  background-color: var(--background);
+  border: 1px solid var(--border);
+  transform: rotateY(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Watermarked panel on the back of the cover */
+.watermarkContainer {
+  width: 90%;
+  height: 90%;
+  border: 1px solid rgba(197, 168, 128, 0.15);
+  border-radius: calc(var(--radius) - 2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.watermarkText {
+  font-family: var(--font-serif), serif;
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: rgba(197, 168, 128, 0.35);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Circular Monogram Seal on cover front */
+/* Circular Monogram Seal on cover front - Irregular organic wax seal */
+.seal {
+  width: 72px;
+  height: 72px;
+  border-radius: 52% 48% 50% 50% / 50% 52% 48% 50%;
+  background: radial-gradient(circle at 35% 35%, #EADBC8 0%, #C5A880 70%, #A4855C 100%);
+  box-shadow: 
+    0 6px 16px rgba(11, 19, 37, 0.16), 
+    0 2px 4px rgba(197, 168, 128, 0.25),
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -3px 6px rgba(11, 19, 37, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: none;
+}
+
+@media (max-width: 480px) {
+  .seal {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+.sealInner {
+  font-family: var(--font-serif), serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FAF8F5;
+  letter-spacing: 0.05em;
+  text-shadow: 
+    0 -1px 1px rgba(11, 19, 37, 0.25), 
+    0 1px 1px rgba(255, 255, 255, 0.4);
+  z-index: 5;
+  transform: translateZ(2px);
+}
+
+@media (max-width: 480px) {
+  .sealInner {
+    font-size: 1.2rem;
+  }
+}
+
+.sealBorder {
+  position: absolute;
+  inset: 8px;
+  border: 1.5px solid rgba(11, 19, 37, 0.12);
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 2px 4px rgba(11, 19, 37, 0.15),
+    0 1px 1px rgba(255, 255, 255, 0.3);
+}

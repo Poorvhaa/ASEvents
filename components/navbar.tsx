@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { BrandLogo } from './shared/brand-logo'
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { Menu, X, ChevronDown, Globe, Mail, Phone, MapPin, Facebook, Instagram, Twitter, Youtube } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -164,7 +165,7 @@ export function Navbar() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: 'spring', stiffness: 100, damping: 15 },
+      transition: { type: 'spring' as const, stiffness: 100, damping: 15 },
     },
     exit: { opacity: 0, y: -20, transition: { duration: 0.2 } },
   }
@@ -179,22 +180,22 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between min-h-[50px]">
+        <nav className="flex items-center justify-between h-20 lg:h-24">
           {/* Logo */}
           <Link
             href="/"
             onClick={closeAllMenus}
-            className="flex items-center shrink-0 transition-opacity duration-300 hover:opacity-90 focus-visible:outline-none"
+            aria-label="AS Events home"
+            className="flex items-center shrink-0 py-2 transition-opacity duration-300 hover:opacity-90 focus-visible:outline-none"
           >
-            <Image
-              src="/as4.jpg"
-              alt="AS Events Logo"
-              width={400}
-              height={533}
+            <BrandLogo
+              variant="navbar"
               priority
               className={cn(
-                'w-auto object-contain transition-all duration-500',
-                isScrolled ? 'h-11' : 'h-14 sm:h-16'
+                "transition-all duration-500 drop-shadow-[0_1px_2px_rgba(0,0,0,0.10)]",
+                isScrolled
+                  ? "h-12 sm:h-14"
+                  : "h-14 sm:h-16 lg:h-[68px]"
               )}
             />
           </Link>
@@ -349,12 +350,9 @@ export function Navbar() {
           >
             {/* Header section in overlay */}
             <div className="flex items-center justify-between w-full max-w-7xl mx-auto border-b border-white/10 pb-6">
-              <Image
-                src="/as.png"
-                alt="AS Events"
-                width={120}
-                height={40}
-                className="h-10 w-auto object-contain invert brightness-[2]"
+              <BrandLogo
+                variant="light"
+                className="h-10 w-auto"
               />
               
               <div className="flex items-center gap-4">

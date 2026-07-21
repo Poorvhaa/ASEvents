@@ -1,0 +1,425 @@
+.eventEntranceRoot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--background); /* Re-themed: warm champagne beige */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  z-index: 10;
+  user-select: none;
+}
+
+.entranceContent {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  opacity: 0;
+  will-change: opacity, filter;
+}
+
+/* Background Atmosphere */
+.entranceBackdrop {
+  position: absolute;
+  inset: 0;
+  /* Re-themed: soft warm champagne glow instead of dark black */
+  background: radial-gradient(circle at center 40%, rgba(197, 168, 128, 0.15) 0%, var(--background) 75%);
+  z-index: 1;
+}
+
+/* Atmospheric Hazes */
+.ambientFog {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 60%, rgba(197, 168, 128, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  mix-blend-mode: multiply; /* Soft warm shadow blend */
+  z-index: 4;
+}
+
+/* Distant Stage Focal Point */
+.backgroundStage {
+  position: absolute;
+  bottom: 25%;
+  left: 50%;
+  width: 160px;
+  height: 220px;
+  transform: translateX(-50%) translateZ(-400px);
+  background: radial-gradient(circle at bottom, rgba(250, 248, 245, 0.4) 0%, rgba(197, 168, 128, 0.1) 50%, transparent 80%);
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  border-radius: 80px 80px 0 0;
+  box-shadow: 0 0 40px rgba(197, 168, 128, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  will-change: transform;
+}
+
+.stageLight {
+  position: absolute;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--background); /* Re-themed: warm champagne */
+  filter: blur(15px);
+  opacity: 0.3;
+}
+
+/* Ceiling Layer / Soft Drape Silhouette */
+.ceilingLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  /* Re-themed: light ivory ceiling drapes */
+  background: linear-gradient(to bottom, rgba(250, 248, 245, 0.95) 0%, rgba(250, 248, 245, 0.6) 60%, transparent 100%);
+  z-index: 8;
+  will-change: transform;
+}
+
+/* Chandeliers */
+.chandelierGroup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 250px;
+  z-index: 7;
+  will-change: transform;
+}
+
+.chandelierCentral,
+.chandelierLeft,
+.chandelierRight {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform, opacity;
+}
+
+.chandelierCentral {
+  left: 50%;
+  top: 10px;
+  transform: translateX(-50%) translateZ(-150px);
+}
+
+.chandelierLeft {
+  left: 25%;
+  top: 25px;
+  transform: translateZ(-250px);
+}
+
+.chandelierRight {
+  right: 25%;
+  top: 25px;
+  transform: translateZ(-250px);
+}
+
+/* Chandelier Stems & Glows */
+.stem {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(197, 168, 128, 0.2) 0%, rgba(197, 168, 128, 0.7) 100%);
+}
+
+.bodyCentral,
+.bodySide {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bodyCentral {
+  width: 40px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(197, 168, 128, 0.45);
+  background-color: rgba(197, 168, 128, 0.08);
+}
+
+.bodySide {
+  width: 28px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  background-color: rgba(197, 168, 128, 0.05);
+}
+
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-color: color-mix(in srgb, var(--background) 35%, transparent); /* Re-themed */
+  filter: blur(8px);
+  border-radius: 50%;
+}
+
+.crystals {
+  display: flex;
+  gap: 3px;
+  margin-top: 4px;
+}
+
+.crystalDrop {
+  width: 3px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, var(--gold-light), transparent); /* Re-themed */
+  box-shadow: 0 0 5px rgba(197, 168, 128, 0.6);
+}
+
+/* Floral Arch - Main Framing */
+.floralArch {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.archFrame {
+  position: absolute;
+  bottom: 0;
+  width: 380px;
+  height: 75%;
+  border-radius: 190px 190px 0 0;
+  border: 2px solid rgba(197, 168, 128, 0.3);
+  border-bottom: none;
+  background: linear-gradient(to top, rgba(197, 168, 128, 0.04) 0%, transparent 60%);
+  transform: translateZ(-100px);
+  will-change: transform, opacity;
+}
+
+@media (max-width: 768px) {
+  .archFrame {
+    width: 78vw;
+    height: 70%;
+  }
+}
+
+/* Floral Clusters on Arch */
+.flowerCluster {
+  position: absolute;
+  background-color: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.clusterTop {
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 60px;
+}
+
+.clusterLeft {
+  left: -20px;
+  top: 30%;
+  width: 60px;
+  height: 180px;
+}
+
+.clusterRight {
+  right: -20px;
+  top: 30%;
+  width: 60px;
+  height: 180px;
+}
+
+/* CSS Flower Petals (Warm Ivory, Brand Gold) */
+.roseIvory,
+.roseBurgundy,
+.leafGreen {
+  border-radius: 50%;
+  position: absolute;
+}
+
+.roseIvory {
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 35% 35%, var(--background) 0%, var(--gold-light) 70%, var(--primary) 100%); /* Re-themed */
+  box-shadow: 0 2px 4px rgba(197, 168, 128, 0.1);
+}
+
+/* Re-themed: Burgundy rose changed to brand gold rose to match AS Events brand identity */
+.roseBurgundy {
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 35% 35%, var(--gold-light) 0%, var(--primary) 70%, var(--border) 100%); /* Re-themed */
+  box-shadow: 0 2px 4px rgba(197, 168, 128, 0.15);
+}
+
+.leafGreen {
+  width: 14px;
+  height: 8px;
+  background: linear-gradient(135deg, #5C6E5F 0%, #3B473E 100%);
+  transform: rotate(45deg);
+  opacity: 0.8;
+}
+
+/* Aisle */
+.aisle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  z-index: 3;
+  will-change: transform;
+}
+
+.aisleRunner {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 460px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, rgba(250, 248, 245, 0.12) 0%, rgba(250, 248, 245, 0.02) 100%);
+  border-left: 1px solid rgba(197, 168, 128, 0.22);
+  border-right: 1px solid rgba(197, 168, 128, 0.22);
+  clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+}
+
+@media (max-width: 768px) {
+  .aisleRunner {
+    width: 75vw;
+  }
+}
+
+.aisleGlow {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 180px;
+  height: 100%;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, rgba(197, 168, 128, 0.08) 0%, transparent 80%);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 100%, 0% 100%);
+}
+
+/* Side Decor pedestals & candle stand glows along the aisle */
+.sideDecor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35%;
+  z-index: 4;
+  will-change: transform;
+}
+
+.pedestalLeft,
+.pedestalRight {
+  position: absolute;
+  width: 24px;
+  height: 80px;
+  background-color: var(--background); /* Re-themed: warm ivory marble */
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 10px rgba(197, 168, 128, 0.1);
+  bottom: 10px;
+  will-change: transform, opacity;
+}
+
+.pedestalLeft {
+  left: 20%;
+  transform: translateZ(-80px);
+}
+
+.pedestalRight {
+  right: 20%;
+  transform: translateZ(-80px);
+}
+
+.candleGlow {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--gold-light); /* Re-themed: warm champagne light */
+  filter: blur(3px);
+  box-shadow: 0 0 10px var(--primary); /* Re-themed */
+  opacity: 0.8;
+}
+
+/* Foreground corner silhouettes creating lens depth */
+.foregroundFlorals {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25%;
+  pointer-events: none;
+  z-index: 9;
+  will-change: transform;
+}
+
+.fgLeft,
+.fgRight {
+  position: absolute;
+  bottom: -20px;
+  width: 200px;
+  height: 180px;
+  background-color: color-mix(in srgb, var(--background) 90%, transparent); /* Re-themed: soft warm ivory shadow */
+  filter: blur(3px);
+  opacity: 0.7;
+  will-change: transform, opacity;
+}
+
+.fgLeft {
+  left: -40px;
+  border-radius: 0 100px 0 0;
+  border-top: 2px solid rgba(197, 168, 128, 0.22);
+  border-right: 2px solid rgba(197, 168, 128, 0.22);
+  transform: translateZ(100px);
+}
+
+.fgRight {
+  right: -40px;
+  border-radius: 100px 0 0 0;
+  border-top: 2px solid rgba(197, 168, 128, 0.22);
+  border-left: 2px solid rgba(197, 168, 128, 0.22);
+  transform: translateZ(100px);
+}
+
+/* Sizing adjustments on mobile viewport size */
+@media (max-width: 480px) {
+  .fgLeft,
+  .fgRight {
+    width: 120px;
+    height: 110px;
+  }
+  .chandelierLeft,
+  .chandelierRight {
+    display: none; /* Simplify mobile decorators */
+  }
+  .pedestalLeft {
+    left: 8%;
+  }
+  .pedestalRight {
+    right: 8%;
+  }
+}

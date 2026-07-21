@@ -89,8 +89,8 @@ export interface BudgetBreakdown {
 
 export interface AIConsultationResult {
   recommendedPackage: PackageRecommendation
-  //budgetEstimate: BudgetBreakdown
-  //budgetRangeLabel: string
+  budgetEstimate: BudgetBreakdown
+  budgetRangeLabel: string
   venueSuggestions: VenueRecommendation[]
   recommendedVenueTypes: string[]
   guestCapacityValidation: GuestCapacityValidation

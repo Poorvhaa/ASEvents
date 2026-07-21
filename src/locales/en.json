@@ -1,565 +1,291 @@
 {
-  "nav": {
-    "home": "Home",
-    "about": "About",
-    "services": "Services",
-    "packages": "Packages",
-    "venues": "Venues",
-    "portfolio": "Portfolio",
-    "contact": "Contact",
-    "getQuote": "Get Free Quote",
-    "dropdown": {
-      "wedding": "Wedding Planning",
-      "destination": "Destination Weddings",
-      "corporate": "Corporate Events",
-
-      "birthdays": "Birthday Celebrations",
-      "anniversaries": "Anniversary Events"
-    },
-    "selectLanguage": "Select Language"
-  },
-  "footer": {
-    "description": "Creating extraordinary events that last forever. We specialize in luxury weddings, corporate events, and destination celebrations.",
-    "ourServices": "Our Services",
-    "quickLinks": "Quick Links",
-    "contactUs": "Contact Us",
-    "address": "803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007",
-    "rights": "All rights reserved.",
-    "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
-  },
-  "hero": {
-    "subtitle": "Luxury Event Management",
-    "titlePart1": "Creating Extraordinary Events",
-    "titlePart2": "That Last Forever",
-    "description": "Luxury weddings, corporate events, destination celebrations, and unforgettable experiences crafted with elegance and precision.",
-    "getQuote": "Get Free Quote",
-    "viewPortfolio": "View Portfolio"
-  },
-  "cta": {
-    "getStarted": "Get Started",
-    "headingPart1": "Let's Create Your",
-    "headingPart2": "Dream Event",
-    "description": "Ready to turn your vision into reality? Our team is here to make your next event an unforgettable experience.",
-    "bookConsultation": "Book Consultation",
-    "contactUs": "Contact Us"
-  },
-  "valueProps": {
-    "planning": {
-      "title": "Bespoke Planning",
-      "desc": "Tailoring every detail to your story, crafting unique designs and seamless schedules that reflect your personal vision."
-    },
-    "venues": {
-      "title": "Elite Venue Curation",
-      "desc": "Unlocking access to the finest luxury destinations, boutique heritage properties, and stunning beachfront spots across India."
-    },
-    "execution": {
-      "title": "Flawless Execution",
-      "desc": "Orchestrating every vendor, cue, and logistical detail with calm, professional precision so you can fully live your moment."
-    }
-  },
-  "services": {
-    "eyebrow": "What We Offer",
-    "headingPart1": "Our Premium",
-    "headingPart2": "Services",
-    "description": "From intimate gatherings to grand celebrations, we bring your vision to life with creativity, precision, and an unwavering commitment to excellence.",
-    "wedding": {
-      "title": "Wedding Planning",
-      "desc": "Exquisite wedding experiences tailored to your unique love story with meticulous attention to detail.",
-      "features": [
-        "Venue scouting and selection",
-        "Theme development and design",
-        "Vendor coordination and management",
-        "Budget planning and tracking",
-        "Day-of coordination",
-        "Guest management"
-      ]
-    },
-    "destination": {
-      "title": "Destination Weddings",
-      "desc": "Transform your dream location into the perfect wedding venue with our global expertise.",
-      "features": [
-        "Global destination expertise",
-        "Travel and accommodation coordination",
-        "Local vendor partnerships",
-        "Legal documentation assistance",
-        "Multi-day event planning",
-        "Guest concierge services"
-      ]
-    },
-    "corporate": {
-      "title": "Corporate Events",
-      "desc": "Professional corporate gatherings that reflect your brand excellence and leave lasting impressions.",
-      "features": [
-        "Conference and summit planning",
-        "Team building events",
-        "Award ceremonies",
-        "Networking events",
-        "Brand activation",
-        "Audio-visual production"
-      ]
-    },
-
-    "birthdays": {
-      "title": "Birthday Celebrations",
-      "desc": "Unforgettable birthday parties from intimate gatherings to grand milestone celebrations.",
-      "features": [
-        "Custom theme design",
-        "Entertainment booking",
-        "Catering coordination",
-        "Photography and videography",
-        "Invitations and RSVP management",
-        "Party favors and gifts"
-      ]
-    },
-    "anniversaries": {
-      "title": "Anniversary Events",
-      "desc": "Celebrate love milestones with elegant anniversary events that honor your journey.",
-      "features": [
-        "Renewal of vows ceremonies",
-        "Memory lane installations",
-        "Custom video tributes",
-        "Elegant dining experiences",
-        "Live entertainment",
-        "Guest coordination"
-      ]
-    },
-    "entertainment": {
-      "title": "Entertainment Management",
-      "desc": "World-class entertainment coordination featuring top performers and spectacular productions.",
-      "features": [
-        "Artist booking and management",
-        "Sound and lighting production",
-        "Stage design and setup",
-        "Technical direction",
-        "Hospitality riders",
-        "Performance coordination"
-      ]
-    }
-  },
-  "whyChooseUs": {
-    "eyebrow": "Why AS Events",
-    "headingPart1": "Why Choose",
-    "headingPart2": "Us",
-    "description": "We don't just plan events, we create experiences that leave lasting impressions and become cherished memories.",
-    "stats": {
-      "events": "Events Delivered",
-      "experience": "Years Experience",
-      "partners": "Vendor Partners",
-      "satisfaction": "Client Satisfaction"
-    },
-    "features": {
-      "team": {
-        "title": "Experienced Team",
-        "desc": "Our dedicated team brings decades of combined experience in crafting memorable events across all scales and styles."
-      },
-      "concepts": {
-        "title": "Creative Concepts",
-        "desc": "We transform your vision into reality with innovative designs and unique themes that set your event apart."
-      },
-      "management": {
-        "title": "End-to-End Management",
-        "desc": "From initial concept to final execution, we handle every detail so you can enjoy your special moments stress-free."
-      },
-      "vendors": {
-        "title": "Trusted Vendors",
-        "desc": "Our network of premium vendors ensures the highest quality services for catering, decor, entertainment, and more."
-      }
-    }
-  },
-  "testimonials": {
-    "eyebrow": "Testimonials",
-    "headingPart1": "What Our",
-    "headingPart2": "Clients Say",
-    "items": {
-      "wedding": "Wedding Clients",
-      "corporate": "CEO, TechCorp",
-      "birthday": "Birthday Celebration",
-      "destination": "Destination Wedding",
-      "review1": "AS Events transformed our wedding into a fairy tale. Every detail was perfect, from the stunning floral arrangements to the seamless coordination. They truly exceeded our expectations.",
-      "review2": "Our company summit was a huge success thanks to AS Events. Their professionalism and attention to detail made our corporate event truly memorable for all attendees.",
-      "review3": "They planned my 50th birthday celebration and it was absolutely magical. The team went above and beyond to make sure everything was perfect. Highly recommended!",
-      "review4": "Planning a destination wedding seemed daunting, but AS Events made it effortless. They handled everything from vendor coordination to travel logistics flawlessly."
-    },
-    "prev": "Previous testimonial",
-    "next": "Next testimonial",
-    "goTo": "Go to testimonial {num}"
-  },
-  "featuredVenues": {
-    "eyebrow": "Venues",
-    "headingPart1": "Featured",
-    "headingPart2": "Venues",
-    "description": "Discover our handpicked selection of premium venues, from luxurious banquet halls to breathtaking outdoor lawns.",
-    "viewAll": "View All Venues",
-    "capacity": "Capacity",
-    "location": "Location",
-    "bookNow": "Book Now",
-    "details": "View Details"
-  },
-  "packagesPreview": {
-    "eyebrow": "Packages",
-    "headingPart1": "Our Event",
-    "headingPart2": "Packages",
-    "description": "Choose from our curated packages or build a custom package tailored to your exact event requirements.",
-    "viewAll": "View All Packages",
-    "popular": "Most Popular",
-    "custom": {
-      "title": "Custom Package",
-      "desc": "Build your own bespoke package from our full catalog of premium services, tailored exactly to your requirements.",
-      "button": "Build Custom Package"
-    },
-    "select": "Select Package",
-    "featuresTitle": "Includes:"
-  },
-  "quoteModal": {
-    "step": "Step",
-    "of": "of",
-    "back": "Back",
-    "next": "Next",
-    "submit": "Submit Request",
-    "submitting": "Submitting...",
-    "close": "Close modal",
-    "errors": {
-      "capacity": "Guest count exceeds venue capacity. Please adjust before submitting.",
-      "date": "Selected date is unavailable. Please choose another date."
-    },
-    "step1": {
-      "heading": "What type of event are you planning?",
-      "sub": "Select the event type that best describes your celebration",
-      "types": {
-        "Wedding": "Wedding",
-        "Engagement": "Engagement",
-        "Haldi": "Haldi",
-        "Mehendi": "Mehendi",
-        "Sangeet": "Sangeet",
-        "Reception": "Reception",
-        "Destination Wedding": "Destination Wedding",
-        "Corporate Event": "Corporate Event",
-
-        "Birthday": "Birthday",
-        "Birthday Celebration": "Birthday Celebration",
-        "Anniversary": "Anniversary",
-
-        "Destination Event": "Destination Event",
-        "Other": "Other"
-      }
-    },
-    "step2": {
-      "heading": "How many guests are you expecting?",
-      "sub": "This helps us recommend the right venues and packages",
-      "counts": {
-        "Less than 50": "Less than 50",
-        "50 - 100": "50 - 100",
-        "100 - 200": "100 - 200",
-        "200 - 500": "200 - 500",
-        "500+": "500+"
-      }
-    },
-    "step3": {
-      "heading": "What is your venue preference?",
-      "sub": "Choose your ideal event setting",
-      "venues": {
-        "Indoor Venue": "Indoor Venue",
-        "Outdoor Venue": "Outdoor Venue",
-        "Beach/Destination": "Beach/Destination",
-        "Hotel/Resort": "Hotel/Resort",
-        "Private Estate": "Private Estate",
-        "No Preference": "No Preference"
-      }
-    },
-    "step4": {
-      "heading": "What is your budget range?",
-      "sub": "This helps us tailor our recommendations",
-      "ranges": {
-        "Under ₹3,00,000": "Under ₹3,00,000",
-        "₹3,00,000 - ₹8,00,000": "₹3,00,000 - ₹8,00,000",
-        "₹8,00,000 - ₹15,00,000": "₹8,00,000 - ₹15,00,000",
-        "₹15,00,000 - ₹30,00,000": "₹15,00,000 - ₹30,00,000",
-        "₹30,00,000+": "₹30,00,000+"
-      }
-    },
-    "step5": {
-      "heading": "Any specific requirements?",
-      "sub": "Tell us about your vision (optional)",
-      "placeholder": "Share your ideas, themes, special requests..."
-    },
-    "step6": {
-      "heading": "Almost there! Your contact details",
-      "sub": "We'll get back to you within 24 hours",
-      "name": "Your Name *",
-      "email": "Your Email *",
-      "phone": "Your Phone",
-      "summaryTitle": "Your Selection Summary",
-      "eventType": "Event Type:",
-      "guestCount": "Guest Count:",
-      "venue": "Venue:",
-      "budget": "Budget:"
-    },
-    "success": "✓ Quote request submitted successfully! We will contact you within 24 hours."
-  },
   "about": {
     "hero": {
+      "description": "For over a decade, AS Events has been transforming dreams into reality, creating luxury experiences that leave lasting impressions.",
       "eyebrow": "About Us",
       "titlePart1": "Crafting",
       "titlePart2": "Unforgettable",
-      "titlePart3": "Experiences",
-      "description": "For over a decade, AS Events has been transforming dreams into reality, creating luxury experiences that leave lasting impressions."
-    },
-    "story": {
-      "eyebrow": "Our Story",
-      "titlePart1": "A Legacy of",
-      "titlePart2": "Excellence",
-      "paragraph1": "Founded in 2014, AS Events began with a simple vision: to revolutionize the event planning industry by combining creativity, precision, and unparalleled service.",
-      "paragraph2": "What started as a small team of passionate event enthusiasts has grown into one of the most sought-after luxury event management companies.",
-      "paragraph3": "Our journey has been defined by our commitment to exceeding expectations. Every event we create is a testament to our dedication to perfection and our clients' unique visions."
+      "titlePart3": "Experiences"
     },
     "mission": {
-      "title": "Our Mission",
-      "desc": "To create extraordinary events that exceed expectations and leave lasting impressions. We are committed to delivering personalized, luxury experiences with impeccable attention to detail, innovative concepts, and flawless execution. Every celebration we touch becomes a masterpiece of memories."
-    },
-    "vision": {
-      "title": "Our Vision",
-      "desc": "To be the world's most trusted and innovative event management company, setting new standards for luxury celebrations. We envision a future where every event we create inspires joy, connects people, and transforms moments into timeless memories that transcend generations."
-    },
-    "values": {
-      "title": "Our Core Values",
-      "items": {
-        "Excellence": "Excellence",
-        "Creativity": "Creativity",
-        "Integrity": "Integrity",
-        "Passion": "Passion",
-        "Innovation": "Innovation"
-      }
+      "desc": "To create extraordinary events that exceed expectations and leave lasting impressions. We are committed to delivering personalized, luxury experiences with impeccable attention to detail, innovative concepts, and flawless execution. Every celebration we touch becomes a masterpiece of memories.",
+      "title": "Our Mission"
     },
     "recognition": {
-      "eyebrow": "Recognition",
-      "titlePart1": "Awards &",
-      "titlePart2": "Achievements",
-      "description": "Our commitment to excellence has been recognized by leading industry organizations.",
       "award1": "Best Event Planner",
       "award2": "Excellence in Design",
       "award3": "Top 10 Event Companies",
-      "award4": "Platinum Service Award"
+      "award4": "Platinum Service Award",
+      "description": "Our commitment to excellence has been recognized by leading industry organizations.",
+      "eyebrow": "Recognition",
+      "titlePart1": "Awards &",
+      "titlePart2": "Achievements"
     },
-  "contact": {
-    "hero": {
-      "eyebrow": "Contact Us",
-      "titlePart1": "Let's Start",
-      "titlePart2": "Planning",
-      "description": "Ready to create your dream event? Get in touch with our team and let's bring your vision to life."
+    "story": {
+      "eyebrow": "Our Story",
+      "paragraph1": "Founded in 2014, AS Events began with a simple vision: to revolutionize the event planning industry by combining creativity, precision, and unparalleled service.",
+      "paragraph2": "What started as a small team of passionate event enthusiasts has grown into one of the most sought-after luxury event management companies.",
+      "paragraph3": "Our journey has been defined by our commitment to exceeding expectations. Every event we create is a testament to our dedication to perfection and our clients' unique visions.",
+      "titlePart1": "A Legacy of",
+      "titlePart2": "Excellence"
     },
-    "content": {
-      "sendMessage": "Send Us a Message",
-      "getInTouch": "Get in Touch",
-      "description": "Have questions or ready to start planning? Reach out to us through any of the channels below, and our team will get back to you promptly.",
-      "name": "Your Name *",
-      "email": "Email Address *",
-      "phone": "Phone Number",
-      "eventType": "Event Type *",
-      "eventDate": "Event Date",
-      "budget": "Budget Range",
-      "message": "Your Message *",
-      "messagePlaceholder": "Tell us about your event vision...",
-      "send": "Send Message",
-      "sending": "Sending...",
-      "successTitle": "Message Sent!",
-      "successDesc": "Thank you for reaching out. We'll get back to you within 24 hours.",
-      "sendAnother": "Send Another Message",
-      "visit": "Visit Us",
-      "call": "Call Us",
-      "emailUs": "Email Us",
-      "hours": "Business Hours",
-      "whatsapp": "Chat on WhatsApp"
+    "values": {
+      "items": {
+        "Creativity": "Creativity",
+        "Excellence": "Excellence",
+        "Innovation": "Innovation",
+        "Integrity": "Integrity",
+        "Passion": "Passion"
+      },
+      "title": "Our Core Values"
+    },
+    "vision": {
+      "desc": "To be the world's most trusted and innovative event management company, setting new standards for luxury celebrations. We envision a future where every event we create inspires joy, connects people, and transforms moments into timeless memories that transcend generations.",
+      "title": "Our Vision"
     }
   },
-  "servicesPage": {
-    "hero": {
-      "eyebrow": "Our Services",
-      "titlePart1": "Premium Event",
-      "titlePart2": "Services",
-      "description": "From intimate gatherings to grand celebrations, we offer comprehensive event management services tailored to your unique vision."
-    },
-    "getQuoteFor": "Get Quote for"
-  },
-  "packagesPage": {
-    "aiPlanner": "Talk to AI Planner",
-    "hero": {
-      "eyebrow": "Packages",
-      "titlePart1": "Event Packages Designed Around Your",
-      "titlePart2": "Celebrations",
-      "description": "Choose from curated event packages or create a fully customized experience."
-    },
-    "guests": "guests",
-    "keyHighlights": "Key Highlights",
-    "includedServices": "Included Services",
-    "noPackages": "No packages found in this category.",
-    "builder": {
-      "eyebrow": "Custom",
-      "titlePart1": "Build Your Own",
-      "titlePart2": "Package",
-      "description": "Tell us about your celebration and we'll craft a bespoke package perfectly suited to your needs and budget.",
-      "eventType": "Event Type",
-      "guestCount": "Guest Count",
-      "location": "Location",
-      "budgetRange": "Budget Range",
-      "selectEventType": "Select event type",
-      "selectGuestCount": "Select guest count",
-      "selectLocation": "Select location",
-      "selectBudget": "Select budget range",
-      "button": "Generate Recommendation",
-      "types": {
-        "Wedding": "Wedding",
-        "Engagement": "Engagement",
-        "Corporate Event": "Corporate Event",
-        "Birthday Celebration": "Birthday Celebration",
-        "Festival Event": "Festival Event",
-        "Other": "Other"
-      },
-      "counts": {
-        "Less than 50": "Less than 50",
-        "50 - 100": "50 - 100",
-        "100 - 200": "100 - 200",
-        "200 - 500": "200 - 500",
-        "500 - 1000": "500 - 1,000",
-        "1000+": "1,000+"
-      },
-      "ranges": {
-        "Under ₹1,00,000": "Under ₹1,00,000",
-        "₹1,00,000 - ₹3,00,000": "₹1,00,000 - ₹3,00,000",
-        "₹3,00,000 - ₹5,00,000": "₹3,00,000 - ₹5,00,000",
-        "₹5,00,000 - ₹10,00,000": "₹5,00,000 - ₹10,00,000",
-        "₹10,00,000+": "₹10,00,000+"
-      }
-    },
-    "categories": {
-      "All": "All",
-      "Weddings": "Weddings",
-      "Corporate": "Corporate",
-      "Social Events": "Social Events"
-    }
-  },
-  "venuesPage": {
-    "hero": {
-      "eyebrow": "Venues",
-      "titlePart1": "Discover Premium Event",
-      "titlePart2": "Venues",
-      "description": "Explore wedding halls, luxury resorts, banquet venues and corporate spaces across India."
-    },
-    "grid": {
-      "title": "Curate Your Perfect Venue",
-      "subtitle": "Explore venues tailored to your event requirements",
-      "destination": "Event Destination",
-      "allLocations": "All Locations",
-      "collection": "Venue Collection",
-      "allTypes": "All Venue Types",
-      "noVenues": "No venues found matching your criteria."
-    },
-    "categories": {
-      "Wedding Halls": "Wedding Halls",
-      "Banquet Halls": "Banquet Halls",
-      "Luxury Resorts": "Luxury Resorts",
-      "Destination Venues": "Destination Venues",
-      "Farmhouses": "Farmhouses",
-      "Beach Venues": "Beach Venues",
-      "Corporate Venues": "Corporate Venues",
-      "Exhibition Venues": "Exhibition Venues",
-      "Open Lawns": "Open Lawns"
-    },
-    "labels": {
-      "bookVenue": "Book Venue",
-      "indoor": "Indoor",
-      "outdoor": "Outdoor",
-      "indoorOutdoor": "Indoor & Outdoor"
-    },
-    "detail": {
-      "back": "Back to Venues",
-      "about": "About This Venue",
-      "facilities": "Facilities",
-      "gallery": "Photo Gallery",
-      "location": "Location",
-      "mapSoon": "Google Maps integration coming soon",
-      "startingFrom": "Starting from",
-      "capacity": "Capacity",
-      "type": "Type",
-      "parking": "Parking",
-      "rooms": "Rooms Available",
-      "bookThis": "Book This Venue",
-      "inquiry": "Inquiry Form",
-      "relatedTitle": "Discover Similar Venues",
-      "relatedSub": "Handpicked premium options that match your style and requirements."
-    },
-    "inquiry": {
-      "submitted": "Booking request submitted!",
-      "contactShort": "We'll contact you shortly.",
-      "fullName": "Full Name",
-      "namePlaceholder": "Your name",
-      "email": "Email",
-      "emailPlaceholder": "your@email.com",
-      "phone": "Phone",
-      "phonePlaceholder": "+91 95103 24143",
-      "eventDate": "Event Date",
-      "guests": "Guests",
-      "guestsMax": "Maximum",
-      "errorCapacity": "Guest count exceeds venue capacity. Maximum Capacity:",
-      "errorCapacityShort": "⚠ Guest count exceeds venue capacity.",
-      "message": "Message",
-      "messagePlaceholder": "I'm interested in booking",
-      "submitting": "Submitting...",
-      "requestButton": "Request Booking"
-    },
+  "aiPlanner": {
+    "aiConsultant": "AS Events Consultant",
+    "askAI": "Ask Event Planner AI",
     "availability": {
-      "available": "Venue available",
-      "unavailable": "Venue unavailable on selected date",
-      "chooseAnother": "Please choose another date."
-    }
+      "earlyDecember": "Early December slots may still be open",
+      "peakSeason": "{month} is peak wedding season in {city} — book 6-9 months in advance",
+      "peakSeasonNote": "Peak season — limited dates available",
+      "recommendEarly": "We recommend checking venue availability in {city} early",
+      "weddingAdvance": "For weddings in {city}, popular venues fill 4-6 months ahead",
+      "weekdaySuggestion": "Consider weekday dates for better availability"
+    },
+    "chatOnWhatsApp": "Chat on WhatsApp",
+    "closeChat": "Close chat",
+    "datePlaceholder": "e.g. March 2026...",
+    "guests": {
+      "considerIncreasing": ". Consider increasing budget or reducing guest count for optimal experience",
+      "manageable": "{guests} guests is manageable for {eventType}",
+      "requiresLarge": "{guests} guests requires a large banquet hall, resort, or convention venue",
+      "suitsPremium": "{guests} guests suits premium banquet halls and luxury resorts"
+    },
+    "inputPlaceholder": "Type your answer...",
+    "nextSteps": {
+      "reviewPackage": "Review package inclusions and customize as needed",
+      "scheduleConsultation": "Schedule a free consultation with our event planner",
+      "submitDetails": "Submit your details to receive a personalized proposal",
+      "visitVenues": "Visit shortlisted venues with our team"
+    },
+    "planningTips": "Planning Tips",
+    "prefillWelcome": "Great choice — the **{eventType}** package! Let me tailor a recommendation. How many guests are you expecting?",
+    "prompts": {
+      "budget": "What is your approximate budget range?",
+      "city": "Which city would you like to host the event in?",
+      "eventDate": "Wonderful choice! When is your event planned? (e.g. December 2025, or type a specific date)",
+      "eventType": "Let's begin — what type of event are you planning?",
+      "guestCount": "How many guests are you expecting?",
+      "specialRequirements": "Any special requirements or vision for your event? (Type your ideas or \"None\")",
+      "venuePreference": "Do you have a venue preference? (e.g. Banquet Hall, Resort, Palace, Farmhouse)"
+    },
+    "reason": {
+      "and": " and ",
+      "suitableGuests": "Suitable for {guests} guests",
+      "weddingCoordination": "covers full wedding coordination needs",
+      "withinBudget": "within your budget range"
+    },
+    "reasonLabel": "Reason:",
+    "recommendedPackage": "Recommended Package",
+    "recommendedVenueTypes": "Recommended Venue Types",
+    "specialPlaceholder": "Your vision or type None...",
+    "tips": {
+      "allocateBudget": "Allocate 40-50% of budget to venue and catering combined.",
+      "backupIndoor": "Consider a backup indoor space for outdoor ceremonies.",
+      "bookEarly": "Book your venue 4-6 months in advance for peak wedding season.",
+      "confirmVendor": "Confirm vendor availability before finalizing your event date.",
+      "coordinateWeddingEvents": "Plan haldi, mehendi, and sangeet as separate coordinated events.",
+      "finalizeAV": "Finalize AV and branding requirements early with your team.",
+      "scheduleWalkthrough": "Schedule a venue walkthrough before signing contracts.",
+      "specialRequirements": "We'll accommodate: \"{req}...\""
+    },
+    "venuePreferences": {
+      "Banquet Hall": "Banquet Hall",
+      "Convention Center": "Convention Center",
+      "Exhibition Hall": "Exhibition Hall",
+      "Farmhouse": "Farmhouse",
+      "Hotel Ballroom": "Hotel Ballroom",
+      "Open Lawn": "Open Lawn",
+      "Palace": "Palace",
+      "Resort": "Resort"
+    },
+    "venueSuggestions": "Venue Suggestions",
+    "welcome": "Namaste! I'm your AS Events AI Consultant — a senior event planner here to help you design the perfect celebration.\n\nI'll ask a few quick questions to understand your vision, then recommend packages, venues, and a budget estimate tailored to your needs.\n\nLet's begin — what type of event are you planning?",
+    "whatsappMessage": "Here's your personalized event consultation:"
   },
-  "portfolioPage": {
-    "hero": {
-      "eyebrow": "Portfolio",
-      "titlePart1": "Our",
-      "titlePart2": "Work",
-      "description": "Browse our portfolio of extraordinary events and stunning gallery photography. Each project represents our commitment to excellence and attention to detail."
-    },
-    "grid": {
-      "events": "Events",
-      "gallery": "Gallery",
-      "searchPlaceholder": "Search events...",
-      "noEvents": "No events found matching your criteria.",
-      "noImages": "No gallery images found in this category.",
-      "guestsLabel": "Guests",
-      "eventGallery": "Event Gallery",
-      "closeLightbox": "Close lightbox"
-    },
-    "categories": {
-      "All": "All",
-      "Wedding": "Wedding",
-      "Corporate": "Corporate",
-      "Birthdays": "Birthdays",
-      "Anniversaries": "Anniversaries",
-      "Others": "Others"
-    }
+  "auth": {
+    "alreadyHaveAccount": "Already have an account? ",
+    "createAccount": "Create account",
+    "descSignIn": "Sign in to your account to continue",
+    "descSignUp": "Sign up to get started",
+    "dontHaveAccount": "Don't have an account? ",
+    "email": "Email",
+    "errorFallback": "Something went wrong",
+    "name": "Name",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signInLink": "Sign in",
+    "signUpLink": "Sign up",
+    "submitting": "Please wait...",
+    "titleSignIn": "Welcome back",
+    "titleSignUp": "Create an account"
   },
   "cities": {
     "Ahmedabad": "Ahmedabad",
-    "Surat": "Surat",
-    "Vadodara": "Vadodara",
-    "Rajkot": "Rajkot",
+    "Delhi": "Delhi",
+    "Goa": "Goa",
+    "Jaipur": "Jaipur",
     "Mumbai": "Mumbai",
     "Pune": "Pune",
+    "Rajkot": "Rajkot",
+    "Surat": "Surat",
     "Udaipur": "Udaipur",
-    "Jaipur": "Jaipur",
-    "Goa": "Goa",
-    "Delhi": "Delhi"
+    "Vadodara": "Vadodara"
+  },
+  "contact": {
+    "content": {
+      "budget": "Budget Range",
+      "call": "Call Us",
+      "description": "Have questions or ready to start planning? Reach out to us through any of the channels below, and our team will get back to you promptly.",
+      "email": "Email Address *",
+      "emailUs": "Email Us",
+      "eventDate": "Event Date",
+      "eventType": "Event Type *",
+      "getInTouch": "Get in Touch",
+      "hours": "Business Hours",
+      "message": "Your Message *",
+      "messagePlaceholder": "Tell us about your event vision...",
+      "name": "Your Name *",
+      "phone": "Phone Number",
+      "send": "Send Message",
+      "sendAnother": "Send Another Message",
+      "sendMessage": "Send Us a Message",
+      "sending": "Sending...",
+      "successDesc": "Thank you for reaching out. We'll get back to you within 24 hours.",
+      "successTitle": "Message Sent!",
+      "visit": "Visit Us",
+      "whatsapp": "Chat on WhatsApp"
+    },
+    "hero": {
+      "description": "Ready to create your dream event? Get in touch with our team and let's bring your vision to life.",
+      "eyebrow": "Contact Us",
+      "titlePart1": "Let's Start",
+      "titlePart2": "Planning"
+    }
+  },
+  "contactExtra": {
+    "monFri": "Mon - Fri: 9:00 AM - 6:00 PM",
+    "placeholders": {
+      "email": "apurv@example.com",
+      "name": "Apurv Shah",
+      "phone": "+91 95103 24143"
+    },
+    "sat": "Sat: 10:00 AM - 4:00 PM",
+    "selectBudget": "Select budget range",
+    "selectType": "Select event type",
+    "submissionFailed": "Failed to submit form. Please try again."
+  },
+  "cta": {
+    "bookConsultation": "Book Consultation",
+    "contactUs": "Contact Us",
+    "description": "Ready to turn your vision into reality? Our team is here to make your next event an unforgettable experience.",
+    "getStarted": "Get Started",
+    "headingPart1": "Let's Create Your",
+    "headingPart2": "Dream Event"
+  },
+  "featuredVenues": {
+    "bookNow": "Book Now",
+    "capacity": "Capacity",
+    "description": "Discover our handpicked selection of premium venues, from luxurious banquet halls to breathtaking outdoor lawns.",
+    "details": "View Details",
+    "eyebrow": "Venues",
+    "headingPart1": "Featured",
+    "headingPart2": "Venues",
+    "location": "Location",
+    "viewAll": "View All Venues"
+  },
+  "footer": {
+    "address": "803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007",
+    "contactUs": "Contact Us",
+    "description": "Creating extraordinary events that last forever. We specialize in luxury weddings, corporate events, and destination celebrations.",
+    "ourServices": "Our Services",
+    "privacy": "Privacy Policy",
+    "quickLinks": "Quick Links",
+    "rights": "All rights reserved.",
+    "terms": "Terms of Service"
+  },
+  "hero": {
+    "description": "Luxury weddings, corporate events, destination celebrations, and unforgettable experiences crafted with elegance and precision.",
+    "getQuote": "Get Free Quote",
+    "subtitle": "Luxury Event Management",
+    "titlePart1": "Creating Extraordinary Events",
+    "titlePart2": "That Last Forever",
+    "viewPortfolio": "View Portfolio"
+  },
+  "leadForm": {
+    "desc": "Get a detailed plan sent to your inbox.",
+    "getProposal": "Get My Proposal",
+    "placeholders": {
+      "city": "City",
+      "email": "Email Address",
+      "name": "Full Name",
+      "phone": "Phone Number"
+    },
+    "submitting": "Submitting...",
+    "successDesc": "Our team will contact you within 24 hours.",
+    "successTitle": "Thank you! Your proposal request has been received.",
+    "title": "Receive Your Personalized Proposal"
+  },
+  "loading": {
+    "packages": "Loading packages...",
+    "portfolio": "Loading portfolio..."
+  },
+  "nav": {
+    "about": "About",
+    "contact": "Contact",
+    "dropdown": {
+      "anniversaries": "Anniversary Events",
+      "birthdays": "Birthday Celebrations",
+      "corporate": "Corporate Events",
+      "destination": "Destination Weddings",
+      "wedding": "Wedding Planning"
+    },
+    "getQuote": "Get Free Quote",
+    "home": "Home",
+    "packages": "Packages",
+    "portfolio": "Portfolio",
+    "selectLanguage": "Select Language",
+    "services": "Services",
+    "venues": "Venues"
   },
   "packages": {
-    "haldi": {
-      "title": "Haldi Ceremony",
-      "description": "A vibrant haldi ceremony with traditional aesthetics and joyful ambiance.",
+    "anniversary": {
+      "description": "Romantic anniversary celebrations with elegant styling and curated entertainment.",
       "duration": "4-6 hours",
       "highlights": [
-        "Yellow theme decor",
-        "Traditional seating",
-        "Live dhol optional"
+        "Romantic styling",
+        "Memory wall",
+        "Live musicians"
+      ],
+      "includedServices": [
+        "Planning",
+        "Decor & Styling",
+        "Entertainment",
+        "Photography",
+        "Catering"
+      ],
+      "title": "Anniversary Celebration"
+    },
+    "baarat": {
+      "description": "A grand baarat procession with traditional music, decor, and seamless coordination.",
+      "duration": "3-5 hours",
+      "highlights": [
+        "Royal procession",
+        "Live band & dhol",
+        "VIP guest handling"
       ],
       "includedServices": [
         "Event planning & coordination",
@@ -568,10 +294,64 @@
         "Photography & videography",
         "Entertainment coordination",
         "Guest hospitality"
-      ]
+      ],
+      "title": "Baraat Management"
+    },
+    "baby-shower": {
+      "description": "Charming baby shower events with delightful decor and thoughtful hospitality.",
+      "duration": "3-5 hours",
+      "highlights": [
+        "Pastel themes",
+        "Game coordination",
+        "Custom favours"
+      ],
+      "includedServices": [
+        "Planning",
+        "Decor",
+        "Entertainment",
+        "Photography",
+        "Catering"
+      ],
+      "title": "Baby Shower"
+    },
+    "birthday": {
+      "description": "Memorable birthday parties with themed decor, entertainment, and photography.",
+      "duration": "4-6 hours",
+      "highlights": [
+        "Custom themes",
+        "Photo booth add-on",
+        "Kids & adult packages"
+      ],
+      "includedServices": [
+        "Planning",
+        "Decor & Styling",
+        "Entertainment",
+        "Photography",
+        "Catering"
+      ],
+      "title": "Birthday Celebration"
+    },
+    "carnival": {
+      "description": "A vibrant carnival-style celebration with themed decor, interactive games, live performers, food counters, photo booths, and entertainment for guests of all ages.",
+      "duration": "6-8 hours",
+      "highlights": [
+        "Colourful carnival-themed decor",
+        "Interactive games for all age groups",
+        "Live entertainers and performers"
+      ],
+      "includedServices": [
+        "Event planning and coordination",
+        "Carnival theme design",
+        "Game stall management",
+        "Artist and performer coordination",
+        "Food counter coordination",
+        "Photography and videography",
+        "Guest hospitality"
+      ],
+      "price": "Starting from ₹3,00,000",
+      "title": "Carnival  Event"
     },
     "complete-wedding": {
-      "title": "Complete Wedding Package",
       "description": "The ultimate all-in-one wedding experience covering every ceremony from haldi to reception.",
       "duration": "3-7 days",
       "highlights": [
@@ -587,102 +367,10 @@
         "Entertainment & DJ",
         "Catering management",
         "Guest hospitality"
-      ]
-    },
-    "mehendi": {
-      "title": "Mehendi Ceremony",
-      "description": "A colourful mehendi celebration with artists, live music, and themed decor.",
-      "duration": "5-7 hours",
-      "highlights": [
-        "Colourful lounge setup",
-        "Artist coordination",
-        "Live folk music"
       ],
-      "includedServices": [
-        "Event planning & coordination",
-        "Venue liaison",
-        "Decor & floral design",
-        "Photography & videography",
-        "Entertainment coordination",
-        "Guest hospitality"
-      ]
-    },
-    "sangeet": {
-      "title": "Sangeet Night",
-      "description": "A high-energy sangeet night with professional stage, sound, and dance floor setup.",
-      "duration": "6-8 hours",
-      "highlights": [
-        "Professional stage",
-        "LED backdrop",
-        "Choreography support"
-      ],
-      "includedServices": [
-        "Event planning & coordination",
-        "Venue liaison",
-        "Decor & floral design",
-        "Photography & videography",
-        "Entertainment coordination",
-        "Guest hospitality"
-      ]
-    },
-    "carnival": {
-      "title": "Carnival  Event",
-      "description": "A vibrant carnival-style celebration with themed decor, interactive games, live performers, food counters, photo booths, and entertainment for guests of all ages.",
-      "price": "Starting from ₹3,00,000",
-      "duration": "6-8 hours",
-      "highlights": [
-        "Colourful carnival-themed decor",
-        "Interactive games for all age groups",
-        "Live entertainers and performers"
-      ],
-      "includedServices": [
-        "Event planning and coordination",
-        "Carnival theme design",
-        "Game stall management",
-        "Artist and performer coordination",
-        "Food counter coordination",
-        "Photography and videography",
-        "Guest hospitality"
-      ]
-    },
-    "baarat": {
-      "title": "Baraat Management",
-      "description": "A grand baarat procession with traditional music, decor, and seamless coordination.",
-      "duration": "3-5 hours",
-      "highlights": [
-        "Royal procession",
-        "Live band & dhol",
-        "VIP guest handling"
-      ],
-      "includedServices": [
-        "Event planning & coordination",
-        "Venue liaison",
-        "Decor & floral design",
-        "Photography & videography",
-        "Entertainment coordination",
-        "Guest hospitality"
-      ]
-    },
-    "reception": {
-      "title": "Reception Celebration",
-      "description": "A grand reception with luxury staging, lighting, and premium entertainment.",
-      "duration": "5-7 hours",
-      "highlights": [
-        "Grand stage design",
-        "Premium lighting",
-        "Live entertainment"
-      ],
-      "includedServices": [
-        "Event planning & coordination",
-        "Venue liaison",
-        "Decor & floral design",
-        "Photography & videography",
-        "Entertainment coordination",
-        "Guest hospitality"
-      ]
+      "title": "Complete Wedding Package"
     },
     "corporate-conference": {
-      "title": "Corporate Conference",
       "description": "Professional conference planning with branding, AV, and hospitality management.",
       "duration": "1-3 days",
       "highlights": [
@@ -697,313 +385,273 @@
         "AV Setup",
         "Photography",
         "Hospitality"
-      ]
+      ],
+      "title": "Corporate Conference"
     },
-
-    "birthday": {
-      "title": "Birthday Celebration",
-      "description": "Memorable birthday parties with themed decor, entertainment, and photography.",
+    "haldi": {
+      "description": "A vibrant haldi ceremony with traditional aesthetics and joyful ambiance.",
       "duration": "4-6 hours",
       "highlights": [
-        "Custom themes",
-        "Photo booth add-on",
-        "Kids & adult packages"
+        "Yellow theme decor",
+        "Traditional seating",
+        "Live dhol optional"
       ],
       "includedServices": [
-        "Planning",
-        "Decor & Styling",
-        "Entertainment",
-        "Photography",
-        "Catering"
-      ]
+        "Event planning & coordination",
+        "Venue liaison",
+        "Decor & floral design",
+        "Photography & videography",
+        "Entertainment coordination",
+        "Guest hospitality"
+      ],
+      "title": "Haldi Ceremony"
     },
-    "anniversary": {
-      "title": "Anniversary Celebration",
-      "description": "Romantic anniversary celebrations with elegant styling and curated entertainment.",
-      "duration": "4-6 hours",
-      "highlights": ["Romantic styling", "Memory wall", "Live musicians"],
+    "mehendi": {
+      "description": "A colourful mehendi celebration with artists, live music, and themed decor.",
+      "duration": "5-7 hours",
+      "highlights": [
+        "Colourful lounge setup",
+        "Artist coordination",
+        "Live folk music"
+      ],
       "includedServices": [
-        "Planning",
-        "Decor & Styling",
-        "Entertainment",
-        "Photography",
-        "Catering"
-      ]
+        "Event planning & coordination",
+        "Venue liaison",
+        "Decor & floral design",
+        "Photography & videography",
+        "Entertainment coordination",
+        "Guest hospitality"
+      ],
+      "title": "Mehendi Ceremony"
     },
-    "baby-shower": {
-      "title": "Baby Shower",
-      "description": "Charming baby shower events with delightful decor and thoughtful hospitality.",
-      "duration": "3-5 hours",
-      "highlights": ["Pastel themes", "Game coordination", "Custom favours"],
+    "reception": {
+      "description": "A grand reception with luxury staging, lighting, and premium entertainment.",
+      "duration": "5-7 hours",
+      "highlights": [
+        "Grand stage design",
+        "Premium lighting",
+        "Live entertainment"
+      ],
       "includedServices": [
-        "Planning",
-        "Decor",
-        "Entertainment",
-        "Photography",
-        "Catering"
-      ]
+        "Event planning & coordination",
+        "Venue liaison",
+        "Decor & floral design",
+        "Photography & videography",
+        "Entertainment coordination",
+        "Guest hospitality"
+      ],
+      "title": "Reception Celebration"
+    },
+    "sangeet": {
+      "description": "A high-energy sangeet night with professional stage, sound, and dance floor setup.",
+      "duration": "6-8 hours",
+      "highlights": [
+        "Professional stage",
+        "LED backdrop",
+        "Choreography support"
+      ],
+      "includedServices": [
+        "Event planning & coordination",
+        "Venue liaison",
+        "Decor & floral design",
+        "Photography & videography",
+        "Entertainment coordination",
+        "Guest hospitality"
+      ],
+      "title": "Sangeet Night"
     }
   },
-  "venues": {
-    "royal-palace-wedding-hall-ahmedabad": {
-      "description": "A grand wedding hall featuring crystal chandeliers, marble flooring, and a spacious mandap area. Perfect for traditional Gujarati weddings with modern amenities and dedicated bridal suites.",
-      "parking": "200+ Vehicles",
-      "rooms": "12 Bridal & Guest Rooms",
-      "location": "SG Highway, Ahmedabad",
-      "amenities": [
-        "AC Banquet Hall",
-        "In-house Catering",
-        "Bridal Suite",
-        "Valet Parking",
-        "Stage & Mandap",
-        "Green Room"
-      ],
-      "name": "Royal Palace Wedding Hall"
+  "packagesPage": {
+    "aiPlanner": "Talk to AI Planner",
+    "builder": {
+      "budgetRange": "Budget Range",
+      "button": "Generate Recommendation",
+      "counts": {
+        "100 - 200": "100 - 200",
+        "1000+": "1,000+",
+        "200 - 500": "200 - 500",
+        "50 - 100": "50 - 100",
+        "500 - 1000": "500 - 1,000",
+        "Less than 50": "Less than 50"
+      },
+      "description": "Tell us about your celebration and we'll craft a bespoke package perfectly suited to your needs and budget.",
+      "eventType": "Event Type",
+      "eyebrow": "Custom",
+      "guestCount": "Guest Count",
+      "location": "Location",
+      "ranges": {
+        "Under ₹1,00,000": "Under ₹1,00,000",
+        "₹1,00,000 - ₹3,00,000": "₹1,00,000 - ₹3,00,000",
+        "₹10,00,000+": "₹10,00,000+",
+        "₹3,00,000 - ₹5,00,000": "₹3,00,000 - ₹5,00,000",
+        "₹5,00,000 - ₹10,00,000": "₹5,00,000 - ₹10,00,000"
+      },
+      "selectBudget": "Select budget range",
+      "selectEventType": "Select event type",
+      "selectGuestCount": "Select guest count",
+      "selectLocation": "Select location",
+      "titlePart1": "Build Your Own",
+      "titlePart2": "Package",
+      "types": {
+        "Birthday Celebration": "Birthday Celebration",
+        "Corporate Event": "Corporate Event",
+        "Engagement": "Engagement",
+        "Festival Event": "Festival Event",
+        "Other": "Other",
+        "Wedding": "Wedding"
+      }
     },
-    "grand-banquet-surat": {
-      "description": "An elegant banquet hall in the heart of Surat, ideal for weddings, receptions, and corporate dinners. Features state-of-the-art lighting and a professional kitchen team.",
-      "parking": "150 Vehicles",
-      "rooms": "8 Guest Rooms",
-      "location": "Athwa Lines, Surat",
-      "amenities": [
-        "Multi-cuisine Catering",
-        "LED Stage",
-        "Sound System",
-        "Decor Support",
-        "Parking",
-        "AC Halls"
-      ],
-      "name": "Grand Imperial Banquet"
+    "categories": {
+      "all": "All",
+      "corporate": "Corporate",
+      "socialEvents": "Social Events",
+      "weddings": "Weddings"
     },
-    "azure-luxury-resort-udaipur": {
-      "description": "A breathtaking lakeside luxury resort offering destination wedding experiences with royal Rajasthani architecture, infinity pools, and panoramic lake views.",
-      "parking": "100 Vehicles",
-      "rooms": "45 Luxury Suites",
-      "location": "Lake Pichola Road, Udaipur",
-      "amenities": [
-        "Lake View Venues",
-        "Spa & Wellness",
-        "Poolside Events",
-        "Royal Decor",
-        "Helipad Access",
-        "Butler Service"
-      ],
-      "name": "Azure Luxury Resort"
+    "guests": "guests",
+    "hero": {
+      "description": "Explore thoughtfully crafted event packages designed around your style, vision, and requirements.",
+      "eyebrow": "Curated Event Experiences",
+      "titlePart1": "Packages Designed",
+      "titlePart2": "For Every Celebration"
     },
-    "heritage-palace-jaipur": {
-      "description": "A magnificent heritage palace for royal destination weddings. Features courtyards, gardens, and opulent halls with authentic Rajasthani hospitality.",
-      "parking": "250 Vehicles",
-      "rooms": "60 Heritage Rooms",
-      "location": "Amer Road, Jaipur",
-      "amenities": [
-        "Palace Courtyard",
-        "Elephant Procession",
-        "Royal Dining",
-        "Heritage Decor",
-        "Cultural Performances",
-        "Fireworks"
-      ],
-      "name": "Heritage Palace Jaipur"
+    "includedServices": "Included Services",
+    "keyHighlights": "Key Highlights",
+    "noPackages": "No packages found in this category."
+  },
+  "packagesPreview": {
+    "custom": {
+      "button": "Build Custom Package",
+      "desc": "Build your own bespoke package from our full catalog of premium services, tailored exactly to your requirements.",
+      "title": "Custom Package"
     },
-    "green-meadows-farmhouse-vadodara": {
-      "description": "A serene farmhouse venue surrounded by lush greenery, perfect for intimate weddings, mehendi functions, and outdoor celebrations under the stars.",
-      "parking": "80 Vehicles",
-      "rooms": "6 Cottage Rooms",
-      "location": "Halol Road, Vadodara",
-      "amenities": [
-        "Open Lawn",
-        "Swimming Pool",
-        "Bonfire Area",
-        "Outdoor Kitchen",
-        "Tent Setup",
-        "Garden Decor"
-      ],
-      "name": "Green Meadows Farmhouse"
+    "description": "Choose from our curated packages or build a custom package tailored to your exact event requirements.",
+    "eyebrow": "Packages",
+    "featuresTitle": "Includes:",
+    "headingPart1": "Our Event",
+    "headingPart2": "Packages",
+    "popular": "Most Popular",
+    "select": "Select Package",
+    "viewAll": "View All Packages"
+  },
+  "pdf": {
+    "clientDetails": "Client Details",
+    "downloadProposal": "Download Proposal PDF",
+    "estimatedCostBreakdown": "Estimated Cost Breakdown",
+    "eventSummary": "Event Summary",
+    "eventTimeline": "Event Timeline",
+    "failed": "Failed to generate PDF. Please try again.",
+    "generated": "Generated",
+    "generating": "Generating PDF...",
+    "labels": {
+      "budget": "Budget",
+      "catering": "Catering",
+      "city": "City",
+      "contingency": "Contingency",
+      "decor": "Decor",
+      "email": "Email",
+      "entertainment": "Entertainment",
+      "eventDate": "Event Date",
+      "eventType": "Event Type",
+      "guestCount": "Guest Count",
+      "location": "Location",
+      "name": "Name",
+      "phone": "Phone",
+      "specialRequirements": "Special Requirements",
+      "startingCost": "Starting Cost",
+      "venue": "Venue",
+      "venueName": "Venue Name",
+      "venuePreference": "Venue Preference"
     },
-    "sunset-beach-resort-goa": {
-      "description": "A stunning beachfront resort for destination weddings with sunset ceremonies, beachside dining, and tropical decor amidst golden sands.",
-      "parking": "60 Vehicles",
-      "rooms": "30 Beach Villas",
-      "location": "Candolim Beach, Goa",
-      "amenities": [
-        "Beach Ceremony Setup",
-        "Water Sports",
-        "Beachside Dining",
-        "Sunset Deck",
-        "Spa",
-        "Live Music Area"
-      ],
-      "name": "Sunset Beach Resort"
-    },
-    "metro-convention-centre-mumbai": {
-      "description": "A premium corporate venue in Mumbai's business district. Ideal for conferences, product launches, and award ceremonies with world-class AV and breakout rooms.",
-      "parking": "500 Vehicles",
-      "rooms": "10 Meeting Rooms",
-      "location": "Bandra Kurla Complex, Mumbai",
-      "amenities": [
-        "AV & Projection",
-        "Breakout Rooms",
-        "High-speed WiFi",
-        "Business Lounge",
-        "Catering",
-        "Registration Desk"
-      ],
-      "name": "Metro Convention Centre"
-    },
-    "expo-grand-hall-delhi": {
-      "description": "A sprawling exhibition hall designed for trade shows, expos, and large-scale corporate events with modular booth layouts and loading docks.",
-      "parking": "1,000 Vehicles",
-      "rooms": "5 Conference Rooms",
-      "location": "Pragati Maidan, Delhi",
-      "amenities": [
-        "Exhibition Booths",
-        "Loading Docks",
-        "High Ceilings",
-        "Power Supply",
-        "Security",
-        "Food Courts"
-      ],
-      "name": "Expo Grand Hall"
-    },
-    "emerald-open-lawn-pune": {
-      "description": "A beautifully landscaped open lawn venue perfect for sangeet nights, receptions, and garden weddings with flexible tent and stage options.",
-      "parking": "120 Vehicles",
-      "rooms": "4 Changing Rooms",
-      "location": "Koregaon Park, Pune",
-      "amenities": [
-        "Open Lawn",
-        "Tent Setup",
-        "Stage Platform",
-        "Garden Lighting",
-        "Catering Area",
-        "Generator Backup"
-      ],
-      "name": "Emerald Open Lawn"
-    },
-    "crystal-banquet-rajkot": {
-      "description": "A modern banquet hall in Rajkot with crystal-themed interiors, perfect for weddings, engagements, and corporate gatherings.",
-      "parking": "100 Vehicles",
-      "rooms": "6 Guest Rooms",
-      "location": "Kalawad Road, Rajkot",
-      "amenities": [
-        "AC Hall",
-        "Crystal Lighting",
-        "In-house Decor",
-        "Catering",
-        "DJ Setup",
-        "Parking"
-      ],
-      "name": "Crystal Banquet Hall"
-    },
-    "riverside-wedding-pavilion-ahmedabad": {
-      "description": "A scenic riverside wedding pavilion offering both indoor banquet and outdoor lawn spaces with stunning Sabarmati riverfront views.",
-      "parking": "150 Vehicles",
-      "rooms": "10 Guest Rooms",
-      "location": "Sabarmati Riverfront, Ahmedabad",
-      "amenities": [
-        "River View",
-        "Indoor & Outdoor Spaces",
-        "Mandap Area",
-        "Catering",
-        "Valet",
-        "Bridal Suite"
-      ],
-      "name": "Riverside Wedding Pavilion"
-    },
-    "tech-hub-conference-pune": {
-      "description": "A modern conference centre in Pune's IT hub, equipped for tech summits, hackathons, and corporate town halls with hybrid event capabilities.",
-      "parking": "300 Vehicles",
-      "rooms": "8 Meeting Rooms",
-      "location": "Hinjewadi, Pune",
-      "amenities": [
-        "Hybrid Streaming",
-        "AV Equipment",
-        "Breakout Spaces",
-        "Cafeteria",
-        "WiFi",
-        "Registration Area"
-      ],
-      "name": "Tech Hub Conference Centre"
-    }
+    "nextSteps": "Next Steps",
+    "packageInclusions": "Package Inclusions",
+    "pageOf": "Page {page} of {total}",
+    "planningTips": "Planning Tips",
+    "preparedBy": "Prepared by AS Events AI Consultant",
+    "proposalTitle": "Personalized Event Proposal",
+    "quoteNumber": "Quote Number",
+    "recommendedBudgetRange": "Recommended Budget Range",
+    "recommendedPackage": "Recommended Package",
+    "totalEventCost": "Total Event Cost",
+    "venueSuggestions": "Venue Suggestions"
   },
   "portfolio": {
     "1": {
-      "title": "The Royal Garden Wedding",
+      "date": "June 2024",
       "description": "A magnificent garden wedding featuring cascading florals, crystal chandeliers under the stars, and a five-course gourmet dining experience.",
       "location": "Ahmedabad",
-      "date": "June 2024"
+      "title": "The Royal Garden Wedding"
     },
     "2": {
-      "title": "Tech Summit 2024",
+      "date": "March 2024",
       "description": "A three-day technology summit featuring keynote speakers, interactive workshops, and networking events for industry leaders.",
       "location": "Pune",
-      "date": "March 2024"
+      "title": "Tech Summit 2024"
     },
     "3": {
-      "title": "Maldives Destination Wedding",
+      "date": "February 2024",
       "description": "An intimate overwater ceremony in the Maldives with bespoke decor, traditional performances, and sunset cocktails.",
       "location": "Maldives",
-      "date": "February 2024"
+      "title": "Maldives Destination Wedding"
     },
     "4": {
-      "title": "Golden Anniversary Gala",
+      "date": "January 2024",
       "description": "A glamorous 50th anniversary celebration with live orchestra, memory displays, and an elegant formal dinner.",
       "location": "Mumbai",
-      "date": "January 2024"
+      "title": "Golden Anniversary Gala"
     },
     "5": {
-      "title": "Luxury Brand Launch",
+      "date": "December 2023",
       "description": "An exclusive product launch event featuring celebrity appearances, immersive brand experiences, and VIP reception.",
       "location": "New Delhi",
-      "date": "December 2023"
+      "title": "Luxury Brand Launch"
     },
     "6": {
-      "title": "Enchanted Forest Reception",
+      "date": "October 2023",
       "description": "A whimsical forest-themed reception with fairy lights, moss installations, and farm-to-table cuisine.",
       "location": "Ahmedabad",
-      "date": "October 2023"
+      "title": "Enchanted Forest Reception"
     },
     "7": {
-      "title": "Tuscan Villa Wedding",
+      "date": "September 2023",
       "description": "A romantic Italian countryside wedding with vineyard ceremonies, traditional cuisine, and opera performances.",
       "location": "Bangalore",
-      "date": "September 2023"
+      "title": "Tuscan Villa Wedding"
     },
     "8": {
-      "title": "Sweet 16 Extravaganza",
+      "date": "August 2023",
       "description": "A spectacular sweet sixteen party with custom LED installations, live DJ, and themed photo experiences.",
       "location": "Pune",
-      "date": "August 2023"
+      "title": "Sweet 16 Extravaganza"
     },
     "9": {
-      "title": "International Trade Expo",
+      "date": "July 2025",
       "description": "Large-scale exhibition event with international exhibitors and immersive brand experiences.",
       "location": "Mumbai",
-      "date": "July 2025"
+      "title": "International Trade Expo"
     },
     "10": {
-      "title": "Luxury Car Launch",
+      "date": "June 2025",
       "description": "Premium automobile launch event with celebrity guests and immersive brand storytelling.",
       "location": "Ahmedabad",
-      "date": "June 2025"
+      "title": "Luxury Car Launch"
     },
     "11": {
-      "title": "Royal Birthday Celebration",
+      "date": "May 2025",
       "description": "Luxury birthday celebration with themed decor, live entertainment, and gourmet dining.",
       "location": "Surat",
-      "date": "May 2025"
+      "title": "Royal Birthday Celebration"
     },
     "12": {
-      "title": "Silver Jubilee Anniversary",
+      "date": "April 2025",
       "description": "25th wedding anniversary event with elegant decor and live orchestra.",
       "location": "Ahmedabad",
-      "date": "April 2025"
+      "title": "Silver Jubilee Anniversary"
     },
     "13": {
-      "title": "Celebrity Music Night",
+      "date": "March 2025",
       "description": "Live entertainment event featuring celebrity performers and spectacular stage production.",
       "location": "Vadodara",
-      "date": "March 2025"
+      "title": "Celebrity Music Night"
     },
     "gallery": {
       "1": {
@@ -1056,203 +704,293 @@
       }
     }
   },
-  "aiPlanner": {
-    "prompts": {
-      "eventType": "Let's begin — what type of event are you planning?",
-      "eventDate": "Wonderful choice! When is your event planned? (e.g. December 2025, or type a specific date)",
-      "city": "Which city would you like to host the event in?",
-      "guestCount": "How many guests are you expecting?",
-      "budget": "What is your approximate budget range?",
-      "venuePreference": "Do you have a venue preference? (e.g. Banquet Hall, Resort, Palace, Farmhouse)",
-      "specialRequirements": "Any special requirements or vision for your event? (Type your ideas or \"None\")"
+  "portfolioPage": {
+    "categories": {
+      "All": "All",
+      "Anniversaries": "Anniversaries",
+      "Birthdays": "Birthdays",
+      "Corporate": "Corporate",
+      "Others": "Others",
+      "Wedding": "Wedding"
     },
-    "reason": {
-      "suitableGuests": "Suitable for {guests} guests",
-      "withinBudget": "within your budget range",
-      "weddingCoordination": "covers full wedding coordination needs",
-      "and": " and "
+    "grid": {
+      "closeLightbox": "Close lightbox",
+      "eventGallery": "Event Gallery",
+      "events": "Events",
+      "gallery": "Gallery",
+      "guestsLabel": "Guests",
+      "noEvents": "No events found matching your criteria.",
+      "noImages": "No gallery images found in this category.",
+      "searchPlaceholder": "Search events..."
     },
-    "guests": {
-      "manageable": "{guests} guests is manageable for {eventType}",
-      "requiresLarge": "{guests} guests requires a large banquet hall, resort, or convention venue",
-      "suitsPremium": "{guests} guests suits premium banquet halls and luxury resorts",
-      "considerIncreasing": ". Consider increasing budget or reducing guest count for optimal experience"
-    },
-    "availability": {
-      "recommendEarly": "We recommend checking venue availability in {city} early",
-      "peakSeason": "{month} is peak wedding season in {city} — book 6-9 months in advance",
-      "weddingAdvance": "For weddings in {city}, popular venues fill 4-6 months ahead",
-      "peakSeasonNote": "Peak season — limited dates available",
-      "weekdaySuggestion": "Consider weekday dates for better availability",
-      "earlyDecember": "Early December slots may still be open"
-    },
-    "tips": {
-      "bookEarly": "Book your venue 4-6 months in advance for peak wedding season.",
-      "allocateBudget": "Allocate 40-50% of budget to venue and catering combined.",
-      "confirmVendor": "Confirm vendor availability before finalizing your event date.",
-      "coordinateWeddingEvents": "Plan haldi, mehendi, and sangeet as separate coordinated events.",
-      "backupIndoor": "Consider a backup indoor space for outdoor ceremonies.",
-      "finalizeAV": "Finalize AV and branding requirements early with your team.",
-      "scheduleWalkthrough": "Schedule a venue walkthrough before signing contracts.",
-      "specialRequirements": "We'll accommodate: \"{req}...\""
-    },
-    "nextSteps": {
-      "submitDetails": "Submit your details to receive a personalized proposal",
-      "scheduleConsultation": "Schedule a free consultation with our event planner",
-      "visitVenues": "Visit shortlisted venues with our team",
-      "reviewPackage": "Review package inclusions and customize as needed"
-    },
-    "welcome": "Namaste! I'm your AS Events AI Consultant — a senior event planner here to help you design the perfect celebration.\n\nI'll ask a few quick questions to understand your vision, then recommend packages, venues, and a budget estimate tailored to your needs.\n\nLet's begin — what type of event are you planning?",
-    "prefillWelcome": "Great choice — the **{eventType}** package! Let me tailor a recommendation. How many guests are you expecting?",
-    "chatOnWhatsApp": "Chat on WhatsApp",
-    "askAI": "Ask Event Planner AI",
-    "aiConsultant": "AS Events Consultant",
-    "closeChat": "Close chat",
-    "inputPlaceholder": "Type your answer...",
-    "datePlaceholder": "e.g. March 2026...",
-    "specialPlaceholder": "Your vision or type None...",
-    "whatsappMessage": "Here's your personalized event consultation:",
-    "recommendedPackage": "Recommended Package",
-    "reasonLabel": "Reason:",
-    "recommendedVenueTypes": "Recommended Venue Types",
-    "venueLabel": "Venue",
-    "decorLabel": "Decor",
-    "cateringLabel": "Catering",
-    "entertainmentLabel": "Entertainment",
-    "contingencyLabel": "Contingency",
-    "venueSuggestions": "Venue Suggestions",
-    "planningTips": "Planning Tips",
-    "venuePreferences": {
-      "Banquet Hall": "Banquet Hall",
-      "Resort": "Resort",
-      "Palace": "Palace",
-      "Farmhouse": "Farmhouse",
-      "Convention Center": "Convention Center",
-      "Hotel Ballroom": "Hotel Ballroom",
-      "Exhibition Hall": "Exhibition Hall",
-      "Open Lawn": "Open Lawn"
+    "hero": {
+      "description": "Browse our portfolio of extraordinary events and stunning gallery photography. Each project represents our commitment to excellence and attention to detail.",
+      "eyebrow": "Portfolio",
+      "titlePart1": "Our",
+      "titlePart2": "Work"
     }
   },
-  "pdf": {
-    "proposalTitle": "Personalized Event Proposal",
-    "quoteNumber": "Quote Number",
-    "generated": "Generated",
-    "clientDetails": "Client Details",
-    "eventSummary": "Event Summary",
-    "recommendedPackage": "Recommended Package",
-    "packageInclusions": "Package Inclusions",
-    
-    "recommendedBudgetRange": "Recommended Budget Range",
-    "estimatedCostBreakdown": "Estimated Cost Breakdown",
-    "totalEventCost": "Total Event Cost",
-    "eventTimeline": "Event Timeline",
-    "venueSuggestions": "Venue Suggestions",
-    "planningTips": "Planning Tips",
-    "nextSteps": "Next Steps",
-    "preparedBy": "Prepared by AS Events AI Consultant",
-    "pageOf": "Page {page} of {total}",
-    "downloadProposal": "Download Proposal PDF",
-    "generating": "Generating PDF...",
-    "failed": "Failed to generate PDF. Please try again.",
-    "labels": {
-      "name": "Name",
-      "email": "Email",
-      "phone": "Phone",
-      "city": "City",
-      "eventType": "Event Type",
-      "eventDate": "Event Date",
-      "guestCount": "Guest Count",
-      "budget": "Budget",
-      "venuePreference": "Venue Preference",
-      "specialRequirements": "Special Requirements",
-      "venueName": "Venue Name",
-      "location": "Location",
-      "startingCost": "Starting Cost",
-      "venue": "Venue",
-      "decor": "Decor",
-      "catering": "Catering",
-      "entertainment": "Entertainment",
-      "contingency": "Contingency"
-    }
-  },
-  "leadForm": {
-    "title": "Receive Your Personalized Proposal",
-    "desc": "Get a detailed plan sent to your inbox.",
-    "successTitle": "Thank you! Your proposal request has been received.",
-    "successDesc": "Our team will contact you within 24 hours.",
-    "getProposal": "Get My Proposal",
+  "quoteModal": {
+    "back": "Back",
+    "close": "Close modal",
+    "errors": {
+      "capacity": "Guest count exceeds venue capacity. Please adjust before submitting.",
+      "date": "Selected date is unavailable. Please choose another date."
+    },
+    "next": "Next",
+    "of": "of",
+    "step": "Step",
+    "step1": {
+      "heading": "What type of event are you planning?",
+      "sub": "Select the event type that best describes your celebration",
+      "types": {
+        "Anniversary": "Anniversary",
+        "Birthday": "Birthday",
+        "Birthday Celebration": "Birthday Celebration",
+        "Corporate Event": "Corporate Event",
+        "Destination Event": "Destination Event",
+        "Destination Wedding": "Destination Wedding",
+        "Engagement": "Engagement",
+        "Haldi": "Haldi",
+        "Mehendi": "Mehendi",
+        "Other": "Other",
+        "Reception": "Reception",
+        "Sangeet": "Sangeet",
+        "Wedding": "Wedding"
+      }
+    },
+    "step2": {
+      "counts": {
+        "100 - 200": "100 - 200",
+        "200 - 500": "200 - 500",
+        "50 - 100": "50 - 100",
+        "500+": "500+",
+        "Less than 50": "Less than 50"
+      },
+      "heading": "How many guests are you expecting?",
+      "sub": "This helps us recommend the right venues and packages"
+    },
+    "step3": {
+      "heading": "What is your venue preference?",
+      "sub": "Choose your ideal event setting",
+      "venues": {
+        "Beach/Destination": "Beach/Destination",
+        "Hotel/Resort": "Hotel/Resort",
+        "Indoor Venue": "Indoor Venue",
+        "No Preference": "No Preference",
+        "Outdoor Venue": "Outdoor Venue",
+        "Private Estate": "Private Estate"
+      }
+    },
+    "step4": {
+      "heading": "What is your budget range?",
+      "ranges": {
+        "Under ₹3,00,000": "Under ₹3,00,000",
+        "₹15,00,000 - ₹30,00,000": "₹15,00,000 - ₹30,00,000",
+        "₹3,00,000 - ₹8,00,000": "₹3,00,000 - ₹8,00,000",
+        "₹30,00,000+": "₹30,00,000+",
+        "₹8,00,000 - ₹15,00,000": "₹8,00,000 - ₹15,00,000"
+      },
+      "sub": "This helps us tailor our recommendations"
+    },
+    "step5": {
+      "heading": "Any specific requirements?",
+      "placeholder": "Share your ideas, themes, special requests...",
+      "sub": "Tell us about your vision (optional)"
+    },
+    "step6": {
+      "budget": "Budget:",
+      "email": "Your Email *",
+      "eventType": "Event Type:",
+      "guestCount": "Guest Count:",
+      "heading": "Almost there! Your contact details",
+      "name": "Your Name *",
+      "phone": "Your Phone",
+      "sub": "We'll get back to you within 24 hours",
+      "summaryTitle": "Your Selection Summary",
+      "venue": "Venue:"
+    },
+    "submit": "Submit Request",
     "submitting": "Submitting...",
-    "placeholders": {
-      "name": "Full Name",
-      "phone": "Phone Number",
-      "email": "Email Address",
-      "city": "City"
-    }
-  },
-  "contactExtra": {
-    "selectType": "Select event type",
-    "selectBudget": "Select budget range",
-    "submissionFailed": "Failed to submit form. Please try again.",
-    "monFri": "Mon - Fri: 9:00 AM - 6:00 PM",
-    "sat": "Sat: 10:00 AM - 4:00 PM",
-    "placeholders": {
-      "name": "Apurv Shah",
-      "email": "apurv@example.com",
-      "phone": "+91 95103 24143"
-    }
+    "success": "✓ Quote request submitted successfully! We will contact you within 24 hours."
   },
   "quoteModalExtra": {
-    "prefillVenue": "Venue:",
-    "prefillCapacity": "Capacity:",
-    "submissionFailed": "Failed to submit quote request:",
-    "connectionError": "Error submitting quote request. Please check your connection and try again."
+    "connectionError": "Error submitting quote request. Please check your connection and try again.",
+    "submissionFailed": "Failed to submit quote request:"
   },
   "seo": {
-    "default": {
-      "title": "AS Events | Luxury Event Management & Wedding Planner",
-      "description": "AS Events is a luxury event management company specializing in Indian weddings, corporate events, destination celebrations, and theme decor in Vadodara, Gujarat."
-    },
     "about": {
-      "title": "About Us | AS Events",
-      "description": "Learn about AS Events, a leading event management company in Gujarat. Meet our team and discover our journey of creating extraordinary celebrations."
-    },
-    "packages": {
-      "title": "Event Packages | AS Events",
-      "description": "Explore premium event packages for Indian Weddings, Corporate events, Social celebrations, and Festivals. Tailored to your requirements and budget."
-    },
-    "venues": {
-      "title": "Discover Premium Event Venues | AS Events",
-      "description": "Explore and book premium wedding halls, luxury resorts, banquet halls, and lawns across India. Find the perfect venue for your next big celebration."
-    },
-    "portfolio": {
-      "title": "Our Portfolio & Event Gallery | AS Events",
-      "description": "Browse our portfolio of luxury weddings, corporate launches, theme decors, and cultural events executed with elegance and precision."
+      "description": "Learn about AS Events, a leading event management company in Gujarat. Meet our team and discover our journey of creating extraordinary celebrations.",
+      "title": "About Us | AS Events"
     },
     "contact": {
-      "title": "Contact Us | AS Events",
-      "description": "Get in touch with AS Events for free consultation and quotes. Let us help you plan your next celebration in Vadodara, Ahmedabad, Surat, and across India."
+      "description": "Get in touch with AS Events for free consultation and quotes. Let us help you plan your next celebration in Vadodara, Ahmedabad, Surat, and across India.",
+      "title": "Contact Us | AS Events"
+    },
+    "default": {
+      "description": "AS Events is a luxury event management company specializing in Indian weddings, corporate events, destination celebrations, and theme decor in Vadodara, Gujarat.",
+      "title": "AS Events | Luxury Event Management & Wedding Planner"
+    },
+    "packages": {
+      "description": "Explore premium event packages for Indian Weddings, Corporate events, Social celebrations, and Festivals. Tailored to your requirements and budget.",
+      "title": "Event Packages | AS Events"
+    },
+    "portfolio": {
+      "description": "Browse our portfolio of luxury weddings, corporate launches, theme decors, and cultural events executed with elegance and precision.",
+      "title": "Our Portfolio & Event Gallery | AS Events"
+    },
+    "venues": {
+      "description": "Explore and book premium wedding halls, luxury resorts, banquet halls, and lawns across India. Find the perfect venue for your next big celebration.",
+      "title": "Discover Premium Event Venues | AS Events"
     }
   },
-  "loading": {
-    "packages": "Loading packages...",
-    "portfolio": "Loading portfolio..."
+  "services": {
+    "anniversaries": {
+      "desc": "Celebrate love milestones with elegant anniversary events that honor your journey.",
+      "features": [
+        "Renewal of vows ceremonies",
+        "Memory lane installations",
+        "Custom video tributes",
+        "Elegant dining experiences",
+        "Live entertainment",
+        "Guest coordination"
+      ],
+      "title": "Anniversary Events"
+    },
+    "birthdays": {
+      "desc": "Unforgettable birthday parties from intimate gatherings to grand milestone celebrations.",
+      "features": [
+        "Custom theme design",
+        "Entertainment booking",
+        "Catering coordination",
+        "Photography and videography",
+        "Invitations and RSVP management",
+        "Party favors and gifts"
+      ],
+      "title": "Birthday Celebrations"
+    },
+    "corporate": {
+      "desc": "Professional corporate gatherings that reflect your brand excellence and leave lasting impressions.",
+      "features": [
+        "Conference and summit planning",
+        "Team building events",
+        "Award ceremonies",
+        "Networking events",
+        "Brand activation",
+        "Audio-visual production"
+      ],
+      "title": "Corporate Events"
+    },
+    "description": "From intimate gatherings to grand celebrations, we bring your vision to life with creativity, precision, and an unwavering commitment to excellence.",
+    "destination": {
+      "desc": "Transform your dream location into the perfect wedding venue with our global expertise.",
+      "features": [
+        "Global destination expertise",
+        "Travel and accommodation coordination",
+        "Local vendor partnerships",
+        "Legal documentation assistance",
+        "Multi-day event planning",
+        "Guest concierge services"
+      ],
+      "title": "Destination Weddings"
+    },
+    "entertainment": {
+      "desc": "World-class entertainment coordination featuring top performers and spectacular productions.",
+      "features": [
+        "Artist booking and management",
+        "Sound and lighting production",
+        "Stage design and setup",
+        "Technical direction",
+        "Hospitality riders",
+        "Performance coordination"
+      ],
+      "title": "Entertainment Management"
+    },
+    "eyebrow": "What We Offer",
+    "headingPart1": "Our Premium",
+    "headingPart2": "Services",
+    "wedding": {
+      "desc": "Exquisite wedding experiences tailored to your unique love story with meticulous attention to detail.",
+      "features": [
+        "Venue scouting and selection",
+        "Theme development and design",
+        "Vendor coordination and management",
+        "Budget planning and tracking",
+        "Day-of coordination",
+        "Guest management"
+      ],
+      "title": "Wedding Planning"
+    }
   },
-  "auth": {
-    "titleSignIn": "Welcome back",
-    "titleSignUp": "Create an account",
-    "descSignIn": "Sign in to your account to continue",
-    "descSignUp": "Sign up to get started",
-    "name": "Name",
-    "email": "Email",
-    "password": "Password",
-    "submitting": "Please wait...",
-    "createAccount": "Create account",
-    "signIn": "Sign in",
-    "alreadyHaveAccount": "Already have an account? ",
-    "dontHaveAccount": "Don't have an account? ",
-    "signUpLink": "Sign up",
-    "signInLink": "Sign in",
-    "errorFallback": "Something went wrong"
+  "servicesPage": {
+    "getQuoteFor": "Get Quote for",
+    "hero": {
+      "description": "From intimate gatherings to grand celebrations, we offer comprehensive event management services tailored to your unique vision.",
+      "eyebrow": "Our Services",
+      "titlePart1": "Premium Event",
+      "titlePart2": "Services"
+    }
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "goTo": "Go to testimonial {num}",
+    "headingPart1": "What Our",
+    "headingPart2": "Clients Say",
+    "items": {
+      "birthday": "Birthday Celebration",
+      "corporate": "CEO, TechCorp",
+      "destination": "Destination Wedding",
+      "review1": "AS Events transformed our wedding into a fairy tale. Every detail was perfect, from the stunning floral arrangements to the seamless coordination. They truly exceeded our expectations.",
+      "review2": "Our company summit was a huge success thanks to AS Events. Their professionalism and attention to detail made our corporate event truly memorable for all attendees.",
+      "review3": "They planned my 50th birthday celebration and it was absolutely magical. The team went above and beyond to make sure everything was perfect. Highly recommended!",
+      "review4": "Planning a destination wedding seemed daunting, but AS Events made it effortless. They handled everything from vendor coordination to travel logistics flawlessly.",
+      "wedding": "Wedding Clients"
+    },
+    "next": "Next testimonial",
+    "prev": "Previous testimonial"
+  },
+  "valueProps": {
+    "execution": {
+      "desc": "Orchestrating every vendor, cue, and logistical detail with calm, professional precision so you can fully live your moment.",
+      "title": "Flawless Execution"
+    },
+    "planning": {
+      "desc": "Tailoring every detail to your story, crafting unique designs and seamless schedules that reflect your personal vision.",
+      "title": "Bespoke Planning"
+    },
+    "venues": {
+      "desc": "Unlocking access to the finest luxury destinations, boutique heritage properties, and stunning beachfront spots across India.",
+      "title": "Elite Venue Curation"
+    }
+  },
+  "whyChooseUs": {
+    "description": "We don't just plan events, we create experiences that leave lasting impressions and become cherished memories.",
+    "eyebrow": "Why AS Events",
+    "features": {
+      "concepts": {
+        "desc": "We transform your vision into reality with innovative designs and unique themes that set your event apart.",
+        "title": "Creative Concepts"
+      },
+      "management": {
+        "desc": "From initial concept to final execution, we handle every detail so you can enjoy your special moments stress-free.",
+        "title": "End-to-End Management"
+      },
+      "team": {
+        "desc": "Our dedicated team brings decades of combined experience in crafting memorable events across all scales and styles.",
+        "title": "Experienced Team"
+      },
+      "vendors": {
+        "desc": "Our network of premium vendors ensures the highest quality services for catering, decor, entertainment, and more.",
+        "title": "Trusted Vendors"
+      }
+    },
+    "headingPart1": "Why Choose",
+    "headingPart2": "Us",
+    "stats": {
+      "events": "Events Delivered",
+      "experience": "Years Experience",
+      "partners": "Vendor Partners",
+      "satisfaction": "Client Satisfaction"
+    }
   }
-}
 }

@@ -42,7 +42,12 @@ export function scrollToHash(
       isScrolling = true
 
       const top = el.getBoundingClientRect().top + window.scrollY - offset
-      window.scrollTo({ top: Math.max(0, top), behavior })
+      const lenisInstance = (window as any).lenis
+      if (lenisInstance) {
+        lenisInstance.scrollTo(Math.max(0, top))
+      } else {
+        window.scrollTo({ top: Math.max(0, top), behavior })
+      }
 
       window.setTimeout(() => {
         isScrolling = false

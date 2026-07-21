@@ -90,7 +90,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto !important;
     scroll-padding-top: 6rem;
     overflow-x: hidden;
   }
@@ -145,6 +145,70 @@
   .filter-scroll::-webkit-scrollbar {
     display: none;
   }
+
+  /* Clamped responsive typography scale */
+  .text-clamp-display {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    font-family: var(--font-serif), serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .text-clamp-heading {
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
+    line-height: 1.2;
+    font-family: var(--font-serif), serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .text-clamp-body {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.6;
+    font-family: var(--font-sans), sans-serif;
+    font-weight: 300;
+  }
+
+  /* Dispersed premium shadows */
+  .shadow-luxury-sm {
+    box-shadow: 0 4px 30px rgba(11, 19, 37, 0.02);
+  }
+
+  .shadow-luxury-md {
+    box-shadow: 0 10px 45px rgba(11, 19, 37, 0.04);
+  }
+
+  .shadow-luxury-lg {
+    box-shadow: 0 20px 60px rgba(11, 19, 37, 0.07);
+  }
+
+  /* Thin luxury border */
+  .border-luxury {
+    border: 1px solid rgba(197, 168, 128, 0.22);
+  }
+
+  /* Glassmorphism templates */
+  .glass-luxury {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+
+  .glass-luxury-dark {
+    background: rgba(11, 19, 37, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* Apple-quality easing motion curve */
+  .transition-luxury {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    transition-duration: 500ms;
+  }
 }
 
 /* Custom scrollbar */
@@ -183,5 +247,5 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto !important;
 }

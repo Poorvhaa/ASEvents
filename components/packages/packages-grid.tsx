@@ -5,31 +5,37 @@ import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { PackageCard } from '@/components/cards/package-card'
 import { Loader2 } from 'lucide-react'
-import { packageCategories } from '@/lib/data/packages'
 import { usePackages } from '@/hooks/use-packages'
 import type { PackageCategoryFilter } from '@/lib/types/packages'
 import { Section, SectionContainer } from '@/components/layout/section-container'
 import { useTranslation } from '@/src/hooks/useTranslation'
 
+const categories: { id: PackageCategoryFilter; translationKey: string }[] = [
+  { id: 'all', translationKey: 'all' },
+  { id: 'weddings', translationKey: 'weddings' },
+  { id: 'corporate', translationKey: 'corporate' },
+  { id: 'social-events', translationKey: 'socialEvents' },
+]
+
 const categoryMap: Record<PackageCategoryFilter, string | null> = {
-  All: null,
-  Weddings: 'wedding',
-  Corporate: 'corporate',
-  'Social Events': 'social',
+  all: null,
+  weddings: 'wedding',
+  corporate: 'corporate',
+  'social-events': 'social',
 }
 
 export function PackagesGrid() {
   const { t } = useTranslation()
   const searchParams = useSearchParams()
-  const [activeCategory, setActiveCategory] = useState<PackageCategoryFilter>('All')
+  const [activeCategory, setActiveCategory] = useState<PackageCategoryFilter>('all')
 
   useEffect(() => {
     const categoryQuery = searchParams.get('category')
     if (categoryQuery) {
       const queryToCategoryMap: Record<string, PackageCategoryFilter> = {
-        weddings: 'Weddings',
-        corporate: 'Corporate',
-        birthday: 'Social Events',
+        weddings: 'weddings',
+        corporate: 'corporate',
+        birthday: 'social-events',
       }
       const matchedCategory = queryToCategoryMap[categoryQuery.toLowerCase()]
       if (matchedCategory) {
@@ -53,19 +59,18 @@ export function PackagesGrid() {
     <Section id="packages-grid-section" className="bg-background">
       <SectionContainer>
         <div className="filter-scroll justify-center sm:justify-start mb-8 sm:mb-12">
-          {packageCategories
-  .map((category) => (
+          {categories.map((category) => (
             <button
-              key={category}
+              key={category.id}
               type="button"
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveCategory(category.id)}
               className={`shrink-0 min-h-11 px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-all ${
-                activeCategory === category
+                activeCategory === category.id
                   ? 'bg-primary text-primary-foreground'
                   : 'bg-white border border-slate-200 text-foreground hover:border-primary/50'
               }`}
             >
-              {t(`packagesPage.categories.${category}`) || category}
+              {t(`packagesPage.categories.${category.translationKey}`)}
             </button>
           ))}
         </div>

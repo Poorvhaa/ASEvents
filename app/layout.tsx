@@ -61,10 +61,9 @@ export default async function RootLayout({
     <html
       lang={lang}
       className={`${inter.variable} ${playfair.variable} bg-background`}
-      data-scroll-behavior="smooth"
     >
       <body className="font-sans antialiased overflow-x-hidden min-w-0">
-        <LanguageProvider>
+        <LanguageProvider defaultLanguage={lang as any}>
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{

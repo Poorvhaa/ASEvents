@@ -3,7 +3,7 @@
 import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { portfolioItems } from '@/lib/db/schema'
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, and } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
@@ -23,9 +23,15 @@ export async function getPortfolioItems() {
 }
 
 export async function getPublicPortfolio(category?: string) {
-  let query = db.select().from(portfolioItems)
+  const conditions = []
   if (category) {
-    query = query.where(eq(portfolioItems.category, category))
+    conditions.push(eq(portfolioItems.category, category))
+  }
+  let query = db.select().from(portfolioItems)
+  if (conditions.length > 0) {
+    return query
+      .where(and(...conditions))
+      .orderBy(desc(portfolioItems.order), desc(portfolioItems.createdAt))
   }
   return query.orderBy(desc(portfolioItems.order), desc(portfolioItems.createdAt))
 }

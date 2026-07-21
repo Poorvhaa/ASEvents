@@ -37,5 +37,9 @@ export function getTranslationServer(lang: string, key: string): string {
     return fallbackVal
   }
 
+  if (process.env.NODE_ENV === 'development') {
+    console.warn(`[i18n] Missing translation: ${key}`)
+  }
+
   return key
 }

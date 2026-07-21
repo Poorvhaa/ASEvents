@@ -5,6 +5,7 @@ import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'luci
 import { SectionContainer } from '@/components/layout/section-container'
 import Image from 'next/image'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { BrandLogo } from '@/components/shared/brand-logo'
 
 const services = [
   { href: '/services', label: 'Wedding Planning', key: 'services.wedding.title' },
@@ -40,12 +41,9 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 sm:gap-12 text-center sm:text-left">
           <div className="flex flex-col items-center sm:items-start">
             <div className="mb-4">
-              <Image
-                src="/as.png"
-                alt="AS Events"
-                width={180}
-                height={60}
-                className="h-12 w-auto object-contain invert brightness-[2]"
+              <BrandLogo
+                variant="light"
+                className="h-12 w-auto"
               />
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-sm">

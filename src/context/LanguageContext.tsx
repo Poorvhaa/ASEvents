@@ -18,14 +18,20 @@ interface LanguageContextType {
   language: Language
   setLanguage: (lang: Language) => void
   t: (key: string) => string
+  translateWithFallback: (key: string, fallback: string) => string
 }
 
 export const LanguageContext = createContext<LanguageContextType | undefined>(undefined)
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  // We default to 'en' so that the server renders English.
-  // Once mounted, we check localStorage and update if needed.
-  const [language, setLanguageState] = useState<Language>('en')
+export function LanguageProvider({
+  children,
+  defaultLanguage = 'en',
+}: {
+  children: React.ReactNode
+  defaultLanguage?: Language
+}) {
+  // Initialize with server-provided defaultLanguage
+  const [language, setLanguageState] = useState<Language>(defaultLanguage)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -84,11 +90,20 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       return fallbackVal
     }
 
+    if (process.env.NODE_ENV === 'development') {
+      console.warn(`[i18n] Missing translation: ${key}`)
+    }
+
     return key
   }
 
+  const translateWithFallback = (key: string, fallback: string): string => {
+    const value = t(key)
+    return !value || value === key ? fallback : value
+  }
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, translateWithFallback }}>
       {children}
     </LanguageContext.Provider>
   )

@@ -1,8 +1,5 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 
-console.log("SUPABASE URL:", process.env.NEXT_PUBLIC_SUPABASE_URL)
-console.log("ANON KEY EXISTS:", !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY)
-console.log("SERVICE KEY EXISTS:", !!process.env.SUPABASE_SERVICE_ROLE_KEY)
 
 export function isSupabaseConfigured(): boolean {
   return Boolean(

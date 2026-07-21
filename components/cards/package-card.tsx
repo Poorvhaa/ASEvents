@@ -15,9 +15,9 @@ interface PackageCardProps {
 }
 
 const categoryNames: Record<string, string> = {
-  wedding: 'Weddings',
-  corporate: 'Corporate',
-  social: 'Social Events',
+  wedding: 'weddings',
+  corporate: 'corporate',
+  social: 'socialEvents',
 }
 
 function mapPackageToEventType(title: string, category: EventPackage['category']): EventType | '' {
@@ -105,16 +105,16 @@ const translateOrFallback = (key: string, fallback: string) => {
       </div>
 
       {translateOrFallback(
-  `packages.${pkg.id}.description`,
-  pkg.description
-) && (
-  <p className="text-muted-foreground text-small leading-relaxed mb-4">
-    {translateOrFallback(
-      `packages.${pkg.id}.description`,
-      pkg.description
-    )}
-  </p>
-)}
+        `packages.${pkg.id}.description`,
+        pkg.description ?? ''
+      ) && (
+        <p className="text-muted-foreground text-small leading-relaxed mb-4">
+          {translateOrFallback(
+            `packages.${pkg.id}.description`,
+            pkg.description ?? ''
+          )}
+        </p>
+      )}
 
       <div className="mb-4">
         <p className="text-xs font-semibold text-foreground uppercase tracking-wide mb-2">{t('packagesPage.keyHighlights')}</p>

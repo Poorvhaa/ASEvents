@@ -96,5 +96,5 @@ export function computeDisplayTotal(breakdown: {
   ]
 
   if (parts.every((p) => p === null)) return null
-  return parts.reduce((sum, p) => sum + (p ?? 0), 0)
+  return parts.reduce((sum: number, p) => sum + (p ?? 0), 0)
 }

@@ -41,7 +41,8 @@ function getNextSteps(): string[] {
 
 export function generateConsultation(answers: ConsultantAnswers): AIConsultationResult {
   const recommendedPackage = recommendPackage(answers)
-  //const budgetEstimate = estimateBudget(answers)
+  const budgetEstimate = estimateBudget(answers)
+  const budgetRangeLabel = formatBudgetRange(budgetEstimate)
   const venueSuggestions = recommendVenues(answers)
   const recommendedVenueTypes = getVenueTypeSuggestions(answers.eventType)
   const guestCapacityValidation = validateGuestCapacity(answers)
@@ -55,8 +56,8 @@ export function generateConsultation(answers: ConsultantAnswers): AIConsultation
 
   return {
     recommendedPackage,
-    //budgetEstimate,
-    //budgetRangeLabel,
+    budgetEstimate,
+    budgetRangeLabel,
     venueSuggestions,
     recommendedVenueTypes,
     guestCapacityValidation,

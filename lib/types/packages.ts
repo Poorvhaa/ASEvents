@@ -6,10 +6,10 @@ export type PackageCategory =
   | 'entertainment'
 
 export type PackageCategoryFilter =
-  | 'All'
-  | 'Weddings'
-  | 'Corporate'
-  | 'Social Events'
+  | 'all'
+  | 'weddings'
+  | 'corporate'
+  | 'social-events'
 
 export interface EventPackage {
   id: string

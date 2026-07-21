@@ -3,7 +3,7 @@
 import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { galleryItems } from '@/lib/db/schema'
-import { eq, desc } from 'drizzle-orm'
+import { eq, desc, and } from 'drizzle-orm'
 import { headers } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
@@ -23,9 +23,15 @@ export async function getGalleryItems() {
 }
 
 export async function getPublicGallery(category?: string) {
-  let query = db.select().from(galleryItems)
+  const conditions = []
   if (category) {
-    query = query.where(eq(galleryItems.category, category))
+    conditions.push(eq(galleryItems.category, category))
+  }
+  let query = db.select().from(galleryItems)
+  if (conditions.length > 0) {
+    return query
+      .where(and(...conditions))
+      .orderBy(desc(galleryItems.order), desc(galleryItems.createdAt))
   }
   return query.orderBy(desc(galleryItems.order), desc(galleryItems.createdAt))
 }
