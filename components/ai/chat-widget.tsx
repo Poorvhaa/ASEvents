@@ -21,7 +21,7 @@ export function AIChatWidget() {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={() => openChat(t('aiPlanner.welcome'))}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 min-h-11 px-4 sm:px-5 py-3 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl hover:bg-blue-700 transition-colors duration-300 max-w-[calc(100vw-2rem)]"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 min-h-11 px-4 sm:px-5 py-3 rounded-full border border-transparent transition-all duration-300 ease-out max-w-[calc(100vw-2rem)] bg-[#C9B9AA] text-[#0B1633] shadow-lg hover:bg-[#BFAE9E] hover:text-[#0B1633] hover:border-[#B89A63] hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 active:bg-[#B5A392] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B89A63] focus-visible:ring-offset-2 focus-visible:ring-offset-[#020817]"
             aria-label={t('aiPlanner.askAI')}
           >
             <MessageCircle size={20} className="shrink-0" />

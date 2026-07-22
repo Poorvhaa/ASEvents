@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { checkRateLimit, sanitizeString } from '@/lib/api-security'
+import { checkRateLimit } from '@/lib/api-security'
 import { chatSchema } from '@/lib/validations/schemas'
 import { generateEventConsultation } from '@/services/openai'
 import { saveConsultation } from '@/services/consultationService'
 import { generateConsultation } from '@/lib/ai/consultant-engine'
 import type { ConsultantAnswers } from '@/lib/ai/types'
+import { escapeHTML, sanitizeTextarea } from '@/lib/validations/sanitization'
 
 export async function POST(request: NextRequest) {
   const rateLimited = checkRateLimit(request, 'chat')
@@ -19,19 +20,15 @@ export async function POST(request: NextRequest) {
     }
 
     const input = {
-      eventType: sanitizeString(parsed.data.eventType, 100),
-      city: parsed.data.city ? sanitizeString(parsed.data.city, 100) : undefined,
-      guestCount: parsed.data.guestCount
-        ? sanitizeString(parsed.data.guestCount, 50)
-        : undefined,
-      budget: parsed.data.budget ? sanitizeString(parsed.data.budget, 100) : undefined,
-      venuePreference: parsed.data.venuePreference
-        ? sanitizeString(parsed.data.venuePreference, 200)
-        : undefined,
+      eventType: escapeHTML(parsed.data.eventType),
+      location: parsed.data.location ? escapeHTML(parsed.data.location) : undefined,
+      guestCount: parsed.data.guestCount ? escapeHTML(parsed.data.guestCount) : undefined,
+      budget: parsed.data.budget ? escapeHTML(parsed.data.budget) : undefined,
+      venueType: parsed.data.venueType ? escapeHTML(parsed.data.venueType) : undefined,
       specialRequirements: parsed.data.specialRequirements
-        ? sanitizeString(parsed.data.specialRequirements, 5000)
+        ? escapeHTML(sanitizeTextarea(parsed.data.specialRequirements))
         : undefined,
-      language: parsed.data.language ? sanitizeString(parsed.data.language, 10) : undefined,
+      language: parsed.data.language ? escapeHTML(parsed.data.language) : undefined,
     }
 
     const structured = await generateEventConsultation(input)
@@ -46,10 +43,10 @@ export async function POST(request: NextRequest) {
     const answers: ConsultantAnswers = {
       eventType: input.eventType as ConsultantAnswers['eventType'],
       eventDate: '',
-      city: input.city || '',
+      location: input.location || '',
       guestCount: input.guestCount || '',
       budget: input.budget || '',
-      venuePreference: input.venuePreference || '',
+      venueType: input.venueType || '',
       specialRequirements: input.specialRequirements || '',
     }
     const recommendation = generateConsultation(answers)

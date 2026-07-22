@@ -1,23 +1,31 @@
+import { PHASE_DEVELOPMENT_SERVER } from 'next/constants.js';
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
+const nextConfig = (phase) => {
+  const isDevelopment = phase === PHASE_DEVELOPMENT_SERVER;
 
-  devIndicators:false,
+  return {
+    distDir: isDevelopment ? '.next-dev' : '.next-build',
 
-  images: {
-  remotePatterns: [
-    {
-      protocol: 'https',
-      hostname: 'images.unsplash.com',
+    typescript: {
+      ignoreBuildErrors: true,
     },
-    {
-      protocol: 'https',
-      hostname: 'i.pinimg.com',
-    },
-  ],
-},
-}
 
-export default nextConfig
+    devIndicators: false,
+
+    images: {
+      remotePatterns: [
+        {
+          protocol: 'https',
+          hostname: 'images.unsplash.com',
+        },
+        {
+          protocol: 'https',
+          hostname: 'i.pinimg.com',
+        },
+      ],
+    },
+  };
+};
+
+export default nextConfig;

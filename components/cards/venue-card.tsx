@@ -29,7 +29,7 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       viewport={{ once: true }}
-      className="group flex flex-col h-full rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 hover:border-blue-400"
+      className="group flex flex-col h-full rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 hover:border-[var(--primary)] hover:shadow-[0_12px_28px_rgba(184,154,99,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2"
     >
       <div className="relative aspect-[4/3] overflow-hidden shrink-0">
         <Image
@@ -80,7 +80,7 @@ export function VenueCard({ venue, index = 0 }: VenueCardProps) {
         <div className="mt-4 sm:mt-5">
           <Button
             asChild
-            className="min-h-11 w-full bg-primary text-primary-foreground hover:bg-blue-700 text-sm font-semibold"
+            className="min-h-11 w-full bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-semibold"
           >
             <Link href={`/venues/${venue.slug}`}>{t('featuredVenues.details')}</Link>
           </Button>

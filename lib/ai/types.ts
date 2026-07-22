@@ -21,10 +21,10 @@ export type EventType = (typeof EVENT_TYPES)[number]
 export type ConsultantStep =
   | 'eventType'
   | 'eventDate'
-  | 'city'
+  | 'location'
   | 'guestCount'
   | 'budget'
-  | 'venuePreference'
+  | 'venueType'
   | 'specialRequirements'
   | 'generating'
   | 'complete'
@@ -35,10 +35,10 @@ export type LeadStatus = 'New' | 'Contacted' | 'Quoted' | 'Booked' | 'Closed'
 export interface ConsultantAnswers {
   eventType: EventType | ''
   eventDate: string
-  city: string
+  location: string
   guestCount: string
   budget: string
-  venuePreference: string
+  venueType: string
   specialRequirements: string
 }
 
@@ -113,12 +113,12 @@ export interface LeadPayload {
   name: string
   email: string
   phone: string
-  city: string
+  venueType?: string
+  location: string
   eventType: string
   eventDate?: string
   guestCount?: string
   budget?: string
-  venuePreference?: string
   specialRequirements?: string
   aiRecommendation?: AIConsultationResult
 }

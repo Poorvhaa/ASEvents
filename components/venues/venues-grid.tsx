@@ -41,7 +41,7 @@ export function VenuesGrid() {
                   id="venue-city"
                   value={activeCity}
                   onChange={(e) => setActiveCity(e.target.value as VenueCity | 'All')}
-                  className="w-full min-h-11 h-12 sm:h-14 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full min-h-11 h-12 sm:h-14 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All">{t('venuesPage.grid.allLocations')}</option>
                   {venueCities.map((city) => (
@@ -60,7 +60,7 @@ export function VenuesGrid() {
                   id="venue-category"
                   value={activeCategory}
                   onChange={(e) => setActiveCategory(e.target.value as VenueCategory | 'All')}
-                  className="w-full min-h-11 h-12 sm:h-14 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full min-h-11 h-12 sm:h-14 px-4 rounded-xl border border-slate-300 bg-white text-slate-900 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="All">{t('venuesPage.grid.allTypes')}</option>
                   {venueCategories.map((category) => (

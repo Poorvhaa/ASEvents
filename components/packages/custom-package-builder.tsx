@@ -1,12 +1,17 @@
 'use client'
 
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { venueCities } from '@/lib/data/venues'
 import { Section, SectionContainer } from '@/components/layout/section-container'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { customPackageSchema } from '@/lib/validations/schemas'
+import { ErrorMessage } from '@/components/ui/error-message'
+import { cn } from '@/lib/utils'
+import { z } from 'zod'
 
 const eventTypes = [
   'Wedding',
@@ -26,24 +31,37 @@ const guestCounts = [
   '1000+',
 ]
 
+const selectClass = (hasError: boolean) =>
+  cn(
+    'w-full min-h-11 px-4 py-3 rounded-xl bg-white border text-foreground text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors duration-200',
+    hasError
+      ? 'border-red-500 focus:border-red-500'
+      : 'border-slate-200 focus:border-primary'
+  )
 
-
-const selectClass =
-  'w-full min-h-11 px-4 py-3 rounded-xl bg-white border border-slate-200 text-foreground text-sm sm:text-base focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20'
+type CustomPackageValues = z.infer<typeof customPackageSchema>
 
 export function CustomPackageBuilder() {
   const { openModal } = useQuoteModal()
   const { t } = useTranslation()
-  const [formData, setFormData] = useState({
-    eventType: '',
-    guestCount: '',
-    location: '',
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CustomPackageValues>({
+    resolver: zodResolver(customPackageSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      eventType: '',
+      guestCount: '',
+      location: '',
+    },
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = (data: CustomPackageValues) => {
     openModal({
-      eventType: formData.eventType || 'Custom Package',
+      eventType: data.eventType || 'Custom Package',
       step: 2,
     })
   }
@@ -78,7 +96,8 @@ export function CustomPackageBuilder() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
           viewport={{ once: true }}
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
           className="max-w-3xl mx-auto p-5 sm:p-8 lg:p-10 rounded-2xl bg-white border border-slate-200 shadow-lg"
         >
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
@@ -88,10 +107,10 @@ export function CustomPackageBuilder() {
               </label>
               <select
                 id="eventType"
-                value={formData.eventType}
-                onChange={(e) => setFormData({ ...formData, eventType: e.target.value })}
-                className={selectClass}
-                required
+                {...register('eventType')}
+                aria-invalid={errors.eventType ? 'true' : 'false'}
+                aria-describedby={errors.eventType ? 'eventType-error' : undefined}
+                className={selectClass(!!errors.eventType)}
               >
                 <option value="">{t('packagesPage.builder.selectEventType')}</option>
                 {eventTypes.map((type) => (
@@ -100,6 +119,7 @@ export function CustomPackageBuilder() {
                   </option>
                 ))}
               </select>
+              <ErrorMessage id="eventType-error" message={errors.eventType?.message} />
             </div>
 
             <div className="min-w-0">
@@ -108,10 +128,10 @@ export function CustomPackageBuilder() {
               </label>
               <select
                 id="guestCount"
-                value={formData.guestCount}
-                onChange={(e) => setFormData({ ...formData, guestCount: e.target.value })}
-                className={selectClass}
-                required
+                {...register('guestCount')}
+                aria-invalid={errors.guestCount ? 'true' : 'false'}
+                aria-describedby={errors.guestCount ? 'guestCount-error' : undefined}
+                className={selectClass(!!errors.guestCount)}
               >
                 <option value="">{t('packagesPage.builder.selectGuestCount')}</option>
                 {guestCounts.map((count) => (
@@ -120,6 +140,7 @@ export function CustomPackageBuilder() {
                   </option>
                 ))}
               </select>
+              <ErrorMessage id="guestCount-error" message={errors.guestCount?.message} />
             </div>
 
             <div className="min-w-0">
@@ -128,23 +149,24 @@ export function CustomPackageBuilder() {
               </label>
               <select
                 id="location"
-                value={formData.location}
-                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                className={selectClass}
-                required
+                {...register('location')}
+                aria-invalid={errors.location ? 'true' : 'false'}
+                aria-describedby={errors.location ? 'location-error' : undefined}
+                className={selectClass(!!errors.location)}
               >
                 <option value="">{t('packagesPage.builder.selectLocation')}</option>
                 {venueCities.map((city) => (
                   <option key={city} value={city}>{city}</option>
                 ))}
               </select>
+              <ErrorMessage id="location-error" message={errors.location?.message} />
             </div>
           </div>
 
           <Button
             type="submit"
             size="lg"
-            className="min-h-11 w-full mt-6 sm:mt-8 bg-primary text-primary-foreground hover:bg-blue-700 font-semibold text-base sm:text-lg"
+            className="min-h-11 w-full mt-6 sm:mt-8 bg-primary text-primary-foreground hover:bg-primary/90 font-semibold text-base sm:text-lg"
           >
             {t('packagesPage.builder.button')}
           </Button>

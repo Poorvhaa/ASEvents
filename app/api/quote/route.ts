@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { checkRateLimit, sanitizeEmail, sanitizePhone, sanitizeString } from '@/lib/api-security'
+import { checkRateLimit, sanitizeEmail, sanitizePhone } from '@/lib/api-security'
 import { quoteSchema } from '@/lib/validations/schemas'
 import { createQuoteLead } from '@/services/leadService'
 import { sendQuoteEmails } from '@/services/email'
 import { generateWhatsAppUrl } from '@/services/whatsapp'
+import { escapeHTML, sanitizeTextarea } from '@/lib/validations/sanitization'
 
 export async function POST(request: NextRequest) {
   const rateLimited = checkRateLimit(request, 'quote')
@@ -22,17 +23,15 @@ export async function POST(request: NextRequest) {
 
     const data = parsed.data
     const payload = {
-      name: sanitizeString(data.name, 100),
+      name: escapeHTML(data.name),
       email: sanitizeEmail(data.email),
       phone: sanitizePhone(data.phone),
-      eventType: sanitizeString(data.eventType, 100),
-      city: data.city ? sanitizeString(data.city, 100) : undefined,
+      eventType: escapeHTML(data.eventType),
+      venueType: data.venueType ? escapeHTML(data.venueType) : undefined,
+      location: escapeHTML(data.location),
       guestCount: data.guestCount !== undefined ? String(data.guestCount) : undefined,
-      budget: data.budget ? sanitizeString(data.budget, 100) : undefined,
-      venuePreference: data.venuePreference
-        ? sanitizeString(data.venuePreference, 200)
-        : undefined,
-      requirements: data.requirements ? sanitizeString(data.requirements, 5000) : undefined,
+      budget: data.budget ? String(data.budget) : undefined,
+      requirements: data.requirements ? escapeHTML(sanitizeTextarea(data.requirements)) : undefined,
       source: 'quote_form',
     }
 
@@ -41,15 +40,18 @@ export async function POST(request: NextRequest) {
     await sendQuoteEmails({
       name: payload.name,
       email: payload.email,
+      phone: payload.phone,
       eventType: payload.eventType,
-      city: payload.city,
+      venueType: payload.venueType,
+      location: payload.location,
       guestCount: payload.guestCount,
       budget: payload.budget,
     })
 
     const whatsappUrl = generateWhatsAppUrl({
       eventType: payload.eventType,
-      city: payload.city,
+      venueType: payload.venueType,
+      location: payload.location,
       guestCount: payload.guestCount,
       budget: payload.budget,
       requirements: payload.requirements,

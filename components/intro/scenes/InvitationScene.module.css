@@ -103,15 +103,30 @@
   line-height: 1.15;
 }
 
+.title[lang="hi"],
+.title[lang="gu"] {
+  font-size: 1.85rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
 @media (max-width: 768px) {
   .title {
     font-size: 1.6rem;
+  }
+  .title[lang="hi"],
+  .title[lang="gu"] {
+    font-size: 1.4rem;
   }
 }
 
 @media (max-width: 480px) {
   .title {
     font-size: 1.25rem;
+  }
+  .title[lang="hi"],
+  .title[lang="gu"] {
+    font-size: 1.15rem;
   }
 }
 
@@ -122,6 +137,13 @@
   color: color-mix(in srgb, var(--foreground) 70%, transparent); /* Re-themed */
   font-style: italic;
   line-height: 1.4;
+}
+
+.tagline[lang="hi"],
+.tagline[lang="gu"] {
+  font-size: 11px;
+  line-height: 1.4;
+  font-style: normal;
 }
 
 /* Cover panel hinges on the left edge */
@@ -235,3 +257,32 @@
     inset 0 2px 4px rgba(11, 19, 37, 0.15),
     0 1px 1px rgba(255, 255, 255, 0.3);
 }
+
+.sealLogoWrapper {
+  position: absolute;
+  inset: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  overflow: visible;
+  z-index: 10;
+}
+
+.sealLogo {
+  width: 74% !important;
+  height: 74% !important;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-48%, -50%);
+  object-fit: contain;
+  opacity: 0.92;
+  filter:
+    drop-shadow(0 1px 0 rgba(255, 255, 255, 0.22))
+    drop-shadow(0 -1px 1px rgba(104, 72, 36, 0.28))
+    brightness(0.88)
+    contrast(1.12);
+  pointer-events: none;
+}
+

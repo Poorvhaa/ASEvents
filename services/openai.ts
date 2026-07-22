@@ -24,10 +24,10 @@ Return structured JSON only with this exact shape:
 
 export interface ChatInput {
   eventType: string
-  city?: string
+  location?: string
   guestCount?: string
   budget?: string
-  venuePreference?: string
+  venueType?: string
   specialRequirements?: string
   language?: string
 }
@@ -36,10 +36,10 @@ function engineFallback(input: ChatInput): StructuredAIResponse {
   const answers: ConsultantAnswers = {
     eventType: input.eventType as ConsultantAnswers['eventType'],
     eventDate: '',
-    city: input.city || '',
+    location: input.location || '',
     guestCount: input.guestCount || '',
     budget: input.budget || '',
-    venuePreference: input.venuePreference || '',
+    venueType: input.venueType || '',
     specialRequirements: input.specialRequirements || '',
   }
 
@@ -62,10 +62,10 @@ export async function generateEventConsultation(input: ChatInput): Promise<Struc
 
   const userPrompt = `Event consultation request:
 - Event Type: ${input.eventType}
-- City: ${input.city || 'Not specified'}
+- Location: ${input.location || 'Not specified'}
 - Guest Count: ${input.guestCount || 'Not specified'}
 - Budget: ${input.budget || 'Not specified'}
-- Venue Preference: ${input.venuePreference || 'Not specified'}
+- Venue Type: ${input.venueType || 'Not specified'}
 - Special Requirements: ${input.specialRequirements || 'None'}
 - Required Output Language: ${targetLang}
 

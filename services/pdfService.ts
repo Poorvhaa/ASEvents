@@ -15,13 +15,13 @@ export interface ProposalDocument {
     name: string
     email: string
     phone: string
-    city: string
+    location: string
   }
   eventSummary: {
     eventType: string
     eventDate: string
     guestCount: string
-    venuePreference: string
+    venueType: string
     specialRequirements: string
   }
   packageRecommendation: AIConsultationResult['recommendedPackage']
@@ -51,13 +51,13 @@ export function buildProposalDocument(
       name: safeText(lead.name),
       email: safeText(lead.email),
       phone: safeText(lead.phone),
-      city: safeText(lead.city),
+      location: safeText(lead.location),
     },
     eventSummary: {
       eventType: safeText(lead.eventType),
       eventDate: safeText(lead.eventDate, 'Flexible'),
       guestCount: safeText(lead.guestCount, 'TBD'),
-      venuePreference: safeText(lead.venuePreference, 'Open'),
+      venueType: safeText(lead.venueType, 'Open'),
       specialRequirements: safeText(lead.specialRequirements, 'None'),
     },
     packageRecommendation: recommendation.recommendedPackage,

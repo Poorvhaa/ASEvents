@@ -79,8 +79,8 @@ export function PackagesPreview() {
               >
                 <Link
                   href={`/packages?category=${categoryParam}`}
-                  className={`relative flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer select-none ${
-                    pkg.popular ? 'border-primary ring-1 ring-primary/20' : 'border-slate-200 hover:border-blue-300'
+                  className={`relative flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:-translate-y-1 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 ${
+                    pkg.popular ? 'border-primary ring-1 ring-primary/20 hover:shadow-luxury-lg' : 'border-slate-200 hover:border-[var(--primary)] hover:shadow-[0_12px_28px_rgba(184,154,99,0.12)]'
                   }`}
                 >
                   {pkg.popular && (

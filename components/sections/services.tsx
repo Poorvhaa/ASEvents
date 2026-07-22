@@ -17,27 +17,22 @@ const services = [
   {
     icon: Heart,
     slug: 'wedding',
-    indexStr: '01',
   },
   {
     icon: Plane,
     slug: 'destination',
-    indexStr: '02',
   },
   {
     icon: Building2,
     slug: 'corporate',
-    indexStr: '03',
   },
   {
     icon: Cake,
     slug: 'birthdays',
-    indexStr: '04',
   },
   {
     icon: Gift,
     slug: 'anniversaries',
-    indexStr: '05',
   },
 ]
 
@@ -95,9 +90,6 @@ export function Services() {
                       <div className="w-12 h-12 rounded-xl bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-foreground transition-all duration-300">
                         <IconComponent className="w-6 h-6" />
                       </div>
-                      <span className="font-serif font-bold text-4xl text-primary/10 tracking-tight select-none">
-                        {service.indexStr}
-                      </span>
                     </div>
 
                     {/* Title */}

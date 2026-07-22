@@ -1,23 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { z } from 'zod'
 import { checkRateLimit } from '@/lib/api-security'
 import { createLead, getLeads } from '@/services/leadService'
 import { sendThankYouEmail, sendAdminLeadNotification } from '@/services/email'
 import { syncLeadToCRM } from '@/services/crmService'
-
-const leadSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  phone: z.string().min(10),
-  city: z.string().min(1),
-  eventType: z.string().min(1),
-  eventDate: z.string().optional(),
-  guestCount: z.string().optional(),
-  budget: z.string().optional(),
-  venuePreference: z.string().optional(),
-  specialRequirements: z.string().optional(),
-  aiRecommendation: z.any().optional(),
-})
+import { leadSchema } from '@/lib/validations/schemas'
+import { escapeHTML, sanitizeTextarea } from '@/lib/validations/sanitization'
 
 export async function POST(request: NextRequest) {
   const rateLimited = checkRateLimit(request, 'leads')
@@ -34,12 +21,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const lead = await createLead(parsed.data)
+    const rawData = parsed.data
+    const sanitizedData = {
+      name: escapeHTML(rawData.name),
+      email: rawData.email.toLowerCase().trim(),
+      phone: rawData.phone,
+      location: escapeHTML(rawData.location),
+      eventType: escapeHTML(rawData.eventType),
+      eventDate: rawData.eventDate,
+      guestCount: rawData.guestCount,
+      budget: rawData.budget,
+      venueType: rawData.venueType ? escapeHTML(rawData.venueType) : undefined,
+      specialRequirements: rawData.specialRequirements ? escapeHTML(sanitizeTextarea(rawData.specialRequirements)) : undefined,
+      aiRecommendation: rawData.aiRecommendation,
+    }
+
+    const lead = await createLead(sanitizedData)
 
     await Promise.allSettled([
-      sendThankYouEmail({ lead: parsed.data, recommendation: parsed.data.aiRecommendation }),
-      sendAdminLeadNotification(parsed.data),
-      syncLeadToCRM(parsed.data, 'hubspot'),
+      sendThankYouEmail({ lead: sanitizedData, recommendation: sanitizedData.aiRecommendation }),
+      sendAdminLeadNotification(sanitizedData),
+      syncLeadToCRM(sanitizedData, 'hubspot'),
     ])
 
     return NextResponse.json({ success: true, lead }, { status: 201 })

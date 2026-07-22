@@ -6,6 +6,7 @@ export interface DbLead {
   phone: string | null
   event_type: string
   city: string | null
+  location: string | null
   guest_count: string | null
   budget: string | null
   venue_preference: string | null

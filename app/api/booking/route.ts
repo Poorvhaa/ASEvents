@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { checkRateLimit, sanitizeEmail, sanitizePhone, sanitizeString } from '@/lib/api-security'
+import { checkRateLimit, sanitizeEmail, sanitizePhone } from '@/lib/api-security'
 import { bookingSchema } from '@/lib/validations/schemas'
 import { createVenueBooking } from '@/services/bookingService'
 import { getVenueById } from '@/services/venueService'
 import { sendBookingEmails } from '@/services/email'
+import { escapeHTML } from '@/lib/validations/sanitization'
 
 export async function POST(request: NextRequest) {
   const rateLimited = checkRateLimit(request, 'booking')
@@ -24,10 +25,10 @@ export async function POST(request: NextRequest) {
     const { booking, error } = await createVenueBooking({
       venueId: data.venueId,
       eventDate: data.eventDate,
-      customerName: sanitizeString(data.customerName, 100),
+      customerName: escapeHTML(data.customerName),
       email: sanitizeEmail(data.email),
       phone: data.phone ? sanitizePhone(data.phone) : undefined,
-      guestCount: data.guestCount,
+      guestCount: typeof data.guestCount === 'string' ? parseInt(data.guestCount, 10) : data.guestCount,
     })
 
     if (error || !booking) {

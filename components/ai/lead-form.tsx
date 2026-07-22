@@ -7,30 +7,57 @@ import { buildProposalDocument } from '@/services/pdfService'
 import { DownloadProposalButton } from '@/components/pdf/download-proposal-button'
 import type { LeadPayload } from '@/lib/ai/types'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { leadSchema } from '@/lib/validations/schemas'
+import { ErrorMessage } from '@/components/ui/error-message'
+import { cn } from '@/lib/utils'
+import { z } from 'zod'
+
+type LeadFormValues = z.infer<typeof leadSchema>
 
 export function LeadForm() {
   const { t, language } = useTranslation()
   const { answers, recommendation } = useAIConsultant()
-  const [formData, setFormData] = useState({ name: '', phone: '', email: '', city: answers.city || '' })
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
+  const [apiError, setApiError] = useState('')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors, isSubmitting },
+  } = useForm<LeadFormValues>({
+    resolver: zodResolver(leadSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      phone: '',
+      email: '',
+      location: answers.location || '',
+      eventType: answers.eventType || '',
+      eventDate: answers.eventDate || '',
+      guestCount: answers.guestCount || '',
+      budget: answers.budget || '',
+      venueType: answers.venueType || '',
+      specialRequirements: answers.specialRequirements || '',
+    },
+  })
+
+  const onSubmit = async (data: LeadFormValues) => {
     if (!recommendation) return
-
-    setIsSubmitting(true)
-    setError('')
+    setApiError('')
 
     const payload: LeadPayload = {
-      ...formData,
-      city: formData.city || answers.city,
-      eventType: answers.eventType,
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      venueType: data.venueType || answers.venueType || '',
+      location: data.location || answers.location || '',
+      eventType: answers.eventType || data.eventType,
       eventDate: answers.eventDate,
       guestCount: answers.guestCount,
       budget: answers.budget,
-      venuePreference: answers.venuePreference,
       specialRequirements: answers.specialRequirements,
       aiRecommendation: recommendation,
     }
@@ -43,29 +70,31 @@ export function LeadForm() {
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Failed to submit')
+        const resData = await res.json()
+        throw new Error(resData.error || 'Failed to submit')
       }
 
       setSubmitted(true)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
-      setIsSubmitting(false)
+      setApiError(err instanceof Error ? err.message : 'Something went wrong')
     }
   }
 
+  // Get current form values to generate draft proposal document (for rendering download link after success)
+  const currentValues = getValues()
   const proposalDoc =
     recommendation &&
     buildProposalDocument(
       {
-        ...formData,
-        city: formData.city || answers.city,
+        name: currentValues.name,
+        phone: currentValues.phone,
+        email: currentValues.email,
+        venueType: currentValues.venueType || answers.venueType || '',
+        location: currentValues.location || answers.location || '',
         eventType: answers.eventType,
         eventDate: answers.eventDate,
         guestCount: answers.guestCount,
         budget: answers.budget,
-        venuePreference: answers.venuePreference,
         specialRequirements: answers.specialRequirements,
       },
       recommendation,
@@ -87,53 +116,83 @@ export function LeadForm() {
     )
   }
 
+  const inputClass = (hasError: boolean) =>
+    cn(
+      'w-full px-3 py-2.5 rounded-xl border text-sm focus:outline-none transition-colors duration-200 bg-white',
+      hasError
+        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/20'
+        : 'border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary/20'
+    )
+
   return (
     <div className="p-4 border-t border-slate-200 bg-slate-50">
       <h3 className="text-sm font-semibold text-foreground mb-1">{t('leadForm.title')}</h3>
       <p className="text-xs text-muted-foreground mb-4">{t('leadForm.desc')}</p>
 
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          placeholder={t('leadForm.placeholders.name')}
-          required
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none bg-white"
-        />
-        <input
-          type="tel"
-          placeholder={t('leadForm.placeholders.phone')}
-          required
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none bg-white"
-        />
-        <input
-          type="email"
-          placeholder={t('leadForm.placeholders.email')}
-          required
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none bg-white"
-        />
-        <input
-          type="text"
-          placeholder={t('leadForm.placeholders.city')}
-          required
-          value={formData.city}
-          onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-          className="w-full px-3 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none bg-white"
-        />
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-3">
+        <div>
+          <input
+            type="text"
+            {...register('name')}
+            aria-invalid={errors.name ? 'true' : 'false'}
+            aria-describedby={errors.name ? 'name-error' : undefined}
+            placeholder={t('leadForm.placeholders.name')}
+            className={inputClass(!!errors.name)}
+          />
+          <ErrorMessage id="name-error" message={errors.name?.message} />
+        </div>
 
-        {error && <p className="text-xs text-red-500">{error}</p>}
+        <div>
+          <input
+            type="tel"
+            {...register('phone')}
+            aria-invalid={errors.phone ? 'true' : 'false'}
+            aria-describedby={errors.phone ? 'phone-error' : undefined}
+            placeholder={t('leadForm.placeholders.phone')}
+            className={inputClass(!!errors.phone)}
+          />
+          <ErrorMessage id="phone-error" message={errors.phone?.message} />
+        </div>
+
+        <div>
+          <input
+            type="email"
+            {...register('email')}
+            aria-invalid={errors.email ? 'true' : 'false'}
+            aria-describedby={errors.email ? 'email-error' : undefined}
+            placeholder={t('leadForm.placeholders.email')}
+            className={inputClass(!!errors.email)}
+          />
+          <ErrorMessage id="email-error" message={errors.email?.message} />
+        </div>
+
+        <div>
+          <input
+            type="text"
+            {...register('location')}
+            aria-invalid={errors.location ? 'true' : 'false'}
+            aria-describedby={errors.location ? 'location-error' : undefined}
+            placeholder={t('leadForm.placeholders.location') || t('quoteModal.step6.locationPlaceholder')}
+            className={inputClass(!!errors.location)}
+          />
+          <ErrorMessage id="location-error" message={errors.location?.message} />
+        </div>
+
+        {apiError && <p className="text-xs text-red-500 font-medium">{apiError}</p>}
 
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold flex items-center justify-center gap-2"
         >
-          {isSubmitting ? t('leadForm.submitting') : t('leadForm.getProposal')}
+          {isSubmitting ? (
+            <>
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              {t('leadForm.submitting')}
+            </>
+          ) : (
+            t('leadForm.getProposal')
+          )}
         </Button>
       </form>
     </div>

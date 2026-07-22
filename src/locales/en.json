@@ -804,6 +804,8 @@
       "eventType": "Event Type:",
       "guestCount": "Guest Count:",
       "heading": "Almost there! Your contact details",
+      "location": "Event Location *",
+      "locationPlaceholder": "Enter event city or location",
       "name": "Your Name *",
       "phone": "Your Phone",
       "sub": "We'll get back to you within 24 hours",
@@ -992,5 +994,16 @@
       "partners": "Vendor Partners",
       "satisfaction": "Client Satisfaction"
     }
+  },
+  "Intro": {
+    "eyebrow": "You’re Invited",
+    "title": "A Celebration Awaits",
+    "subtitle": "Step into a world of unforgettable celebrations",
+    "scrollHint": "Scroll to enter",
+    "skip": "Skip",
+    "skipExperience": "Skip experience",
+    "regionLabel": "Cinematic introduction experience",
+    "invitationLabel": "AS Events luxury invitation folder opening sequence with ribbon and portal transition",
+    "entranceLabel": "Luxury event grand entrance venue"
   }
 }

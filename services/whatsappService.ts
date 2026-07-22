@@ -13,7 +13,8 @@ export function generateWhatsAppUrl(
 ): string {
   return buildUrl({
     eventType: answers.eventType,
-    city: answers.city,
+    venueType: answers.venueType,
+    location: answers.location,
     guestCount: answers.guestCount,
     requirements: answers.specialRequirements,
   })

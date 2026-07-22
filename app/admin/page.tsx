@@ -133,7 +133,8 @@ export default function AdminDashboard() {
                 <tr>
                   <th className="text-left p-3">Name</th>
                   <th className="text-left p-3 hidden sm:table-cell">Event</th>
-                  <th className="text-left p-3 hidden md:table-cell">City</th>
+                  <th className="text-left p-3 hidden md:table-cell">Venue Type</th>
+                  <th className="text-left p-3 hidden md:table-cell">Location</th>
                   <th className="text-left p-3">Status</th>
                   <th className="text-left p-3 hidden lg:table-cell">Date</th>
                 </tr>
@@ -143,7 +144,8 @@ export default function AdminDashboard() {
                   <tr key={lead.id} className="border-t border-border">
                     <td className="p-3">{lead.name}</td>
                     <td className="p-3 hidden sm:table-cell">{lead.eventType}</td>
-                    <td className="p-3 hidden md:table-cell">{lead.city}</td>
+                    <td className="p-3 hidden md:table-cell">{lead.venueType || 'N/A'}</td>
+                    <td className="p-3 hidden md:table-cell">{lead.location || 'N/A'}</td>
                     <td className="p-3">{lead.status}</td>
                     <td className="p-3 hidden lg:table-cell text-muted-foreground">
                       {new Date(lead.createdAt).toLocaleDateString('en-IN')}
@@ -152,7 +154,7 @@ export default function AdminDashboard() {
                 ))}
                 {leads.length === 0 && (
                   <tr>
-                    <td colSpan={5} className="p-6 text-center text-muted-foreground">
+                    <td colSpan={6} className="p-6 text-center text-muted-foreground">
                       No leads yet
                     </td>
                   </tr>

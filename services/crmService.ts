@@ -7,7 +7,8 @@ export interface CRMLeadPayload {
   lastName: string
   email: string
   phone: string
-  city: string
+  venueType: string
+  location: string
   eventType: string
   guestCount: string
   budget: string
@@ -30,14 +31,15 @@ export function prepareCRMPayload(lead: LeadPayload): CRMLeadPayload {
     lastName,
     email: lead.email,
     phone: lead.phone,
-    city: lead.city,
+    venueType: lead.venueType || '',
+    location: lead.location,
     eventType: lead.eventType,
     guestCount: lead.guestCount || '',
     budget: lead.budget || '',
     source: 'AI Event Consultant',
     notes: [
       lead.specialRequirements && `Requirements: ${lead.specialRequirements}`,
-      lead.venuePreference && `Venue Preference: ${lead.venuePreference}`,
+      lead.venueType && `Venue Preference: ${lead.venueType}`,
       lead.aiRecommendation?.recommendedPackage?.name &&
         `Package: ${lead.aiRecommendation.recommendedPackage.name}`,
     ]
@@ -45,7 +47,7 @@ export function prepareCRMPayload(lead: LeadPayload): CRMLeadPayload {
       .join('\n'),
     customFields: {
       event_date: lead.eventDate || '',
-      venue_preference: lead.venuePreference || '',
+      venue_preference: lead.venueType || '',
       ai_package: lead.aiRecommendation?.recommendedPackage?.name || '',
       ai_budget: '',
     },

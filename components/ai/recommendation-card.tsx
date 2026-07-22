@@ -56,7 +56,7 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
   // 3. Localize Availability message
   let displayAvailability = venueAvailabilitySuggestion.message
   if (answers) {
-    const city = answers.city || 'your city'
+    const city = answers.location || 'your location'
     const month = answers.eventDate
       ? new Date(answers.eventDate).toLocaleString('en-IN', { month: 'long' })
       : ''
@@ -156,7 +156,7 @@ export function RecommendationCard({ recommendation, compact }: RecommendationCa
               const transKey = `aiPlanner.venuePreferences.${tVal}`
               const transVal = t(transKey)
               return (
-                <span key={tVal} className="px-2 py-0.5 rounded-full bg-blue-50 text-primary text-xs">
+                <span key={tVal} className="px-2 py-0.5 rounded-full bg-primary/10 text-primary text-xs">
                   {transVal === transKey ? tVal : transVal}
                 </span>
               )

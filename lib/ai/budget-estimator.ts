@@ -45,7 +45,7 @@ function scaleToTarget(
 export function estimateBudget(answers: ConsultantAnswers): BudgetBreakdown {
   const guests = parseGuestCount(answers.guestCount)
   const multiplier = getEventMultiplier(answers.eventType)
-  const pref = answers.venuePreference?.toLowerCase() ?? ''
+  const pref = answers.venueType?.toLowerCase() ?? ''
 
   const venueBase = pref.includes('resort')
     ? 500_000

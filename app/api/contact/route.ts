@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { checkRateLimit, sanitizeEmail, sanitizePhone, sanitizeString } from '@/lib/api-security'
+import { checkRateLimit, sanitizeEmail, sanitizePhone } from '@/lib/api-security'
 import { contactSchema } from '@/lib/validations/schemas'
 import { createContactInquiry } from '@/services/leadService'
 import { sendContactEmails } from '@/services/email'
+import { escapeHTML, sanitizeTextarea } from '@/lib/validations/sanitization'
 
 export async function POST(request: NextRequest) {
   const rateLimited = checkRateLimit(request, 'contact')
@@ -19,12 +20,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Escape HTML tags to prevent XSS (script injection)
     const payload = {
-      name: sanitizeString(parsed.data.name, 100),
+      name: escapeHTML(parsed.data.name),
       email: sanitizeEmail(parsed.data.email),
       phone: parsed.data.phone ? sanitizePhone(parsed.data.phone) : undefined,
-      subject: sanitizeString(parsed.data.subject, 200),
-      message: sanitizeString(parsed.data.message, 5000),
+      subject: escapeHTML(parsed.data.subject || 'General Inquiry'),
+      message: escapeHTML(sanitizeTextarea(parsed.data.message)),
     }
 
     const inquiry = await createContactInquiry(payload)

@@ -28,10 +28,10 @@ interface AIConsultantStore {
 const initialAnswers: ConsultantAnswers = {
   eventType: '',
   eventDate: '',
-  city: '',
+  location: '',
   guestCount: '',
   budget: '',
-  venuePreference: '',
+  venueType: '',
   specialRequirements: '',
 }
 

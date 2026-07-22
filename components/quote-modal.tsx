@@ -1,19 +1,24 @@
 'use client'
 
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { quoteSchema } from '@/lib/validations/schemas'
+import { ErrorMessage } from '@/components/ui/error-message'
+import { sanitizeTextarea } from '@/lib/validations/sanitization'
+import { cn } from '@/lib/utils'
+import { z } from 'zod'
 
 const eventTypes = [
   'Wedding',
   'Corporate Event',
   'Birthday Celebration',
   'Anniversary',
-  //'Product Launch',
   'Exhibition',
   'Destination Event',
   'Other',
@@ -36,16 +41,10 @@ const venuePreferences = [
   'No Preference',
 ]
 
-const budgetRanges = [
-  'Under ₹3,00,000',
-  '₹3,00,000 - ₹8,00,000',
-  '₹8,00,000 - ₹15,00,000',
-  '₹15,00,000 - ₹30,00,000',
-  '₹30,00,000+',
-]
+type QuoteFormValues = z.infer<typeof quoteSchema>
 
 export function QuoteModal() {
-  const { t, language } = useTranslation()
+  const { t } = useTranslation()
   const {
     isOpen,
     closeModal,
@@ -53,44 +52,67 @@ export function QuoteModal() {
     initialStep,
   } = useQuoteModal()
   const [step, setStep] = useState(initialStep)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [formData, setFormData] = useState({
-    eventType: '',
-    guestCount: '',
-    venuePreference: '',
-    budgetRange: '',
-    requirements: '',
-    name: '',
-    email: '',
-    phone: '',
-    eventDate: new Date().toISOString().split('T')[0],
+  const [apiError, setApiError] = useState<string | null>(null)
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    trigger,
+    watch,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<QuoteFormValues>({
+    resolver: zodResolver(quoteSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      eventType: '',
+      guestCount: '',
+      venueType: '',
+      location: '',
+      requirements: '',
+      name: '',
+      email: '',
+      phone: '',
+      eventDate: new Date().toISOString().split('T')[0],
+    },
   })
+
+  // Watch fields for rendering and custom flow transitions
+  const watchedEventType = watch('eventType')
+  const watchedGuestCount = watch('guestCount')
+  const watchedVenueType = watch('venueType')
+  const watchedLocation = watch('location')
+  const watchedRequirements = watch('requirements')
+  const watchedName = watch('name')
+  const watchedEmail = watch('email')
+  const watchedPhone = watch('phone')
 
   useEffect(() => {
     if (isOpen) {
       setStep(initialStep)
-      setFormData((prev) => ({
-        ...prev,
-        eventType: initialEventType || prev.eventType,
-      }))
+      if (initialEventType) {
+        setValue('eventType', initialEventType, { shouldValidate: true })
+      }
     }
-  }, [
-    isOpen,
-    initialEventType,
-    initialStep,
-  ])
-
-
+  }, [isOpen, initialEventType, initialStep, setValue])
 
   const totalSteps = 5
 
-  const handleSelect = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
+  const handleSelect = (field: keyof QuoteFormValues, value: string) => {
+    setValue(field, value, { shouldValidate: true })
   }
 
-  const handleNext = () => {
-    if (step < totalSteps) setStep(step + 1)
+  const handleNext = async () => {
+    let isValid = false
+    if (step === 1) isValid = await trigger('eventType')
+    else if (step === 2) isValid = await trigger('guestCount')
+    else if (step === 3) isValid = await trigger('venueType')
+    else if (step === 4) isValid = await trigger('requirements')
+
+    if (isValid && step < totalSteps) {
+      setStep(step + 1)
+    }
   }
 
   const handlePrev = () => {
@@ -109,22 +131,14 @@ export function QuoteModal() {
     return translated === key ? val : translated
   }
 
-  const translateVenuePreference = (val: string) => {
+  const translateVenueType = (val: string) => {
     const key = `quoteModal.step3.venues.${val}`
     const translated = t(key)
     return translated === key ? val : translated
   }
 
-  const translateBudgetRange = (val: string) => {
-    const key = `quoteModal.step4.ranges.${val}`
-    const translated = t(key)
-    return translated === key ? val : translated
-  }
-
-  const handleSubmit = async () => {
-    console.log('[v0] Quote Modal: Starting submission...')
-    setIsSubmitting(true)
-    setError(null)
+  const onSubmit = async (data: QuoteFormValues) => {
+    setApiError(null)
 
     try {
       const guestCountMap: { [key: string]: number } = {
@@ -136,92 +150,74 @@ export function QuoteModal() {
       }
 
       const payload = {
-        eventType: formData.eventType,
-        eventDate: formData.eventDate,
-        guestCount: guestCountMap[formData.guestCount] || 50,
-        location: formData.venuePreference,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        requirements: formData.requirements,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        eventType: data.eventType,
+        venueType: data.venueType,
+        location: data.location,
+        guestCount: data.guestCount || guestCountMap[data.guestCount || ''] || 50,
+        requirements: data.requirements ? sanitizeTextarea(data.requirements) : '',
+        eventDate: data.eventDate,
       }
-
-      console.log('[v0] Quote Modal: Sending payload:', {
-        eventType: payload.eventType,
-        guestCount: payload.guestCount,
-        email: payload.email,
-        name: payload.name,
-      })
 
       const response = await fetch('/api/quote', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: payload.name,
-          email: payload.email,
-          phone: payload.phone,
-          eventType: payload.eventType,
-          city: formData.venuePreference,
-          guestCount: formData.guestCount || payload.guestCount,
-          venuePreference: formData.venuePreference,
-          requirements: payload.requirements,
-        }),
+        body: JSON.stringify(payload),
       })
 
-      console.log('[v0] Quote Modal: Response status:', response.status)
-
       if (response.ok) {
-        const data = await response.json()
-        console.log('[v0] Quote Modal: Success response:', data)
-        
-        // Reset form
         closeModal()
         setStep(1)
-        setFormData({
-          eventType: '',
-          guestCount: '',
-          venuePreference: '',
-          budgetRange: '',
-          requirements: '',
-          name: '',
-          email: '',
-          phone: '',
-          eventDate: new Date().toISOString().split('T')[0],
-        })
+        reset()
         alert(t('quoteModal.success'))
       } else {
         const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
         const errorMsg = errorData.error || `HTTP ${response.status}`
-        console.error('[v0] Quote Modal: Error response:', errorData)
-        setError(errorMsg)
+        setApiError(errorMsg)
         alert(`${t('quoteModalExtra.submissionFailed')} ${errorMsg}.`)
       }
     } catch (err) {
       const errorMsg = err instanceof Error ? err.message : String(err)
-      console.error('[v0] Quote Modal: Submission error:', errorMsg)
-      setError(errorMsg)
+      setApiError(errorMsg)
       alert(`${t('quoteModalExtra.connectionError')}`)
-    } finally {
-      setIsSubmitting(false)
     }
   }
 
   const canProceed = () => {
     switch (step) {
       case 1:
-        return formData.eventType !== ''
+        return !!watchedEventType
       case 2:
-        return formData.guestCount !== ''
+        return !!watchedGuestCount
       case 3:
-        return formData.venuePreference !== ''
+        return !!watchedVenueType
       case 4:
-        return true // Requirements is optional
+        return !errors.requirements
       case 5:
-        return formData.name !== '' && formData.email !== ''
+        return (
+          !!watchedName &&
+          !!watchedEmail &&
+          !!watchedPhone &&
+          !!watchedLocation &&
+          !errors.name &&
+          !errors.email &&
+          !errors.phone &&
+          !errors.location
+        )
       default:
         return false
     }
   }
+
+  const inputClass = (hasError: boolean) =>
+    cn(
+      'w-full p-4 rounded-lg border-2 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors duration-200',
+      hasError
+        ? 'border-red-500 focus:border-red-500'
+        : 'border-border focus:border-primary'
+    )
 
   const renderStep = () => {
     switch (step) {
@@ -237,18 +233,21 @@ export function QuoteModal() {
             <div className="grid grid-cols-2 gap-4">
               {eventTypes.map((type) => (
                 <button
+                  type="button"
                   key={type}
                   onClick={() => handleSelect('eventType', type)}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    formData.eventType === type
+                  className={cn(
+                    'p-4 rounded-lg border-2 transition-all cursor-pointer',
+                    watchedEventType === type
                       ? 'border-primary bg-primary/10 text-primary'
                       : 'border-border hover:border-primary/50 text-foreground'
-                  }`}
+                  )}
                 >
                   {translateEventType(type)}
                 </button>
               ))}
             </div>
+            <ErrorMessage message={errors.eventType?.message} />
           </div>
         )
       case 2:
@@ -263,18 +262,21 @@ export function QuoteModal() {
             <div className="grid grid-cols-1 gap-4">
               {guestCounts.map((count) => (
                 <button
+                  type="button"
                   key={count}
                   onClick={() => handleSelect('guestCount', count)}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    formData.guestCount === count
+                  className={cn(
+                    'p-4 rounded-lg border-2 transition-all cursor-pointer',
+                    watchedGuestCount === count
                       ? 'border-primary bg-primary/10 text-primary'
                       : 'border-border hover:border-primary/50 text-foreground'
-                  }`}
+                  )}
                 >
                   {translateGuestCount(count)}
                 </button>
               ))}
             </div>
+            <ErrorMessage message={errors.guestCount?.message} />
           </div>
         )
       case 3:
@@ -289,18 +291,21 @@ export function QuoteModal() {
             <div className="grid grid-cols-2 gap-4">
               {venuePreferences.map((venue) => (
                 <button
+                  type="button"
                   key={venue}
-                  onClick={() => handleSelect('venuePreference', venue)}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    formData.venuePreference === venue
+                  onClick={() => handleSelect('venueType', venue)}
+                  className={cn(
+                    'p-4 rounded-lg border-2 transition-all cursor-pointer',
+                    watchedVenueType === venue
                       ? 'border-primary bg-primary/10 text-primary'
                       : 'border-border hover:border-primary/50 text-foreground'
-                  }`}
+                  )}
                 >
-                  {translateVenuePreference(venue)}
+                  {translateVenueType(venue)}
                 </button>
               ))}
             </div>
+            <ErrorMessage message={errors.venueType?.message} />
           </div>
         )
       case 4:
@@ -312,12 +317,16 @@ export function QuoteModal() {
               </h3>
               <p className="text-muted-foreground">{t('quoteModal.step5.sub')}</p>
             </div>
-            <textarea
-              value={formData.requirements}
-              onChange={(e) => handleSelect('requirements', e.target.value)}
-              placeholder={t('quoteModal.step5.placeholder')}
-              className="w-full h-40 p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none resize-none"
-            />
+            <div>
+              <textarea
+                {...register('requirements')}
+                placeholder={t('quoteModal.step5.placeholder')}
+                aria-invalid={errors.requirements ? 'true' : 'false'}
+                aria-describedby={errors.requirements ? 'requirements-error' : undefined}
+                className="w-full h-40 p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none resize-none"
+              />
+              <ErrorMessage id="requirements-error" message={errors.requirements?.message} />
+            </div>
           </div>
         )
       case 5:
@@ -330,39 +339,64 @@ export function QuoteModal() {
               <p className="text-muted-foreground">{t('quoteModal.step6.sub')}</p>
             </div>
             <div className="space-y-4">
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => handleSelect('name', e.target.value)}
-                placeholder={t('quoteModal.step6.name')}
-                className="w-full p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-              />
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleSelect('email', e.target.value)}
-                placeholder={t('quoteModal.step6.email')}
-                className="w-full p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-              />
-              <input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => handleSelect('phone', e.target.value)}
-                placeholder={t('quoteModal.step6.phone')}
-                className="w-full p-4 rounded-lg border-2 border-border bg-transparent text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
-              />
+              <div>
+                <input
+                  type="text"
+                  {...register('name')}
+                  placeholder={t('quoteModal.step6.name')}
+                  aria-invalid={errors.name ? 'true' : 'false'}
+                  aria-describedby={errors.name ? 'name-error' : undefined}
+                  className={inputClass(!!errors.name)}
+                />
+                <ErrorMessage id="name-error" message={errors.name?.message} />
+              </div>
+              <div>
+                <input
+                  type="email"
+                  {...register('email')}
+                  placeholder={t('quoteModal.step6.email')}
+                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-describedby={errors.email ? 'email-error' : undefined}
+                  className={inputClass(!!errors.email)}
+                />
+                <ErrorMessage id="email-error" message={errors.email?.message} />
+              </div>
+              <div>
+                <input
+                  type="tel"
+                  {...register('phone')}
+                  placeholder={t('quoteModal.step6.phone')}
+                  aria-invalid={errors.phone ? 'true' : 'false'}
+                  aria-describedby={errors.phone ? 'phone-error' : undefined}
+                  className={inputClass(!!errors.phone)}
+                />
+                <ErrorMessage id="phone-error" message={errors.phone?.message} />
+              </div>
+              <div>
+                <input
+                  type="text"
+                  {...register('location')}
+                  placeholder={t('quoteModal.step6.locationPlaceholder')}
+                  aria-invalid={errors.location ? 'true' : 'false'}
+                  aria-describedby={errors.location ? 'location-error' : undefined}
+                  className={inputClass(!!errors.location)}
+                />
+                <ErrorMessage id="location-error" message={errors.location?.message} />
+              </div>
             </div>
-            
+
             {/* Summary */}
             <div className="mt-8 p-4 rounded-lg bg-secondary/50 space-y-2">
               <h4 className="font-semibold text-foreground mb-3">{t('quoteModal.step6.summaryTitle')}</h4>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <span className="text-muted-foreground">{t('quoteModal.step6.eventType')}</span>
-                <span className="text-foreground">{translateEventType(formData.eventType)}</span>
+                <span className="text-foreground">{translateEventType(watchedEventType)}</span>
                 <span className="text-muted-foreground">{t('quoteModal.step6.guestCount')}</span>
-                <span className="text-foreground">{translateGuestCount(formData.guestCount)}</span>
+                <span className="text-foreground">{translateGuestCount(watchedGuestCount !== undefined ? String(watchedGuestCount) : '')}</span>
                 <span className="text-muted-foreground">{t('quoteModal.step6.venue')}</span>
-                <span className="text-foreground">{translateVenuePreference(formData.venuePreference)}</span>
+                <span className="text-foreground">{translateVenueType(watchedVenueType || '')}</span>
+                <span className="text-muted-foreground">{t('quoteModal.step6.location') || 'Event Location:'}</span>
+                <span className="text-foreground">{watchedLocation || '—'}</span>
               </div>
             </div>
           </div>
@@ -390,7 +424,7 @@ export function QuoteModal() {
             className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-card rounded-2xl shadow-2xl border border-border"
           >
             {/* Header */}
-            <div className="sticky top-0 bg-card border-b border-border p-6 flex items-center justify-between">
+            <div className="sticky top-0 bg-card border-b border-border p-6 flex items-center justify-between z-10">
               <div>
                 <span className="text-sm text-primary font-medium">
                   {t('quoteModal.step')} {step} {t('quoteModal.of')} {totalSteps}
@@ -417,10 +451,9 @@ export function QuoteModal() {
 
             {/* Content */}
             <div className="p-6">
-
-              {error && (
+              {apiError && (
                 <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-700">
-                  <p className="text-sm font-medium">{error}</p>
+                  <p className="text-sm font-medium">{apiError}</p>
                 </div>
               )}
               <AnimatePresence mode="wait">
@@ -437,7 +470,7 @@ export function QuoteModal() {
             </div>
 
             {/* Footer */}
-            <div className="sticky bottom-0 bg-card border-t border-border p-6 flex justify-between">
+            <div className="sticky bottom-0 bg-card border-t border-border p-6 flex justify-between z-10">
               <Button
                 variant="outline"
                 onClick={handlePrev}
@@ -458,12 +491,21 @@ export function QuoteModal() {
                 </Button>
               ) : (
                 <Button
-                  onClick={handleSubmit}
+                  onClick={handleSubmit(onSubmit)}
                   disabled={!canProceed() || isSubmitting}
-                  className="bg-primary text-primary-foreground hover:bg-gold-light gap-2"
+                  className="bg-primary text-primary-foreground hover:bg-gold-light gap-2 flex items-center justify-center"
                 >
-                  {isSubmitting ? t('quoteModal.submitting') : t('quoteModal.submit')}
-                  {!isSubmitting && <Check size={18} />}
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      {t('quoteModal.submitting')}
+                    </>
+                  ) : (
+                    <>
+                      {t('quoteModal.submit')}
+                      <Check size={18} />
+                    </>
+                  )}
                 </Button>
               )}
             </div>

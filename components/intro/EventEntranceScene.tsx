@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styles from './EventEntranceScene.module.css';
 import { IntroTimeline } from './Timeline';
+import { useTranslation } from '@/src/hooks/useTranslation';
 
 interface EventEntranceSceneProps {
   timeline: IntroTimeline | null;
@@ -9,6 +10,7 @@ interface EventEntranceSceneProps {
 export const EventEntranceScene: React.FC<EventEntranceSceneProps> = ({ timeline }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentWrapperRef = useRef<HTMLDivElement>(null);
+  const { t } = useTranslation();
   
   // Modular Refs preserved for Cinematic Camera Parallax Zooms and Reveals
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -29,7 +31,7 @@ export const EventEntranceScene: React.FC<EventEntranceSceneProps> = ({ timeline
     <article
       ref={containerRef}
       className={`${styles.eventEntranceRoot} js-entrance-root`}
-      aria-label="Luxury event grand entrance venue"
+      aria-label={t('Intro.entranceLabel')}
     >
       {/* Content wrapper to allow seamless black-to-content fade */}
       <div ref={contentWrapperRef} className={`${styles.entranceContent} js-entrance-content-wrapper`}>

@@ -130,7 +130,8 @@ export default function AdminLeadsPage() {
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Name</th>
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Contact</th>
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Event</th>
-                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">City</th>
+                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Venue Type</th>
+                    <th className="text-left px-4 py-3 font-medium text-muted-foreground">Location</th>
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Budget</th>
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Status</th>
                     <th className="text-left px-4 py-3 font-medium text-muted-foreground">Date</th>
@@ -148,7 +149,8 @@ export default function AdminLeadsPage() {
                         <div>{lead.eventType}</div>
                         <div className="text-xs text-muted-foreground">{lead.guestCount} guests</div>
                       </td>
-                      <td className="px-4 py-3">{lead.city}</td>
+                      <td className="px-4 py-3">{lead.venueType || 'N/A'}</td>
+                      <td className="px-4 py-3">{lead.location || 'N/A'}</td>
                       <td className="px-4 py-3">{lead.budget || '—'}</td>
                       <td className="px-4 py-3">
                         <select

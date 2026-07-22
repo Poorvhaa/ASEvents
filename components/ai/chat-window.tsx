@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -13,15 +13,14 @@ import { getVenueTypeSuggestions } from '@/lib/venue-engine'
 import { generateWhatsAppUrl } from '@/services/whatsappService'
 import { generateConsultation, formatConsultationMessage } from '@/lib/ai/consultant-engine'
 import { useTranslation } from '@/src/hooks/useTranslation'
-
-const STEP_PROMPTS: Record<string, string> = {
-  eventDate: 'Wonderful choice! When is your event planned? (e.g. December 2025, or type a specific date)',
-  city: 'Which city would you like to host the event in?',
-  guestCount: 'How many guests are you expecting?',
-  budget: 'What is your approximate budget range?',
-  venuePreference: 'Do you have a venue preference? (e.g. Banquet Hall, Resort, Palace, Farmhouse)',
-  specialRequirements: 'Any special requirements or vision for your event? (Type your ideas or "None")',
-}
+import { ErrorMessage } from '@/components/ui/error-message'
+import {
+  futureDateField,
+  locationField,
+  guestCountInputSchema,
+  aiPlannerPromptField,
+} from '@/lib/validations/schemas'
+import { cn } from '@/lib/utils'
 
 const BUDGET_OPTIONS = [
   'Under ₹3,00,000',
@@ -50,6 +49,7 @@ export function ChatWindow() {
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const [inputError, setInputError] = useState<string | null>(null)
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -101,7 +101,7 @@ export function ChatWindow() {
       addMessage('assistant', t('aiPlanner.prompts.' + nextStep) || '')
       setStep(nextStep)
     },
-    [answers, addMessage, setAnswer, setStep, setTyping, setRecommendation, t]
+    [answers, addMessage, setStep, setTyping, setRecommendation, t, language]
   )
 
   const handleEventType = (type: string) => {
@@ -114,23 +114,53 @@ export function ChatWindow() {
 
   const handleTextSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const value = inputRef.current?.value.trim()
-    if (!value) return
+    setInputError(null)
+    const value = inputRef.current?.value.trim() || ''
+
+    if (!value) {
+      if (step === 'specialRequirements') {
+        setInputError('Please describe your event.')
+      } else {
+        setInputError('This field is required.')
+      }
+      return
+    }
+
+    // Validate based on the current step
+    let validationResult
+    if (step === 'eventDate') {
+      validationResult = futureDateField.safeParse(value)
+    } else if (step === 'location') {
+      validationResult = locationField.safeParse(value)
+    } else if (step === 'guestCount') {
+      validationResult = guestCountInputSchema.safeParse(value)
+    } else if (step === 'specialRequirements') {
+      validationResult = aiPlannerPromptField.safeParse(value)
+    } else {
+      validationResult = { success: true, data: value }
+    }
+
+    if (!validationResult.success) {
+      setInputError((validationResult as any).error?.errors[0]?.message || 'Invalid input')
+      return
+    }
+
     if (inputRef.current) inputRef.current.value = ''
 
     const flow: Record<string, { next: typeof step; field: keyof typeof answers }> = {
-      eventDate: { next: 'city', field: 'eventDate' },
-      city: { next: 'guestCount', field: 'city' },
-      guestCount: { next: 'venuePreference', field: 'guestCount' },
-      venuePreference: { next: 'specialRequirements', field: 'venuePreference' },
+      eventDate: { next: 'location', field: 'eventDate' },
+      location: { next: 'guestCount', field: 'location' },
+      guestCount: { next: 'venueType', field: 'guestCount' },
+      venueType: { next: 'specialRequirements', field: 'venueType' },
       specialRequirements: { next: 'generating', field: 'specialRequirements' },
     }
 
     const current = flow[step]
     if (!current) return
 
-    setAnswer(current.field, value)
-    advance(value, current.next, { [current.field]: value })
+    const finalValue = String(validationResult.data)
+    setAnswer(current.field, finalValue)
+    advance(finalValue, current.next, { [current.field]: finalValue })
   }
 
   const venueSuggestions =
@@ -166,40 +196,40 @@ export function ChatWindow() {
 
         <div ref={messagesEndRef} />
 
-{(step === 'complete' || step === 'leadCapture') && (
-  <div className="mt-4">
-    {whatsappUrl && (
-      <div className="mb-3">
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#25D366] text-white text-sm font-semibold hover:bg-[#20BD5A] transition-colors"
-        >
-          {t('aiPlanner.chatOnWhatsApp')}
-        </a>
-      </div>
-    )}
+        {(step === 'complete' || step === 'leadCapture') && (
+          <div className="mt-4">
+            {whatsappUrl && (
+              <div className="mb-3">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-[#25D366] text-white text-sm font-semibold hover:bg-[#20BD5A] transition-colors"
+                >
+                  {t('aiPlanner.chatOnWhatsApp')}
+                </a>
+              </div>
+            )}
 
-    <LeadForm />
-  </div>
-)}
-</div>
+            <LeadForm />
+          </div>
+        )}
+      </div>
 
       {/* Quick replies */}
       {step === 'eventType' && !isTyping && (
         <QuickReplies options={[...EVENT_TYPES]} onSelect={handleEventType} t={t} step={step} language={language} />
       )}
 
-      {step === 'city' && !isTyping && (
+      {step === 'location' && !isTyping && (
         <QuickReplies
           options={[...venueCities]}
           onSelect={(c) => {
-            setAnswer('city', c)
+            setAnswer('location', c)
             const key = `cities.${c}`
             const translated = t(key)
             const userMsg = translated === key ? c : translated
-            advance(userMsg, 'guestCount', { city: c })
+            advance(userMsg, 'guestCount', { location: c })
           }}
           t={t}
           step={step}
@@ -216,7 +246,7 @@ export function ChatWindow() {
             const key = `packagesPage.builder.counts.${normalizedG}`
             const translatedG = t(key)
             const displayG = translatedG === key ? g : translatedG
-            advance(`${displayG} ${t('packagesPage.guests')}`, 'venuePreference', { guestCount: g })
+            advance(`${displayG} ${t('packagesPage.guests')}`, 'venueType', { guestCount: g })
           }}
           t={t}
           step={step}
@@ -224,15 +254,15 @@ export function ChatWindow() {
         />
       )}
 
-      {step === 'venuePreference' && !isTyping && venueSuggestions.length > 0 && (
+      {step === 'venueType' && !isTyping && venueSuggestions.length > 0 && (
         <QuickReplies
           options={venueSuggestions}
           onSelect={(v) => {
-            setAnswer('venuePreference', v)
+            setAnswer('venueType', v)
             const key = `aiPlanner.venuePreferences.${v}`
             const translated = t(key)
             const userMsg = translated === key ? v : translated
-            advance(userMsg, 'specialRequirements', { venuePreference: v })
+            advance(userMsg, 'specialRequirements', { venueType: v })
           }}
           t={t}
           step={step}
@@ -241,22 +271,31 @@ export function ChatWindow() {
       )}
 
       {/* Text input for open-ended steps */}
-      {['eventDate', 'city', 'guestCount', 'venuePreference', 'specialRequirements'].includes(step) && !isTyping && (
-        <form onSubmit={handleTextSubmit} className="px-4 pb-3 flex gap-2 border-t border-slate-100 pt-3">
-          <input
-            ref={inputRef}
-            type="text"
-            placeholder={
-              step === 'eventDate' ? t('aiPlanner.datePlaceholder') :
-              step === 'specialRequirements' ? t('aiPlanner.specialPlaceholder') :
-              t('aiPlanner.inputPlaceholder')
-            }
-            className="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none bg-white"
-          />
-          <Button type="submit" size="icon" className="bg-primary text-primary-foreground shrink-0 rounded-xl">
-            <Send size={16} />
-          </Button>
-        </form>
+      {['eventDate', 'location', 'guestCount', 'venueType', 'specialRequirements'].includes(step) && !isTyping && (
+        <div className="flex flex-col border-t border-slate-100 pt-3 bg-slate-50/50">
+          <div className="px-4">
+            <ErrorMessage message={inputError || undefined} />
+          </div>
+          <form onSubmit={handleTextSubmit} noValidate className="px-4 pb-3 flex gap-2 pt-1">
+            <input
+              ref={inputRef}
+              type="text"
+              onChange={() => setInputError(null)}
+              placeholder={
+                step === 'eventDate' ? t('aiPlanner.datePlaceholder') :
+                step === 'specialRequirements' ? t('aiPlanner.specialPlaceholder') :
+                t('aiPlanner.inputPlaceholder')
+              }
+              className={cn(
+                'flex-1 px-4 py-2.5 rounded-xl border text-sm focus:outline-none bg-white transition-colors duration-200',
+                inputError ? 'border-red-500 focus:border-red-500' : 'border-slate-200 focus:border-primary'
+              )}
+            />
+            <Button type="submit" size="icon" className="bg-primary text-primary-foreground shrink-0 rounded-xl">
+              <Send size={16} />
+            </Button>
+          </form>
+        </div>
       )}
     </div>
   )
@@ -278,40 +317,35 @@ function QuickReplies({
   const translateOption = (opt: string) => {
     if (step === 'eventType') {
       const key = `quoteModal.step1.types.${opt}`
-      const val = t(key)
-      return val === key ? opt : val
+      const translated = t(key)
+      return translated === key ? opt : translated
     }
-    if (step === 'city') {
+    if (step === 'location') {
       const key = `cities.${opt}`
-      const val = t(key)
-      return val === key ? opt : val
+      const translated = t(key)
+      return translated === key ? opt : translated
     }
     if (step === 'guestCount') {
-      const normalizedOpt = opt.replace(/(\d+)-(\d+)/, '$1 - $2')
-      const key = `packagesPage.builder.counts.${normalizedOpt}`
-      const val = t(key)
-      return val === key ? opt : val
+      const normalizedG = opt.replace(/(\d+)-(\d+)/, '$1 - $2')
+      const key = `packagesPage.builder.counts.${normalizedG}`
+      const translated = t(key)
+      return translated === key ? opt : translated
     }
-    if (step === 'budget') {
-      const key = `quoteModal.step4.ranges.${opt}`
-      const val = t(key)
-      return val === key ? opt : val
-    }
-    if (step === 'venuePreference') {
+    if (step === 'venueType') {
       const key = `aiPlanner.venuePreferences.${opt}`
-      const val = t(key)
-      return val === key ? opt : val
+      const translated = t(key)
+      return translated === key ? opt : translated
     }
     return opt
   }
 
   return (
-    <div className="px-4 pb-2 flex flex-wrap gap-1.5 max-h-28 overflow-y-auto">
+    <div className="flex flex-wrap gap-2 p-4 border-t border-slate-100 bg-slate-50/50 shrink-0">
       {options.map((opt) => (
         <button
           key={opt}
           onClick={() => onSelect(opt)}
-          className="px-3 py-1.5 text-xs font-medium rounded-full border border-slate-200 bg-white hover:border-primary hover:text-primary transition-colors"
+          className="px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-800 text-xs font-medium rounded-full border border-slate-200 shadow-sm transition-colors cursor-pointer"
         >
           {translateOption(opt)}
         </button>

@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "dev:webpack": "next dev",
+    "dev": "node scripts/check-dev-lock.mjs && next dev --turbopack",
+    "dev:webpack": "node scripts/check-dev-lock.mjs && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "clean": "node scripts/clean-next-cache.mjs",
-    "reset:dev": "node scripts/reset-dev.mjs"
+    "reset-dev": "node scripts/reset-dev.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

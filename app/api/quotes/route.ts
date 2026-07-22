@@ -18,11 +18,12 @@ export async function POST(request: NextRequest) {
       email: body.email,
       phone: body.phone || '+910000000000',
       eventType: body.eventType,
-      city: body.location || body.city,
+      venueType: body.venueType || body.city || body.location || '',
+      location: body.location || body.city || '',
       guestCount: body.guestCount,
       budget: body.budget,
-      venuePreference: body.location,
       requirements: body.requirements,
+      eventDate: body.eventDate || new Date().toISOString().split('T')[0],
     })
 
     if (!parsed.success) {
@@ -38,12 +39,10 @@ export async function POST(request: NextRequest) {
       email: sanitizeEmail(data.email),
       phone: sanitizePhone(data.phone),
       eventType: sanitizeString(data.eventType, 100),
-      city: data.city ? sanitizeString(data.city, 100) : undefined,
+      venueType: data.venueType ? sanitizeString(data.venueType, 100) : undefined,
+      location: data.location ? sanitizeString(data.location, 120) : undefined,
       guestCount: data.guestCount !== undefined ? String(data.guestCount) : undefined,
       budget: data.budget ? sanitizeString(data.budget, 100) : undefined,
-      venuePreference: data.venuePreference
-        ? sanitizeString(data.venuePreference, 200)
-        : undefined,
       requirements: data.requirements ? sanitizeString(data.requirements, 5000) : undefined,
       source: 'legacy_quotes_api',
     })
@@ -52,9 +51,10 @@ export async function POST(request: NextRequest) {
       name: data.name,
       email: data.email,
       eventType: data.eventType,
-      city: data.city,
+      venueType: data.venueType,
+      location: data.location,
       guestCount: data.guestCount !== undefined ? String(data.guestCount) : undefined,
-      budget: data.budget,
+      budget: data.budget !== undefined ? String(data.budget) : undefined,
     })
 
     return NextResponse.json({ success: true, message: 'Quote request submitted successfully' }, { status: 201 })

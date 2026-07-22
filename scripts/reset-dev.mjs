@@ -7,7 +7,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const projectRoot = path.resolve(__dirname, '..')
 const packageJsonPath = path.join(projectRoot, 'package.json')
-const nextDir = path.join(projectRoot, '.next')
+const nextDevDir = path.join(projectRoot, '.next-dev')
+const nextBuildDir = path.join(projectRoot, '.next-build')
 const nodeModulesCacheDir = path.join(projectRoot, 'node_modules', '.cache')
 
 function verifyEnvironment() {
@@ -26,30 +27,61 @@ function verifyEnvironment() {
   }
 }
 
+function isPortInUse(port) {
+  try {
+    const isWindows = process.platform === 'win32'
+    const cmd = isWindows 
+      ? `netstat -ano | findstr :${port}` 
+      : `lsof -i :${port} -t`
+    const stdout = execSync(cmd, { encoding: 'utf8' })
+    return stdout.includes('LISTENING') || (!isWindows && stdout.trim().length > 0)
+  } catch (e) {
+    return false
+  }
+}
+
 function isNextRunning() {
-  if (fs.existsSync(nextDir)) {
-    try {
-      const tempPath = path.join(projectRoot, `.next_temp_clean_${Date.now()}`)
-      fs.renameSync(nextDir, tempPath)
-      fs.rmSync(tempPath, { recursive: true, force: true })
-      return false
-    } catch (err) {
-      if (err.code === 'EBUSY' || err.code === 'EPERM' || err.code === 'EACCES') {
+  // Check ports
+  if (isPortInUse(3000) || isPortInUse(3001)) {
+    return true
+  }
+
+  // Also check running node processes
+  try {
+    const isWindows = process.platform === 'win32'
+    if (isWindows) {
+      const stdout = execSync("wmic process where \"name='node.exe'\" get commandline", { encoding: 'utf8' })
+      const lines = stdout.split('\n')
+      let activeNextProcs = 0
+      for (const line of lines) {
+        if (line.includes('next') && (line.includes('dev') || line.includes('build') || line.includes('start')) && line.includes('ASEvents') && !line.includes('reset-dev')) {
+          activeNextProcs++
+        }
+      }
+      if (activeNextProcs > 0) {
+        return true
+      }
+    } else {
+      const cmd = "ps aux | grep node | grep -E 'next (dev|build|start)' | grep -E 'ASEvents' | grep -v grep | grep -v reset-dev"
+      const stdout = execSync(cmd, { encoding: 'utf8' })
+      if (stdout.trim().length > 0) {
         return true
       }
     }
-  }
-
-  try {
-    const isWindows = process.platform === 'win32'
-    const cmd = isWindows ? 'tasklist' : 'ps aux'
-    const stdout = execSync(cmd, { encoding: 'utf8' })
-    const nodeCount = (stdout.match(/node(\.exe)?/gi) || []).length
-    if (nodeCount > 1) {
-      return true
-    }
   } catch (e) {
-    // ignore
+    // Fallback: check general Node process count
+    try {
+      const isWindows = process.platform === 'win32'
+      const cmd = isWindows ? 'tasklist' : 'ps aux'
+      const stdout = execSync(cmd, { encoding: 'utf8' })
+      const nodeCount = (stdout.match(/node(\.exe)?/gi) || []).length
+      // This reset script itself is 1 node process
+      if (nodeCount > 1) {
+        return true
+      }
+    } catch (err) {
+      // ignore
+    }
   }
 
   return false
@@ -66,15 +98,28 @@ function resetDev() {
 
   console.log("Proceeding with development reset...")
 
-  if (fs.existsSync(nextDir)) {
+  // Clean .next-dev
+  if (fs.existsSync(nextDevDir)) {
     try {
-      fs.rmSync(nextDir, { recursive: true, force: true })
-      console.log("✓ Cleared Next.js build cache (.next)")
+      fs.rmSync(nextDevDir, { recursive: true, force: true })
+      console.log("✓ Cleared Next.js dev build cache (.next-dev)")
     } catch (err) {
-      console.error(`[WARNING] Could not clear .next cache: ${err.message}`)
+      console.error(`[WARNING] Could not clear .next-dev cache: ${err.message}`)
     }
   } else {
-    console.log(".next cache does not exist. Skipping.")
+    console.log(".next-dev cache does not exist. Skipping.")
+  }
+
+  // Clean .next-build
+  if (fs.existsSync(nextBuildDir)) {
+    try {
+      fs.rmSync(nextBuildDir, { recursive: true, force: true })
+      console.log("✓ Cleared Next.js production build cache (.next-build)")
+    } catch (err) {
+      console.error(`[WARNING] Could not clear .next-build cache: ${err.message}`)
+    }
+  } else {
+    console.log(".next-build cache does not exist. Skipping.")
   }
 
   if (fs.existsSync(nodeModulesCacheDir)) {

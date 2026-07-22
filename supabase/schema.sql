@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS leads (
   phone TEXT,
   event_type TEXT NOT NULL,
   city TEXT,
+  location TEXT,
   guest_count TEXT,
   budget TEXT,
   venue_preference TEXT,

@@ -12,7 +12,6 @@ const testimonials = [
     id: 1,
     name: 'Vishva & Jay Rathore',
     roleKey: 'testimonials.items.wedding',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop',
     rating: 5,
     reviewKey: 'testimonials.items.review1',
   },
@@ -20,15 +19,13 @@ const testimonials = [
     id: 2,
     name: 'Vansh Joshi',
     roleKey: 'testimonials.items.corporate',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200&auto=format&fit=crop',
     rating: 5,
     reviewKey: 'testimonials.items.review2',
   },
   {
     id: 3,
-    name: 'Sara Khan',
+    name: 'Meera Patel',
     roleKey: 'testimonials.items.birthday',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&auto=format&fit=crop',
     rating: 5,
     reviewKey: 'testimonials.items.review3',
   },
@@ -36,7 +33,6 @@ const testimonials = [
     id: 4,
     name: 'Yashvi & Nisarg Pandya',
     roleKey: 'testimonials.items.destination',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop',
     rating: 5,
     reviewKey: 'testimonials.items.review4',
   },
@@ -83,15 +79,7 @@ export function Testimonials() {
               </p>
 
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
-                <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden shrink-0">
-                  <Image
-                    src={testimonials[currentIndex].image}
-                    alt={testimonials[currentIndex].name}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
-                </div>
+    
                 <div>
                   <h4 className="font-semibold text-foreground">{testimonials[currentIndex].name}</h4>
                   <p className="text-muted-foreground text-small">{t(testimonials[currentIndex].roleKey)}</p>

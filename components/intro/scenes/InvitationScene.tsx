@@ -4,15 +4,37 @@ import styles from './InvitationScene.module.css';
 import { IntroTimeline } from '../Timeline';
 import { Ribbon } from '../Ribbon';
 import { PortalTransition } from '../PortalTransition';
+import { useTranslation } from '@/src/hooks/useTranslation';
 
 interface InvitationSceneProps {
   timeline: IntroTimeline | null;
 }
 
+const getTitleStyle = (lang: string): React.CSSProperties => {
+  if (lang === 'hi') {
+    return { fontFamily: 'var(--font-noto-devanagari), serif' };
+  }
+  if (lang === 'gu') {
+    return { fontFamily: 'var(--font-noto-gujarati), serif' };
+  }
+  return {};
+};
+
+const getTaglineStyle = (lang: string): React.CSSProperties => {
+  if (lang === 'hi') {
+    return { fontFamily: 'var(--font-noto-devanagari), serif' };
+  }
+  if (lang === 'gu') {
+    return { fontFamily: 'var(--font-noto-gujarati), serif' };
+  }
+  return {};
+};
+
 export const InvitationScene: React.FC<InvitationSceneProps> = ({ timeline }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useTranslation();
 
   // Ribbon Refs
   const ribbonContainerRef = useRef<HTMLDivElement>(null);
@@ -42,7 +64,7 @@ export const InvitationScene: React.FC<InvitationSceneProps> = ({ timeline }) =>
     <article
       ref={containerRef}
       className={`${styles.container} js-intro-container`}
-      aria-label="AS Events luxury invitation folder opening sequence with ribbon and portal transition"
+      aria-label={t('Intro.invitationLabel')}
     >
       <div className={styles.cardWrapper}>
         {/* Envelope Base */}
@@ -50,8 +72,20 @@ export const InvitationScene: React.FC<InvitationSceneProps> = ({ timeline }) =>
 
         {/* Interior Card (slides forward) */}
         <section ref={cardRef} className={`${styles.interiorCard} js-intro-interior-card`}>
-          <h1 className={styles.title}>You’re Invited</h1>
-          <p className={styles.tagline}>Every unforgettable celebration begins with an invitation.</p>
+          <h1 
+            className={styles.title} 
+            lang={language} 
+            style={getTitleStyle(language)}
+          >
+            {t('Intro.title')}
+          </h1>
+          <p 
+            className={styles.tagline} 
+            lang={language} 
+            style={getTaglineStyle(language)}
+          >
+            {t('Intro.subtitle')}
+          </p>
 
           {/* Cinematic Portal Transition */}
           <PortalTransition
@@ -72,10 +106,13 @@ export const InvitationScene: React.FC<InvitationSceneProps> = ({ timeline }) =>
           <div className={styles.coverFront}>
             <div className={styles.seal} aria-hidden="true">
               <div className={styles.sealBorder} />
-              <BrandLogo
-                variant="monogram"
-                className="h-10 w-10 object-contain sm:h-12 sm:w-12 z-10 opacity-90 brightness-[1.05] contrast-[1.05]"
-              />
+              <div className={styles.sealLogoWrapper}>
+                <BrandLogo
+                  variant="monogram"
+                  className={styles.sealLogo}
+                  priority
+                />
+              </div>
             </div>
           </div>
           

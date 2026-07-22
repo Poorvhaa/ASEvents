@@ -50,7 +50,7 @@ export function generateConsultation(answers: ConsultantAnswers): AIConsultation
   const planningTips = getPlanningTips(answers)
   const nextSteps = getNextSteps()
 
-  const cityLabel = answers.city || 'your preferred city'
+  const cityLabel = answers.location || 'your preferred location'
   const guestLabel = answers.guestCount || `${guestCapacityValidation.guestCount} guests`
   const summary = `${answers.eventType} in ${cityLabel} · ${guestLabel} . Recommended: **${recommendedPackage.name}**.`
 
@@ -150,7 +150,7 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
     }
 
     // Localize availability message
-    const city = answers.city || 'your city'
+    const city = answers.location || 'your location'
     const month = answers.eventDate
       ? new Date(answers.eventDate).toLocaleString('en-IN', { month: 'long' })
       : ''
@@ -184,7 +184,7 @@ export function formatConsultationMessage(result: AIConsultationResult, t?: (key
     const displayEventType = eventTypeTranslated.startsWith('quoteModal.') ? answers.eventType : eventTypeTranslated
 
     const inWord = lang === 'hi' ? 'में' : lang === 'gu' ? 'માં' : 'in'
-    const cityLabel = answers.city || translate('aiPlanner.placeholders.city')
+    const cityLabel = answers.location || translate('aiPlanner.placeholders.city')
     const guestLabel = answers.guestCount || `${guestCount} ${translate('packagesPage.guests')}`
 
     displaySummary = `${displayEventType} ${inWord} ${cityLabel} · ${guestLabel}. Recommended: **${displayName}**.`

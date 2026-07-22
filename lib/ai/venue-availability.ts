@@ -28,7 +28,7 @@ export function checkMockVenueDateAvailability(
 }
 
 export function suggestVenueAvailability(answers: ConsultantAnswers): VenueAvailabilitySuggestion {
-  const city = answers.city || 'your city'
+  const city = answers.location || 'your location'
   const month = answers.eventDate
     ? new Date(answers.eventDate).toLocaleString('en-IN', { month: 'long' })
     : ''

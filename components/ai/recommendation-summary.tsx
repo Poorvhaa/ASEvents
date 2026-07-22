@@ -15,7 +15,7 @@ export function RecommendationSummary({ recommendation }: RecommendationSummaryP
   } = recommendation
 
   return (
-    <div className="mx-4 mb-4 p-4 rounded-xl bg-blue-50 border border-blue-100 space-y-4">
+    <div className="mx-4 mb-4 p-4 rounded-xl bg-primary/10 border border-primary/20 space-y-4">
       <div className="flex items-start gap-2">
         <Package size={16} className="text-primary mt-0.5 shrink-0" />
         <div>

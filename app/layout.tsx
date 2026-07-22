@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Inter, Playfair_Display, Noto_Serif_Devanagari, Noto_Serif_Gujarati } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Navbar } from '@/components/navbar'
@@ -20,6 +20,18 @@ const inter = Inter({
 const playfair = Playfair_Display({ 
   subsets: ['latin'],
   variable: '--font-playfair',
+})
+
+const notoDevanagari = Noto_Serif_Devanagari({
+  subsets: ['devanagari'],
+  variable: '--font-noto-devanagari',
+  weight: ['400', '500', '600', '700'],
+})
+
+const notoGujarati = Noto_Serif_Gujarati({
+  subsets: ['gujarati'],
+  variable: '--font-noto-gujarati',
+  weight: ['400', '500', '600', '700'],
 })
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -60,7 +72,7 @@ export default async function RootLayout({
   return (
     <html
       lang={lang}
-      className={`${inter.variable} ${playfair.variable} bg-background`}
+      className={`${inter.variable} ${playfair.variable} ${notoDevanagari.variable} ${notoGujarati.variable} bg-background`}
     >
       <body className="font-sans antialiased overflow-x-hidden min-w-0">
         <LanguageProvider defaultLanguage={lang as any}>

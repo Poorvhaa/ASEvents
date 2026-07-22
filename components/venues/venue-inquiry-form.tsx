@@ -1,10 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Button } from '@/components/ui/button'
 import { VenueAvailability } from '@/components/venues/venue-availability'
 import type { Venue } from '@/lib/types/venues'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { bookingSchema, guestCountInputSchema } from '@/lib/validations/schemas'
+import { ErrorMessage } from '@/components/ui/error-message'
+import { sanitizeTextarea } from '@/lib/validations/sanitization'
+import { cn } from '@/lib/utils'
+import { z } from 'zod'
 
 interface VenueInquiryFormProps {
   venue: Venue
@@ -13,52 +20,73 @@ interface VenueInquiryFormProps {
 export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
   const { t } = useTranslation()
   const maxGuests = parseInt(venue.capacity.replace(/\D/g, ''), 10) || 0
-  const [guestError, setGuestError] = useState('')
   const [dateAvailable, setDateAvailable] = useState(true)
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState('')
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    eventDate: '',
-    guests: '',
-    message: '',
+  const [apiError, setApiError] = useState('')
+
+  const localizedGuestsLabel = t('portfolioPage.grid.guestsLabel')
+  const localizedCapacity = venue.capacity.replace(' Guests', ' ' + localizedGuestsLabel)
+
+  // Dynamically extend bookingSchema to include venue capacity check with proper localization
+  const formSchema = useMemo(() => {
+    return bookingSchema.extend({
+      customerName: bookingSchema.shape.customerName,
+      guestCount: guestCountInputSchema.refine(
+        (val) => {
+          const num = typeof val === 'string' ? parseInt(val, 10) : val
+          return maxGuests === 0 || num <= maxGuests
+        },
+        { message: `${t('venuesPage.inquiry.errorCapacity')} ${localizedCapacity}` }
+      ),
+    })
+  }, [maxGuests, localizedCapacity, t])
+
+  type FormValues = z.infer<typeof formSchema>
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      venueId: venue.id,
+      eventDate: '',
+      customerName: '',
+      email: '',
+      phone: '',
+      guestCount: '' as any,
+      message: '',
+    },
   })
 
-  const capacityExceeded = Boolean(guestError)
-  const canSubmit = !capacityExceeded && dateAvailable && !isSubmitting
+  const watchedEventDate = watch('eventDate')
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!canSubmit) return
-
-    setIsSubmitting(true)
-    setError('')
-
+  const onSubmit = async (data: FormValues) => {
+    setApiError('')
     try {
       const res = await fetch('/api/booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          venueId: venue.id,
-          eventDate: formData.eventDate,
-          customerName: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          guestCount: parseInt(formData.guests, 10) || 1,
+          venueId: data.venueId,
+          eventDate: data.eventDate,
+          customerName: data.customerName,
+          email: data.email,
+          phone: data.phone,
+          guestCount: typeof data.guestCount === 'string' ? parseInt(data.guestCount, 10) : data.guestCount,
+          message: data.message ? sanitizeTextarea(data.message) : undefined,
         }),
       })
 
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error || 'Booking failed')
+      const responseData = await res.json()
+      if (!res.ok) throw new Error(responseData.error || 'Booking failed')
 
       setSubmitted(true)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Something went wrong')
-    } finally {
-      setIsSubmitting(false)
+      setApiError(err instanceof Error ? err.message : 'Something went wrong')
     }
   }
 
@@ -73,24 +101,30 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
     )
   }
 
-  const localizedGuestsLabel = t('portfolioPage.grid.guestsLabel')
-  const localizedCapacity = venue.capacity.replace(' Guests', ' ' + localizedGuestsLabel)
+  const inputClass = (hasError: boolean) =>
+    cn(
+      'w-full px-4 py-2.5 rounded-xl border text-sm focus:outline-none transition-colors duration-200 bg-white',
+      hasError
+        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/20'
+        : 'border-slate-200 focus:border-primary focus:ring-1 focus:ring-primary/20'
+    )
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-foreground mb-1.5">
+        <label htmlFor="customerName" className="block text-sm font-medium text-foreground mb-1.5">
           {t('venuesPage.inquiry.fullName')}
         </label>
         <input
-          id="name"
+          id="customerName"
           type="text"
-          required
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
+          {...register('customerName')}
+          aria-invalid={errors.customerName ? 'true' : 'false'}
+          aria-describedby={errors.customerName ? 'customerName-error' : undefined}
+          className={inputClass(!!errors.customerName)}
           placeholder={t('venuesPage.inquiry.namePlaceholder')}
         />
+        <ErrorMessage id="customerName-error" message={errors.customerName?.message} />
       </div>
 
       <div>
@@ -100,12 +134,13 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
         <input
           id="email"
           type="email"
-          required
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
+          {...register('email')}
+          aria-invalid={errors.email ? 'true' : 'false'}
+          aria-describedby={errors.email ? 'email-error' : undefined}
+          className={inputClass(!!errors.email)}
           placeholder={t('venuesPage.inquiry.emailPlaceholder')}
         />
+        <ErrorMessage id="email-error" message={errors.email?.message} />
       </div>
 
       <div>
@@ -115,12 +150,13 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
         <input
           id="phone"
           type="tel"
-          required
-          value={formData.phone}
-          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
+          {...register('phone')}
+          aria-invalid={errors.phone ? 'true' : 'false'}
+          aria-describedby={errors.phone ? 'phone-error' : undefined}
+          className={inputClass(!!errors.phone)}
           placeholder={t('venuesPage.inquiry.phonePlaceholder')}
         />
+        <ErrorMessage id="phone-error" message={errors.phone?.message} />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -131,52 +167,33 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
           <input
             id="eventDate"
             type="date"
-            required
+            {...register('eventDate')}
+            aria-invalid={errors.eventDate ? 'true' : 'false'}
+            aria-describedby={errors.eventDate ? 'eventDate-error' : undefined}
             min={new Date().toISOString().split('T')[0]}
-            value={formData.eventDate}
-            onChange={(e) => setFormData({ ...formData, eventDate: e.target.value })}
-            className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none"
+            className={inputClass(!!errors.eventDate)}
           />
           <VenueAvailability
             venueId={venue.id}
-            eventDate={formData.eventDate}
+            eventDate={watchedEventDate}
             onAvailabilityChange={setDateAvailable}
           />
+          <ErrorMessage id="eventDate-error" message={errors.eventDate?.message} />
         </div>
         <div>
-          <label htmlFor="guests" className="block text-sm font-medium text-foreground mb-1.5">
+          <label htmlFor="guestCount" className="block text-sm font-medium text-foreground mb-1.5">
             {t('venuesPage.inquiry.guests')}
           </label>
           <input
-            id="guests"
+            id="guestCount"
             type="number"
-            required
-            min={1}
-            value={formData.guests}
-            onChange={(e) => {
-              const value = e.target.value
-              setFormData({ ...formData, guests: value })
-              const guestCount = parseInt(value, 10)
-              if (!Number.isNaN(guestCount) && guestCount > maxGuests) {
-                setGuestError(
-                  `${t('venuesPage.inquiry.errorCapacity')} ${localizedCapacity}`
-                )
-              } else {
-                setGuestError('')
-              }
-            }}
-            className={`w-full px-4 py-2.5 rounded-xl text-sm focus:outline-none ${
-              guestError
-                ? 'border-2 border-red-500 bg-red-50/30'
-                : 'border border-slate-200 focus:border-primary'
-            }`}
+            {...register('guestCount')}
+            aria-invalid={errors.guestCount ? 'true' : 'false'}
+            aria-describedby={errors.guestCount ? 'guestCount-error' : undefined}
+            className={inputClass(!!errors.guestCount)}
             placeholder={`${t('venuesPage.inquiry.guestsMax')} ${localizedCapacity}`}
           />
-          {guestError && (
-            <div className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5">
-              <p className="text-sm text-red-700 font-medium">{t('venuesPage.inquiry.errorCapacityShort')}</p>
-            </div>
-          )}
+          <ErrorMessage id="guestCount-error" message={errors.guestCount?.message} />
         </div>
       </div>
 
@@ -187,22 +204,31 @@ export function VenueInquiryForm({ venue }: VenueInquiryFormProps) {
         <textarea
           id="message"
           rows={3}
-          value={formData.message}
-          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:border-primary focus:outline-none resize-none"
+          {...register('message')}
+          aria-invalid={errors.message ? 'true' : 'false'}
+          aria-describedby={errors.message ? 'message-error' : undefined}
+          className={cn(inputClass(!!errors.message), 'resize-none')}
           placeholder={`${t('venuesPage.inquiry.messagePlaceholder')} ${t(`venues.${venue.slug}.name`) || venue.name}...`}
         />
+        <ErrorMessage id="message-error" message={errors.message?.message} />
       </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {apiError && <p className="text-sm text-red-500 font-medium">{apiError}</p>}
 
       <Button
-        disabled={!canSubmit}
+        disabled={!dateAvailable || isSubmitting}
         type="submit"
         size="lg"
-        className="w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold disabled:opacity-50"
+        className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold disabled:opacity-50 flex items-center justify-center gap-2"
       >
-        {isSubmitting ? t('venuesPage.inquiry.submitting') : t('venuesPage.inquiry.requestButton')}
+        {isSubmitting ? (
+          <>
+            <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            {t('venuesPage.inquiry.submitting')}
+          </>
+        ) : (
+          t('venuesPage.inquiry.requestButton')
+        )}
       </Button>
     </form>
   )

@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react'; // Edit 10
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { InvitationScene } from './scenes/InvitationScene';
 import { EventEntranceScene } from './EventEntranceScene';
+import { useTranslation } from '@/src/hooks/useTranslation';
 
 // Register ScrollTrigger globally
 if (typeof window !== 'undefined') {
@@ -20,8 +21,8 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
   const containerRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
+  const { t, language } = useTranslation();
 
-  const [isTimelineReady, setIsTimelineReady] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -80,19 +81,57 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
 
-    setIsTimelineReady(true);
+
 
     // 3. Setup GSAP master timeline using matchMedia for responsive profiles
     const ctx = gsap.context(() => {
       const mm = gsap.matchMedia();
 
       const setupTimeline = (scrollPercent: number, scrubVal: number, isMobile: boolean, isTablet: boolean) => {
+        if (!containerRef.current || !pinRef.current) return;
+
+        const introContainer = containerRef.current.querySelector('.js-intro-container');
+        const entranceRoot = containerRef.current.querySelector('.js-entrance-root');
+
+        if (!introContainer || !entranceRoot) {
+          console.error(
+            'Intro timeline initialization failed: required scene elements are missing.'
+          );
+          return;
+        }
+
+        // Stable visible first frame setup
+        gsap.set('.js-intro-container', {
+          autoAlpha: 1,
+          opacity: 1,
+          visibility: 'visible',
+          scale: 0.96,
+        });
+
+        gsap.set('.js-intro-ribbon-container', {
+          autoAlpha: 1,
+          opacity: 1,
+          visibility: 'visible',
+        });
+
+        gsap.set('.js-intro-cover', {
+          autoAlpha: 1,
+          opacity: 1,
+          visibility: 'visible',
+        });
+
+        gsap.set('.js-entrance-root', {
+          autoAlpha: 0,
+        });
+
         // Initial setup for states to prevent flashes
-        gsap.set('.js-entrance-root', { autoAlpha: 0 });
         gsap.set('#homepage-content', { y: '100vh', autoAlpha: 0 });
         gsap.set('header.fixed.top-0', { opacity: 0, autoAlpha: 0 });
 
         const tl = gsap.timeline({
+          defaults: {
+            ease: 'none',
+          },
           scrollTrigger: {
             trigger: containerRef.current,
             pin: pinRef.current,
@@ -113,8 +152,6 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
             },
           },
         });
-
-        tl.defaults({ ease: 'none' });
 
         // ==========================================
         // SCENE 1 & 2: Invitation Establishes & Ribbon Unties (0% to 38%)
@@ -527,7 +564,11 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
       mm.add('(max-width: 767px)', () => {
         setupTimeline(300, 0.55, true, false);
       });
-    });
+
+      return () => {
+        mm.revert();
+      };
+    }, containerRef);
 
     return () => {
       // Clean up Lenis and ticker on unmount
@@ -540,7 +581,6 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
       // Clean up GSAP context and ScrollTrigger instances
       ctx.revert();
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
       // Restore inline styles on cleanup
       const finalHomepage = document.getElementById('homepage-content');
@@ -612,15 +652,16 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
       id="intro-experience-container"
       className="relative w-full bg-gradient-to-b from-[#FAF8F5] to-[#F3EFEA] overflow-x-hidden"
       role="region"
-      aria-label="Cinematic Introduction Experience"
+      aria-label={t('Intro.regionLabel')}
+      lang={language}
     >
       {/* Keyboard Accessible Skip Button */}
       <button
         onClick={skipIntro}
         className="absolute top-6 left-6 z-50 px-5 py-2.5 bg-[var(--background)] text-[var(--foreground)] font-sans font-medium text-xs tracking-widest uppercase rounded border border-[var(--primary)] opacity-0 focus:opacity-100 transition-opacity duration-300 pointer-events-none focus:pointer-events-auto shadow-lg"
-        aria-label="Skip cinematic introduction experience"
+        aria-label={t('Intro.skipExperience')}
       >
-        Skip Experience
+        {t('Intro.skipExperience')}
       </button>
 
       {/* Main Pinned Viewport Wrapper */}
@@ -643,20 +684,17 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
           <button
             onClick={skipIntro}
             className="text-[var(--foreground)]/60 hover:text-[var(--primary)] font-sans text-xs tracking-[0.2em] uppercase transition-colors duration-300 focus:outline-none focus:ring-1 focus:ring-[var(--primary)] px-2 py-1 cursor-pointer"
+            aria-label={t('Intro.skipExperience')}
           >
-            Skip
+            {t('Intro.skip')}
           </button>
         </header>
 
         {/* MIDDLE PANEL: Active Scene Render Spot */}
         <main className="flex-1 w-full relative flex items-center justify-center">
-          {isTimelineReady && (
-            <>
-              {/* Keep both scenes mounted continuously to avoid React layout recalculations during scroll */}
-              <InvitationScene timeline={null} />
-              <EventEntranceScene timeline={null} />
-            </>
-          )}
+          {/* Keep both scenes mounted continuously to avoid React layout recalculations during scroll */}
+          <InvitationScene timeline={null} />
+          <EventEntranceScene timeline={null} />
         </main>
       </div>
     </div>

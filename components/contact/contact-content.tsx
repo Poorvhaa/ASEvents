@@ -2,16 +2,22 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react'
+import { MapPin, Phone, Mail, Clock, MessageCircle, Send, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { contactSchema } from '@/lib/validations/schemas'
+import { ErrorMessage } from '@/components/ui/error-message'
+import { sanitizeTextarea } from '@/lib/validations/sanitization'
+import { cn } from '@/lib/utils'
+import { z } from 'zod'
 
 const eventTypes = [
   'Wedding',
   'Corporate Event',
   'Birthday Celebration',
   'Anniversary',
-  //'Product Launch',
   'Other',
 ]
 
@@ -23,23 +29,31 @@ const budgetRanges = [
   '₹30,00,000+',
 ]
 
+type ContactFormData = z.infer<typeof contactSchema>
+
 export function ContactContent() {
   const { t } = useTranslation()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    eventType: '',
-    eventDate: '',
-    budget: '',
-    message: '',
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      eventType: '',
+      eventDate: '',
+      budget: '',
+      subject: 'General Inquiry',
+      message: '',
+    },
+  })
 
   const translateEventType = (val: string) => {
     const key = `quoteModal.step1.types.${val}`
@@ -53,29 +67,29 @@ export function ContactContent() {
     return translated === key ? val : translated
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    
+  const onSubmit = async (data: ContactFormData) => {
     try {
-      // Submit quote request
-      if (formData.eventType && formData.eventDate) {
-        const guestCount = formData.message.includes('guests') 
-          ? parseInt(formData.message.match(/\d+/)?.[0] || '50') 
+      const sanitizedMessage = sanitizeTextarea(data.message)
+
+      // Submit quote request if type and date are provided
+      if (data.eventType && data.eventDate) {
+        const guestCount = sanitizedMessage.includes('guests')
+          ? parseInt(sanitizedMessage.match(/\d+/)?.[0] || '50')
           : 50
-        
+
         await fetch('/api/quote', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            eventType: formData.eventType,
+            eventType: data.eventType,
             city: 'TBD',
             guestCount,
-            budget: formData.budget,
-            name: formData.name,
-            email: formData.email,
-            phone: formData.phone,
-            requirements: formData.message,
+            budget: data.budget,
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            requirements: sanitizedMessage,
+            eventDate: data.eventDate,
           }),
         })
       }
@@ -85,31 +99,29 @@ export function ContactContent() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          subject: formData.eventType || 'General Inquiry',
-          message: formData.message,
+          name: data.name,
+          email: data.email,
+          phone: data.phone || undefined,
+          subject: data.eventType || 'General Inquiry',
+          message: sanitizedMessage,
         }),
       })
 
-      setIsSubmitting(false)
       setIsSubmitted(true)
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        eventType: '',
-        eventDate: '',
-        budget: '',
-        message: '',
-      })
+      reset()
     } catch (error) {
       console.error('Submission error:', error)
-      setIsSubmitting(false)
       alert(t('contactExtra.submissionFailed'))
     }
   }
+
+  const inputClass = (hasError: boolean) =>
+    cn(
+      'w-full px-4 py-3 rounded-lg bg-card border text-foreground placeholder:text-muted-foreground focus:outline-none transition-colors duration-200',
+      hasError
+        ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500/20'
+        : 'border-border focus:border-primary focus:ring-1 focus:ring-primary/20'
+    )
 
   return (
     <section className="py-24 bg-background">
@@ -124,15 +136,15 @@ export function ContactContent() {
             <h2 className="text-3xl font-serif font-bold text-foreground mb-6">
               {t('contact.content.sendMessage')}
             </h2>
-            
+
             {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="p-8 rounded-2xl bg-card border border-primary/30 text-center"
               >
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Send className="w-8 h-8 text-primary" />
+                <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mx-auto mb-4">
+                  <Check className="w-8 h-8 text-green-600" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   {t('contact.content.successTitle')}
@@ -148,7 +160,7 @@ export function ContactContent() {
                 </Button>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
@@ -157,13 +169,13 @@ export function ContactContent() {
                     <input
                       type="text"
                       id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                      {...register('name')}
+                      aria-invalid={errors.name ? 'true' : 'false'}
+                      aria-describedby={errors.name ? 'name-error' : undefined}
+                      className={inputClass(!!errors.name)}
                       placeholder={t('contactExtra.placeholders.name')}
                     />
+                    <ErrorMessage id="name-error" message={errors.name?.message} />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
@@ -172,13 +184,13 @@ export function ContactContent() {
                     <input
                       type="email"
                       id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                      {...register('email')}
+                      aria-invalid={errors.email ? 'true' : 'false'}
+                      aria-describedby={errors.email ? 'email-error' : undefined}
+                      className={inputClass(!!errors.email)}
                       placeholder={t('contactExtra.placeholders.email')}
                     />
+                    <ErrorMessage id="email-error" message={errors.email?.message} />
                   </div>
                 </div>
 
@@ -190,12 +202,13 @@ export function ContactContent() {
                     <input
                       type="tel"
                       id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none"
+                      {...register('phone')}
+                      aria-invalid={errors.phone ? 'true' : 'false'}
+                      aria-describedby={errors.phone ? 'phone-error' : undefined}
+                      className={inputClass(!!errors.phone)}
                       placeholder={t('contactExtra.placeholders.phone')}
                     />
+                    <ErrorMessage id="phone-error" message={errors.phone?.message} />
                   </div>
                   <div>
                     <label htmlFor="eventType" className="block text-sm font-medium text-foreground mb-2">
@@ -203,17 +216,17 @@ export function ContactContent() {
                     </label>
                     <select
                       id="eventType"
-                      name="eventType"
-                      value={formData.eventType}
-                      onChange={handleChange}
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground focus:border-primary focus:outline-none"
+                      {...register('eventType')}
+                      aria-invalid={errors.eventType ? 'true' : 'false'}
+                      aria-describedby={errors.eventType ? 'eventType-error' : undefined}
+                      className={inputClass(!!errors.eventType)}
                     >
                       <option value="">{t('contactExtra.selectType')}</option>
                       {eventTypes.map((type) => (
                         <option key={type} value={type}>{translateEventType(type)}</option>
                       ))}
                     </select>
+                    <ErrorMessage id="eventType-error" message={errors.eventType?.message} />
                   </div>
                 </div>
 
@@ -225,11 +238,12 @@ export function ContactContent() {
                     <input
                       type="date"
                       id="eventDate"
-                      name="eventDate"
-                      value={formData.eventDate}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground focus:border-primary focus:outline-none"
+                      {...register('eventDate')}
+                      aria-invalid={errors.eventDate ? 'true' : 'false'}
+                      aria-describedby={errors.eventDate ? 'eventDate-error' : undefined}
+                      className={inputClass(!!errors.eventDate)}
                     />
+                    <ErrorMessage id="eventDate-error" message={errors.eventDate?.message} />
                   </div>
                   <div>
                     <label htmlFor="budget" className="block text-sm font-medium text-foreground mb-2">
@@ -237,16 +251,17 @@ export function ContactContent() {
                     </label>
                     <select
                       id="budget"
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground focus:border-primary focus:outline-none"
+                      {...register('budget')}
+                      aria-invalid={errors.budget ? 'true' : 'false'}
+                      aria-describedby={errors.budget ? 'budget-error' : undefined}
+                      className={inputClass(!!errors.budget)}
                     >
                       <option value="">{t('contactExtra.selectBudget')}</option>
                       {budgetRanges.map((range) => (
                         <option key={range} value={range}>{translateBudgetRange(range)}</option>
                       ))}
                     </select>
+                    <ErrorMessage id="budget-error" message={errors.budget?.message} />
                   </div>
                 </div>
 
@@ -256,22 +271,29 @@ export function ContactContent() {
                   </label>
                   <textarea
                     id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
+                    {...register('message')}
+                    aria-invalid={errors.message ? 'true' : 'false'}
+                    aria-describedby={errors.message ? 'message-error' : undefined}
                     rows={5}
-                    className="w-full px-4 py-3 rounded-lg bg-card border border-border text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none resize-none"
+                    className={cn(inputClass(!!errors.message), 'resize-none')}
                     placeholder={t('contact.content.messagePlaceholder')}
                   />
+                  <ErrorMessage id="message-error" message={errors.message?.message} />
                 </div>
 
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-primary-foreground hover:bg-gold-light font-semibold py-6 text-lg"
+                  className="w-full bg-primary text-primary-foreground hover:bg-gold-light font-semibold py-6 text-lg transition-all flex items-center justify-center gap-2"
                 >
-                  {isSubmitting ? t('contact.content.sending') : t('contact.content.send')}
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      {t('contact.content.sending')}
+                    </>
+                  ) : (
+                    t('contact.content.send')
+                  )}
                 </Button>
               </form>
             )}

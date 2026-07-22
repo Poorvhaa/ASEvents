@@ -37,10 +37,10 @@ export async function getAIConsultantResponse(
 Customer consultation data:
 - Event Type: ${answers.eventType}
 - Event Date: ${answers.eventDate || 'Not specified'}
-- City: ${answers.city || 'Not specified'}
+- Location: ${answers.location || 'Not specified'}
 - Guest Count: ${answers.guestCount || 'Not specified'}
 - Budget: ${answers.budget || 'Not specified'}
-- Venue Preference: ${answers.venuePreference || 'Not specified'}
+- Venue Type: ${answers.venueType || 'Not specified'}
 - Special Requirements: ${answers.specialRequirements || 'None'}
 
 Engine recommendations (use as basis, enhance with your expertise):

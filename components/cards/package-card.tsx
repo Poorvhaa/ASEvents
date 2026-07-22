@@ -68,10 +68,10 @@ const translateOrFallback = (key: string, fallback: string) => {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.05 }}
       viewport={{ once: true }}
-      className={`relative flex flex-col h-full p-5 sm:p-6 lg:p-8 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 min-w-0 ${
+      className={`relative flex flex-col h-full p-5 sm:p-6 lg:p-8 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 sm:hover:-translate-y-2 min-w-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 ${
         pkg.popular
           ? 'border-primary ring-2 ring-primary/20'
-          : 'border-slate-200 hover:border-blue-400'
+          : 'border-slate-200 hover:border-[var(--primary)] hover:shadow-[0_12px_28px_rgba(184,154,99,0.12)]'
       }`}
     >
       {pkg.popular && (
@@ -149,7 +149,7 @@ const translateOrFallback = (key: string, fallback: string) => {
       <div className="pt-4 border-t border-border mt-auto flex flex-col gap-2.5 w-full">
         <Button
           onClick={() => openModal({ eventType: t(`packages.${pkg.id}.title`) || pkg.title, step: 2 })}
-          className="min-h-11 w-full bg-primary text-primary-foreground hover:bg-blue-700 font-semibold"
+          className="min-h-11 w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
         >
           {t('nav.getQuote')}
         </Button>

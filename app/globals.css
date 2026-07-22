@@ -49,6 +49,8 @@
 @theme inline {
   --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
   --font-serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-noto-devanagari: var(--font-noto-devanagari), 'Noto Serif Devanagari', serif;
+  --font-noto-gujarati: var(--font-noto-gujarati), 'Noto Serif Gujarati', serif;
   --font-mono: 'Geist Mono', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -46,14 +46,20 @@ export async function sendQuoteEmails(payload: {
   name: string
   email: string
   eventType: string
-  city?: string
+  venueType?: string
+  location?: string
   guestCount?: string
   budget?: string
+  phone?: string
 }): Promise<void> {
   const customerHtml = `
     <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;">
       <h1 style="color:#2563EB;">Thank You, ${payload.name}!</h1>
       <p>We've received your quote request for <strong>${payload.eventType}</strong>.</p>
+      <ul>
+        <li><strong>Venue Type:</strong> ${payload.venueType || 'N/A'}</li>
+        <li><strong>Location:</strong> ${payload.location || 'N/A'}</li>
+      </ul>
       <p>Our team will contact you within 24 hours with a personalized proposal.</p>
       <p>— ${COMPANY_NAME}</p>
     </div>`
@@ -64,8 +70,10 @@ export async function sendQuoteEmails(payload: {
       <ul>
         <li><strong>Name:</strong> ${payload.name}</li>
         <li><strong>Email:</strong> ${payload.email}</li>
+        ${payload.phone ? `<li><strong>Phone:</strong> ${payload.phone}</li>` : ''}
         <li><strong>Event:</strong> ${payload.eventType}</li>
-        <li><strong>City:</strong> ${payload.city || 'N/A'}</li>
+        <li><strong>Venue Type:</strong> ${payload.venueType || 'N/A'}</li>
+        <li><strong>Location:</strong> ${payload.location || 'N/A'}</li>
         <li><strong>Guests:</strong> ${payload.guestCount || 'N/A'}</li>
         <li><strong>Budget:</strong> ${payload.budget || 'N/A'}</li>
       </ul>
@@ -140,8 +148,10 @@ export async function sendThankYouEmail(data: {
   await sendQuoteEmails({
     name: data.lead.name,
     email: data.lead.email,
+    phone: data.lead.phone,
     eventType: data.lead.eventType,
-    city: data.lead.city,
+    venueType: data.lead.venueType,
+    location: data.lead.location,
     guestCount: data.lead.guestCount,
     budget: data.lead.budget,
   })
@@ -153,8 +163,10 @@ export async function sendAdminLeadNotification(lead: LeadPayload): Promise<bool
   await sendQuoteEmails({
     name: lead.name,
     email: lead.email,
+    phone: lead.phone,
     eventType: lead.eventType,
-    city: lead.city,
+    venueType: lead.venueType,
+    location: lead.location,
     guestCount: lead.guestCount,
     budget: lead.budget,
   })

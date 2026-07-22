@@ -7,10 +7,10 @@ export interface QuotePayload {
   email: string
   phone: string
   eventType: string
-  city?: string
+  venueType?: string
+  location?: string
   guestCount?: string | number
   budget?: string
-  venuePreference?: string
   requirements?: string
   source?: string
 }
@@ -21,11 +21,11 @@ function mapDbLead(row: DbLead): LeadRecord {
     name: row.name,
     email: row.email,
     phone: row.phone || '',
-    city: row.city || '',
+    venueType: row.city || '',
+    location: row.location || '',
     eventType: row.event_type,
     guestCount: row.guest_count || undefined,
     budget: row.budget || undefined,
-    venuePreference: row.venue_preference || undefined,
     specialRequirements: row.requirements || undefined,
     status: normalizeStatus(row.status),
     createdAt: row.created_at,
@@ -61,10 +61,11 @@ export async function createQuoteLead(payload: QuotePayload): Promise<LeadRecord
     email: payload.email,
     phone: payload.phone,
     event_type: payload.eventType,
-    city: payload.city || null,
+    city: payload.venueType || null,
+    location: payload.location || null,
     guest_count: guestCount,
     budget: payload.budget || null,
-    venue_preference: payload.venuePreference || null,
+    venue_preference: payload.venueType || null,
     requirements: payload.requirements || null,
     source: payload.source || 'quote_form',
     status: 'new',
@@ -75,7 +76,8 @@ export async function createQuoteLead(payload: QuotePayload): Promise<LeadRecord
     const mock: LeadRecord = {
       id: crypto.randomUUID(),
       ...payload,
-      city: payload.city || '',
+      venueType: payload.venueType || '',
+      location: payload.location || '',
       guestCount: guestCount || undefined,
       status: 'New',
       createdAt: new Date().toISOString(),
@@ -95,10 +97,10 @@ export async function createLead(payload: LeadPayload): Promise<LeadRecord> {
     email: payload.email,
     phone: payload.phone,
     eventType: payload.eventType,
-    city: payload.city,
+    venueType: payload.venueType,
+    location: payload.location,
     guestCount: payload.guestCount,
     budget: payload.budget,
-    venuePreference: payload.venuePreference,
     requirements: payload.specialRequirements,
     source: 'ai_consultant',
   })
@@ -136,7 +138,8 @@ export async function getLeads(filters?: {
         l.name.toLowerCase().includes(term) ||
         l.email.toLowerCase().includes(term) ||
         l.phone.includes(term) ||
-        l.city.toLowerCase().includes(term) ||
+        (l.venueType || '').toLowerCase().includes(term) ||
+        l.location.toLowerCase().includes(term) ||
         l.eventType.toLowerCase().includes(term)
     )
   }
@@ -176,7 +179,8 @@ export function leadsToCSV(leadsList: LeadRecord[]): string {
     'Name',
     'Email',
     'Phone',
-    'City',
+    'Venue Type',
+    'Location',
     'Event Type',
     'Guest Count',
     'Budget',
@@ -184,7 +188,7 @@ export function leadsToCSV(leadsList: LeadRecord[]): string {
     'Created At',
   ]
   const rows = leadsList.map((l) =>
-    [l.id, l.name, l.email, l.phone, l.city, l.eventType, l.guestCount, l.budget, l.status, l.createdAt]
+    [l.id, l.name, l.email, l.phone, l.venueType, l.location, l.eventType, l.guestCount, l.budget, l.status, l.createdAt]
       .map((v) => `"${String(v ?? '').replace(/"/g, '""')}"`)
       .join(',')
   )

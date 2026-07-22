@@ -32,7 +32,7 @@ export { parseINRString, formatINRRange, formatVenueStartingCost, formatTimeline
 export function answersSummary(answers: ConsultantAnswers): string {
   const parts = [
     answers.eventType,
-    answers.city ? `in ${answers.city}` : '',
+    answers.location ? `in ${answers.location}` : '',
     answers.guestCount ? `${answers.guestCount} guests` : '',
     answers.budget ? `Budget ${answers.budget}` : '',
   ].filter(Boolean)

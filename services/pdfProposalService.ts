@@ -248,14 +248,14 @@ function drawClientSection(doc: jsPDF, proposal: ProposalDocument, y: number, t:
   const colW = CONTENT_WIDTH / 2 - 4
   const leftX = MARGIN + 5
   const rightX = MARGIN + CONTENT_WIDTH / 2 + 2
-  const { name, email, phone, city } = proposal.clientDetails
+  const { name, email, phone, location } = proposal.clientDetails
 
   let innerY = cardTop + 5
   let leftY = drawKeyValue(doc, t('pdf.labels.name'), name, leftX, innerY, colW)
   let rightY = drawKeyValue(doc, t('pdf.labels.email'), email, rightX, innerY, colW)
   innerY = Math.max(leftY, rightY)
   leftY = drawKeyValue(doc, t('pdf.labels.phone'), phone, leftX, innerY, colW)
-  rightY = drawKeyValue(doc, t('pdf.labels.city'), city, rightX, innerY, colW)
+  rightY = drawKeyValue(doc, t('pdf.labels.location'), location, rightX, innerY, colW)
 
   return cardTop + cardHeight + 8
 }
@@ -276,7 +276,7 @@ function drawEventSummary(doc: jsPDF, proposal: ProposalDocument, y: number, t: 
   let rightY = drawKeyValue(doc, t('pdf.labels.eventDate'), s.eventDate, rightX, innerY, colW)
   innerY = Math.max(leftY, rightY)
   leftY = drawKeyValue(doc, t('pdf.labels.guestCount'), s.guestCount, leftX, innerY, colW)
-  rightY = drawKeyValue(doc, t('pdf.labels.venuePreference'), s.venuePreference, rightX, innerY, colW)
+  rightY = drawKeyValue(doc, t('pdf.labels.venuePreference'), s.venueType, rightX, innerY, colW)
   innerY = Math.max(leftY, rightY)
   leftY = drawKeyValue(doc, t('pdf.labels.specialRequirements'), s.specialRequirements, leftX, innerY, CONTENT_WIDTH - 10)
 
@@ -432,7 +432,7 @@ function drawVenueTable(doc: jsPDF, proposal: ProposalDocument, y: number, t: (k
             safe(v.startingCost),
           ]
         })
-      : [[fallbackVenueLabel, safe(proposal.clientDetails.city), 'N/A']]
+      : [[fallbackVenueLabel, safe(proposal.clientDetails.location), 'N/A']]
 
   autoTable(doc, {
     startY: y,

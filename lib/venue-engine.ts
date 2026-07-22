@@ -40,19 +40,19 @@ function getPreferredCategories(eventType: string, venuePreference: string): str
 
 export function recommendVenues(answers: ConsultantAnswers): VenueRecommendation[] {
   const guests = parseGuestCount(answers.guestCount)
-  const preferredCategories = getPreferredCategories(answers.eventType, answers.venuePreference)
+  const preferredCategories = getPreferredCategories(answers.eventType, answers.venueType)
 
   let filtered = venues.filter((v) => parseCapacity(v.capacity) >= guests * 0.7)
 
-  if (answers.city) {
-    const cityMatches = filtered.filter((v) => v.city === answers.city)
+  if (answers.location) {
+    const cityMatches = filtered.filter((v) => v.city === answers.location)
     if (cityMatches.length > 0) filtered = cityMatches
   }
 
   const scored = filtered.map((venue) => {
     let score = 0
     if (preferredCategories.includes(venue.category)) score += 10
-    if (answers.city && venue.city === answers.city) score += 5
+    if (answers.location && venue.city === answers.location) score += 5
     score += venue.rating
     return { venue, score }
   })
@@ -75,7 +75,7 @@ export function recommendVenues(answers: ConsultantAnswers): VenueRecommendation
         name: 'Premium Banquet Hall',
         type: 'Banquet Hall',
         capacity: `${guests + 100} Guests`,
-        location: answers.city || 'Ahmedabad',
+        location: answers.location || 'Ahmedabad',
         startingCost: '₹1,50,000',
       },
       {
@@ -83,7 +83,7 @@ export function recommendVenues(answers: ConsultantAnswers): VenueRecommendation
         name: 'Luxury Resort Venue',
         type: 'Resort',
         capacity: `${guests + 200} Guests`,
-        location: answers.city || 'Udaipur',
+        location: answers.location || 'Udaipur',
         startingCost: '₹5,00,000',
       },
     ]

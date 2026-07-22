@@ -132,9 +132,9 @@ export function WhyChooseUs() {
               viewport={{ once: true }}
               className="group h-full"
             >
-              <div className="h-full p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-blue-300 transition-all duration-300">
+              <div className="h-full p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-[var(--primary)] hover:shadow-[0_12px_28px_rgba(184,154,99,0.12)] transition-all duration-300">
                 <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                     <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                   </div>
                   <div className="min-w-0">
