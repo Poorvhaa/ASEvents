@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename)
 const projectRoot = path.resolve(__dirname, '..')
 const packageJsonPath = path.join(projectRoot, 'package.json')
 const nextDevDir = path.join(projectRoot, '.next-dev')
-const nextBuildDir = path.join(projectRoot, '.next-build')
+const nextBuildDir = path.join(projectRoot, '.next')
 const nodeModulesCacheDir = path.join(projectRoot, 'node_modules', '.cache')
 
 function verifyEnvironment() {
@@ -110,16 +110,16 @@ function resetDev() {
     console.log(".next-dev cache does not exist. Skipping.")
   }
 
-  // Clean .next-build
+  // Clean .next
   if (fs.existsSync(nextBuildDir)) {
     try {
       fs.rmSync(nextBuildDir, { recursive: true, force: true })
-      console.log("✓ Cleared Next.js production build cache (.next-build)")
+      console.log("✓ Cleared Next.js production build cache (.next)")
     } catch (err) {
-      console.error(`[WARNING] Could not clear .next-build cache: ${err.message}`)
+      console.error(`[WARNING] Could not clear .next cache: ${err.message}`)
     }
   } else {
-    console.log(".next-build cache does not exist. Skipping.")
+    console.log(".next cache does not exist. Skipping.")
   }
 
   if (fs.existsSync(nodeModulesCacheDir)) {

@@ -5,7 +5,7 @@ const nextConfig = (phase) => {
   const isDevelopment = phase === PHASE_DEVELOPMENT_SERVER;
 
   return {
-    distDir: isDevelopment ? '.next-dev' : '.next-build',
+    distDir: isDevelopment ? '.next-dev' : '.next',
 
     typescript: {
       ignoreBuildErrors: true,

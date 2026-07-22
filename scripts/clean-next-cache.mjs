@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const projectRoot = path.resolve(__dirname, '..')
 const nextDevDir = path.join(projectRoot, '.next-dev')
-const nextBuildDir = path.join(projectRoot, '.next-build')
+const nextBuildDir = path.join(projectRoot, '.next')
 
 function isDirLocked(dirPath) {
   if (fs.existsSync(dirPath)) {
@@ -69,10 +69,10 @@ function cleanCache() {
   if (fs.existsSync(nextBuildDir)) {
     try {
       fs.rmSync(nextBuildDir, { recursive: true, force: true })
-      console.log("Removed .next-build successfully.")
+      console.log("Removed .next successfully.")
       cleaned = true;
     } catch (err) {
-      console.error(`[ERROR] Failed to remove .next-build directory: ${err.message}`)
+      console.error(`[ERROR] Failed to remove .next directory: ${err.message}`)
       process.exit(1)
     }
   }
