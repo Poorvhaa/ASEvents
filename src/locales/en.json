@@ -804,7 +804,7 @@
       "eventType": "Event Type:",
       "guestCount": "Guest Count:",
       "heading": "Almost there! Your contact details",
-      "location": "Event Location *",
+      "location": "Event Location :",
       "locationPlaceholder": "Enter event city or location",
       "name": "Your Name *",
       "phone": "Your Phone",

@@ -54,6 +54,36 @@ export function Navbar() {
   const router = useRouter()
   const isHomePage = pathname === '/'
 
+  const [isIntroActive, setIsIntroActive] = useState(isHomePage)
+
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsIntroActive(false)
+      return
+    }
+
+    // Check if the intro has already been completed/skipped previously
+    if (typeof window !== 'undefined') {
+      const introCompleted = (window as any).__introCompleted || !document.getElementById('intro-experience-container');
+      if (introCompleted) {
+        setIsIntroActive(false)
+        return
+      }
+    }
+
+    const handleIntroComplete = () => {
+      setIsIntroActive(false)
+      if (typeof window !== 'undefined') {
+        (window as any).__introCompleted = true;
+      }
+    }
+
+    window.addEventListener('intro-complete', handleIntroComplete)
+    return () => {
+      window.removeEventListener('intro-complete', handleIntroComplete)
+    }
+  }, [isHomePage])
+
   useMotionValueEvent(scrollY, 'change', (latest) => {
     setIsScrolled(latest > 50)
   })
@@ -176,7 +206,8 @@ export function Navbar() {
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full py-3',
         isScrolled
           ? 'bg-background/80 backdrop-blur-xl border-b border-border shadow-sm py-2'
-          : 'bg-transparent py-4'
+          : 'bg-transparent py-4',
+        isIntroActive && 'pointer-events-none'
       )}
     >
       <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -186,7 +217,7 @@ export function Navbar() {
             href="/"
             onClick={closeAllMenus}
             aria-label="AS Events home"
-            className="flex items-center shrink-0 py-2 transition-opacity duration-300 hover:opacity-90 focus-visible:outline-none"
+            className="flex items-center shrink-0 py-2 transition-opacity duration-300 hover:opacity-90 focus-visible:outline-none pointer-events-auto"
           >
             <BrandLogo
               variant="navbar"
@@ -201,7 +232,10 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+          <div className={cn(
+            "hidden lg:flex items-center gap-6 xl:gap-8 js-navbar-fade-in pointer-events-auto",
+            isIntroActive && "opacity-0 pointer-events-none"
+          )}>
             <Link href="/" className={linkClass}>
               {t('nav.home')}
               <span className={underlineClass} />
@@ -262,7 +296,10 @@ export function Navbar() {
           </div>
 
           {/* Languages, CTA & Hamburger */}
-          <div className="flex items-center gap-3">
+          <div className={cn(
+            "flex items-center gap-3 js-navbar-fade-in pointer-events-auto",
+            isIntroActive && "opacity-0 pointer-events-none"
+          )}>
             {/* Language Switcher (Desktop) */}
             <div className="hidden md:block relative" ref={langRef}>
               <button

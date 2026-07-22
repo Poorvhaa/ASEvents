@@ -138,7 +138,6 @@ export const quoteSchema = z.object({
   guestCount: z.union([z.string(), z.number()]).optional(),
   budget: z.union([z.string(), z.number()]).optional(),
   requirements: z.string().trim().max(5000).optional(),
-  eventDate: futureDateField,
 });
 
 export const contactSchema = z.object({

@@ -25,6 +25,22 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
+
+  const [introCompleted, setIntroCompleted] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !!(window as any).__introCompleted;
+    }
+    return false;
+  });
+
+  const [isSkipped, setIsSkipped] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return !!(window as any).__introCompleted;
+    }
+    return false;
+  });
+
   useEffect(() => {
     // 1. Accessibility: Media query to check for prefers-reduced-motion
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -34,9 +50,70 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
     // If reduced motion is preferred, immediately complete and exit
     if (mediaQuery.matches) {
+      window.dispatchEvent(new CustomEvent('intro-complete'));
       if (onComplete) onComplete();
       return () => {
         mediaQuery.removeEventListener('change', motionListener);
+      };
+    }
+
+    if (isSkipped) {
+      // Dispatch event to show navbar elements
+      window.dispatchEvent(new CustomEvent('intro-complete'));
+      if (onComplete) onComplete();
+
+      // Clear homepage/navbar styles to ensure they are visible
+      const homepage = document.getElementById('homepage-content');
+      if (homepage) {
+        homepage.style.opacity = '';
+        homepage.style.visibility = '';
+        homepage.style.transform = '';
+      }
+      const siteHeader = document.querySelector('header.fixed.top-0') as HTMLElement;
+      if (siteHeader) {
+        siteHeader.style.pointerEvents = '';
+      }
+      const navbarFades = document.querySelectorAll('.js-navbar-fade-in');
+      navbarFades.forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.style.opacity = '';
+        htmlEl.style.visibility = '';
+        htmlEl.style.pointerEvents = '';
+      });
+
+      // Initialize Lenis for standard page scrolling
+      const lenis = new Lenis({
+        duration: 1.15,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+        syncTouch: false,
+        wheelMultiplier: 0.85,
+        touchMultiplier: 1.1,
+        infinite: false,
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+      });
+
+      lenisRef.current = lenis;
+      (window as any).lenis = lenis;
+
+      lenis.on('scroll', ScrollTrigger.update);
+
+      const updateTicker = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(updateTicker);
+      gsap.ticker.lagSmoothing(0);
+
+      // Force instant jump/scroll to the top of the homepage
+      window.scrollTo(0, 0);
+      lenis.scrollTo(0, { immediate: true, force: true });
+
+      return () => {
+        lenis.destroy();
+        lenisRef.current = null;
+        gsap.ticker.remove(updateTicker);
+        delete (window as any).lenis;
       };
     }
 
@@ -50,10 +127,16 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
     const siteHeader = document.querySelector('header.fixed.top-0') as HTMLElement;
     if (siteHeader) {
-      siteHeader.style.opacity = '0';
-      siteHeader.style.visibility = 'hidden';
       siteHeader.style.pointerEvents = 'none';
     }
+
+    const navbarFades = document.querySelectorAll('.js-navbar-fade-in');
+    navbarFades.forEach((el) => {
+      const htmlEl = el as HTMLElement;
+      htmlEl.style.opacity = '0';
+      htmlEl.style.visibility = 'hidden';
+      htmlEl.style.pointerEvents = 'none';
+    });
 
     // 2. Initialize Lenis Smooth Scroll
     const lenis = new Lenis({
@@ -126,7 +209,8 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
         // Initial setup for states to prevent flashes
         gsap.set('#homepage-content', { y: '100vh', autoAlpha: 0 });
-        gsap.set('header.fixed.top-0', { opacity: 0, autoAlpha: 0 });
+        gsap.set('header.fixed.top-0', { pointerEvents: 'none' });
+        gsap.set('.js-navbar-fade-in', { opacity: 0, autoAlpha: 0 });
 
         const tl = gsap.timeline({
           defaults: {
@@ -140,18 +224,31 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
             scrub: scrubVal,
             invalidateOnRefresh: true,
             onUpdate: (self) => {
+              const isAtEnd = self.progress >= 0.99;
+              setIntroCompleted((prev) => {
+                if (prev !== isAtEnd) {
+                  return isAtEnd;
+                }
+                return prev;
+              });
+
               // Trigger onComplete callback when reaching the end of the intro
-              if (self.progress >= 0.99) {
+              if (isAtEnd) {
+                // Dispatch event to show navbar elements
+                window.dispatchEvent(new CustomEvent('intro-complete'));
                 if (onComplete) onComplete();
                 // Clear inline styles once scrolling has finalized past intro
                 gsap.set('#homepage-content', { clearProps: 'all' });
                 gsap.set('#homepage-content section div.absolute.inset-0.z-0', { clearProps: 'all' });
                 gsap.set('#homepage-content section .relative.z-20', { clearProps: 'all' });
                 gsap.set('header.fixed.top-0', { clearProps: 'all' });
+                gsap.set('.js-navbar-fade-in', { clearProps: 'all' });
               }
             },
           },
         });
+
+        timelineRef.current = tl;
 
         // ==========================================
         // SCENE 1 & 2: Invitation Establishes & Ribbon Unties (0% to 38%)
@@ -532,14 +629,20 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
           duration: 10,
         }, 85);
 
-        // Navbar fades in at the end
-        tl.fromTo('header.fixed.top-0', {
+        // Navbar elements fade in at the end
+        tl.fromTo('.js-navbar-fade-in', {
           opacity: 0,
           autoAlpha: 0,
         }, {
           opacity: 1,
           autoAlpha: 1,
           duration: 4,
+        }, 96);
+
+        // Header becomes interactive
+        tl.to('header.fixed.top-0', {
+          pointerEvents: 'auto',
+          duration: 0.1,
         }, 96);
 
         // Intro container dims out
@@ -596,53 +699,35 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
         headerCleanup.style.visibility = '';
         headerCleanup.style.pointerEvents = '';
       }
+      const navbarFades = document.querySelectorAll('.js-navbar-fade-in');
+      navbarFades.forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        htmlEl.style.opacity = '';
+        htmlEl.style.visibility = '';
+        htmlEl.style.pointerEvents = '';
+      });
     };
-  }, [onComplete]);
+  }, [onComplete, isSkipped]);
 
-  // Accessibility Skip function (Scrolls the user past the 500% pin container)
+  // Accessibility Skip function (Completes timeline, sets states, and reveals homepage)
   const skipIntro = () => {
-    if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
-      const absoluteTop = window.scrollY + rect.top;
-      
-      // Determine the target scroll height based on breakpoint
-      let scrollMultiplier = 5.05;
-      if (window.innerWidth <= 767) {
-        scrollMultiplier = 3.05;
-      } else if (window.innerWidth <= 1024) {
-        scrollMultiplier = 4.05;
-      }
-
-      const targetScroll = absoluteTop + window.innerHeight * scrollMultiplier;
-
-      // Force immediate ScrollTrigger completion through instant scroll position update
-      if (lenisRef.current) {
-        lenisRef.current.scrollTo(targetScroll, {
-          immediate: true,
-          force: true,
-        });
-      } else {
-        window.scrollTo({
-          top: targetScroll,
-          behavior: 'auto',
-        });
-      }
-
-      // Restore homepage styles for static page flow
-      gsap.set('#homepage-content', { clearProps: 'all' });
-      gsap.set('#homepage-content section div.absolute.inset-0.z-0', { clearProps: 'all' });
-      gsap.set('#homepage-content section .relative.z-20', { clearProps: 'all' });
-      gsap.set('header.fixed.top-0', { clearProps: 'all' });
-
-      // Notify parent on completion
-      if (onComplete) {
-        onComplete();
-      }
+    // 1. Seek timeline to the end (progress = 1)
+    if (timelineRef.current) {
+      timelineRef.current.progress(1);
     }
+
+    // 2. Set completion flags
+    if (typeof window !== 'undefined') {
+      (window as any).__introCompleted = true;
+    }
+
+    // 3. Update React states to trigger unmount and permanently hide button
+    setIntroCompleted(true);
+    setIsSkipped(true);
   };
 
-  // If user prefers reduced motion, do not render the scroll wrapper
-  if (prefersReducedMotion) {
+  // If user prefers reduced motion or skipped the intro, do not render the container
+  if (isSkipped || prefersReducedMotion) {
     return null;
   }
 
@@ -655,19 +740,41 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
       aria-label={t('Intro.regionLabel')}
       lang={language}
     >
-      {/* Keyboard Accessible Skip Button */}
-      <button
-        onClick={skipIntro}
-        className="absolute top-6 left-6 z-50 px-5 py-2.5 bg-[var(--background)] text-[var(--foreground)] font-sans font-medium text-xs tracking-widest uppercase rounded border border-[var(--primary)] opacity-0 focus:opacity-100 transition-opacity duration-300 pointer-events-none focus:pointer-events-auto shadow-lg"
-        aria-label={t('Intro.skipExperience')}
-      >
-        {t('Intro.skipExperience')}
-      </button>
+      <style>{`
+        .premium-skip-button {
+          position: fixed;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 100;
+          top: calc(50vh + 175px + 50px);
+        }
+        @media (max-width: 768px) {
+          .premium-skip-button {
+            top: calc(50vh + 26vw + 40px);
+          }
+        }
+        @media (max-width: 480px) {
+          .premium-skip-button {
+            top: calc(50vh + 31vw + 40px);
+          }
+        }
+      `}</style>
+
+      {/* Centered Premium Skip Button */}
+      {!introCompleted && (
+        <button
+          onClick={skipIntro}
+          className="premium-skip-button px-6 py-2.5 bg-transparent text-[var(--foreground)] font-serif font-semibold text-xs tracking-[0.25em] uppercase rounded-full border border-[#C5A880]/60 hover:border-[#C5A880] hover:bg-[#EADBC8]/30 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-[#C5A880] focus:ring-offset-2 focus:ring-offset-[#FAF8F5] cursor-pointer shadow-sm select-none"
+          aria-label={t('Intro.skipExperience')}
+        >
+          {t('Intro.skip')}
+        </button>
+      )}
 
       {/* Main Pinned Viewport Wrapper */}
       <div
         ref={pinRef}
-        className="relative w-full h-screen overflow-hidden flex flex-col justify-between"
+        className="relative w-full h-screen overflow-hidden flex flex-col"
       >
         {/* Subtle radial ambient vignette */}
         <div className="absolute inset-0 bg-radial-[circle_at_center,rgba(250,248,245,0)_45%,rgba(243,239,234,0.7)_100%] pointer-events-none z-10" />
@@ -678,17 +785,6 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
           <div className="absolute -bottom-[20%] -right-[15%] w-[70%] h-[70%] rounded-full bg-radial-[circle_at_center,rgba(234,219,200,0.16)_0%,transparent_60%] blur-3xl" />
           <div className="absolute top-[35%] left-[25%] w-[45%] h-[45%] rounded-full bg-radial-[circle_at_center,rgba(250,248,245,0.45)_0%,transparent_70%] blur-3xl" />
         </div>
-
-        {/* TOP PANEL: Skip Indicator */}
-        <header className="w-full px-8 py-8 sm:px-16 flex justify-end items-center z-20">
-          <button
-            onClick={skipIntro}
-            className="text-[var(--foreground)]/60 hover:text-[var(--primary)] font-sans text-xs tracking-[0.2em] uppercase transition-colors duration-300 focus:outline-none focus:ring-1 focus:ring-[var(--primary)] px-2 py-1 cursor-pointer"
-            aria-label={t('Intro.skipExperience')}
-          >
-            {t('Intro.skip')}
-          </button>
-        </header>
 
         {/* MIDDLE PANEL: Active Scene Render Spot */}
         <main className="flex-1 w-full relative flex items-center justify-center">

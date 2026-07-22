@@ -23,7 +23,6 @@ export async function POST(request: NextRequest) {
       guestCount: body.guestCount,
       budget: body.budget,
       requirements: body.requirements,
-      eventDate: body.eventDate || new Date().toISOString().split('T')[0],
     })
 
     if (!parsed.success) {

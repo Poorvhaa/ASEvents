@@ -1,12 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { useTranslation } from '@/src/hooks/useTranslation'
-import { useForm } from 'react-hook-form'
+import { useForm, FieldErrors } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { quoteSchema } from '@/lib/validations/schemas'
 import { ErrorMessage } from '@/components/ui/error-message'
@@ -53,6 +53,29 @@ export function QuoteModal() {
   } = useQuoteModal()
   const [step, setStep] = useState(initialStep)
   const [apiError, setApiError] = useState<string | null>(null)
+  const scrollContainerRef = useRef<HTMLFormElement>(null)
+
+  // Prevent background body scrolling when modal is open
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow
+      document.body.style.overflow = 'hidden'
+      return () => {
+        document.body.style.overflow = originalOverflow
+      }
+    }
+  }, [isOpen])
+
+  // Reset scroll position and focus the container when step changes or modal opens
+  useEffect(() => {
+    if (isOpen && scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0
+      const rafId = requestAnimationFrame(() => {
+        scrollContainerRef.current?.focus()
+      })
+      return () => cancelAnimationFrame(rafId)
+    }
+  }, [isOpen, step])
 
   const {
     register,
@@ -74,7 +97,6 @@ export function QuoteModal() {
       name: '',
       email: '',
       phone: '',
-      eventDate: new Date().toISOString().split('T')[0],
     },
   })
 
@@ -158,7 +180,6 @@ export function QuoteModal() {
         location: data.location,
         guestCount: data.guestCount || guestCountMap[data.guestCount || ''] || 50,
         requirements: data.requirements ? sanitizeTextarea(data.requirements) : '',
-        eventDate: data.eventDate,
       }
 
       const response = await fetch('/api/quote', {
@@ -183,6 +204,10 @@ export function QuoteModal() {
       setApiError(errorMsg)
       alert(`${t('quoteModalExtra.connectionError')}`)
     }
+  }
+
+  const onInvalid = (errors: FieldErrors<QuoteFormValues>) => {
+    console.error("Quote form validation failed:", errors)
   }
 
   const canProceed = () => {
@@ -413,7 +438,7 @@ export function QuoteModal() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-background/80 backdrop-blur-sm"
           onClick={closeModal}
         >
           <motion.div
@@ -421,10 +446,10 @@ export function QuoteModal() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-card rounded-2xl shadow-2xl border border-border"
+            className="flex max-h-[90dvh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl bg-card shadow-2xl border border-border"
           >
             {/* Header */}
-            <div className="sticky top-0 bg-card border-b border-border p-6 flex items-center justify-between z-10">
+            <div className="shrink-0 bg-card border-b border-border p-6 flex items-center justify-between">
               <div>
                 <span className="text-sm text-primary font-medium">
                   {t('quoteModal.step')} {step} {t('quoteModal.of')} {totalSteps}
@@ -449,8 +474,15 @@ export function QuoteModal() {
               </button>
             </div>
 
-            {/* Content */}
-            <div className="p-6">
+            {/* Content / Dedicated Scroll Container */}
+            <form
+              id="quote-form"
+              onSubmit={handleSubmit(onSubmit, onInvalid)}
+              ref={scrollContainerRef}
+              data-lenis-prevent
+              tabIndex={0}
+              className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain p-6 touch-pan-y pointer-events-auto focus:outline-none"
+            >
               {apiError && (
                 <div className="mb-4 p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-700">
                   <p className="text-sm font-medium">{apiError}</p>
@@ -467,10 +499,10 @@ export function QuoteModal() {
                   {renderStep()}
                 </motion.div>
               </AnimatePresence>
-            </div>
+            </form>
 
             {/* Footer */}
-            <div className="sticky bottom-0 bg-card border-t border-border p-6 flex justify-between z-10">
+            <div className="shrink-0 bg-card border-t border-border p-6 flex justify-between">
               <Button
                 variant="outline"
                 onClick={handlePrev}
@@ -491,7 +523,8 @@ export function QuoteModal() {
                 </Button>
               ) : (
                 <Button
-                  onClick={handleSubmit(onSubmit)}
+                  type="submit"
+                  form="quote-form"
                   disabled={!canProceed() || isSubmitting}
                   className="bg-primary text-primary-foreground hover:bg-gold-light gap-2 flex items-center justify-center"
                 >
