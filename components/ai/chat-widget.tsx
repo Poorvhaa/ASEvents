@@ -12,6 +12,21 @@ export function AIChatWidget() {
   const { t } = useTranslation()
 
   const [isIntroActive, setIsIntroActive] = useState(false)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const handleMenuState = (e: Event) => {
+      const customEvent = e as CustomEvent
+      setIsMenuOpen(customEvent.detail.isOpen)
+    }
+
+    window.addEventListener('menu-state', handleMenuState)
+    return () => {
+      window.removeEventListener('menu-state', handleMenuState)
+    }
+  }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -34,7 +49,7 @@ export function AIChatWidget() {
     }
   }, [])
 
-  if (isIntroActive) {
+  if (isIntroActive || isMenuOpen) {
     return null
   }
 

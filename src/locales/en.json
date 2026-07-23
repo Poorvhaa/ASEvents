@@ -843,6 +843,14 @@
     "venues": {
       "description": "Explore and book premium wedding halls, luxury resorts, banquet halls, and lawns across India. Find the perfect venue for your next big celebration.",
       "title": "Discover Premium Event Venues | AS Events"
+    },
+    "privacyPolicy": {
+      "description": "Read how AS Events collects, uses, and protects personal information.",
+      "title": "Privacy Policy | AS Events"
+    },
+    "termsOfService": {
+      "description": "Read the Terms of Service for AS Events luxury wedding and corporate event planning services.",
+      "title": "Terms of Service | AS Events"
     }
   },
   "services": {
@@ -1004,5 +1012,122 @@
     "regionLabel": "Cinematic introduction experience",
     "invitationLabel": "AS Events luxury invitation folder opening sequence with ribbon and portal transition",
     "entranceLabel": "Luxury event grand entrance venue"
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: July 24, 2026",
+    "sections": {
+      "introduction": {
+        "title": "Introduction",
+        "content": "Welcome to AS Events. We are committed to protecting your privacy and handling your personal data in a secure, confidential, and transparent manner. This Privacy Policy details how we collect, use, store, and share your personal information when you visit our website, use our services, or interact with our digital tools, including our booking and event planning systems."
+      },
+      "informationCollect": {
+        "title": "Information We Collect",
+        "content": "We collect information that you voluntarily provide to us, as well as data that is collected automatically through your interaction with our website. This includes personal identifiers (such as name, email address, phone number), event planning details, preferences, and technical usage data."
+      },
+      "useInformation": {
+        "title": "How We Use Information",
+        "content": "We use the collected information to deliver and refine our luxury event planning services, respond to inquiries, send proposals, schedule consultations, process booking details, and maintain the safety and integrity of our digital platforms."
+      },
+      "quoteContact": {
+        "title": "Quote and Contact Form Data",
+        "content": "When you request a quote or contact us via our online forms, we collect details such as your name, email, phone number, event type, date, budget range, and specific requirements. This information is solely used to prepare tailored event proposals and contact you regarding your request."
+      },
+      "aiPlanner": {
+        "title": "AI Event Planner Data",
+        "content": "Our website features an AI Event Planner widget. Interaction logs and preferences entered during your chat session with our AI assistant are analyzed locally to provide relevant planning recommendations. We do not sell or share chat history with external advertising networks."
+      },
+      "cookies": {
+        "title": "Cookies and Analytics",
+        "content": "We use cookies and similar tracking technologies to store your language preferences, analyze website traffic, and optimize performance. You can manage cookie preferences directly through your browser settings, though disabling certain cookies may affect page functionality."
+      },
+      "security": {
+        "title": "Data Storage and Security",
+        "content": "We implement industry-standard administrative, technical, and physical security measures to protect your personal data from unauthorized access, alteration, disclosure, or destruction. We maintain secure databases and only permit authorized personnel to access sensitive details."
+      },
+      "thirdParty": {
+        "title": "Third-Party Services",
+        "content": "To deliver a seamless online experience, we integrate with trusted third-party service providers. These partners are strictly bound by confidentiality agreements and are authorized to use your data only as necessary to provide services to us."
+      },
+      "supabase": {
+        "title": "Supabase Integration",
+        "content": "We utilize Supabase for secure data hosting, database storage, and user authentication. Any personal details submitted via our contact forms or saved in user profiles are stored in encrypted Supabase cloud databases."
+      },
+      "resend": {
+        "title": "Resend Email Delivery",
+        "content": "We use Resend for automated transactional email delivery, including sending proposals, event confirmations, and contact notifications. Resend processes your name and email address to ensure reliable message delivery."
+      },
+      "rights": {
+        "title": "User Rights",
+        "content": "You have the right to request access to the personal data we hold about you, request corrections to inaccurate information, or request the deletion of your personal records. To exercise any of these rights, please contact our concierge."
+      },
+      "retention": {
+        "title": "Data Retention",
+        "content": "We retain your personal data only as long as necessary to fulfill the purposes for which it was collected, comply with legal obligations, resolve disputes, and enforce our service agreements."
+      },
+      "children": {
+        "title": "Children's Privacy",
+        "content": "Our website and services are not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you become aware that a minor has provided us with personal data, please contact us so we can delete it."
+      },
+      "changes": {
+        "title": "Changes to This Policy",
+        "content": "We may update this Privacy Policy from time to time to reflect changes in our operational, legal, or regulatory practices. Any changes will be posted on this page with an updated revision date."
+      },
+      "contact": {
+        "title": "Contact Information",
+        "content": "If you have any questions, concerns, or requests regarding this Privacy Policy or our data management practices, please contact our concierge team at:\n\nAS Events\nBlue Chip Complex, Sayajiganj Rd, Vadodara, Gujarat\nEmail: as.eventmanagement2829@gmail.com\nPhone: +91 95103 24143"
+      }
+    }
+  },
+  "termsOfService": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: July 24, 2026",
+    "intro": "Welcome to AS Events. These Terms of Service govern your access to and use of our website and premier event planning services. Please read them carefully before initiating any bookings.",
+    "sections": {
+      "acceptance": {
+        "title": "1. Acceptance of Terms",
+        "content": "By accessing or using the AS Events website and engaging our services, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, please do not use our services or access our website."
+      },
+      "services": {
+        "title": "2. Description of Services",
+        "content": "AS Events provides bespoke luxury event management, design, wedding planning, destination coordination, and corporate planning services. The specific scope of work, timelines, and deliverables for each event will be detailed in a separate signed contract."
+      },
+      "bookings": {
+        "title": "3. Event Bookings & Quotations",
+        "content": "All quotations are valid for the period specified in the proposal. Bookings are officially confirmed only upon receipt of a signed service agreement and the initial deposit payment."
+      },
+      "cancellations": {
+        "title": "4. Cancellations, Refunds & Deposits",
+        "content": "Deposits are non-refundable as they secure our exclusive services and booking date. Cancellations must be submitted in writing. Refund eligibility for remaining balances is determined by the schedule in your specific contract."
+      },
+      "clientResponsibilities": {
+        "title": "5. Client Responsibilities",
+        "content": "Clients must provide timely decisions, approvals, and accurate information. Failure to meet deadlines or provide access to event-related coordinates may result in delays or additional fees."
+      },
+      "intellectualProperty": {
+        "title": "6. Intellectual Property & Portfolio Use",
+        "content": "All designs, concepts, graphics, and materials created by AS Events remain our intellectual property. We reserve the right to document events for our professional portfolio and marketing purposes unless otherwise agreed in writing."
+      },
+      "limitationOfLiability": {
+        "title": "7. Limitation of Liability & Force Majeure",
+        "content": "AS Events is not liable for any failure or delay in performance due to Force Majeure events beyond our reasonable control, including natural disasters, venue cancellations, or government regulations. Our maximum liability is limited to the fees paid."
+      },
+      "thirdPartyServices": {
+        "title": "8. Vendor & Third-Party Services",
+        "content": "We may recommend third-party vendors (catering, florists, entertainment). While we coordinate these services, AS Events is not responsible or liable for vendor performance, products, or contract breaches."
+      },
+      "privacy": {
+        "title": "9. Privacy & Data Protection",
+        "content": "Your privacy is highly valued. Personal details, event planning logs, and guest lists shared with us will be managed securely and processed in accordance with our Privacy Policy."
+      },
+      "changes": {
+        "title": "10. Changes to These Terms",
+        "content": "We reserve the right to update these Terms of Service at any time. The most current version will be posted on our website, and continued use of our services constitutes acceptance of the revised terms."
+      },
+      "contact": {
+        "title": "11. Contact Information",
+        "content": "For inquiries regarding our terms or services, please contact our concierge team at:\n\nAS Events\nBlue Chip Complex, Sayajiganj Rd, Vadodara, Gujarat\nEmail: as.eventmanagement2829@gmail.com\nPhone: +91 95103 24143"
+      }
+    }
   }
 }

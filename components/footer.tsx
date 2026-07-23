@@ -26,10 +26,8 @@ const quickLinks = [
 ]
 
 const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Instagram, href: 'https://www.instagram.com/as.event.management?igsh=MXdmeXljYm9rMWNyeA==', label: 'Instagram' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Youtube, href: '#', label: 'Youtube' },
+  { icon: Instagram, href: 'https://www.instagram.com/as.event.management?igsh=MXdmeXljYm9rMWNyeA==', label: 'Instagram' }
+  
 ]
 
 export function Footer() {
@@ -144,10 +142,10 @@ export function Footer() {
             &copy; {new Date().getFullYear()} AS Events. {t('footer.rights')}
           </p>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm">
-            <Link href="/privacy" className="text-slate-500 hover:text-white transition-colors min-h-11 inline-flex items-center">
+            <Link href="/privacy-policy" className="text-slate-500 hover:text-white transition-colors min-h-11 inline-flex items-center">
               {t('footer.privacy')}
             </Link>
-            <Link href="/terms" className="text-slate-500 hover:text-white transition-colors min-h-11 inline-flex items-center">
+            <Link href="/terms-of-service" className="text-slate-500 hover:text-white transition-colors min-h-11 inline-flex items-center">
               {t('footer.terms')}
             </Link>
           </div>

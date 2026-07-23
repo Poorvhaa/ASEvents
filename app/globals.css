@@ -251,3 +251,26 @@
 html {
   scroll-behavior: auto !important;
 }
+
+/* Restrained scrollbar for full-screen menu overlay */
+.menu-overlay-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.menu-overlay-scroll::-webkit-scrollbar-track {
+  background: rgba(11, 19, 37, 0.4);
+}
+
+.menu-overlay-scroll::-webkit-scrollbar-thumb {
+  background: rgba(197, 168, 128, 0.25);
+  border-radius: 999px;
+}
+
+.menu-overlay-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 168, 128, 0.45);
+}
+
+.menu-overlay-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(197, 168, 128, 0.25) rgba(11, 19, 37, 0.4);
+}

@@ -1,5 +1,5 @@
 'use client'
-// Touched to invalidate next.js json bundle cache
+// Touched to invalidate next.js json bundle cache - Updated July 24, 2026
 
 import React, { createContext, useState, useEffect } from 'react'
 import en from '../locales/en.json'
