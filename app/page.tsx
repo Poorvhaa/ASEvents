@@ -1,4 +1,5 @@
 import { IntroExperience } from '@/components/intro/IntroExperience'
+import { ENABLE_CINEMATIC_INTRO } from '@/src/config/features'
 import { Hero } from '@/components/sections/hero'
 import { ValueProps } from '@/components/sections/value-props'
 import { Services } from '@/components/sections/services'
@@ -11,7 +12,7 @@ import { CTASection } from '@/components/sections/cta-section'
 export default function HomePage() {
   return (
     <>
-      <IntroExperience />
+      {ENABLE_CINEMATIC_INTRO && <IntroExperience />}
       <div id="homepage-content">
         <Hero />
         <ValueProps />

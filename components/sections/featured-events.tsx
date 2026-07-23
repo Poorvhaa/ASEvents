@@ -75,7 +75,11 @@ export function FeaturedEvents() {
               Featured <span className="text-gold-gradient">Events</span>
             </h2>
           </div>
-          <Button asChild variant="outline" className="border-primary/50 text-foreground hover:bg-primary/10 gap-2 w-fit">
+          <Button
+            asChild
+            variant="outline"
+            className="border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground hover:border-primary gap-2 w-fit transition-all duration-300 ease-out"
+          >
             <Link href="/portfolio">
               View All Events
               <ArrowRight size={18} />

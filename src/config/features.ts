@@ -1,0 +1,2 @@
+export const ENABLE_CINEMATIC_INTRO =
+  process.env.NEXT_PUBLIC_ENABLE_CINEMATIC_INTRO === 'true';

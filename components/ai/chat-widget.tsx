@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Bot } from 'lucide-react'
 import { useAIConsultant } from '@/hooks/use-ai-consultant'
@@ -9,6 +10,33 @@ import { useTranslation } from '@/src/hooks/useTranslation'
 export function AIChatWidget() {
   const { isOpen, openChat, closeChat } = useAIConsultant()
   const { t } = useTranslation()
+
+  const [isIntroActive, setIsIntroActive] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    // Check if we are on the homepage and intro container is present and not completed
+    const isHomePage = window.location.pathname === '/'
+    const completed = !!(window as any).__introCompleted || !document.getElementById('intro-experience-container')
+    
+    if (isHomePage && !completed) {
+      setIsIntroActive(true)
+    }
+
+    const handleIntroComplete = () => {
+      setIsIntroActive(false)
+    }
+
+    window.addEventListener('intro-complete', handleIntroComplete)
+    return () => {
+      window.removeEventListener('intro-complete', handleIntroComplete)
+    }
+  }, [])
+
+  if (isIntroActive) {
+    return null
+  }
 
   return (
     <>

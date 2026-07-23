@@ -157,7 +157,7 @@ const translateOrFallback = (key: string, fallback: string) => {
           type="button"
           variant="outline"
           onClick={handleAIPlanner}
-          className="min-h-11 w-full border-primary/50 text-primary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300 gap-1.5 disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:opacity-100"
+          className="min-h-11 w-full border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 ease-out gap-1.5 disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:opacity-100"
         >
           <Bot size={16} />
           {t('packagesPage.aiPlanner')}

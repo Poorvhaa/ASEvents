@@ -162,7 +162,7 @@ export function FeaturedVenues() {
           <Button
             asChild
             variant="outline"
-            className="min-h-11 border-primary/50 text-foreground hover:bg-primary/10 gap-2 w-full sm:w-fit mx-auto md:mx-0 rounded-xl"
+            className="min-h-11 border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground hover:border-primary gap-2 w-full sm:w-fit mx-auto md:mx-0 rounded-xl transition-all duration-300 ease-out"
           >
             <Link href="/venues">
               {t('featuredVenues.viewAll')}

@@ -136,7 +136,7 @@ export function VenueDetailContent({ venue }: VenueDetailContentProps) {
                         key={amenity}
                         className="group flex items-center gap-3.5 p-4 rounded-xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300"
                       >
-                        <div className="p-2 rounded-lg bg-blue-50 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300 shrink-0">
+                        <div className="p-2 rounded-lg bg-blue-50 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300 shrink-0">
                           <Check size={16} />
                         </div>
                         <span className="text-slate-700 font-medium text-sm sm:text-base">

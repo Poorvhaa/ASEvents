@@ -136,7 +136,7 @@ export function CTASection() {
                 <Button
                   asChild
                   variant="outline"
-                  className="flex-1 min-h-11 border-primary/50 text-foreground hover:bg-primary/10 rounded-xl"
+                  className="flex-1 min-h-11 border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground hover:border-primary rounded-xl transition-all duration-300 ease-out"
                 >
                   <Link href="/contact" className="flex items-center justify-center gap-1.5">
                     <span>Contact Us</span>

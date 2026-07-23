@@ -525,7 +525,6 @@
       "title": "Custom Package"
     },
     "description": "Choose from our curated packages or build a custom package tailored to your exact event requirements.",
-    "eyebrow": "Packages",
     "featuresTitle": "Includes:",
     "headingPart1": "Our Event",
     "headingPart2": "Packages",
@@ -804,7 +803,7 @@
       "eventType": "Event Type:",
       "guestCount": "Guest Count:",
       "heading": "Almost there! Your contact details",
-      "location": "Event Location :",
+      "location": "Event Location:",
       "locationPlaceholder": "Enter event city or location",
       "name": "Your Name *",
       "phone": "Your Phone",

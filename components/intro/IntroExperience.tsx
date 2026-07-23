@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react'; // Edit 10
+import React, { useEffect, useLayoutEffect, useRef, useState, useCallback } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -26,6 +26,9 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   const timelineRef = useRef<gsap.core.Timeline | null>(null);
+  const introFinalizedRef = useRef(false);
+  const isMountedRef = useRef(true);
+  const rafRef = useRef<number | null>(null);
 
   const [introCompleted, setIntroCompleted] = useState(() => {
     if (typeof window !== 'undefined') {
@@ -34,14 +37,87 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
     return false;
   });
 
-  const [isSkipped, setIsSkipped] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return !!(window as any).__introCompleted;
-    }
-    return false;
-  });
+  const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
+  // Track component mount status
   useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const finalizeIntro = useCallback(() => {
+    if (introFinalizedRef.current) return;
+    if (process.env.NODE_ENV === 'development') {
+      console.debug('[Intro] finalizeIntro invoked');
+    }
+    introFinalizedRef.current = true;
+
+    // 1. Force the timeline to complete (progress 1) if it exists
+    if (timelineRef.current) {
+      timelineRef.current.progress(1, false);
+    }
+
+    // 2. Set completion global flag
+    if (typeof window !== 'undefined') {
+      (window as any).__introCompleted = true;
+    }
+
+    // 3. Dispatch completion event for other components (like Navbar)
+    window.dispatchEvent(new CustomEvent('intro-complete'));
+    if (onComplete) onComplete();
+
+    // 4. Reveal homepage and navbar by clearing inline styles set by GSAP
+    const homepage = document.getElementById('homepage-content');
+    if (homepage) {
+      homepage.style.opacity = '';
+      homepage.style.visibility = '';
+      homepage.style.transform = '';
+      gsap.set('#homepage-content', { clearProps: 'all' });
+      gsap.set('#homepage-content section div.absolute.inset-0.z-0', { clearProps: 'all' });
+      gsap.set('#homepage-content section .relative.z-20', { clearProps: 'all' });
+    }
+
+    const siteHeader = document.querySelector('header.fixed.top-0') as HTMLElement;
+    if (siteHeader) {
+      siteHeader.style.opacity = '';
+      siteHeader.style.visibility = '';
+      siteHeader.style.pointerEvents = '';
+      gsap.set('header.fixed.top-0', { clearProps: 'all' });
+    }
+
+    const navbarFades = document.querySelectorAll('.js-navbar-fade-in');
+    navbarFades.forEach((el) => {
+      const htmlEl = el as HTMLElement;
+      htmlEl.style.opacity = '';
+      htmlEl.style.visibility = '';
+      htmlEl.style.pointerEvents = '';
+    });
+    gsap.set('.js-navbar-fade-in', { clearProps: 'all' });
+
+    // 5. Update state to unmount
+    setIntroCompleted(true);
+
+    // 6. Start Lenis scrolling if reference exists
+    if (lenisRef.current) {
+      lenisRef.current.start();
+    }
+
+    // 7. Refresh ScrollTrigger asynchronously but safely
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    rafRef.current = requestAnimationFrame(() => {
+      if (isMountedRef.current) {
+        ScrollTrigger.refresh();
+      }
+    });
+  }, [onComplete]);
+
+  useIsomorphicLayoutEffect(() => {
+    isMountedRef.current = true;
+
     // 1. Accessibility: Media query to check for prefers-reduced-motion
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     setPrefersReducedMotion(mediaQuery.matches);
@@ -50,14 +126,14 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
     // If reduced motion is preferred, immediately complete and exit
     if (mediaQuery.matches) {
-      window.dispatchEvent(new CustomEvent('intro-complete'));
-      if (onComplete) onComplete();
+      finalizeIntro();
       return () => {
         mediaQuery.removeEventListener('change', motionListener);
+        isMountedRef.current = false;
       };
     }
 
-    if (isSkipped) {
+    if (introCompleted) {
       // Dispatch event to show navbar elements
       window.dispatchEvent(new CustomEvent('intro-complete'));
       if (onComplete) onComplete();
@@ -83,12 +159,13 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
       // Initialize Lenis for standard page scrolling
       const lenis = new Lenis({
-        duration: 1.15,
+        autoRaf: false, // Drive Lenis via GSAP ticker
+        duration: 1.1,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smoothWheel: true,
         syncTouch: false,
-        wheelMultiplier: 0.85,
-        touchMultiplier: 1.1,
+        wheelMultiplier: 0.9,
+        touchMultiplier: 1.0,
         infinite: false,
         orientation: 'vertical',
         gestureOrientation: 'vertical',
@@ -110,6 +187,8 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
       lenis.scrollTo(0, { immediate: true, force: true });
 
       return () => {
+        isMountedRef.current = false;
+        mediaQuery.removeEventListener('change', motionListener);
         lenis.destroy();
         lenisRef.current = null;
         gsap.ticker.remove(updateTicker);
@@ -143,7 +222,7 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      syncTouch: false, // Maintain responsive native touch on mobile devices
+      syncTouch: false,
       wheelMultiplier: 0.85,
       touchMultiplier: 1.1,
       infinite: false,
@@ -154,17 +233,13 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
     lenisRef.current = lenis;
     (window as any).lenis = lenis;
 
-    // Connect Lenis to ScrollTrigger updates
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Sync Lenis RAF loop with the GSAP ticker
     const updateTicker = (time: number) => {
       lenis.raf(time * 1000);
     };
     gsap.ticker.add(updateTicker);
     gsap.ticker.lagSmoothing(0);
-
-
 
     // 3. Setup GSAP master timeline using matchMedia for responsive profiles
     const ctx = gsap.context(() => {
@@ -177,45 +252,19 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
         const entranceRoot = containerRef.current.querySelector('.js-entrance-root');
 
         if (!introContainer || !entranceRoot) {
-          console.error(
-            'Intro timeline initialization failed: required scene elements are missing.'
-          );
           return;
         }
 
-        // Stable visible first frame setup
-        gsap.set('.js-intro-container', {
-          autoAlpha: 1,
-          opacity: 1,
-          visibility: 'visible',
-          scale: 0.96,
-        });
-
-        gsap.set('.js-intro-ribbon-container', {
-          autoAlpha: 1,
-          opacity: 1,
-          visibility: 'visible',
-        });
-
-        gsap.set('.js-intro-cover', {
-          autoAlpha: 1,
-          opacity: 1,
-          visibility: 'visible',
-        });
-
-        gsap.set('.js-entrance-root', {
-          autoAlpha: 0,
-        });
-
-        // Initial setup for states to prevent flashes
+        gsap.set('.js-intro-container', { autoAlpha: 1, opacity: 1, visibility: 'visible', scale: 0.96 });
+        gsap.set('.js-intro-ribbon-container', { autoAlpha: 1, opacity: 1, visibility: 'visible' });
+        gsap.set('.js-intro-cover', { autoAlpha: 1, opacity: 1, visibility: 'visible' });
+        gsap.set('.js-entrance-root', { autoAlpha: 0 });
         gsap.set('#homepage-content', { y: '100vh', autoAlpha: 0 });
         gsap.set('header.fixed.top-0', { pointerEvents: 'none' });
         gsap.set('.js-navbar-fade-in', { opacity: 0, autoAlpha: 0 });
 
         const tl = gsap.timeline({
-          defaults: {
-            ease: 'none',
-          },
+          defaults: { ease: 'none' },
           scrollTrigger: {
             trigger: containerRef.current,
             pin: pinRef.current,
@@ -225,24 +274,10 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
             invalidateOnRefresh: true,
             onUpdate: (self) => {
               const isAtEnd = self.progress >= 0.99;
-              setIntroCompleted((prev) => {
-                if (prev !== isAtEnd) {
-                  return isAtEnd;
-                }
-                return prev;
-              });
-
-              // Trigger onComplete callback when reaching the end of the intro
               if (isAtEnd) {
-                // Dispatch event to show navbar elements
-                window.dispatchEvent(new CustomEvent('intro-complete'));
-                if (onComplete) onComplete();
-                // Clear inline styles once scrolling has finalized past intro
-                gsap.set('#homepage-content', { clearProps: 'all' });
-                gsap.set('#homepage-content section div.absolute.inset-0.z-0', { clearProps: 'all' });
-                gsap.set('#homepage-content section .relative.z-20', { clearProps: 'all' });
-                gsap.set('header.fixed.top-0', { clearProps: 'all' });
-                gsap.set('.js-navbar-fade-in', { clearProps: 'all' });
+                requestAnimationFrame(() => {
+                  finalizeIntro();
+                });
               }
             },
           },
@@ -250,331 +285,56 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
 
         timelineRef.current = tl;
 
-        // ==========================================
-        // SCENE 1 & 2: Invitation Establishes & Ribbon Unties (0% to 38%)
-        // ==========================================
-        tl.fromTo('.js-intro-container', 
-          { scale: 0.96 }, 
-          { scale: 1.0, duration: 18 }, 
-          0
-        );
-
-        // Ribbon knot loosening
-        tl.to('.js-intro-ribbon-knot', {
-          scale: 1.18,
-          rotation: 15,
-          z: isMobile ? 0 : 8,
-          duration: 12,
-        }, 18);
-
-        // Loops shrink & tails slide off
-        tl.to('.js-intro-ribbon-knot', {
-          rotation: 23,
-          z: isMobile ? 0 : 13,
-          duration: 8,
-        }, 30);
-
-        tl.to('.js-intro-ribbon-loop-left', {
-          scale: 0,
-          rotation: -70,
-          duration: 8,
-        }, 30);
-        tl.to('.js-intro-ribbon-loop-right', {
-          scale: 0,
-          rotation: 70,
-          duration: 8,
-        }, 30);
-
-        tl.to('.js-intro-ribbon-tail-left', {
-          rotation: 87,
-          x: -45,
-          y: 25,
-          duration: 8,
-        }, 30);
-        tl.to('.js-intro-ribbon-tail-right', {
-          rotation: -87,
-          x: 45,
-          y: 25,
-          duration: 8,
-        }, 30);
-
-        // Ribbon wrapper container slides off screen
-        tl.to('.js-intro-ribbon-container', {
-          x: 480,
-          opacity: 0,
-          autoAlpha: 0,
-          duration: 5,
-        }, 33);
-
-        // ==========================================
-        // SCENE 3: Invitation Opens (38% to 58%)
-        // ==========================================
-        // Cover flap folds open
-        tl.to('.js-intro-cover', {
-          rotationY: -150,
-          duration: 8,
-        }, 38);
-
-        // Card shifts up on Z axis
-        tl.to('.js-intro-interior-card', {
-          z: isMobile ? 0 : 30,
-          opacity: 1,
-          duration: 8,
-        }, 38);
-
-        // Portal fades in
-        tl.fromTo('.js-intro-portal', {
-          opacity: 0,
-          autoAlpha: 0,
-          scale: 0.88,
-        }, {
-          opacity: 1,
-          autoAlpha: 1,
-          scale: 1.0,
-          duration: 3,
-        }, 48);
-
-        tl.to('.js-intro-portal-glow', {
-          opacity: 1,
-          duration: 3,
-        }, 48);
-
-        // Depth rings animate
-        tl.to('.js-intro-portal-ring1', {
-          z: isMobile ? 0 : 50,
-          y: isMobile ? -10 : 0,
-          duration: 7,
-        }, 51);
-        tl.to('.js-intro-portal-ring2', {
-          z: isMobile ? 0 : -50,
-          y: isMobile ? -20 : 0,
-          duration: 7,
-        }, 51);
-
-        // Doorway scale zooms past viewport
-        tl.to('.js-intro-interior-card', {
-          scale: isMobile ? 2.5 : 4.5,
-          z: isMobile ? 0 : 180,
-          y: isMobile ? -50 : 0,
-          duration: 10,
-        }, 48);
-
-        tl.to('.js-intro-base', {
-          scale: isMobile ? 2.5 : 5.0,
-          x: isMobile ? -80 : -150,
-          opacity: 0,
-          autoAlpha: 0,
-          duration: 10,
-        }, 48);
-
-        tl.to('.js-intro-cover', {
-          scale: isMobile ? 2.5 : 5.0,
-          x: isMobile ? -160 : -300,
-          opacity: 0,
-          autoAlpha: 0,
-          duration: 10,
-        }, 48);
-
-        // Screen is masked by the portal placeholder
-        tl.to('.js-intro-portal-placeholder', {
-          opacity: 1,
-          autoAlpha: 1,
-          duration: 2,
-        }, 56);
-
-        // ==========================================
-        // SCENE 4: Event Venue Reveals & Zooms (58% to 82%)
-        // ==========================================
-        tl.to('.js-entrance-root', {
-          autoAlpha: 1,
-          duration: 0.1,
-        }, 58);
-
-        tl.fromTo('.js-entrance-content-wrapper', {
-          opacity: 0,
-          filter: (isMobile || isTablet) ? 'none' : 'brightness(0.25)',
-        }, {
-          opacity: 1,
-          filter: 'brightness(1)',
-          duration: 3,
-        }, 58);
-
-        // Crossfade: invitation dims out
-        tl.to('.js-intro-container', {
-          opacity: 0,
-          autoAlpha: 0,
-          duration: 4,
-        }, 58);
-
-        // Zoom Camera Parallax
+        tl.fromTo('.js-intro-container', { scale: 0.96 }, { scale: 1.0, duration: 18 }, 0);
+        tl.to('.js-intro-ribbon-knot', { scale: 1.18, rotation: 15, z: isMobile ? 0 : 8, duration: 12 }, 18);
+        tl.to('.js-intro-ribbon-knot', { rotation: 23, z: isMobile ? 0 : 13, duration: 8 }, 30);
+        tl.to('.js-intro-ribbon-loop-left', { scale: 0, rotation: -70, duration: 8 }, 30);
+        tl.to('.js-intro-ribbon-loop-right', { scale: 0, rotation: 70, duration: 8 }, 30);
+        tl.to('.js-intro-ribbon-tail-left', { rotation: 87, x: -45, y: 25, duration: 8 }, 30);
+        tl.to('.js-intro-ribbon-tail-right', { rotation: -87, x: 45, y: 25, duration: 8 }, 30);
+        tl.to('.js-intro-ribbon-container', { x: 480, opacity: 0, autoAlpha: 0, duration: 5 }, 33);
+        tl.to('.js-intro-cover', { rotationY: -150, duration: 8 }, 38);
+        tl.to('.js-intro-interior-card', { z: isMobile ? 0 : 30, opacity: 1, duration: 8 }, 38);
+        tl.fromTo('.js-intro-portal', { opacity: 0, autoAlpha: 0, scale: 0.88 }, { opacity: 1, autoAlpha: 1, scale: 1.0, duration: 3 }, 48);
+        tl.to('.js-intro-portal-glow', { opacity: 1, duration: 3 }, 48);
+        tl.to('.js-intro-portal-ring1', { z: isMobile ? 0 : 50, y: isMobile ? -10 : 0, duration: 7 }, 51);
+        tl.to('.js-intro-portal-ring2', { z: isMobile ? 0 : -50, y: isMobile ? -20 : 0, duration: 7 }, 51);
+        tl.to('.js-intro-interior-card', { scale: isMobile ? 2.5 : 4.5, z: isMobile ? 0 : 180, y: isMobile ? -50 : 0, duration: 10 }, 48);
+        tl.to('.js-intro-base', { scale: isMobile ? 2.5 : 5.0, x: isMobile ? -80 : -150, opacity: 0, autoAlpha: 0, duration: 10 }, 48);
+        tl.to('.js-intro-cover', { scale: isMobile ? 2.5 : 5.0, x: isMobile ? -160 : -300, opacity: 0, autoAlpha: 0, duration: 10 }, 48);
+        tl.to('.js-intro-portal-placeholder', { opacity: 1, autoAlpha: 1, duration: 2 }, 56);
+        tl.to('.js-entrance-root', { autoAlpha: 1, duration: 0.1 }, 58);
+        tl.fromTo('.js-entrance-content-wrapper', { opacity: 0, filter: (isMobile || isTablet) ? 'none' : 'brightness(0.25)' }, { opacity: 1, filter: 'brightness(1)', duration: 3 }, 58);
+        tl.to('.js-intro-container', { opacity: 0, autoAlpha: 0, duration: 4 }, 58);
+        
         const amp = isMobile ? 0.5 : (isTablet ? 0.75 : 1.0);
-
-        tl.to('.js-entrance-fg-left', {
-          z: isMobile ? 0 : 400 * amp,
-          x: -150 * amp,
-          y: isMobile ? 50 : 0,
-          scale: 3.2,
-          opacity: 0,
-          duration: 24,
-        }, 58);
-
-        tl.to('.js-entrance-fg-right', {
-          z: isMobile ? 0 : 400 * amp,
-          x: 150 * amp,
-          y: isMobile ? 50 : 0,
-          scale: 3.2,
-          opacity: 0,
-          duration: 24,
-        }, 58);
-
-        tl.to('.js-entrance-arch-frame', {
-          z: isMobile ? 0 : 250 * amp,
-          y: isMobile ? 40 : 0,
-          scale: 2.5,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-arch-frame', {
-          opacity: 0,
-          duration: 5,
-        }, 77);
-
-        tl.to('.js-entrance-ceiling', {
-          y: -120 * amp,
-          scale: 1.5,
-          duration: 24,
-        }, 58);
-
-        tl.to('.js-entrance-ch-central', {
-          z: isMobile ? 0 : 150 * amp,
-          scale: 2.2,
-          y: -60 * amp,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-ch-central', {
-          opacity: 0,
-          duration: 6,
-        }, 76);
-
-        tl.to('.js-entrance-ch-left', {
-          z: isMobile ? 0 : 50 * amp,
-          scale: 2.0,
-          x: -120 * amp,
-          y: -40 * amp,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-ch-left', {
-          opacity: 0,
-          duration: 8,
-        }, 74);
-
-        tl.to('.js-entrance-ch-right', {
-          z: isMobile ? 0 : 50 * amp,
-          scale: 2.0,
-          x: 120 * amp,
-          y: -40 * amp,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-ch-right', {
-          opacity: 0,
-          duration: 8,
-        }, 74);
-
-        tl.to('.js-entrance-aisle-runner', {
-          scaleX: 2.5,
-          scaleY: 1.8,
-          y: 100 * amp,
-          z: isMobile ? 0 : 150 * amp,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-aisle-glow', {
-          scaleX: 2.5,
-          scaleY: 1.8,
-          y: 100 * amp,
-          z: isMobile ? 0 : 150 * amp,
-          duration: 24,
-        }, 58);
-
-        tl.to('.js-entrance-ped-left', {
-          x: -120 * amp,
-          z: isMobile ? 0 : 120 * amp,
-          scale: 2.0,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-ped-left', {
-          opacity: 0,
-          duration: 7,
-        }, 75);
-
-        tl.to('.js-entrance-ped-right', {
-          x: 120 * amp,
-          z: isMobile ? 0 : 120 * amp,
-          scale: 2.0,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-ped-right', {
-          opacity: 0,
-          duration: 7,
-        }, 75);
-
-        tl.to('.js-entrance-bg-stage', {
-          scale: 1.4,
-          z: isMobile ? 0 : -200 * amp,
-          duration: 24,
-        }, 58);
-        tl.to('.js-entrance-stage-light', {
-          opacity: 0.35,
-          duration: 24,
-        }, 58);
-
-        tl.to('.js-entrance-backdrop', {
-          scale: 1.15,
-          duration: 24,
-        }, 58);
-
-        if (!isMobile && !isTablet) {
-          tl.to('.js-entrance-ambient-fog', {
-            opacity: 0.08,
-            duration: 24,
-          }, 58);
-        }
-
-        // ==========================================
-        // SCENE 5: Camera Enters & Homepage Reveals (82% to 100%)
-        // ==========================================
-        tl.to('.js-entrance-bg-stage', {
-          scale: 2.5,
-          duration: 10,
-        }, 82);
-        tl.to('.js-entrance-stage-light', {
-          opacity: 0.95,
-          duration: 10,
-        }, 82);
-        tl.to('.js-entrance-backdrop', {
-          scale: 1.5,
-          duration: 10,
-        }, 82);
-
-        if (!isMobile && !isTablet) {
-          tl.to('.js-entrance-ambient-fog', {
-            opacity: 0.45,
-            duration: 10,
-          }, 82);
-        }
-
-        // Ambient peak whiteout
-        if (!isMobile && !isTablet) {
-          tl.to('.js-entrance-ambient-fog', {
-            opacity: 1.0,
-            duration: 4,
-          }, 92);
-        }
-        tl.to('.js-entrance-bg-stage', {
-          scale: 5.0,
-          z: 0,
-          duration: 4,
-        }, 92);
-
-        // Layers fly past screen
+        tl.to('.js-entrance-fg-left', { z: isMobile ? 0 : 400 * amp, x: -150 * amp, y: isMobile ? 50 : 0, scale: 3.2, opacity: 0, duration: 24 }, 58);
+        tl.to('.js-entrance-fg-right', { z: isMobile ? 0 : 400 * amp, x: 150 * amp, y: isMobile ? 50 : 0, scale: 3.2, opacity: 0, duration: 24 }, 58);
+        tl.to('.js-entrance-arch-frame', { z: isMobile ? 0 : 250 * amp, y: isMobile ? 40 : 0, scale: 2.5, duration: 24 }, 58);
+        tl.to('.js-entrance-arch-frame', { opacity: 0, duration: 5 }, 77);
+        tl.to('.js-entrance-ceiling', { y: -120 * amp, scale: 1.5, duration: 24 }, 58);
+        tl.to('.js-entrance-ch-central', { z: isMobile ? 0 : 150 * amp, scale: 2.2, y: -60 * amp, duration: 24 }, 58);
+        tl.to('.js-entrance-ch-central', { opacity: 0, duration: 6 }, 76);
+        tl.to('.js-entrance-ch-left', { z: isMobile ? 0 : 50 * amp, scale: 2.0, x: -120 * amp, y: -40 * amp, duration: 24 }, 58);
+        tl.to('.js-entrance-ch-left', { opacity: 0, duration: 8 }, 74);
+        tl.to('.js-entrance-ch-right', { z: isMobile ? 0 : 50 * amp, scale: 2.0, x: 120 * amp, y: -40 * amp, duration: 24 }, 58);
+        tl.to('.js-entrance-ch-right', { opacity: 0, duration: 8 }, 74);
+        tl.to('.js-entrance-aisle-runner', { scaleX: 2.5, scaleY: 1.8, y: 100 * amp, z: isMobile ? 0 : 150 * amp, duration: 24 }, 58);
+        tl.to('.js-entrance-aisle-glow', { scaleX: 2.5, scaleY: 1.8, y: 100 * amp, z: isMobile ? 0 : 150 * amp, duration: 24 }, 58);
+        tl.to('.js-entrance-ped-left', { x: -120 * amp, z: isMobile ? 0 : 120 * amp, scale: 2.0, duration: 24 }, 58);
+        tl.to('.js-entrance-ped-left', { opacity: 0, duration: 7 }, 75);
+        tl.to('.js-entrance-ped-right', { x: 120 * amp, z: isMobile ? 0 : 120 * amp, scale: 2.0, duration: 24 }, 58);
+        tl.to('.js-entrance-ped-right', { opacity: 0, duration: 7 }, 75);
+        tl.to('.js-entrance-bg-stage', { scale: 1.4, z: isMobile ? 0 : -200 * amp, duration: 24 }, 58);
+        tl.to('.js-entrance-stage-light', { opacity: 0.35, duration: 24 }, 58);
+        tl.to('.js-entrance-backdrop', { scale: 1.15, duration: 24 }, 58);
+        if (!isMobile && !isTablet) { tl.to('.js-entrance-ambient-fog', { opacity: 0.08, duration: 24 }, 58); }
+        tl.to('.js-entrance-bg-stage', { scale: 2.5, duration: 10 }, 82);
+        tl.to('.js-entrance-stage-light', { opacity: 0.95, duration: 10 }, 82);
+        tl.to('.js-entrance-backdrop', { scale: 1.5, duration: 10 }, 82);
+        if (!isMobile && !isTablet) { tl.to('.js-entrance-ambient-fog', { opacity: 0.45, duration: 10 }, 82); }
+        if (!isMobile && !isTablet) { tl.to('.js-entrance-ambient-fog', { opacity: 1.0, duration: 4 }, 92); }
+        tl.to('.js-entrance-bg-stage', { scale: 5.0, z: 0, duration: 4 }, 92);
         tl.to('.js-entrance-fg-left', { scale: 5.5, z: isMobile ? 0 : 600 * amp, x: -400 * amp, opacity: 0, duration: 4 }, 92);
         tl.to('.js-entrance-fg-right', { scale: 5.5, z: isMobile ? 0 : 600 * amp, x: 400 * amp, opacity: 0, duration: 4 }, 92);
         tl.to('.js-entrance-arch-frame', { scale: 6.0, z: isMobile ? 0 : 600 * amp, opacity: 0, duration: 4 }, 92);
@@ -586,105 +346,55 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
         tl.to('.js-entrance-aisle-glow', { scaleX: 5.0, scaleY: 3.0, y: 250 * amp, z: isMobile ? 0 : 350 * amp, opacity: 0, duration: 4 }, 92);
         tl.to('.js-entrance-ped-left', { scale: 5.0, z: isMobile ? 0 : 400 * amp, x: -320 * amp, opacity: 0, duration: 4 }, 92);
         tl.to('.js-entrance-ped-right', { scale: 5.0, z: isMobile ? 0 : 400 * amp, x: 320 * amp, opacity: 0, duration: 4 }, 92);
-
-        // Stage dissolves
         tl.to('.js-entrance-bg-stage', { opacity: 0, autoAlpha: 0, duration: 2 }, 96);
         tl.to('.js-entrance-backdrop', { opacity: 0, autoAlpha: 0, duration: 2 }, 96);
-
-        if (!isMobile && !isTablet) {
-          tl.to('.js-entrance-ambient-fog', { opacity: 0, autoAlpha: 0, duration: 2 }, 96);
-        }
-
-        // Entrance fades out completely
+        if (!isMobile && !isTablet) { tl.to('.js-entrance-ambient-fog', { opacity: 0, autoAlpha: 0, duration: 2 }, 96); }
         tl.to('.js-entrance-content-wrapper', { opacity: 0, autoAlpha: 0, duration: 4 }, 96);
-
-        // Homepage emerges and translates up
-        tl.fromTo('#homepage-content', {
-          y: '100vh',
-          autoAlpha: 0,
-        }, {
-          y: 0,
-          autoAlpha: 1,
-          duration: 18,
-        }, 82);
-
-        // Homepage Hero emerges inside homepage
-        tl.fromTo('#homepage-content section div.absolute.inset-0.z-0', {
-          opacity: 0,
-          scale: 1.03,
-          filter: (isMobile || isTablet) ? 'none' : 'blur(10px)',
-        }, {
-          opacity: 1,
-          scale: 1,
-          filter: 'none',
-          duration: 10,
-        }, 82);
-
-        tl.fromTo('#homepage-content section .relative.z-20', {
-          opacity: 0,
-          y: 25,
-        }, {
-          opacity: 1,
-          y: 0,
-          duration: 10,
-        }, 85);
-
-        // Navbar elements fade in at the end
-        tl.fromTo('.js-navbar-fade-in', {
-          opacity: 0,
-          autoAlpha: 0,
-        }, {
-          opacity: 1,
-          autoAlpha: 1,
-          duration: 4,
-        }, 96);
-
-        // Header becomes interactive
-        tl.to('header.fixed.top-0', {
-          pointerEvents: 'auto',
-          duration: 0.1,
-        }, 96);
-
-        // Intro container dims out
-        tl.to('#intro-experience-container', {
-          opacity: 0,
-          autoAlpha: 0,
-          duration: 4,
-        }, 96);
+        tl.fromTo('#homepage-content', { y: '100vh', autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 18 }, 82);
+        tl.fromTo('#homepage-content section div.absolute.inset-0.z-0', { opacity: 0, scale: 1.03, filter: (isMobile || isTablet) ? 'none' : 'blur(10px)' }, { opacity: 1, scale: 1, filter: 'none', duration: 10 }, 82);
+        tl.fromTo('#homepage-content section .relative.z-20', { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 10 }, 85);
+        tl.fromTo('.js-navbar-fade-in', { opacity: 0, autoAlpha: 0 }, { opacity: 1, autoAlpha: 1, duration: 4 }, 96);
+        tl.to('header.fixed.top-0', { pointerEvents: 'auto', duration: 0.1 }, 96);
+        tl.to('#intro-experience-container', { opacity: 0, autoAlpha: 0, duration: 4 }, 96);
       };
 
-      // Desktop layout: 500% scroll path, scrub 1.15
-      mm.add('(min-width: 1025px)', () => {
-        setupTimeline(500, 1.15, false, false);
-      });
+      mm.add('(min-width: 1025px)', () => { setupTimeline(500, 1.15, false, false); });
+      mm.add('(min-width: 768px) and (max-width: 1024px)', () => { setupTimeline(400, 0.85, false, true); });
+      mm.add('(max-width: 767px)', () => { setupTimeline(300, 0.55, true, false); });
 
-      // Tablet layout: 400% scroll path, scrub 0.85
-      mm.add('(min-width: 768px) and (max-width: 1024px)', () => {
-        setupTimeline(400, 0.85, false, true);
-      });
-
-      // Mobile layout: 300% scroll path, scrub 0.55
-      mm.add('(max-width: 767px)', () => {
-        setupTimeline(300, 0.55, true, false);
-      });
-
-      return () => {
-        mm.revert();
-      };
+      return () => { mm.revert(); };
     }, containerRef);
 
+    // Refresh ScrollTrigger and Lenis when assets and fonts are fully loaded
+    const handleLoad = () => {
+      if (!isMountedRef.current) return;
+      ScrollTrigger.refresh();
+      lenis.resize();
+    };
+
+    window.addEventListener('load', handleLoad);
+
+    if (typeof document !== 'undefined' && (document as any).fonts) {
+      (document as any).fonts.ready.then(() => {
+        if (!isMountedRef.current) return;
+        ScrollTrigger.refresh();
+        if (lenisRef.current) {
+          lenisRef.current.resize();
+        }
+      });
+    }
+
     return () => {
-      // Clean up Lenis and ticker on unmount
+      isMountedRef.current = false;
+      mediaQuery.removeEventListener('change', motionListener);
+      window.removeEventListener('load', handleLoad);
       if (lenisRef.current) {
         lenisRef.current.destroy();
         lenisRef.current = null;
       }
       gsap.ticker.remove(updateTicker);
       delete (window as any).lenis;
-
-      // Clean up GSAP context and ScrollTrigger instances
       ctx.revert();
-
       // Restore inline styles on cleanup
       const finalHomepage = document.getElementById('homepage-content');
       if (finalHomepage) {
@@ -707,27 +417,15 @@ export const IntroExperience: React.FC<IntroExperienceProps> = ({ onComplete }) 
         htmlEl.style.pointerEvents = '';
       });
     };
-  }, [onComplete, isSkipped]);
+  }, [onComplete, introCompleted]);
 
   // Accessibility Skip function (Completes timeline, sets states, and reveals homepage)
   const skipIntro = () => {
-    // 1. Seek timeline to the end (progress = 1)
-    if (timelineRef.current) {
-      timelineRef.current.progress(1);
-    }
-
-    // 2. Set completion flags
-    if (typeof window !== 'undefined') {
-      (window as any).__introCompleted = true;
-    }
-
-    // 3. Update React states to trigger unmount and permanently hide button
-    setIntroCompleted(true);
-    setIsSkipped(true);
+    finalizeIntro();
   };
 
   // If user prefers reduced motion or skipped the intro, do not render the container
-  if (isSkipped || prefersReducedMotion) {
+  if (introCompleted || prefersReducedMotion) {
     return null;
   }
 

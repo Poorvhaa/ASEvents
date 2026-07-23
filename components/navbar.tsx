@@ -14,6 +14,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { parseHashHref, scrollToHash } from '@/lib/scroll-to-hash'
 import { useTranslation } from '@/src/hooks/useTranslation'
 import { Language } from '@/src/context/LanguageContext'
+import { ENABLE_CINEMATIC_INTRO } from '@/src/config/features'
 
 const getNavLinkTranslationKey = (label: string): string => {
   switch (label.toLowerCase()) {
@@ -54,7 +55,7 @@ export function Navbar() {
   const router = useRouter()
   const isHomePage = pathname === '/'
 
-  const [isIntroActive, setIsIntroActive] = useState(isHomePage)
+  const [isIntroActive, setIsIntroActive] = useState(isHomePage && ENABLE_CINEMATIC_INTRO)
 
   useEffect(() => {
     if (!isHomePage) {
@@ -212,22 +213,20 @@ export function Navbar() {
     >
       <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between h-20 lg:h-24">
-          {/* Logo */}
           <Link
             href="/"
             onClick={closeAllMenus}
             aria-label="AS Events home"
-            className="flex items-center shrink-0 py-2 transition-opacity duration-300 hover:opacity-90 focus-visible:outline-none pointer-events-auto"
+            className={cn(
+              "relative flex items-center shrink-0 transition-all duration-500 hover:opacity-90 focus-visible:outline-none pointer-events-auto js-navbar-fade-in",
+              isIntroActive && "opacity-0 pointer-events-none"
+            )}
           >
             <BrandLogo
               variant="navbar"
+              isScrolled={isScrolled}
+              isHomePage={isHomePage}
               priority
-              className={cn(
-                "transition-all duration-500 drop-shadow-[0_1px_2px_rgba(0,0,0,0.10)]",
-                isScrolled
-                  ? "h-12 sm:h-14"
-                  : "h-14 sm:h-16 lg:h-[68px]"
-              )}
             />
           </Link>
 
@@ -389,7 +388,7 @@ export function Navbar() {
             <div className="flex items-center justify-between w-full max-w-7xl mx-auto border-b border-white/10 pb-6">
               <BrandLogo
                 variant="light"
-                className="h-10 w-auto"
+                className="h-14 w-14 sm:h-16 sm:w-16"
               />
               
               <div className="flex items-center gap-4">

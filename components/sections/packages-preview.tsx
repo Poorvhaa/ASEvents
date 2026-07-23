@@ -44,7 +44,6 @@ export function PackagesPreview() {
           className="flex flex-col md:flex-row md:items-end justify-between mb-10 sm:mb-16 gap-6"
         >
           <div className="text-center md:text-left">
-            <span className="text-eyebrow">{t('packagesPreview.eyebrow')}</span>
             <h2 className="text-section-heading text-foreground mt-3 sm:mt-4">
               {t('packagesPreview.headingPart1')}{' '}
               <span className="text-gold-gradient">{t('packagesPreview.headingPart2')}</span>
@@ -56,7 +55,7 @@ export function PackagesPreview() {
           <Button
             asChild
             variant="outline"
-            className="min-h-11 border-primary/50 text-foreground hover:bg-primary/10 gap-2 w-full sm:w-fit mx-auto md:mx-0"
+            className="min-h-11 border-primary/50 text-foreground hover:bg-primary/10 hover:text-foreground hover:border-primary gap-2 w-full sm:w-fit mx-auto md:mx-0 transition-all duration-300 ease-out"
           >
             <Link href="/packages">
               {t('packagesPreview.viewAll')}

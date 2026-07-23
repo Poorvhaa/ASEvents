@@ -42,8 +42,7 @@ export function Footer() {
           <div className="flex flex-col items-center sm:items-start">
             <div className="mb-4">
               <BrandLogo
-                variant="light"
-                className="h-12 w-auto"
+                variant="footer"
               />
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-sm">
@@ -55,7 +54,7 @@ export function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
-                  className="touch-target w-11 h-11 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+                  className="touch-target w-11 h-11 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 ease-out"
                 >
                   <social.icon size={18} />
                 </a>
