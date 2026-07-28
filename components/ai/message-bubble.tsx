@@ -27,7 +27,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const { t } = useTranslation()
 
   let content = message.content
-  if (message.id === 'welcome') {
+  if (message.translationKey) {
+    content = t(message.translationKey)
+  } else if (message.id === 'welcome') {
     if (content.startsWith('Great choice') || content.includes('package')) {
       const match = content.match(/\*\*(.*?)\*\*/)
       const pkgTitle = match ? match[1] : ''

@@ -79,8 +79,9 @@
       "eventDate": "Wonderful choice! When is your event planned? (e.g. December 2025, or type a specific date)",
       "eventType": "Let's begin — what type of event are you planning?",
       "guestCount": "How many guests are you expecting?",
-      "specialRequirements": "Any special requirements or vision for your event? (Type your ideas or \"None\")",
-      "venuePreference": "Do you have a venue preference? (e.g. Banquet Hall, Resort, Palace, Farmhouse)"
+      "specialRequirements": "Any special requirements or vision for your event? Type your ideas or \"None\".",
+      "venuePreference": "Do you have a venue preference? (e.g. Banquet Hall, Resort, Palace, Farmhouse)",
+      "venueType": "What type of venue would you prefer?"
     },
     "reason": {
       "and": " and ",
@@ -101,6 +102,14 @@
       "finalizeAV": "Finalize AV and branding requirements early with your team.",
       "scheduleWalkthrough": "Schedule a venue walkthrough before signing contracts.",
       "specialRequirements": "We'll accommodate: \"{req}...\""
+    },
+    "validation": {
+      "describeEvent": "Please describe your event or enter \"None\".",
+      "selectVenue": "Please select a venue type.",
+      "guestCount": "Please enter the expected number of guests.",
+      "required": "This field is required.",
+      "invalidDate": "Please select a valid future event date.",
+      "invalidLocation": "Please enter a valid event location."
     },
     "venuePreferences": {
       "Banquet Hall": "Banquet Hall",

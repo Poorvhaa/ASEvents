@@ -80,7 +80,7 @@ export function AIChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.96 }}
             transition={{ type: 'spring', damping: 28, stiffness: 320 }}
-            className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:bottom-6 sm:right-6 z-50 w-auto sm:w-[min(400px,calc(100vw-2rem))] h-[min(800px,calc(100dvh-1rem))] sm:h-[min(850px,calc(100vh-2rem))] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden max-h-[95vh]"
+            className="fixed inset-x-3 bottom-[calc(0.75rem+env(safe-area-inset-bottom,0px))] sm:inset-x-auto sm:bottom-6 sm:right-6 z-50 w-auto sm:w-[min(400px,calc(100vw-2rem))] h-[min(800px,calc(100dvh-1rem))] sm:h-[min(850px,calc(100vh-2rem))] bg-white rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden max-h-[95dvh]"
           >
             <div className="flex items-center justify-between px-4 py-3.5 bg-primary text-primary-foreground shrink-0">
               <div className="flex items-center gap-2.5 min-w-0">

@@ -124,6 +124,41 @@ export const aiPlannerPromptField = safeString(
     }, 'Please describe your event.')
 );
 
+const optionalRequirementResponses = [
+  "none",
+  "no",
+  "n/a",
+  "na",
+  "no special requirements",
+  "nothing specific",
+  "नहीं",
+  "कोई नहीं",
+  "कोई विशेष आवश्यकता नहीं",
+  "कुछ नहीं",
+  "ના",
+  "કોઈ નહીં",
+  "કોઈ ખાસ જરૂરિયાત નથી",
+  "કંઈ નહીં"
+];
+
+export const specialRequirementsSchema = safeString(
+  z.string()
+    .trim()
+    .min(1, 'Please describe your event.')
+    .max(1500, 'Prompt must not exceed 1500 characters.')
+    .refine((value) => {
+      const normalized = value
+        .toLowerCase()
+        .replace(/[.!?,]/g, "")
+        .trim();
+
+      return (
+        optionalRequirementResponses.includes(normalized) ||
+        normalized.length >= 3
+      );
+    }, 'Please describe your event.')
+);
+
 // ----------------------------------------------------------------
 // Form Specific Schemas
 // ----------------------------------------------------------------

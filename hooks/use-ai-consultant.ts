@@ -17,7 +17,7 @@ interface AIConsultantStore {
   openChat: (welcomeMessage?: string) => void
   openChatWithPackage: (prefill: Partial<ConsultantAnswers>, welcomeMessage?: string) => void
   closeChat: () => void
-  addMessage: (role: 'assistant' | 'user', content: string, recommendation?: AIConsultationResult) => void
+  addMessage: (role: 'assistant' | 'user', content: string, recommendation?: AIConsultationResult, translationKey?: string) => void
   setAnswer: (field: keyof ConsultantAnswers, value: string) => void
   setStep: (step: ConsultantStep) => void
   setTyping: (typing: boolean) => void
@@ -87,7 +87,7 @@ export const useAIConsultant = create<AIConsultantStore>((set) => ({
 
   closeChat: () => set({ isOpen: false }),
 
-  addMessage: (role, content, recommendation) =>
+  addMessage: (role, content, recommendation, translationKey) =>
     set((state) => ({
       messages: [
         ...state.messages,
@@ -97,6 +97,7 @@ export const useAIConsultant = create<AIConsultantStore>((set) => ({
           content,
           timestamp: new Date(),
           recommendation,
+          translationKey,
         },
       ],
     })),

@@ -107,6 +107,7 @@ export interface ChatMessage {
   content: string
   timestamp: Date
   recommendation?: AIConsultationResult
+  translationKey?: string
 }
 
 export interface LeadPayload {
