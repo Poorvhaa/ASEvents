@@ -73,9 +73,21 @@ export default async function RootLayout({
     <html
       lang={lang}
       className={`${inter.variable} ${playfair.variable} ${notoDevanagari.variable} ${notoGujarati.variable} bg-background`}
-    > <head> <meta name="google-site-verification" content="r_3c8kVeDtn1diqQw1oIrSRDRJZ_lxk7aKdjWz1HwqA" />
-
-</head>
+    >
+      <head>
+        <meta name="google-site-verification" content="r_3c8kVeDtn1diqQw1oIrSRDRJZ_lxk7aKdjWz1HwqA" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FJ65Q3DVKB" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){ window.dataLayer.push(arguments); }
+              gtag('js', new Date());
+              gtag('config', 'G-FJ65Q3DVKB');
+            `,
+          }}
+        />
+      </head>
       <body className="font-sans antialiased overflow-x-hidden min-w-0">
         <LanguageProvider defaultLanguage={lang as any}>
           <script
