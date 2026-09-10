@@ -22,8 +22,9 @@ export function CompanyStory() {
             <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
               <Image
                 src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop"
-                alt="AS Events team planning"
+                alt="Reception table set with colorful flowers, glassware, and white plates"
                 fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
                 className="object-cover"
               />
             </div>

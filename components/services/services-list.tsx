@@ -14,6 +14,7 @@ const services = [
     title: 'Wedding Planning',
     description: 'Transform your wedding dreams into a breathtaking reality. Our expert planners handle every detail, from venue selection to the final farewell, ensuring your special day is nothing short of magical.',
     image: 'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop',
+    alt: "Bride holding a bouquet beside the groom",
     features: [
       'Venue scouting and selection',
       'Theme development and design',
@@ -29,6 +30,7 @@ const services = [
     title: 'Destination Weddings',
     description: 'Say "I do" in paradise. We specialize in creating unforgettable destination weddings at exotic locations worldwide, handling all logistics so you can focus on your love story.',
     image: 'https://images.unsplash.com/photo-1544078751-58fee2d8a03b?q=80&w=1200&auto=format&fit=crop',
+    alt: "Wedding couple embracing on a black sand beach",
     features: [
       'Global destination expertise',
       'Travel and accommodation coordination',
@@ -44,6 +46,7 @@ const services = [
     title: 'Corporate Events',
     description: 'Elevate your corporate image with professionally executed events. From product launches to annual galas, we create impactful experiences that strengthen your brand.',
     image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1200&auto=format&fit=crop',
+    alt: "Audience seated at a conference beneath hanging lights",
     features: [
       'Conference and summit planning',
       'Team building events',
@@ -59,6 +62,7 @@ const services = [
     title: 'Birthday & Milestone Celebrations',
     description: 'Celebrate life&apos;s special moments in style. From sweet sixteens to golden anniversaries, we create personalized celebrations that reflect your story.',
     image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&w=1200&auto=format&fit=crop',
+    alt: "Colorful balloons with curling ribbons",
     features: [
       'Custom theme design',
       'Entertainment booking',
@@ -74,6 +78,7 @@ const services = [
     title: 'Anniversary Events',
     description: 'Honor your journey together with an elegant anniversary celebration. We create intimate gatherings or grand parties that celebrate your enduring love.',
     image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop',
+    alt: "Reception table with floral centerpieces and place settings",
     features: [
       'Renewal of vows ceremonies',
       'Memory lane installations',
@@ -139,8 +144,9 @@ export function ServicesList() {
                   <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
                     <Image
                       src={service.image}
-                      alt={t(`services.${localeSlug}.title`)}
+                      alt={service.alt}
                       fill
+                      sizes="(min-width: 1024px) 50vw, 100vw"
                       className="object-cover"
                     />
                   </div>

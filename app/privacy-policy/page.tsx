@@ -10,9 +10,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const description = getTranslationServer(lang, 'seo.privacyPolicy.description')
 
   return {
+    alternates: { canonical: 'https://www.aseventmanagement.com/privacy-policy' },
+    robots: { index: true, follow: true },
     title,
     description,
     openGraph: {
+      url: 'https://www.aseventmanagement.com/privacy-policy',
       title,
       description,
       type: 'website',

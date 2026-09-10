@@ -9,14 +9,19 @@ export function middleware(request: NextRequest) {
   if (localeMatch) {
     const locale = localeMatch[1]
     const cleanPath = pathname.replace(/^\/(en|hi|gu)/, '') || '/'
-    const redirectUrl = new URL(cleanPath, request.url)
+    const replacedPaths: Record<string, string> = {
+      '/privacy': '/privacy-policy',
+      '/terms': '/terms-of-service',
+      '/gallery': '/portfolio',
+    }
+    const redirectUrl = new URL(replacedPaths[cleanPath] || cleanPath, request.url)
     
     // Copy query parameters
     request.nextUrl.searchParams.forEach((val, key) => {
       redirectUrl.searchParams.set(key, val)
     })
 
-    const response = NextResponse.redirect(redirectUrl)
+    const response = NextResponse.redirect(redirectUrl, 308)
     response.cookies.set('as-events-language', locale, { path: '/', maxAge: 31536000 })
     return response
   }

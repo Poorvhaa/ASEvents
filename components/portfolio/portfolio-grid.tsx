@@ -246,14 +246,8 @@ export function PortfolioGrid() {
                   <Image
                     src={image.src}
                     alt={imageAlt}
-                    width={400}
-                    height={
-                      index % 3 === 0
-                        ? 500
-                        : index % 3 === 1
-                          ? 300
-                          : 400
-                    }
+                    width={image.width}
+                    height={image.height}
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -309,8 +303,8 @@ export function PortfolioGrid() {
             <Image
               src={selectedImage.src}
               alt={selectedImage.alt}
-              width={1200}
-              height={800}
+              width={selectedImage.width}
+              height={selectedImage.height}
               sizes="100vw"
               className="object-contain w-full h-auto max-h-[85vh] rounded-xl"
             />

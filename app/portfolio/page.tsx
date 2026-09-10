@@ -1,3 +1,4 @@
+import { BreadcrumbStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { getTranslationServer } from '@/lib/i18n-server'
@@ -12,6 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = getTranslationServer(lang, 'seo.portfolio.title')
   const description = getTranslationServer(lang, 'seo.portfolio.description')
   return {
+    alternates: { canonical: 'https://www.aseventmanagement.com/portfolio' },
+    robots: { index: true, follow: true },
     title,
     description,
     keywords: [
@@ -26,6 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
       'entertainment events',
     ],
     openGraph: {
+      url: 'https://www.aseventmanagement.com/portfolio',
       title,
       description,
       type: 'website',
@@ -44,6 +48,7 @@ export default async function PortfolioPage() {
 
   return (
     <>
+      <BreadcrumbStructuredData page="portfolio" />
       <PortfolioHero />
       <Suspense fallback={<div className="py-24 text-center text-muted-foreground">{getTranslationServer(lang, 'loading.portfolio')}</div>}>
         <PortfolioGrid />

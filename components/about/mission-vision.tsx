@@ -22,7 +22,7 @@ export function MissionVision() {
             <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
               <Target className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-foreground mb-4">{t('about.mission.title')}</h3>
+            <h2 className="text-2xl font-serif font-bold text-foreground mb-4">{t('about.mission.title')}</h2>
             <p className="text-muted-foreground leading-relaxed">
               {t('about.mission.desc')}
             </p>
@@ -39,7 +39,7 @@ export function MissionVision() {
             <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mb-6">
               <Eye className="w-8 h-8 text-primary" />
             </div>
-            <h3 className="text-2xl font-serif font-bold text-foreground mb-4">{t('about.vision.title')}</h3>
+            <h2 className="text-2xl font-serif font-bold text-foreground mb-4">{t('about.vision.title')}</h2>
             <p className="text-muted-foreground leading-relaxed">
               {t('about.vision.desc')}
             </p>
@@ -54,7 +54,7 @@ export function MissionVision() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <h3 className="text-2xl font-serif font-bold text-foreground mb-8">{t('about.values.title')}</h3>
+          <h2 className="text-2xl font-serif font-bold text-foreground mb-8">{t('about.values.title')}</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {['Excellence', 'Creativity', 'Integrity', 'Passion', 'Innovation'].map((value, index) => (
               <motion.span

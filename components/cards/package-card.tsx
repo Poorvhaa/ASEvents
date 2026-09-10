@@ -86,9 +86,9 @@ const translateOrFallback = (key: string, fallback: string) => {
       <span className="text-primary text-xs sm:text-sm font-medium capitalize">
         {t(`packagesPage.categories.${categoryNames[pkg.category] || pkg.category}`) || pkg.category}
       </span>
-      <h3 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">
+      <h2 className="text-lg sm:text-xl font-semibold text-foreground mt-1 mb-2">
         {translateOrFallback(`packages.${pkg.id}.title`, pkg.title)}
-      </h3>
+      </h2>
 
       <div className="flex flex-wrap gap-3 text-xs text-muted-foreground mb-4">
         <span className="inline-flex items-center gap-1">

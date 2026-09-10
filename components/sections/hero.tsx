@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import Link from 'next/link'
@@ -14,11 +13,6 @@ import en from '@/src/locales/en.json'
 import hi from '@/src/locales/hi.json'
 import gu from '@/src/locales/gu.json'
 
-// Dynamically import ThreeJS Canvas to prevent hydration failures / SSR errors
-const HeroScene = dynamic(() => import('@/components/three/hero-scene'), {
-  ssr: false,
-  loading: () => <div className="absolute inset-0 z-0 bg-black/20" />,
-})
 
 export function Hero() {
   const { openModal } = useQuoteModal()
@@ -44,7 +38,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <Image
           src="/herobg.jpeg"
-          alt="Luxury event celebration"
+          alt=""
           fill
           priority
           sizes="100vw"

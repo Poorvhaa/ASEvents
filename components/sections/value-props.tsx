@@ -65,9 +65,9 @@ export function ValueProps() {
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+                <h2 className="text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
                   {title}
-                </h3>
+                </h2>
                 
                 <p className="text-small text-muted-foreground leading-relaxed font-light">
                   {desc}

@@ -32,7 +32,7 @@ export function BrandLogo({
           src="/as-event-logo-light.png"
           alt="AS Events Logo"
           fill
-          priority={priority}
+          priority={priority && isTransparent}
           sizes="(max-width: 640px) 96px, (max-width: 1024px) 110px, 145px"
           className={cn(
             'object-contain transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.10)]',
@@ -46,7 +46,7 @@ export function BrandLogo({
           src="/as-events-logo-navbar.png"
           alt="AS Events Logo"
           fill
-          priority={priority}
+          priority={priority && !isTransparent}
           sizes="(max-width: 640px) 96px, (max-width: 1024px) 110px, 145px"
           className={cn(
             'object-contain transition-opacity duration-300 drop-shadow-[0_1px_2px_rgba(0,0,0,0.10)]',

@@ -72,13 +72,13 @@ export const InvitationScene: React.FC<InvitationSceneProps> = ({ timeline }) =>
 
         {/* Interior Card (slides forward) */}
         <section ref={cardRef} className={`${styles.interiorCard} js-intro-interior-card`}>
-          <h1 
+          <p 
             className={styles.title} 
             lang={language} 
             style={getTitleStyle(language)}
           >
             {t('Intro.title')}
-          </h1>
+          </p>
           <p 
             className={styles.tagline} 
             lang={language} 

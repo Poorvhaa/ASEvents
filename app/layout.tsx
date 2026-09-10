@@ -1,3 +1,5 @@
+import Script from 'next/script'
+import { GlobalStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display, Noto_Serif_Devanagari, Noto_Serif_Gujarati } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
@@ -38,6 +40,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const cookieStore = await cookies()
   const lang = cookieStore.get('as-events-language')?.value || 'en'
   return {
+    metadataBase: new URL('https://www.aseventmanagement.com'),
     title: getTranslationServer(lang, 'seo.default.title'),
     description: getTranslationServer(lang, 'seo.default.description'),
     keywords: ['event management', 'luxury weddings', 'corporate events', 'destination weddings', 'event planning'],
@@ -58,6 +61,18 @@ export async function generateMetadata(): Promise<Metadata> {
       ],
       apple: '/apple-icon.png',
     },
+    openGraph: {
+      title: getTranslationServer(lang, 'seo.default.title'),
+      description: getTranslationServer(lang, 'seo.default.description'),
+      siteName: 'AS Events',
+      locale: lang === 'hi' ? 'hi_IN' : lang === 'gu' ? 'gu_IN' : 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: getTranslationServer(lang, 'seo.default.title'),
+      description: getTranslationServer(lang, 'seo.default.description'),
+    },
   }
 }
 
@@ -76,8 +91,10 @@ export default async function RootLayout({
     >
       <head>
         <meta name="google-site-verification" content="r_3c8kVeDtn1diqQw1oIrSRDRJZ_lxk7aKdjWz1HwqA" />
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FJ65Q3DVKB" />
-        <script
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-FJ65Q3DVKB" strategy="afterInteractive" />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -90,27 +107,7 @@ export default async function RootLayout({
       </head>
       <body className="font-sans antialiased overflow-x-hidden min-w-0">
         <LanguageProvider defaultLanguage={lang as any}>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                '@context': 'https://schema.org',
-                '@type': 'EventPlanner',
-                name: 'AS Events',
-                url: 'https://asevents.in',
-                description:
-                  'Premium Indian event management — weddings, corporate events, destination celebrations.',
-                address: {
-                  '@type': 'PostalAddress',
-                  addressLocality: 'Vadodara',
-                  addressRegion: 'Gujarat',
-                  addressCountry: 'IN',
-                },
-                email: 'as.eventmanagement2829@gmail.com',
-                telephone: '+91-95103-24143',
-              }),
-            }}
-          />
+          <GlobalStructuredData />
           <Navbar />
           <main className="min-w-0 overflow-x-hidden">{children}</main>
           <Footer />

@@ -81,7 +81,7 @@ export function Testimonials() {
               <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
     
                 <div>
-                  <h4 className="font-semibold text-foreground">{testimonials[currentIndex].name}</h4>
+                  <p className="font-semibold text-foreground">{testimonials[currentIndex].name}</p>
                   <p className="text-muted-foreground text-small">{t(testimonials[currentIndex].roleKey)}</p>
                   <div className="flex gap-1 mt-1 justify-center sm:justify-start">
                     {Array.from({ length: testimonials[currentIndex].rating }).map((_, i) => (

@@ -1,3 +1,23 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Event Venues | AS Event Management',
+  description: 'Explore premium wedding halls, luxury resorts, banquet halls, and lawns with AS Event Management to find the ideal setting for your celebration.',
+  alternates: { canonical: 'https://www.aseventmanagement.com/venues' },
+  openGraph: {
+    title: 'Event Venues | AS Event Management',
+    description: 'Explore premium wedding halls, luxury resorts, banquet halls, and lawns with AS Event Management to find the ideal setting for your celebration.',
+    url: 'https://www.aseventmanagement.com/venues',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Event Venues | AS Event Management',
+    description: 'Explore premium wedding halls, luxury resorts, banquet halls, and lawns with AS Event Management to find the ideal setting for your celebration.',
+  },
+  robots: { index: false, follow: true },
+}
+
 import { notFound } from 'next/navigation'
 
 export default function VenuesPage() {

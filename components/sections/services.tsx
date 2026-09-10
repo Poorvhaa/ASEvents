@@ -53,8 +53,10 @@ export function Services() {
         >
           <span className="text-eyebrow">{t('services.eyebrow')}</span>
           <h2 className="text-section-heading text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6 font-serif">
-            {t('services.headingPart1')}{' '}
-            <span className="text-gold-gradient">{t('services.headingPart2')}</span>
+            <Link href="/services">
+              {t('services.headingPart1')}{' '}
+              <span className="text-gold-gradient">{t('services.headingPart2')}</span>
+            </Link>
           </h2>
           <p className="text-body text-muted-foreground font-light">
             {t('services.description')}
@@ -134,10 +136,10 @@ export function Services() {
                   </div>
 
                   <Link
-                    href={`/portfolio?category=${service.slug}`}
+                    href="/portfolio"
                     className="flex items-center justify-between w-full py-3 px-4 bg-primary text-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-all duration-300"
                   >
-                    <span>View Projects</span>
+                    <span>View Portfolio</span>
                     <ArrowRight size={16} />
                   </Link>
                 </div>

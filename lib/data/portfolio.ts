@@ -30,6 +30,8 @@ export interface PortfolioItem {
 }
 
 export interface GalleryImage {
+  width: number
+  height: number
   id: string
   src: string
   category: PortfolioCategory
@@ -222,45 +224,45 @@ export const portfolioItems: PortfolioItem[] = [
 
 export const galleryImages: GalleryImage[] = [
   // Weddings
-  { id: 'wedding-carnival-1', src: '/images/portfolio/weddings/carnival 1.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 1' },
-  { id: 'wedding-carnival-2', src: '/images/portfolio/weddings/carnival 2.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 2' },
-  { id: 'wedding-carnival-3', src: '/images/portfolio/weddings/carnival 3.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 3' },
-  { id: 'wedding-carnival-4', src: '/images/portfolio/weddings/carnival 4.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 4' },
-  { id: 'wedding-engagement', src: '/images/portfolio/weddings/engagement.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 5' },
-  { id: 'wedding-haldi-1', src: '/images/portfolio/weddings/haldi 1.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 6' },
-  { id: 'wedding-haldi-2', src: '/images/portfolio/weddings/haldi 2.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 7' },
-  { id: 'wedding-haldi-3', src: '/images/portfolio/weddings/haldi 3.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 8' },
-  { id: 'wedding-haldi-4', src: '/images/portfolio/weddings/haldi 4.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 9' },
-  { id: 'wedding-mehendi-1', src: '/images/portfolio/weddings/mehendi 1.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 10' },
-  { id: 'wedding-mehendi-2', src: '/images/portfolio/weddings/mehendi 2.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 11' },
-  { id: 'wedding-mehendi-3', src: '/images/portfolio/weddings/mehendi 3.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 12' },
-  { id: 'wedding-mehendi-4', src: '/images/portfolio/weddings/mehendi 4.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 13' },
-  { id: 'wedding-sangeet-1', src: '/images/portfolio/weddings/sangeet 1.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 14' },
-  { id: 'wedding-sangeet-2', src: '/images/portfolio/weddings/sangeet 2.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 15' },
-  { id: 'wedding-sangeet-3', src: '/images/portfolio/weddings/sangeet 3.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 16' },
-  { id: 'wedding-sangeet-4', src: '/images/portfolio/weddings/sangeet 4.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 17' },
-  { id: 'wedding-wedding-1', src: '/images/portfolio/weddings/wedding 1.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 18' },
-  { id: 'wedding-wedding-2', src: '/images/portfolio/weddings/wedding 2.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 19' },
-  { id: 'wedding-wedding-3', src: '/images/portfolio/weddings/wedding 3.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 20' },
-  { id: 'wedding-wedding-4', src: '/images/portfolio/weddings/wedding 4.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 21' },
-  { id: 'wedding-wedding-5', src: '/images/portfolio/weddings/wedding 5.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 22' },
-  { id: 'wedding-wedding-6', src: '/images/portfolio/weddings/wedding 6.jpg', category: 'Wedding', alt: 'Wedding event by AS Events 23' },
+  { id: 'wedding-carnival-1', src: '/images/portfolio/weddings/carnival 1.jpg', width: 1024, height: 1536, category: 'Wedding', alt: 'Outdoor carnival entrance decorated with colorful masks and palm trees' },
+  { id: 'wedding-carnival-2', src: '/images/portfolio/weddings/carnival 2.jpg', width: 1200, height: 1487, category: 'Wedding', alt: 'Pink and orange carnival seating area beneath colorful hanging decorations' },
+  { id: 'wedding-carnival-3', src: '/images/portfolio/weddings/carnival 3.jpg', width: 736, height: 552, category: 'Wedding', alt: 'Colorful carnival lounge with patterned panels and hanging garlands' },
+  { id: 'wedding-carnival-4', src: '/images/portfolio/weddings/carnival 4.jpg', width: 800, height: 1000, category: 'Wedding', alt: 'Outdoor seating beneath a canopy of pink and yellow fabric' },
+  { id: 'wedding-engagement', src: '/images/portfolio/weddings/engagement.jpg', width: 1200, height: 800, category: 'Wedding', alt: 'Engagement stage with a cream sofa and red and white floral arch' },
+  { id: 'wedding-haldi-1', src: '/images/portfolio/weddings/haldi 1.jpg', width: 1200, height: 1500, category: 'Wedding', alt: 'Haldi setup with two gold basins and hanging garlands against green panels' },
+  { id: 'wedding-haldi-2', src: '/images/portfolio/weddings/haldi 2.jpg', width: 736, height: 589, category: 'Wedding', alt: 'Yellow and white haldi backdrop with a gold basin and cushioned seating' },
+  { id: 'wedding-haldi-3', src: '/images/portfolio/weddings/haldi 3.jpg', width: 1200, height: 1959, category: 'Wedding', alt: 'Haldi seating beneath hanging baskets and a yellow floral canopy' },
+  { id: 'wedding-haldi-4', src: '/images/portfolio/weddings/haldi 4.jpg', width: 736, height: 1104, category: 'Wedding', alt: 'Indoor haldi stage with yellow flowers and hanging marigold garlands' },
+  { id: 'wedding-mehendi-1', src: '/images/portfolio/weddings/mehendi 1.jpg', width: 736, height: 804, category: 'Wedding', alt: 'Green mehendi seating beneath a draped canopy topped with white flowers' },
+  { id: 'wedding-mehendi-2', src: '/images/portfolio/weddings/mehendi 2.jpg', width: 1200, height: 1159, category: 'Wedding', alt: 'Circular floral mehendi backdrop with white curtains and low seating' },
+  { id: 'wedding-mehendi-3', src: '/images/portfolio/weddings/mehendi 3.jpg', width: 1080, height: 1075, category: 'Wedding', alt: 'Green outdoor mehendi swing beneath a fabric canopy' },
+  { id: 'wedding-mehendi-4', src: '/images/portfolio/weddings/mehendi 4.jpg', width: 1200, height: 1600, category: 'Wedding', alt: 'Outdoor mehendi seating framed by orange garlands and colorful flowers' },
+  { id: 'wedding-sangeet-1', src: '/images/portfolio/weddings/sangeet 1.jpg', width: 864, height: 865, category: 'Wedding', alt: 'White sofa beneath illuminated floral arches at an evening sangeet' },
+  { id: 'wedding-sangeet-2', src: '/images/portfolio/weddings/sangeet 2.jpg', width: 735, height: 490, category: 'Wedding', alt: 'Outdoor sangeet stage with a geometric LED backdrop and dance floor' },
+  { id: 'wedding-sangeet-3', src: '/images/portfolio/weddings/sangeet 3.jpg', width: 1024, height: 768, category: 'Wedding', alt: 'Outdoor sangeet stage with overhead lighting and rows of chairs' },
+  { id: 'wedding-sangeet-4', src: '/images/portfolio/weddings/sangeet 4.jpg', width: 736, height: 920, category: 'Wedding', alt: 'Illuminated geometric entrance arches above a black and white walkway' },
+  { id: 'wedding-wedding-1', src: '/images/portfolio/weddings/wedding 1.jpg', width: 1200, height: 861, category: 'Wedding', alt: 'Wedding stage with two ornate chairs, pink drapes, and floral garlands' },
+  { id: 'wedding-wedding-2', src: '/images/portfolio/weddings/wedding 2.jpg', width: 736, height: 981, category: 'Wedding', alt: 'Wedding entrance lined with yellow drapes, flowers, and lanterns' },
+  { id: 'wedding-wedding-3', src: '/images/portfolio/weddings/wedding 3.jpg', width: 736, height: 1104, category: 'Wedding', alt: 'Garden wedding mandap with hanging flowers and white guest seating' },
+  { id: 'wedding-wedding-4', src: '/images/portfolio/weddings/wedding 4.jpg', width: 1080, height: 1074, category: 'Wedding', alt: 'Circular outdoor wedding mandap with floral canopy and gold pillars' },
+  { id: 'wedding-wedding-5', src: '/images/portfolio/weddings/wedding 5.jpg', width: 1200, height: 1200, category: 'Wedding', alt: 'Wedding aisle beneath white drapes and chandeliers with floral arrangements' },
+  { id: 'wedding-wedding-6', src: '/images/portfolio/weddings/wedding 6.jpg', width: 1200, height: 1207, category: 'Wedding', alt: 'Outdoor wedding entrance with cream drapes and a chandelier at dusk' },
 
   // Corporate
-  { id: 'corporate-corporate-1', src: '/images/portfolio/corporate/corporate 1.jpg', category: 'Corporate', alt: 'Corporate event by AS Events 1' },
-  { id: 'corporate-corporate-2', src: '/images/portfolio/corporate/corporate 2.jpg', category: 'Corporate', alt: 'Corporate event by AS Events 2' },
+  { id: 'corporate-corporate-1', src: '/images/portfolio/corporate/corporate 1.jpg', width: 1200, height: 945, category: 'Corporate', alt: 'Gold and white 2026 celebration backdrop with balloons and floor fountains' },
+  { id: 'corporate-corporate-2', src: '/images/portfolio/corporate/corporate 2.jpg', width: 750, height: 750, category: 'Corporate', alt: 'Corporate stage with illuminated company values panels' },
 
   // Birthdays
-  { id: 'birthdays-birthday-1', src: '/images/portfolio/birthdays/birthday 1.jpg', category: 'Birthdays', alt: 'Birthday celebration by AS Events 1' },
-  { id: 'birthdays-birthday-2', src: '/images/portfolio/birthdays/birthday 2.jpg', category: 'Birthdays', alt: 'Birthday celebration by AS Events 2' },
-  { id: 'birthdays-birthday-3', src: '/images/portfolio/birthdays/birthday 3.jpg', category: 'Birthdays', alt: 'Birthday celebration by AS Events 3' },
-  { id: 'birthdays-birthday-4', src: '/images/portfolio/birthdays/birthday 4.jpg', category: 'Birthdays', alt: 'Birthday celebration by AS Events 4' },
-  { id: 'birthdays-birthday-5', src: '/images/portfolio/birthdays/birthday 5.jpg', category: 'Birthdays', alt: 'Birthday celebration by AS Events 5' },
+  { id: 'birthdays-birthday-1', src: '/images/portfolio/birthdays/birthday 1.jpg', width: 964, height: 1200, category: 'Birthdays', alt: 'Outdoor birthday backdrop with neutral balloons and pampas grass' },
+  { id: 'birthdays-birthday-2', src: '/images/portfolio/birthdays/birthday 2.jpg', width: 736, height: 981, category: 'Birthdays', alt: 'Circular birthday backdrop with sage green drapes and white flowers' },
+  { id: 'birthdays-birthday-3', src: '/images/portfolio/birthdays/birthday 3.jpg', width: 756, height: 1008, category: 'Birthdays', alt: 'Poolside birthday backdrop with black and gold balloons' },
+  { id: 'birthdays-birthday-4', src: '/images/portfolio/birthdays/birthday 4.jpg', width: 735, height: 808, category: 'Birthdays', alt: 'First birthday display with blue balloons, teddy bears, and a gold number one' },
+  { id: 'birthdays-birthday-5', src: '/images/portfolio/birthdays/birthday 5.jpg', width: 563, height: 751, category: 'Birthdays', alt: 'Mickey Mouse birthday display with blue and white balloons' },
 
   // Anniversaries
-  { id: 'anniversaries-anniversary-1', src: '/images/portfolio/anniversaries/anniversary 1.jpg', category: 'Anniversaries', alt: 'Anniversary celebration by AS Events' },
+  { id: 'anniversaries-anniversary-1', src: '/images/portfolio/anniversaries/anniversary 1.jpg', width: 1073, height: 1200, category: 'Anniversaries', alt: 'Anniversary backdrop with cream drapes, white flowers, and gold stands' },
 
   // Others
-  { id: 'others-baby-shower-1', src: '/images/portfolio/others/baby shower 1.jpg', category: 'Others', alt: 'Event celebration by AS Events 1' },
-  { id: 'others-baby-shower-2', src: '/images/portfolio/others/baby shower 2.jpg', category: 'Others', alt: 'Event celebration by AS Events 2' },
+  { id: 'others-baby-shower-1', src: '/images/portfolio/others/baby shower 1.jpg', width: 1080, height: 810, category: 'Others', alt: 'Baby shower stage with red panels, floral decorations, and a green sofa' },
+  { id: 'others-baby-shower-2', src: '/images/portfolio/others/baby shower 2.jpg', width: 1438, height: 1438, category: 'Others', alt: 'Outdoor baby shower display with pastel balloons and teddy bears' },
 ]

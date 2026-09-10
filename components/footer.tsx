@@ -8,9 +8,9 @@ import { useTranslation } from '@/src/hooks/useTranslation'
 import { BrandLogo } from '@/components/shared/brand-logo'
 
 const services = [
-  { href: '/services', label: 'Wedding Planning', key: 'services.wedding.title' },
-  { href: '/services', label: 'Destination Weddings', key: 'services.destination.title' },
-  { href: '/services', label: 'Corporate Events', key: 'services.corporate.title' },
+  { href: '/services#wedding-planning', label: 'Wedding Planning', key: 'services.wedding.title' },
+  { href: '/services#destination-weddings', label: 'Destination Weddings', key: 'services.destination.title' },
+  { href: '/services#corporate-events', label: 'Corporate Events', key: 'services.corporate.title' },
   { href: '/packages', label: 'Event Packages', key: 'nav.packages' },
   //{ href: '/venues', label: 'Venue Booking', key: 'nav.venues' },
   { href: '/portfolio', label: 'Our Portfolio', key: 'nav.portfolio' },
@@ -61,7 +61,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.ourServices')}</h4>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.ourServices')}</h2>
             <ul className="space-y-2.5 sm:space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -77,7 +77,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.quickLinks')}</h4>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.quickLinks')}</h2>
             <ul className="space-y-2.5 sm:space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href + link.label}>
@@ -93,7 +93,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-center sm:items-start">
-            <h4 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h4>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h2>
             <ul className="space-y-4 w-full max-w-[290px] sm:max-w-none">
               <li className="flex items-start gap-3 text-left min-w-0">
                 <MapPin size={20} className="text-primary mt-1 shrink-0" aria-hidden="true" />

@@ -1,3 +1,4 @@
+import { BreadcrumbStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { getTranslationServer } from '@/lib/i18n-server'
@@ -15,9 +16,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = getTranslationServer(lang, 'seo.about.title')
   const description = getTranslationServer(lang, 'seo.about.description')
   return {
+    alternates: { canonical: 'https://www.aseventmanagement.com/about' },
+    robots: { index: true, follow: true },
     title,
     description,
     openGraph: {
+      url: 'https://www.aseventmanagement.com/about',
       title,
       description,
       type: 'website',
@@ -33,6 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function AboutPage() {
   return (
     <>
+      <BreadcrumbStructuredData page="about" />
       <AboutHero />
       <CompanyStory />
       <MissionVision />

@@ -535,9 +535,9 @@ export function Navbar() {
                 <div className="flex flex-col gap-8 md:gap-10">
                   {/* Services Group */}
                   <div>
-                    <h4 className="text-[11px] font-bold tracking-widest text-[#C5A880] uppercase mb-4">
+                    <h2 className="text-[11px] font-bold tracking-widest text-[#C5A880] uppercase mb-4">
                       {t('nav.services')}
-                    </h4>
+                    </h2>
                     <ul className="space-y-3">
                       {servicesDropdownItems.map((item) => (
                         <li key={item.label}>
@@ -558,15 +558,15 @@ export function Navbar() {
 
                   {/* Packages Group */}
                   <div>
-                    <h4 className="text-[11px] font-bold tracking-widest text-[#C5A880] uppercase mb-4">
+                    <h2 className="text-[11px] font-bold tracking-widest text-[#C5A880] uppercase mb-4">
                       {t('nav.packages')}
-                    </h4>
+                    </h2>
                     <ul className="space-y-3">
                       {[
                         { id: 'complete-wedding', label: 'Complete Wedding Package', href: '/packages?category=weddings' },
                         { id: 'corporate-conference', label: 'Corporate Conference', href: '/packages?category=corporate' },
-                        { id: 'birthday', label: 'Birthday Celebration', href: '/packages?category=social-events' },
-                        { id: 'anniversary', label: 'Anniversary Celebration', href: '/packages?category=social-events' }
+                        { id: 'birthday', label: 'Birthday Celebration', href: '/packages?category=birthday' },
+                        { id: 'anniversary', label: 'Anniversary Celebration', href: '/packages?category=birthday' }
                       ].map((pkg) => (
                         <li key={pkg.id}>
                           <Link
@@ -588,9 +588,9 @@ export function Navbar() {
                 {/* Column 3: Contact panel */}
                 <div className="flex flex-col gap-8 md:gap-10 md:col-span-2 lg:col-span-1 lg:pl-10 xl:pl-12 border-t lg:border-t-0 lg:border-l border-white/10 pt-8 lg:pt-0">
                   <div>
-                    <h4 className="text-[11px] font-bold tracking-widest text-[#C5A880] uppercase mb-5">
+                    <h2 className="text-[11px] font-bold tracking-widest text-[#C5A880] uppercase mb-5">
                       {t('footer.contactUs')}
-                    </h4>
+                    </h2>
                     
                     <ul className="space-y-5">
                       {/* Address */}
