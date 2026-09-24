@@ -23,6 +23,8 @@ const getNavLinkTranslationKey = (label: string): string => {
     case 'packages': return 'nav.packages'
     case 'venues': return 'nav.venues'
     case 'portfolio': return 'nav.portfolio'
+    case 'articles': return 'nav.articles'
+    case 'blog': return 'nav.articles'
     case 'contact': return 'nav.contact'
     default: return `nav.${label.toLowerCase()}`
   }
@@ -508,6 +510,7 @@ export function Navbar() {
                     { label: 'Services', href: '/services' },
                     { label: 'Packages', href: '/packages' },
                     { label: 'Portfolio', href: '/portfolio' },
+                    { label: 'Articles', href: '/blog' },
                     { label: 'Contact', href: '/contact' }
                   ].map((link) => {
                     const translationKey = getNavLinkTranslationKey(link.label)

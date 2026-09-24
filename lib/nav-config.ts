@@ -4,6 +4,7 @@ export const mainNavLinks = [
   { label: 'Packages', href: '/packages' },
  // { label: 'Venues', href: '/venues' },
   { label: 'Portfolio', href: '/portfolio' },
+  { label: 'Articles', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ] as const
 

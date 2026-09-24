@@ -20,8 +20,8 @@ const quickLinks = [
   { href: '/about', label: 'About Us', key: 'nav.about' },
   { href: '/services', label: 'Services', key: 'nav.services' },
   { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
-  //{ href: '/venues', label: 'Venues', key: 'nav.venues' },
   { href: '/packages', label: 'Packages', key: 'nav.packages' },
+  { href: '/blog', label: 'Articles', key: 'nav.articles' },
   { href: '/contact', label: 'Contact', key: 'nav.contact' },
 ]
 
