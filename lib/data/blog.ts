@@ -4,7 +4,7 @@ export interface BlogPost {
   slug: string
   excerpt: string
   image: string
-  date: string
+  date?: string
   readTime: string
   category: string
   tags: string[]
@@ -18,6 +18,7 @@ export interface BlogPost {
     name: string
     role: string
   }
+  content?: string
 }
 
 export const blogCategories = [
@@ -170,11 +171,13 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'Explore the latest decor trends that are transforming event spaces into immersive, Instagram-worthy experiences.',
     image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?q=80&w=1200',
-    date: 'February 5, 2024',
     readTime: '7 min read',
     category: 'Trends',
     tags: ['Decor', 'Trends'],
     featured: false,
+    seoTitle: 'Decor Trends: Transforming Spaces into Experiences | AS Events',
+    metaDescription:
+      'Explore the latest decor trends that are transforming event spaces into immersive, Instagram-worthy experiences.',
   },
 ]
 

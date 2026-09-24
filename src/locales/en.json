@@ -269,7 +269,8 @@
     "selectLanguage": "Select Language",
     "services": "Services",
     "venues": "Venues",
-    "articles": "Articles"
+    "articles": "Articles",
+    "blogArticles": "Blog / Articles"
   },
   "packages": {
     "anniversary": {

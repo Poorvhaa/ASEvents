@@ -21,7 +21,7 @@ const quickLinks = [
   { href: '/services', label: 'Services', key: 'nav.services' },
   { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
   { href: '/packages', label: 'Packages', key: 'nav.packages' },
-  { href: '/blog', label: 'Articles', key: 'nav.articles' },
+  { href: '/blog', label: 'Blog / Articles', key: 'nav.blogArticles' },
   { href: '/contact', label: 'Contact', key: 'nav.contact' },
 ]
 
@@ -85,7 +85,7 @@ export function Footer() {
                     href={link.href}
                     className="text-slate-400 text-sm hover:text-white transition-colors"
                   >
-                    {t(link.key)}
+                    {t(link.key) === link.key ? link.label : t(link.key)}
                   </Link>
                 </li>
               ))}

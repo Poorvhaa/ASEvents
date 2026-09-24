@@ -5,6 +5,7 @@ import {
   ArticleStructuredData,
 } from '@/components/structured-data'
 import { ArticleContent } from '@/components/blog/article-content'
+import { GenericArticleContent } from '@/components/blog/generic-article-content'
 import { CTASection } from '@/components/sections/cta-section'
 import { blogPosts, getBlogPostBySlug } from '@/lib/data/blog'
 
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     title: pageTitle,
     description: metaDesc,
     keywords: [
-      post.primaryKeyword || 'how to choose an event planner',
+      post.primaryKeyword || 'event planning',
       ...(post.secondaryKeywords || []),
       'event management',
       'luxury events',
@@ -62,7 +63,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url: articleUrl,
       siteName: 'AS Events',
       type: 'article',
-      publishedTime: '2024-03-24T00:00:00+05:30',
+      ...(post.date ? { publishedTime: '2024-03-24T00:00:00+05:30' } : {}),
       authors: [post.author?.name || 'Apurv Shah'],
       images: [
         {
@@ -104,10 +105,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         description={post.metaDescription || post.excerpt}
         url={articleUrl}
         image={post.image}
-        datePublished="2024-03-24T00:00:00+05:30"
+        datePublished={post.date ? '2024-03-24T00:00:00+05:30' : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
-      <ArticleContent />
+      {post.slug === 'how-to-choose-the-right-event-planner-for-your-event' ? (
+        <ArticleContent />
+      ) : (
+        <GenericArticleContent post={post} />
+      )}
       <CTASection />
     </>
   )

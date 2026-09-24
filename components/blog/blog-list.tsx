@@ -58,12 +58,19 @@ export function BlogList() {
                             </span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 mb-3">
+                        <div className="flex items-center gap-3 mb-3">
                           <span className="text-primary text-sm font-semibold">{post.category}</span>
-                          <span className="flex items-center gap-1.5 text-muted-foreground text-sm">
-                            <Calendar size={14} />
-                            {post.date}
-                          </span>
+                          {post.date ? (
+                            <span className="flex items-center gap-1.5 text-muted-foreground text-sm">
+                              <Calendar size={14} />
+                              {post.date}
+                            </span>
+                          ) : (
+                            <>
+                              <span className="text-muted-foreground/60 text-sm">·</span>
+                              <span className="text-muted-foreground text-sm">{post.readTime}</span>
+                            </>
+                          )}
                         </div>
                         <h3 className="text-xl font-serif font-bold text-foreground mb-2 group-hover:text-primary transition-colors line-clamp-2 leading-snug">
                           {post.title}
@@ -108,18 +115,29 @@ export function BlogList() {
                         />
                       </div>
                       <div className="flex-1 flex flex-col justify-center">
-                        <div className="flex items-center gap-4 mb-2">
+                        <div className="flex items-center gap-2 mb-2">
                           <span className="text-primary text-xs font-semibold uppercase tracking-wider">
-                            {post.category}
+                            {post.category.toUpperCase()}
                           </span>
-                          <span className="flex items-center gap-1 text-muted-foreground text-xs">
-                            <Calendar size={12} />
-                            {post.date}
-                          </span>
-                          <span className="flex items-center gap-1 text-muted-foreground text-xs">
-                            <Clock size={12} />
-                            {post.readTime}
-                          </span>
+                          {post.date ? (
+                            <>
+                              <span className="flex items-center gap-1 text-muted-foreground text-xs ml-2">
+                                <Calendar size={12} />
+                                {post.date}
+                              </span>
+                              <span className="flex items-center gap-1 text-muted-foreground text-xs ml-2">
+                                <Clock size={12} />
+                                {post.readTime}
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <span className="text-muted-foreground/60 text-xs">·</span>
+                              <span className="text-muted-foreground text-xs">
+                                {post.readTime}
+                              </span>
+                            </>
+                          )}
                         </div>
                         <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors leading-snug">
                           {post.title}
