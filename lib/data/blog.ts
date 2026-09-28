@@ -45,6 +45,35 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 102,
+    title: 'What Does an Event Planner Do? A Complete Guide to Event Planning Services',
+    slug: 'what-does-an-event-planner-do',
+    excerpt:
+      'Learn what an event planner does, from defining your vision and budget to coordinating venues, vendors, guests, timelines, and event-day execution.',
+    image: '/images/blog/what-does-an-event-planner-do/hero.jpg',
+    date: 'September 18, 2026',
+    readTime: '11 min read',
+    category: 'Planning Tips',
+    tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],
+    featured: true,
+    seoTitle:
+      'What Does an Event Planner Do? A Complete Guide to Event Planning Services | AS Events',
+    metaDescription:
+      'Learn what an event planner does, from venue and vendor coordination to budgeting, design, guest management, timelines, and event-day execution.',
+    primaryKeyword: 'what does an event planner do',
+    secondaryKeywords: [
+      'event planner services',
+      'event planning services',
+      'event management',
+      'professional event planner',
+    ],
+    canonicalUrl: 'https://www.aseventmanagement.com/blog/what-does-an-event-planner-do',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Events',
+    },
+  },
+  {
     id: 101,
     title: 'How to Choose the Right Event Planner for Your Event',
     slug: 'how-to-choose-the-right-event-planner-for-your-event',
@@ -191,4 +220,33 @@ export function getBlogPostBySlug(slug: string): BlogPost | undefined {
 
 export function getFeaturedBlogPosts(): BlogPost[] {
   return blogPosts.filter((post) => post.featured)
+}
+
+const ARTICLE_MONTHS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] as const
+
+/** Converts a display date such as "March 24, 2026" to an IST ISO timestamp. */
+export function toArticleIsoDate(displayDate?: string): string | undefined {
+  if (!displayDate) return undefined
+  const match = displayDate.match(/^([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})$/)
+  if (!match) return undefined
+  const monthIndex = ARTICLE_MONTHS.findIndex(
+    (month) => month.toLowerCase() === match[1].toLowerCase(),
+  )
+  if (monthIndex < 0) return undefined
+  const month = String(monthIndex + 1).padStart(2, '0')
+  const day = match[2].padStart(2, '0')
+  return `${match[3]}-${month}-${day}T00:00:00+05:30`
 }
