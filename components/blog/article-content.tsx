@@ -28,6 +28,9 @@ import {
 } from '@/components/blog/article-diagrams'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
+import { getBlogPostBySlug } from '@/lib/data/blog'
+
+const article = getBlogPostBySlug('how-to-choose-the-right-event-planner-for-your-event')
 
 export function ArticleContent() {
   const { openModal } = useQuoteModal()
@@ -100,7 +103,7 @@ export function ArticleContent() {
             </div>
             <div className="flex items-center gap-1.5">
               <Calendar size={15} className="text-primary" />
-              <span>March 24, 2024</span>
+              <span>{article?.date}</span>
             </div>
             <div className="flex items-center gap-1.5">
               <Clock size={15} className="text-primary" />

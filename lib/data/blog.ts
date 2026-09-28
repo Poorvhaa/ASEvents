@@ -51,7 +51,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'Learn what an event planner does, from defining your vision and budget to coordinating venues, vendors, guests, timelines, and event-day execution.',
     image: '/images/blog/what-does-an-event-planner-do/hero.jpg',
-    date: 'September 18, 2026',
+    date: 'September 29, 2026',
     readTime: '11 min read',
     category: 'Planning Tips',
     tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],
@@ -80,7 +80,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       'Learn how to choose the right event planner by comparing experience, services, budget, communication, vendor coordination, and event-day execution.',
     image: '/images/blog/how-to-choose-the-right-event-planner-for-your-event/hero.jpg',
-    date: 'March 24, 2024',
+    date: 'September 29, 2026',
     readTime: '10 min read',
     category: 'Planning Tips',
     tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],

@@ -10,6 +10,11 @@ import { GenericArticleContent } from '@/components/blog/generic-article-content
 import { CTASection } from '@/components/sections/cta-section'
 import { blogPosts, getBlogPostBySlug, toArticleIsoDate } from '@/lib/data/blog'
 
+const CENTRAL_DATE_SLUGS = new Set([
+  'what-does-an-event-planner-do',
+  'how-to-choose-the-right-event-planner-for-your-event',
+])
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }
@@ -34,12 +39,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const pageTitle = post.seoTitle || `${post.title} | AS Events`
   const metaDesc = post.metaDescription || post.excerpt
   const imageUrl = post.image.startsWith('http') ? post.image : `${siteUrl}${post.image}`
-  const publishedIso =
-    post.slug === 'what-does-an-event-planner-do'
-      ? toArticleIsoDate(post.date)
-      : post.date
-        ? '2024-03-24T00:00:00+05:30'
-        : undefined
+  const usesCentralDate = CENTRAL_DATE_SLUGS.has(post.slug)
+  const publishedIso = usesCentralDate
+    ? toArticleIsoDate(post.date)
+    : post.date
+      ? '2024-03-24T00:00:00+05:30'
+      : undefined
 
   return {
     title: pageTitle,
@@ -70,7 +75,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url: articleUrl,
       siteName: 'AS Events',
       type: 'article',
-      ...(post.slug === 'what-does-an-event-planner-do' && publishedIso
+      ...(usesCentralDate && publishedIso
         ? { publishedTime: publishedIso, modifiedTime: publishedIso }
         : post.date
           ? { publishedTime: '2024-03-24T00:00:00+05:30' }
@@ -104,12 +109,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   const siteUrl = 'https://www.aseventmanagement.com'
   const articleUrl = post.canonicalUrl || `${siteUrl}/blog/${post.slug}`
-  const publishedIso =
-    post.slug === 'what-does-an-event-planner-do'
-      ? toArticleIsoDate(post.date)
-      : post.date
-        ? '2024-03-24T00:00:00+05:30'
-        : undefined
+  const usesCentralDate = CENTRAL_DATE_SLUGS.has(post.slug)
+  const publishedIso = usesCentralDate
+    ? toArticleIsoDate(post.date)
+    : post.date
+      ? '2024-03-24T00:00:00+05:30'
+      : undefined
 
   return (
     <>
@@ -122,16 +127,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         description={post.metaDescription || post.excerpt}
         url={articleUrl}
         image={post.image}
-        datePublished={
-          post.slug === 'what-does-an-event-planner-do'
-            ? publishedIso
-            : post.date
-              ? '2024-03-24T00:00:00+05:30'
-              : undefined
-        }
-        dateModified={
-          post.slug === 'what-does-an-event-planner-do' ? publishedIso : undefined
-        }
+        datePublished={publishedIso}
+        dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
       {post.slug === 'how-to-choose-the-right-event-planner-for-your-event' ? (
