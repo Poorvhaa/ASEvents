@@ -1,25 +1,30 @@
 'use client'
 
 import Link from 'next/link'
-import { Facebook, Instagram, Twitter, Youtube, Mail, Phone, MapPin } from 'lucide-react'
+import { Instagram, Mail, Phone, MapPin } from 'lucide-react'
 import { SectionContainer } from '@/components/layout/section-container'
-import Image from 'next/image'
 import { useTranslation } from '@/src/hooks/useTranslation'
 import { BrandLogo } from '@/components/shared/brand-logo'
+import { usePathname } from 'next/navigation'
+import { parseHashHref, scrollToHash } from '@/lib/scroll-to-hash'
 
 const services = [
   { href: '/services#wedding-planning', label: 'Wedding Planning', key: 'services.wedding.title' },
   { href: '/services#destination-weddings', label: 'Destination Weddings', key: 'services.destination.title' },
   { href: '/services#corporate-events', label: 'Corporate Events', key: 'services.corporate.title' },
+  { href: '/services#birthday-celebrations', label: 'Birthday Celebrations', key: 'services.birthdays.title' },
+  { href: '/services#anniversary-events', label: 'Anniversary Events', key: 'services.anniversaries.title' },
   { href: '/packages', label: 'Event Packages', key: 'nav.packages' },
   //{ href: '/venues', label: 'Venue Booking', key: 'nav.venues' },
   { href: '/portfolio', label: 'Our Portfolio', key: 'nav.portfolio' },
 ]
 
 const quickLinks = [
+  { href: '/', label: 'Home', key: 'nav.home' },
   { href: '/about', label: 'About Us', key: 'nav.about' },
   { href: '/services', label: 'Services', key: 'nav.services' },
   { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
+  { href: '/portfolio', label: 'Gallery', key: 'nav.gallery' },
   { href: '/packages', label: 'Packages', key: 'nav.packages' },
   { href: '/blog', label: 'Blog / Articles', key: 'nav.blogArticles' },
   { href: '/contact', label: 'Contact', key: 'nav.contact' },
@@ -27,11 +32,23 @@ const quickLinks = [
 
 const socialLinks = [
   { icon: Instagram, href: 'https://www.instagram.com/as.event.management?igsh=MXdmeXljYm9rMWNyeA==', label: 'Instagram' }
-  
 ]
 
 export function Footer() {
   const { t } = useTranslation()
+  const pathname = usePathname()
+
+  const handleServiceClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    const { path, hash } = parseHashHref(href)
+    if (pathname === path && hash) {
+      e.preventDefault()
+      window.history.pushState(null, '', href)
+      scrollToHash(hash)
+    }
+  }
 
   return (
     <footer className="bg-slate-950 text-slate-300 border-t border-slate-900 overflow-hidden">
@@ -67,9 +84,10 @@ export function Footer() {
                 <li key={service.label}>
                   <Link
                     href={service.href}
-                    className="text-slate-400 text-sm hover:text-white transition-colors"
+                    onClick={(e) => handleServiceClick(e, service.href)}
+                    className="text-slate-400 text-sm hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                   >
-                    {t(service.key)}
+                    {t(service.key) === service.key ? service.label : t(service.key)}
                   </Link>
                 </li>
               ))}
@@ -83,7 +101,7 @@ export function Footer() {
                 <li key={link.href + link.label}>
                   <Link
                     href={link.href}
-                    className="text-slate-400 text-sm hover:text-white transition-colors"
+                    className="text-slate-400 text-sm hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
                   >
                     {t(link.key) === link.key ? link.label : t(link.key)}
                   </Link>
@@ -141,14 +159,21 @@ export function Footer() {
           <p className="text-slate-500 text-sm">
             &copy; {new Date().getFullYear()} AS Events. {t('footer.rights')}
           </p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm">
-            <Link href="/privacy-policy" className="text-slate-500 hover:text-white transition-colors min-h-11 inline-flex items-center">
+          <nav aria-label="Legal" className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm">
+            <Link
+              href="/privacy-policy"
+              className="text-slate-400 hover:text-white transition-colors min-h-11 inline-flex items-center hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+            >
               {t('footer.privacy')}
             </Link>
-            <Link href="/terms-of-service" className="text-slate-500 hover:text-white transition-colors min-h-11 inline-flex items-center">
+            <span className="text-slate-700 hidden sm:inline" aria-hidden="true">•</span>
+            <Link
+              href="/terms-of-service"
+              className="text-slate-400 hover:text-white transition-colors min-h-11 inline-flex items-center hover:underline underline-offset-4 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary rounded"
+            >
               {t('footer.terms')}
             </Link>
-          </div>
+          </nav>
         </div>
       </SectionContainer>
     </footer>

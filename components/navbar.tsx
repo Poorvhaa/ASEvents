@@ -25,6 +25,7 @@ const getNavLinkTranslationKey = (label: string): string => {
     case 'portfolio': return 'nav.portfolio'
     case 'articles': return 'nav.articles'
     case 'blog': return 'nav.articles'
+    case 'gallery': return 'nav.gallery'
     case 'contact': return 'nav.contact'
     default: return `nav.${label.toLowerCase()}`
   }

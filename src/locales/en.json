@@ -218,6 +218,7 @@
   },
   "footer": {
     "address": "803-804, Blue Chip Complex, Sayajiganj Rd, Near Kala Ghoda, Sarod, Jetalpur, Vadodara, Gujarat 390007",
+    "blog": "Blog",
     "contactUs": "Contact Us",
     "description": "Creating extraordinary events that last forever. We specialize in luxury weddings, corporate events, and destination celebrations.",
     "ourServices": "Our Services",
@@ -254,6 +255,7 @@
   },
   "nav": {
     "about": "About",
+    "blog": "Blog",
     "contact": "Contact",
     "dropdown": {
       "anniversaries": "Anniversary Events",
@@ -262,6 +264,7 @@
       "destination": "Destination Weddings",
       "wedding": "Wedding Planning"
     },
+    "gallery": "Gallery",
     "getQuote": "Get Free Quote",
     "home": "Home",
     "packages": "Packages",
