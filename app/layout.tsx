@@ -44,23 +44,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: getTranslationServer(lang, 'seo.default.title'),
     description: getTranslationServer(lang, 'seo.default.description'),
     keywords: ['event management', 'luxury weddings', 'corporate events', 'destination weddings', 'event planning'],
-    icons: {
-      icon: [
-        {
-          url: '/icon-light-32x32.png',
-          media: '(prefers-color-scheme: light)',
-        },
-        {
-          url: '/icon-dark-32x32.png',
-          media: '(prefers-color-scheme: dark)',
-        },
-        {
-          url: '/icon.svg',
-          type: 'image/svg+xml',
-        },
-      ],
-      apple: '/apple-icon.png',
-    },
     openGraph: {
       title: getTranslationServer(lang, 'seo.default.title'),
       description: getTranslationServer(lang, 'seo.default.description'),
