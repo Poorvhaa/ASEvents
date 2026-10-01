@@ -14,18 +14,14 @@ const services = [
   { href: '/services#corporate-events', label: 'Corporate Events', key: 'services.corporate.title' },
   { href: '/services#birthday-celebrations', label: 'Birthday Celebrations', key: 'services.birthdays.title' },
   { href: '/services#anniversary-events', label: 'Anniversary Events', key: 'services.anniversaries.title' },
-  { href: '/packages', label: 'Event Packages', key: 'nav.packages' },
-  //{ href: '/venues', label: 'Venue Booking', key: 'nav.venues' },
-  { href: '/portfolio', label: 'Our Portfolio', key: 'nav.portfolio' },
 ]
 
 const quickLinks = [
   { href: '/', label: 'Home', key: 'nav.home' },
   { href: '/about', label: 'About Us', key: 'nav.about' },
   { href: '/services', label: 'Services', key: 'nav.services' },
-  { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
-  { href: '/portfolio', label: 'Gallery', key: 'nav.gallery' },
   { href: '/packages', label: 'Packages', key: 'nav.packages' },
+  { href: '/portfolio', label: 'Portfolio', key: 'nav.portfolio' },
   { href: '/blog', label: 'Blog / Articles', key: 'nav.blogArticles' },
   { href: '/contact', label: 'Contact', key: 'nav.contact' },
 ]
