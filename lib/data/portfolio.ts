@@ -250,7 +250,7 @@ export const galleryImages: GalleryImage[] = [
 
   // Corporate
   { id: 'corporate-corporate-1', src: '/images/portfolio/corporate/corporate 1.jpg', width: 1200, height: 945, category: 'Corporate', alt: 'Gold and white 2026 celebration backdrop with balloons and floor fountains' },
-  { id: 'corporate-corporate-2', src: '/images/portfolio/corporate/corporate 2.jpg', width: 750, height: 750, category: 'Corporate', alt: 'Corporate stage with illuminated company values panels' },
+  { id: 'corporate-corporate-2', src: '/images/portfolio/corporate/corporate-event-gala.jpg', width: 1024, height: 1024, category: 'Corporate', alt: 'Elegant corporate event setup with stage lighting and banquet seating' },
 
   // Birthdays
   { id: 'birthdays-birthday-1', src: '/images/portfolio/birthdays/birthday 1.jpg', width: 964, height: 1200, category: 'Birthdays', alt: 'Outdoor birthday backdrop with neutral balloons and pampas grass' },
