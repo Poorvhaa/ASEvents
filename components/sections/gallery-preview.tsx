@@ -110,7 +110,7 @@ export function GalleryPreview() {
           className="text-center mt-12"
         >
           <Button asChild className="bg-primary text-primary-foreground hover:bg-gold-light px-8">
-            <Link href="/gallery">View Full Gallery</Link>
+            <Link href="/portfolio">View Full Gallery</Link>
           </Button>
         </motion.div>
 

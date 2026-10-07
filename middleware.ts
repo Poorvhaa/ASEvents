@@ -4,6 +4,22 @@ import type { NextRequest } from 'next/server'
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  if (pathname === '/gallery' || pathname === '/gallery/') {
+    const redirectUrl = new URL(request.url)
+    redirectUrl.pathname = '/portfolio'
+    redirectUrl.search = ''
+    return NextResponse.redirect(redirectUrl, 308)
+  }
+
+  // Same permanent trailing-slash redirect Next.js used before it was skipped,
+  // so /gallery/ can go directly to /portfolio above.
+  // Use the standard URL API so a request slash is not copied onto the target.
+  if (pathname.length > 1 && pathname.endsWith('/')) {
+    const redirectUrl = new URL(request.url)
+    redirectUrl.pathname = pathname.slice(0, -1)
+    return NextResponse.redirect(redirectUrl, 308)
+  }
+
   // Locale route prefix redirection
   const localeMatch = pathname.match(/^\/(en|hi|gu)(\/|$)/)
   if (localeMatch) {

@@ -98,7 +98,7 @@ export function FeaturedEvents() {
               viewport={{ once: true }}
               className="group cursor-pointer"
             >
-              <Link href={`/portfolio?category=${event.slug}`}>
+              <Link href="/portfolio">
                 <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4">
                   <Image
                     src={event.image}

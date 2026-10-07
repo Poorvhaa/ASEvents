@@ -13,6 +13,14 @@ const nextConfig = (phase) => {
 
     devIndicators: false,
 
+    // Put metadata in the initial <head> for every user agent. Next streams it
+    // into the body by default, and Google ignores body canonicals.
+    htmlLimitedBots: /.*/,
+
+    // Let middleware send /gallery/ to /portfolio in one hop. Other trailing
+    // slashes are still redirected there, matching the previous behavior.
+    skipTrailingSlashRedirect: true,
+
     images: {
       remotePatterns: [
         {
