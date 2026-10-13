@@ -5,12 +5,14 @@ import {
   ArticleStructuredData,
 } from '@/components/structured-data'
 import { ArticleContent } from '@/components/blog/article-content'
+import { ChecklistArticleContent } from '@/components/blog/checklist-article-content'
 import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-content'
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
 import { CTASection } from '@/components/sections/cta-section'
 import { blogPosts, getBlogPostBySlug, toArticleIsoDate } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'complete-event-planning-checklist',
   'what-does-an-event-planner-do',
   'how-to-choose-the-right-event-planner-for-your-event',
 ])
@@ -131,7 +133,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
-      {post.slug === 'how-to-choose-the-right-event-planner-for-your-event' ? (
+      {post.slug === 'complete-event-planning-checklist' ? (
+        <ChecklistArticleContent />
+      ) : post.slug === 'how-to-choose-the-right-event-planner-for-your-event' ? (
         <ArticleContent />
       ) : post.slug === 'what-does-an-event-planner-do' ? (
         <EventPlannerRoleContent />

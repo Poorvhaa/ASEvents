@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/complete-event-planning-checklist`,
+      lastModified: new Date('2026-10-12T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/how-to-choose-the-right-event-planner-for-your-event`,
       changeFrequency: 'weekly',
       priority: 0.8,

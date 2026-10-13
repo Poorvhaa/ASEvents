@@ -45,17 +45,45 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 103,
+    title: 'Complete Event Planning Checklist: From the First Idea to Event Day',
+    slug: 'complete-event-planning-checklist',
+    excerpt:
+      'A practical event planning guide covering the decisions that turn an idea into a coordinated, guest-ready event.',
+    image: '/images/blog/complete-event-planning-checklist/hero.jpg',
+    date: 'October 12, 2026',
+    readTime: '12 min read',
+    category: 'Planning Tips',
+    tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],
+    featured: true,
+    seoTitle: 'Complete Event Planning Checklist: From Idea to Event Day | AS Events',
+    metaDescription:
+      'Use this practical event planning checklist to organize your budget, venue, vendors, guest experience, timeline, event-day execution and post-event wrap-up.',
+    primaryKeyword: 'event planning checklist',
+    secondaryKeywords: [
+      'event planning guide',
+      'event checklist',
+      'event management checklist',
+      'event planner checklist',
+    ],
+    canonicalUrl: 'https://www.aseventmanagement.com/blog/complete-event-planning-checklist',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Events',
+    },
+  },
+  {
     id: 102,
     title: 'What Does an Event Planner Do? A Complete Guide to Event Planning Services',
     slug: 'what-does-an-event-planner-do',
     excerpt:
-      'Learn what an event planner does, from defining your vision and budget to coordinating venues, vendors, guests, timelines, and event-day execution.',
+      'From ideas to a coordinated celebration — how an event planner connects vision, venue, vendors, guests, and event-day execution.',
     image: '/images/blog/what-does-an-event-planner-do/hero.jpg',
     date: 'September 29, 2026',
     readTime: '11 min read',
     category: 'Planning Tips',
     tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],
-    featured: true,
+    featured: false,
     seoTitle:
       'What Does an Event Planner Do? A Complete Guide to Event Planning Services | AS Events',
     metaDescription:

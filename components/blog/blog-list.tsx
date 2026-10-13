@@ -146,7 +146,10 @@ export function BlogList() {
                           {post.excerpt}
                         </p>
                         <span className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold group-hover:gap-3 transition-all mt-auto">
-                          Read More
+                          {post.slug === 'what-does-an-event-planner-do' ||
+                          post.slug === 'complete-event-planning-checklist'
+                            ? 'Read Full Guide'
+                            : 'Read More'}
                           <ArrowRight size={15} />
                         </span>
                       </div>
