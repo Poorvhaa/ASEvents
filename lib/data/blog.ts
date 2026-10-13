@@ -50,7 +50,7 @@ export const blogPosts: BlogPost[] = [
     slug: 'complete-event-planning-checklist',
     excerpt:
       'A practical event planning guide covering the decisions that turn an idea into a coordinated, guest-ready event.',
-    image: '/images/blog/complete-event-planning-checklist/hero.jpg',
+    image: '/images/blog/complete-event-planning-checklist/complete-event-planning-checklist.jpg',
     date: 'October 12, 2026',
     readTime: '12 min read',
     category: 'Planning Tips',

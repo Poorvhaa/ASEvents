@@ -207,8 +207,8 @@ export function ChecklistArticleContent() {
       <div className="container mx-auto px-4 lg:px-8 max-w-4xl mb-12">
         <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden shadow-2xl border border-border/40">
           <Image
-            src="/images/blog/complete-event-planning-checklist/hero.jpg"
-            alt="Complete event planning checklist from idea to event day"
+            src="/images/blog/complete-event-planning-checklist/complete-event-planning-checklist.jpg"
+            alt="Professional event setup for complete event planning checklist"
             fill
             priority
             className="object-cover"
