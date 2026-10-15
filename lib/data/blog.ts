@@ -45,6 +45,41 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 104,
+    title: "Event Planner vs Event Manager: What's the Difference?",
+    slug: 'event-planner-vs-event-manager',
+    excerpt:
+      'Learn the key differences between an event planner and event manager, from budgeting and vendor selection to event-day coordination and live execution.',
+    image: '/images/blog/event-planner-vs-event-manager/hero.jpg',
+    date: 'October 15, 2026',
+    readTime: '10 min read',
+    category: 'Planning Tips',
+    tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],
+    featured: true,
+    seoTitle: 'Event Planner vs Event Manager: Key Differences Explained | AS Events',
+    metaDescription:
+      'Learn the difference between an event planner and event manager, including responsibilities, timelines, vendor coordination, event-day execution and which service you need.',
+    primaryKeyword: 'event planner vs event manager',
+    secondaryKeywords: [
+      'event planner vs event manager difference',
+      'difference between event planner and event manager',
+      'event planner',
+      'event manager',
+      'event planning services',
+      'event management services',
+      'professional event planner',
+      'professional event manager',
+      'event coordinator',
+      'event planning company',
+      'event management company',
+    ],
+    canonicalUrl: 'https://www.aseventmanagement.com/blog/event-planner-vs-event-manager',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Events',
+    },
+  },
+  {
     id: 103,
     title: 'Complete Event Planning Checklist: From the First Idea to Event Day',
     slug: 'complete-event-planning-checklist',

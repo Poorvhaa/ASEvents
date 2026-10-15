@@ -155,3 +155,27 @@ export function ArticleStructuredData({
     />
   )
 }
+
+export function FaqStructuredData({
+  faqs,
+}: {
+  faqs: { question: string; answer: string }[]
+}) {
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }}
+    />
+  )
+}
+

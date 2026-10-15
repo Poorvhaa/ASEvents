@@ -3,15 +3,21 @@ import { notFound } from 'next/navigation'
 import {
   BlogArticleBreadcrumbStructuredData,
   ArticleStructuredData,
+  FaqStructuredData,
 } from '@/components/structured-data'
 import { ArticleContent } from '@/components/blog/article-content'
 import { ChecklistArticleContent } from '@/components/blog/checklist-article-content'
 import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-content'
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
+import {
+  PlannerVsManagerContent,
+  faqList as plannerVsManagerFaqs,
+} from '@/components/blog/planner-vs-manager-content'
 import { CTASection } from '@/components/sections/cta-section'
 import { blogPosts, getBlogPostBySlug, toArticleIsoDate } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'event-planner-vs-event-manager',
   'complete-event-planning-checklist',
   'what-does-an-event-planner-do',
   'how-to-choose-the-right-event-planner-for-your-event',
@@ -133,7 +139,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
-      {post.slug === 'complete-event-planning-checklist' ? (
+      {post.slug === 'event-planner-vs-event-manager' && (
+        <FaqStructuredData faqs={plannerVsManagerFaqs} />
+      )}
+      {post.slug === 'event-planner-vs-event-manager' ? (
+        <PlannerVsManagerContent />
+      ) : post.slug === 'complete-event-planning-checklist' ? (
         <ChecklistArticleContent />
       ) : post.slug === 'how-to-choose-the-right-event-planner-for-your-event' ? (
         <ArticleContent />
