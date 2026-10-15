@@ -24,7 +24,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
-import { getBlogPostBySlug } from '@/lib/data/blog'
+import { getBlogPostBySlug, plannerVsManagerFaqs } from '@/lib/data/blog'
 
 const article = getBlogPostBySlug('event-planner-vs-event-manager')
 
@@ -94,43 +94,8 @@ const comparisonData: ComparisonRow[] = [
   },
 ]
 
-export const faqList = [
-  {
-    question: 'What is the difference between an event planner and an event manager?',
-    answer:
-      'An event planner focuses on the creative, financial, and logistical preparation leading up to the celebration—such as event concept development, venue scouting, vendor sourcing, budget tracking, and master timelines. An event manager focuses on the live execution—supervising venue setup, coordinating vendors on event day, directing staff, managing the schedule, and troubleshooting live issues.',
-  },
-  {
-    question: 'Is an event planner the same as an event manager?',
-    answer:
-      'In casual conversation, the two terms are often used interchangeably, but in the professional event industry, they denote two distinct disciplines. Event planning is primarily long-term preparatory architecture, while event management is operational logistics and real-time execution.',
-  },
-  {
-    question: 'Do event planners manage events on the day?',
-    answer:
-      'Not always. Some independent planners conclude their service once the master plan, vendor contracts, and run-of-show are finalized. However, full-service event planning companies like AS Event Management provide integrated planning and event-day management to ensure seamless handover and flawless execution.',
-  },
-  {
-    question: 'What does an event manager do on event day?',
-    answer:
-      'On event day, the event manager is the on-site conductor. They supervise venue access and vendor load-in, test audiovisual systems, coordinate catering timelines, direct event staff and security, cue keynote speakers or ceremonial entrances, resolve technical hiccups, and oversee venue breakdown and inventory wrap-up.',
-  },
-  {
-    question: 'Can one person be both an event planner and event manager?',
-    answer:
-      'Yes, for smaller, more intimate gatherings like private dinner parties, milestone birthdays, or boutique social events, a skilled professional can successfully handle both planning and on-site coordination. For larger events like high-stakes corporate conferences or weddings with hundreds of guests, the workload requires separate dedicated specialists or an experienced team.',
-  },
-  {
-    question: 'Which service do I need for my event?',
-    answer:
-      'If you have just an idea and need assistance selecting a venue, managing costs, and securing dependable vendors, you need an event planner. If you have already booked your vendors and finalized details but need a professional to run event-day operations so you can relax, you need an event manager. If you want stress-free coverage from concept to cleanup, you need a full event management service.',
-  },
-  {
-    question: 'What is full event management?',
-    answer:
-      'Full event management is an end-to-end service that unifies strategic planning, creative design, vendor contract negotiations, guest management, and live on-site event coordination under one coordinated team. AS Event Management specializes in full-service delivery for weddings, corporate galas, and social celebrations.',
-  },
-]
+const faqList = plannerVsManagerFaqs
+
 
 export function PlannerVsManagerContent() {
   const { openModal } = useQuoteModal()

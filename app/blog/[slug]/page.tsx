@@ -9,12 +9,14 @@ import { ArticleContent } from '@/components/blog/article-content'
 import { ChecklistArticleContent } from '@/components/blog/checklist-article-content'
 import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-content'
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
-import {
-  PlannerVsManagerContent,
-  faqList as plannerVsManagerFaqs,
-} from '@/components/blog/planner-vs-manager-content'
+import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-content'
 import { CTASection } from '@/components/sections/cta-section'
-import { blogPosts, getBlogPostBySlug, toArticleIsoDate } from '@/lib/data/blog'
+import {
+  blogPosts,
+  getBlogPostBySlug,
+  toArticleIsoDate,
+  plannerVsManagerFaqs,
+} from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
   'event-planner-vs-event-manager',
