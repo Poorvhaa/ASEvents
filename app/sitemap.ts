@@ -40,6 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/how-early-should-you-hire-an-event-planner`,
+      lastModified: new Date('2026-10-16T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/event-planner-vs-event-manager`,
       lastModified: new Date('2026-10-15T00:00:00+05:30'),
       changeFrequency: 'weekly',

@@ -45,6 +45,40 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 105,
+    title: 'How Early Should You Hire an Event Planner?',
+    slug: 'how-early-should-you-hire-an-event-planner',
+    excerpt:
+      'Learn how early to hire an event planner for weddings, corporate events, birthdays and destination celebrations, with booking timelines and planning tips.',
+    image: '/images/blog/how-early-should-you-hire-an-event-planner/hero.jpg',
+    date: 'October 16, 2026',
+    readTime: '11 min read',
+    category: 'Planning Tips',
+    tags: ['Planning Tips', 'Event Management', 'Weddings', 'Corporate', 'Budget'],
+    featured: true,
+    seoTitle: 'How Early Should You Hire an Event Planner? Booking Timeline Guide | AS Events',
+    metaDescription:
+      'Learn how early to hire an event planner for weddings, corporate events, birthdays and destination events, with practical booking timelines and planning tips.',
+    primaryKeyword: 'how early should you hire an event planner',
+    secondaryKeywords: [
+      'when to hire an event planner',
+      'how far in advance to book an event planner',
+      'event planner booking timeline',
+      'when should i book an event planner',
+      'when to hire a wedding planner',
+      'when to hire a corporate event planner',
+      'event planning timeline',
+      'last-minute event planner',
+      'event management services',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-early-should-you-hire-an-event-planner',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Events',
+    },
+  },
+  {
     id: 104,
     title: "Event Planner vs Event Manager: What's the Difference?",
     slug: 'event-planner-vs-event-manager',
@@ -351,4 +385,58 @@ export const plannerVsManagerFaqs = [
       'Full event management is an end-to-end service that unifies strategic planning, creative design, vendor contract negotiations, guest management, and live on-site event coordination under one coordinated team. AS Event Management specializes in full-service delivery for weddings, corporate galas, and social celebrations.',
   },
 ]
+
+export const bookingTimelineFaqs = [
+  {
+    question: 'When should I hire an event planner?',
+    answer:
+      'The best time to hire an event planner is as soon as you have an approximate date and budget, particularly for large, complex, customized, or date-sensitive events. Involving a planner early gives them the opportunity to help with the foundation of the event—securing preferred venues, establishing realistic budgets, and sourcing trusted vendors before availability tightens.',
+  },
+  {
+    question: 'How early should I hire a wedding planner?',
+    answer:
+      'Many weddings benefit from approximately 9 to 18 months of planning. Larger celebrations, high-demand peak wedding seasons, or destination weddings often require 12 to 18+ months to secure preferred venues and key vendors such as photographers, caterers, and decorators.',
+  },
+  {
+    question: 'Can I hire an event planner three months before my event?',
+    answer:
+      'Yes. Depending on planner availability, an event professional can provide partial planning, event management services, or event-day coordination even when the event is approaching rapidly, stepping in to audit contracts, organize timelines, and coordinate final logistics.',
+  },
+  {
+    question: 'Can an event planner help with a small party?',
+    answer:
+      'Yes. While a small private gathering or intimate birthday may require fewer planning hours, professional assistance still provides significant value by streamlining vendor sourcing, custom décor styling, catering coordination, and event-day hospitality.',
+  },
+  {
+    question: 'What does an event planner do before an event?',
+    answer:
+      'Pre-event planning responsibilities include concept development, budgeting, venue research and contract negotiation, vendor sourcing, floor plan design, guest management workflows, master schedule creation, and thorough logistical preparation.',
+  },
+  {
+    question: 'What does an event planner do on event day?',
+    answer:
+      'On event day, the planner or on-site event manager coordinates vendor load-in, supervises setup, directs event staff, manages schedule cues and transitions, handles guest flow, troubleshoots live issues in real time, and oversees breakdown.',
+  },
+  {
+    question: 'What is the difference between event planning and event management?',
+    answer:
+      'Event planning emphasizes pre-event preparation, budgeting, creative design, and vendor contracting, while event management focuses heavily on live on-site execution, staff coordination, and operational control. In practice, full-service companies like AS Events provide both.',
+  },
+  {
+    question: 'What is event-day coordination?',
+    answer:
+      'Event-day coordination is professional support designed for clients who have handled most of the preparatory planning themselves but want an experienced professional to manage live setup, vendor deliveries, timeline execution, and issue resolution on the day so the host can relax.',
+  },
+  {
+    question: 'Should I hire an event planner before choosing a venue?',
+    answer:
+      'Yes. Involving a planner before or during venue research is highly beneficial because planners evaluate guest capacity limits, hidden facility fees, acoustic properties, kitchen infrastructure, and curfew rules before you sign a binding contract.',
+  },
+  {
+    question: 'How do I choose the right professional event planner?',
+    answer:
+      'Look for relevant portfolio experience with your specific event type, clear and prompt communication, structured planning methodologies, transparent pricing, strong vendor relationships, and a clearly defined service agreement.',
+  },
+]
+
 

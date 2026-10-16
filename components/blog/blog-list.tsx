@@ -148,7 +148,8 @@ export function BlogList() {
                         <span className="inline-flex items-center gap-1.5 text-primary text-sm font-semibold group-hover:gap-3 transition-all mt-auto">
                           {post.slug === 'what-does-an-event-planner-do' ||
                           post.slug === 'complete-event-planning-checklist' ||
-                          post.slug === 'event-planner-vs-event-manager'
+                          post.slug === 'event-planner-vs-event-manager' ||
+                          post.slug === 'how-early-should-you-hire-an-event-planner'
                             ? 'Read Full Guide'
                             : 'Read More'}
                           <ArrowRight size={15} />
