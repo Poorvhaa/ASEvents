@@ -41,7 +41,7 @@ export function ArticleHeader({ post, badgeLabel, shareTitle }: ArticleHeaderPro
         >
           <div className="relative w-24 sm:w-28 h-24 sm:h-28 flex items-center justify-center overflow-hidden rounded-xl bg-white">
             <Image
-              src="/images/brand/apurv-shah-article-logo.png"
+              src="/images/brand/as-events-logo-white.png"
               alt="Apurv Shah – AS Events"
               width={112}
               height={112}
