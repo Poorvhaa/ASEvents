@@ -149,7 +149,8 @@ export function BlogList() {
                           {post.slug === 'what-does-an-event-planner-do' ||
                           post.slug === 'complete-event-planning-checklist' ||
                           post.slug === 'event-planner-vs-event-manager' ||
-                          post.slug === 'how-early-should-you-hire-an-event-planner'
+                          post.slug === 'how-early-should-you-hire-an-event-planner' ||
+                          post.slug === 'how-to-create-an-event-budget'
                             ? 'Read Full Guide'
                             : 'Read More'}
                           <ArrowRight size={15} />

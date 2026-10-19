@@ -8,6 +8,7 @@ import {
 import { ArticleContent } from '@/components/blog/article-content'
 import { BookingTimelineContent } from '@/components/blog/booking-timeline-content'
 import { ChecklistArticleContent } from '@/components/blog/checklist-article-content'
+import { EventBudgetContent } from '@/components/blog/event-budget-content'
 import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-content'
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
 import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-content'
@@ -18,9 +19,11 @@ import {
   toArticleIsoDate,
   plannerVsManagerFaqs,
   bookingTimelineFaqs,
+  eventBudgetFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'how-to-create-an-event-budget',
   'how-early-should-you-hire-an-event-planner',
   'event-planner-vs-event-manager',
   'complete-event-planning-checklist',
@@ -144,13 +147,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'how-to-create-an-event-budget' && (
+        <FaqStructuredData faqs={eventBudgetFaqs} />
+      )}
       {post.slug === 'how-early-should-you-hire-an-event-planner' && (
         <FaqStructuredData faqs={bookingTimelineFaqs} />
       )}
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'how-early-should-you-hire-an-event-planner' ? (
+      {post.slug === 'how-to-create-an-event-budget' ? (
+        <EventBudgetContent />
+      ) : post.slug === 'how-early-should-you-hire-an-event-planner' ? (
         <BookingTimelineContent />
       ) : post.slug === 'event-planner-vs-event-manager' ? (
         <PlannerVsManagerContent />

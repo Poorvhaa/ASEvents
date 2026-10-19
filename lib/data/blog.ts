@@ -45,6 +45,46 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 106,
+    title: 'How to Create an Event Budget: A Practical Guide for Any Event',
+    slug: 'how-to-create-an-event-budget',
+    excerpt:
+      'A practical guide to event budget planning, including cost categories, hidden expenses, contingency funds, vendor comparisons, tracking, and final budget control.',
+    image: '/images/blog/how-to-create-an-event-budget/hero.jpg',
+    date: 'October 19, 2026',
+    readTime: '12 min read',
+    category: 'Planning Tips',
+    tags: ['Planning Tips', 'Budget', 'Event Management', 'Corporate', 'Weddings'],
+    featured: true,
+    seoTitle: 'How to Create an Event Budget: Step-by-Step Guide | AS Events',
+    metaDescription:
+      'Learn how to create an event budget with practical steps for venue, catering, vendors, hidden costs, contingency funds, tracking, and final budget control.',
+    primaryKeyword: 'how to create an event budget',
+    secondaryKeywords: [
+      'event budget',
+      'event budget planning',
+      'event planning budget',
+      'event management budget',
+      'event budget checklist',
+      'event costs',
+      'event planning costs',
+      'event budget template',
+      'event budget spreadsheet',
+      'event budget categories',
+      'event budgeting guide',
+      'event planning budget checklist',
+      'event cost management',
+      'event planner budget',
+      'event budget tracking',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-to-create-an-event-budget',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Events',
+    },
+  },
+  {
     id: 105,
     title: 'How Early Should You Hire an Event Planner?',
     slug: 'how-early-should-you-hire-an-event-planner',
@@ -438,5 +478,59 @@ export const bookingTimelineFaqs = [
       'Look for relevant portfolio experience with your specific event type, clear and prompt communication, structured planning methodologies, transparent pricing, strong vendor relationships, and a clearly defined service agreement.',
   },
 ]
+
+export const eventBudgetFaqs = [
+  {
+    question: 'What is an event budget?',
+    answer:
+      'An event budget is a financial plan that estimates, tracks, and controls the money required to deliver an event. It normally includes expected income, planned expenses, committed costs, actual spending, payment schedules, and contingency funds.',
+  },
+  {
+    question: 'What should an event budget include?',
+    answer:
+      'An event budget should include all major event cost categories such as venue and logistics, catering, technology and AV production, staffing, entertainment, décor, marketing, transportation, administrative expenses, and a dedicated contingency reserve.',
+  },
+  {
+    question: 'How do I start event budget planning?',
+    answer:
+      'Start by identifying the total available funding and the primary objectives of the event. Next, estimate the guest count, establish spending priorities, research realistic vendor pricing, and build a master tracking spreadsheet before signing binding contracts.',
+  },
+  {
+    question: 'Why is a contingency fund important?',
+    answer:
+      'Unexpected expenses can arise even with meticulous planning. A contingency reserve provides financial protection for approved, unplanned costs—such as weather alterations, rush delivery fees, or technical additions—without disrupting essential event categories.',
+  },
+  {
+    question: 'How can I avoid event budget creep?',
+    answer:
+      'Avoid budget creep by documenting full vendor quotes upfront, requesting itemized proposals, recording every scope modification immediately, tracking committed spending, conducting regular reviews, and requiring formal approval before increasing expenses.',
+  },
+  {
+    question: 'Should estimated and actual event costs be tracked separately?',
+    answer:
+      'Yes. Tracking estimated, quoted, contracted, and actual costs side by side allows planners to measure variance, spot trends early, and reallocate funds across categories before final balances come due.',
+  },
+  {
+    question: 'Can an event planner help with budgeting?',
+    answer:
+      'Yes. A professional event planner provides realistic market pricing, negotiates vendor contracts, uncovers hidden venue fees, structures payment milestones, tracks commitments, and prevents costly planning oversights.',
+  },
+  {
+    question: 'Is the cheapest vendor always the best choice?',
+    answer:
+      'No. Compare total scope, reliability, included services, equipment quality, setup labor, and contractual terms. A vendor with a lower headline price may ultimately cost more if essential services, delivery, or teardown fees are excluded.',
+  },
+  {
+    question: 'How often should an event budget be reviewed?',
+    answer:
+      'Review frequency should match event complexity and proximity. Early in planning, monthly or bi-weekly reviews are often sufficient; as the event nears and major vendor contracts and final headcounts are confirmed, weekly or real-time reviews are recommended.',
+  },
+  {
+    question: 'What is the difference between an event budget and an event management budget?',
+    answer:
+      'An event budget is the overarching financial blueprint establishing total funding and category allocations. An event management budget focuses on operational execution, tracking real-time commitments, deposit schedules, vendor milestones, variance control, and day-of operational spending.',
+  },
+]
+
 
 
