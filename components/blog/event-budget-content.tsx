@@ -42,6 +42,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { getBlogPostBySlug, eventBudgetFaqs } from '@/lib/data/blog'
+import { ArticleHeader } from '@/components/blog/article-header'
 
 const article = getBlogPostBySlug('how-to-create-an-event-budget')
 
@@ -348,70 +349,12 @@ export function EventBudgetContent() {
 
   return (
     <article className="min-h-screen bg-background text-foreground pt-24 pb-20">
-      {/* 1. Breadcrumbs */}
-      <nav
-        aria-label="Breadcrumb"
-        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-6 text-sm text-muted-foreground"
-      >
-        <ol className="flex items-center space-x-2 flex-wrap">
-          <li>
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
-            </Link>
-          </li>
-          <li className="flex items-center space-x-2">
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-            <Link href="/blog" className="hover:text-primary transition-colors">
-              Articles
-            </Link>
-          </li>
-          <li className="flex items-center space-x-2">
-            <ChevronRight className="w-3.5 h-3.5 text-muted-foreground/60" />
-            <span className="text-foreground font-medium truncate max-w-[240px] sm:max-w-md">
-              How to Create an Event Budget
-            </span>
-          </li>
-        </ol>
-      </nav>
-
-      {/* 2. Header & H1 */}
-      <header className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
-          <PieChart className="w-3.5 h-3.5" />
-          Planning Tips &amp; Financial Control
-        </div>
-
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-foreground leading-[1.15] mb-6">
-          How to Create an Event Budget: A Practical Guide for Any Event
-        </h1>
-
-        <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-border/60 text-xs sm:text-sm text-muted-foreground">
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-foreground">Apurv Shah</span>
-              <span className="text-muted-foreground/60">·</span>
-              <span>Lead Event Director, AS Events</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-4 h-4 text-primary" />
-              <span>October 19, 2026</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-primary" />
-              <span>12 min read</span>
-            </div>
-          </div>
-
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-primary transition-colors"
-            title="Copy article link"
-          >
-            <Share2 className="w-4 h-4" />
-            {copied ? 'Link Copied!' : 'Share Guide'}
-          </button>
-        </div>
-      </header>
+      {article && (
+        <ArticleHeader
+          post={article}
+          badgeLabel="Financial Control & Cost Management"
+        />
+      )}
 
       {/* 3. Hero Visual */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
@@ -1314,7 +1257,7 @@ export function EventBudgetContent() {
             {/* CTA Buttons with strict contrast specifications */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <button
-                onClick={openModal}
+                onClick={() => openModal()}
                 className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-primary text-slate-950 font-bold hover:bg-primary/90 transition-all shadow-lg hover:shadow-primary/20 text-sm sm:text-base"
               >
                 Plan Your Event

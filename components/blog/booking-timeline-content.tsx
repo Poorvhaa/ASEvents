@@ -35,6 +35,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { getBlogPostBySlug, bookingTimelineFaqs } from '@/lib/data/blog'
+import { ArticleHeader } from '@/components/blog/article-header'
 
 const article = getBlogPostBySlug('how-early-should-you-hire-an-event-planner')
 
@@ -222,78 +223,12 @@ export function BookingTimelineContent() {
 
   return (
     <article className="pt-28 pb-20 bg-background text-foreground">
-      {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="container mx-auto px-4 lg:px-8 max-w-4xl mb-6">
-        <ol className="flex items-center flex-wrap gap-2 text-xs sm:text-sm text-muted-foreground">
-          <li>
-            <Link href="/" className="hover:text-primary transition-colors">
-              Home
-            </Link>
-          </li>
-          <li className="flex items-center gap-2">
-            <ChevronRight size={14} className="text-muted-foreground/60" />
-            <Link href="/blog" className="hover:text-primary transition-colors">
-              Blog
-            </Link>
-          </li>
-          <li className="flex items-center gap-2">
-            <ChevronRight size={14} className="text-muted-foreground/60" />
-            <span className="text-foreground font-medium truncate max-w-[200px] sm:max-w-none">
-              How Early Should You Hire an Event Planner?
-            </span>
-          </li>
-        </ol>
-      </nav>
-
-      {/* Header */}
-      <header className="container mx-auto px-4 lg:px-8 max-w-4xl mb-10">
-        <div className="flex flex-wrap items-center gap-3 mb-4">
-          <span className="px-3.5 py-1 bg-primary/10 text-primary text-xs font-semibold rounded-full border border-primary/20">
-            Planning Tips
-          </span>
-          <span className="text-xs text-muted-foreground uppercase tracking-widest font-semibold">
-            Booking &amp; Timeline Guide
-          </span>
-        </div>
-
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground leading-[1.15] mb-4 text-balance">
-          How Early Should You Hire an Event Planner?
-        </h1>
-
-        <p className="text-base sm:text-xl text-muted-foreground leading-relaxed mb-6 font-light">
-          A practical guide to event planner booking, recommended planning timelines, lead times for
-          weddings and corporate events, and how early professional involvement protects your budget
-          and peace of mind.
-        </p>
-
-        <div className="flex flex-wrap items-center justify-between gap-4 py-4 border-y border-border/60 text-xs sm:text-sm text-muted-foreground">
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs">
-                AS
-              </div>
-              <span className="font-medium text-foreground">Apurv Shah</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Calendar size={15} className="text-primary" />
-              <span>{article?.date || 'October 16, 2026'}</span>
-            </div>
-            <div className="flex items-center gap-1.5">
-              <Clock size={15} className="text-primary" />
-              <span>11 min read</span>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={handleShare}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:text-primary/80 transition-colors px-3 py-1.5 rounded-lg border border-border hover:border-primary/40 bg-card"
-          >
-            <Share2 size={14} />
-            Share Article
-          </button>
-        </div>
-      </header>
+      {article && (
+        <ArticleHeader
+          post={article}
+          badgeLabel="Booking & Timeline Guide"
+        />
+      )}
 
       {/* Featured / Hero Visual */}
       <div className="container mx-auto px-4 lg:px-8 max-w-4xl mb-12">

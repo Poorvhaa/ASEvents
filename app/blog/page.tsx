@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { BreadcrumbStructuredData } from '@/components/structured-data'
-import { BlogHero } from '@/components/blog/blog-hero'
 import { BlogList } from '@/components/blog/blog-list'
 import { CTASection } from '@/components/sections/cta-section'
 
@@ -35,7 +34,6 @@ export default function BlogListingPage() {
   return (
     <>
       <BreadcrumbStructuredData page="blog" />
-      <BlogHero />
       <BlogList />
       <CTASection />
     </>
