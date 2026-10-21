@@ -45,6 +45,65 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 107,
+    title: 'How to Plan a Successful Wedding: A Step-by-Step Wedding Planning Guide',
+    slug: 'how-to-plan-a-successful-wedding',
+    excerpt:
+      'A practical step-by-step wedding planning guide covering budget, guest list, venue, vendors, ceremonies, décor, food, timeline and final wedding-day preparation.',
+    image: '/images/blog/how-to-plan-a-successful-wedding/hero.jpg',
+    date: 'October 21, 2026',
+    readTime: '14 min read',
+    category: 'Weddings',
+    tags: ['Weddings', 'Planning Tips', 'Budget', 'Decor', 'Catering', 'Entertainment'],
+    featured: true,
+    seoTitle: 'How to Plan a Successful Wedding: Step-by-Step Guide | AS Event Management',
+    metaDescription:
+      'Learn how to plan a successful wedding with a practical guide to budget, guest list, venue, vendors, ceremonies, décor, food, timeline and wedding-day coordination.',
+    primaryKeyword: 'how to plan a wedding',
+    secondaryKeywords: [
+      'wedding planning guide',
+      'wedding planning checklist',
+      'step-by-step wedding planning',
+      'how to plan a successful wedding',
+      'wedding planning timeline',
+      'wedding planner',
+      'wedding planning services',
+      'wedding budget planning',
+      'wedding venue selection',
+      'wedding vendor planning',
+      'Indian wedding planning',
+      'destination wedding planning',
+      'wedding guest list planning',
+      'wedding day timeline',
+      'Indian wedding planner',
+      'Gujarati wedding planning',
+      'North Indian wedding planning',
+      'South Indian wedding planning',
+      'interfaith wedding planning',
+      'destination wedding planner',
+      'wedding budget',
+      'wedding guest experience',
+      'wedding vendors',
+      'wedding décor',
+      'wedding catering',
+      'wedding photography',
+      'wedding entertainment',
+      'wedding ceremony planning',
+      'mehndi planning',
+      'haldi planning',
+      'sangeet planning',
+      'wedding reception planning',
+      'wedding logistics',
+      'wedding coordination',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-to-plan-a-successful-wedding',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Event Management',
+    },
+  },
+  {
     id: 106,
     title: 'How to Create an Event Budget: A Practical Guide for Any Event',
     slug: 'how-to-create-an-event-budget',
@@ -529,6 +588,44 @@ export const eventBudgetFaqs = [
     question: 'What is the difference between an event budget and an event management budget?',
     answer:
       'An event budget is the overarching financial blueprint establishing total funding and category allocations. An event management budget focuses on operational execution, tracking real-time commitments, deposit schedules, vendor milestones, variance control, and day-of operational spending.',
+  },
+]
+
+export const weddingPlanningFaqs = [
+  {
+    question: 'How do I start planning a wedding?',
+    answer:
+      'Start by agreeing on your shared wedding vision, core atmosphere, approximate scale, cultural requirements, and top three priorities before committing deposits. Establishing your priorities early helps you evaluate venues, vendors, and budgets without getting overwhelmed.',
+  },
+  {
+    question: 'When should we set the wedding budget?',
+    answer:
+      'Set your wedding budget at the very start of the planning process. Define confirmed financial contributions from all parties, establish a clear spending ceiling, allocate funds across major categories, and reserve a dedicated contingency fund before signing any vendor or venue contracts.',
+  },
+  {
+    question: 'Should we create the guest list before booking the venue?',
+    answer:
+      'Yes. Drafting your guest count across immediate family, extended relatives, and friends—with separate estimates for each ceremony—is critical before selecting a venue. Usable capacity, catering minimums, and seating comfort depend directly on realistic guest attendance.',
+  },
+  {
+    question: 'How do we choose wedding vendors?',
+    answer:
+      'Prioritize high-demand vendors whose dates book early, such as catering, photography, production, and decor. Review portfolios of events similar in style and scale, speak with recent references, confirm dedicated on-site supervisors, and ensure contracts detail scope, overtime, backup plans, and cancellation terms.',
+  },
+  {
+    question: 'How do we plan multiple Indian wedding functions?',
+    answer:
+      'Create an individual planning outline for each celebration—including haldi, mehndi, sangeet, the main wedding ritual, and the reception. Detail the purpose, location, timing, required materials, family roles, food service, and officiant requirements for each event to prevent rushed schedules.',
+  },
+  {
+    question: 'When can a wedding planner help?',
+    answer:
+      'Professional wedding planning is especially valuable when managing multi-day celebrations, complex logistics, large guest lists, destination events, or when families have limited time to coordinate vendors. Planners offer full-service planning, partial planning, or day-of event coordination based on your needs.',
+  },
+  {
+    question: 'How do we create a wedding-day timeline?',
+    answer:
+      'Build a master timeline outlining vendor load-in, dressing and beauty times, photography sessions, guest arrivals, ritual milestones, dining service, and teardown. Include realistic buffer times between events to accommodate travel delays, family portraits, and cultural traditions comfortably.',
   },
 ]
 

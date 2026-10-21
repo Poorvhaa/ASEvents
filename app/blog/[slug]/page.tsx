@@ -12,6 +12,7 @@ import { EventBudgetContent } from '@/components/blog/event-budget-content'
 import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-content'
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
 import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-content'
+import { WeddingPlanningContent } from '@/components/blog/wedding-planning-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -20,9 +21,11 @@ import {
   plannerVsManagerFaqs,
   bookingTimelineFaqs,
   eventBudgetFaqs,
+  weddingPlanningFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'how-to-plan-a-successful-wedding',
   'how-to-create-an-event-budget',
   'how-early-should-you-hire-an-event-planner',
   'event-planner-vs-event-manager',
@@ -147,6 +150,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'how-to-plan-a-successful-wedding' && (
+        <FaqStructuredData faqs={weddingPlanningFaqs} />
+      )}
       {post.slug === 'how-to-create-an-event-budget' && (
         <FaqStructuredData faqs={eventBudgetFaqs} />
       )}
@@ -156,7 +162,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'how-to-create-an-event-budget' ? (
+      {post.slug === 'how-to-plan-a-successful-wedding' ? (
+        <WeddingPlanningContent />
+      ) : post.slug === 'how-to-create-an-event-budget' ? (
         <EventBudgetContent />
       ) : post.slug === 'how-early-should-you-hire-an-event-planner' ? (
         <BookingTimelineContent />
