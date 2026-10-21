@@ -9,12 +9,10 @@ export const mainNavLinks = [
 ] as const
 
 export const servicesDropdownItems = [
-  { href: '/services#wedding-planning', label: 'Wedding Planning' },
-  { href: '/services#destination-weddings', label: 'Destination Weddings' },
-  { href: '/services#corporate-events', label: 'Corporate Events' },
- // { href: '/services#product-launches', label: 'Product Launches' },
-  //{ href: '/services#exhibitions', label: 'Exhibitions' },
-  { href: '/services#birthday-celebrations', label: 'Birthday Celebrations' },
-  { href: '/services#anniversary-events', label: 'Anniversary Events' },
-  //{ href: '/services#entertainment-management', label: 'Entertainment Management' },
+  { href: '/services/wedding-planning', label: 'Wedding Planning' },
+  { href: '/services/destination-weddings', label: 'Destination Weddings' },
+  { href: '/services/corporate-events', label: 'Corporate Events' },
+  { href: '/services/birthday-celebrations', label: 'Birthday Celebrations' },
+  { href: '/services/anniversary-events', label: 'Anniversary Events' },
 ] as const
+

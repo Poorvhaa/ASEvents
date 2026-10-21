@@ -156,16 +156,105 @@ export function ArticleStructuredData({
   )
 }
 
-export function FaqStructuredData({
+export function ServiceStructuredData({
+  name,
+  description,
+  url,
+  serviceType,
+  image,
+}: {
+  name: string
+  description: string
+  url: string
+  serviceType: string
+  image?: string
+}) {
+  const rootUrl = siteUrl.replace(/\/$/, '')
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name,
+        description,
+        url,
+        serviceType,
+        provider: {
+          '@id': `${rootUrl}#organization`,
+        },
+        areaServed: [
+          {
+            '@type': 'City',
+            name: 'Vadodara',
+          },
+          {
+            '@type': 'State',
+            name: 'Gujarat',
+          },
+          {
+            '@type': 'Country',
+            name: 'India',
+          },
+        ],
+        ...(image ? { image } : {}),
+      }}
+    />
+  )
+}
+
+export function ServiceBreadcrumbStructuredData({
+  serviceName,
+  serviceUrl,
+}: {
+  serviceName: string
+  serviceUrl: string
+}) {
+  const rootUrl = siteUrl.replace(/\/$/, '')
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        '@id': `${serviceUrl}#breadcrumb`,
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: `${rootUrl}/`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Services',
+            item: `${rootUrl}/services`,
+          },
+          {
+            '@type': 'ListItem',
+            position: 3,
+            name: serviceName,
+            item: serviceUrl,
+          },
+        ],
+      }}
+    />
+  )
+}
+
+export function FAQStructuredData({
   faqs,
+  url,
 }: {
   faqs: { question: string; answer: string }[]
+  url?: string
 }) {
   return (
     <JsonLd
       data={{
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
+        ...(url ? { '@id': `${url}#faq` } : {}),
         mainEntity: faqs.map((faq) => ({
           '@type': 'Question',
           name: faq.question,
@@ -178,4 +267,7 @@ export function FaqStructuredData({
     />
   )
 }
+
+export const FaqStructuredData = FAQStructuredData
+
 

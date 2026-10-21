@@ -305,21 +305,45 @@ export function Navbar() {
             </Link>
 
             {/* Services Dropdown */}
-            <div className="relative" ref={dropdownRef}>
-              <button
-                onClick={() => setIsServicesOpen(!isServicesOpen)}
-                className={cn(linkClass, 'flex items-center gap-1 py-1')}
-              >
-                {t('nav.services')}
-                <ChevronDown
-                  size={14}
+            <div
+              className="relative"
+              ref={dropdownRef}
+              onMouseEnter={() => setIsServicesOpen(true)}
+              onMouseLeave={() => setIsServicesOpen(false)}
+            >
+              <div className="flex items-center gap-1 py-1">
+                <Link
+                  href="/services"
+                  onClick={(e) => handleLinkClick(e, '/services')}
+                  className={linkClass}
+                >
+                  {t('nav.services')}
+                  <span className={underlineClass} />
+                </Link>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    setIsServicesOpen((prev) => !prev)
+                  }}
                   className={cn(
-                    'transition-transform duration-300',
-                    isServicesOpen && 'rotate-180'
+                    'p-0.5 rounded transition-transform duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary',
+                    isHomePage && !isScrolled
+                      ? 'text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)] hover:text-gold-light'
+                      : 'text-slate-900 hover:text-primary'
                   )}
-                />
-                <span className={underlineClass} />
-              </button>
+                  aria-label="Toggle services menu"
+                  aria-expanded={isServicesOpen}
+                >
+                  <ChevronDown
+                    size={14}
+                    className={cn(
+                      'transition-transform duration-300',
+                      isServicesOpen && 'rotate-180'
+                    )}
+                  />
+                </button>
+              </div>
 
               <AnimatePresence>
                 {isServicesOpen && (
@@ -328,14 +352,21 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-64 py-2 bg-white rounded-xl shadow-lg border border-border z-50"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 py-2 bg-white rounded-xl shadow-lg border border-border z-50"
                   >
+                    <Link
+                      href="/services"
+                      onClick={(e) => handleLinkClick(e, '/services')}
+                      className="block px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary border-b border-border/40 hover:bg-muted transition-colors"
+                    >
+                      {t('nav.services')} Overview
+                    </Link>
                     {servicesDropdownItems.map((item) => (
                       <Link
                         key={item.label}
                         href={item.href}
                         onClick={(e) => handleLinkClick(e, item.href)}
-                        className="block px-4 py-3 text-sm text-foreground hover:bg-muted hover:text-primary transition-colors"
+                        className="block px-4 py-2.5 text-sm text-foreground hover:bg-muted hover:text-primary transition-colors"
                       >
                         {t(getServiceTranslationKey(item.label))}
                       </Link>

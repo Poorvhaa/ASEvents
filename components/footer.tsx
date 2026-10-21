@@ -9,12 +9,13 @@ import { usePathname } from 'next/navigation'
 import { parseHashHref, scrollToHash } from '@/lib/scroll-to-hash'
 
 const services = [
-  { href: '/services#wedding-planning', label: 'Wedding Planning', key: 'services.wedding.title' },
-  { href: '/services#destination-weddings', label: 'Destination Weddings', key: 'services.destination.title' },
-  { href: '/services#corporate-events', label: 'Corporate Events', key: 'services.corporate.title' },
-  { href: '/services#birthday-celebrations', label: 'Birthday Celebrations', key: 'services.birthdays.title' },
-  { href: '/services#anniversary-events', label: 'Anniversary Events', key: 'services.anniversaries.title' },
+  { href: '/services/wedding-planning', label: 'Wedding Planning', key: 'services.wedding.title' },
+  { href: '/services/destination-weddings', label: 'Destination Weddings', key: 'services.destination.title' },
+  { href: '/services/corporate-events', label: 'Corporate Events', key: 'services.corporate.title' },
+  { href: '/services/birthday-celebrations', label: 'Birthday Celebrations', key: 'services.birthdays.title' },
+  { href: '/services/anniversary-events', label: 'Anniversary Events', key: 'services.anniversaries.title' },
 ]
+
 
 const quickLinks = [
   { href: '/', label: 'Home', key: 'nav.home' },

@@ -1,4 +1,3 @@
-import { BreadcrumbStructuredData } from '@/components/structured-data'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -20,10 +19,6 @@ export const metadata: Metadata = {
 }
 
 export default function ServicesLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <BreadcrumbStructuredData page="services" />
-      {children}
-    </>
-  )
+  return children
 }
+

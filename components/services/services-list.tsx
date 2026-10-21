@@ -2,10 +2,12 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Check } from 'lucide-react'
+import Link from 'next/link'
+import { Check, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { useTranslation } from '@/src/hooks/useTranslation'
+
 
 const services = [
   {
@@ -141,15 +143,20 @@ export function ServicesList() {
               >
                 {/* Image */}
                 <div className={`relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden">
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className="block group/image relative aspect-[4/3] rounded-2xl overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    aria-label={`View details for ${t(`services.${localeSlug}.title`)}`}
+                  >
                     <Image
                       src={service.image}
                       alt={service.alt}
                       fill
                       sizes="(min-width: 1024px) 50vw, 100vw"
-                      className="object-cover"
+                      className="object-cover transition-transform duration-700 ease-out group-hover/image:scale-105"
                     />
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover/image:opacity-100 transition-opacity duration-300" />
+                  </Link>
                   {/* Decorative Element */}
                   <div className={`absolute -bottom-6 ${index % 2 === 1 ? '-left-6' : '-right-6'} w-48 h-48 bg-primary/10 rounded-2xl -z-10`} />
                 </div>
@@ -158,7 +165,13 @@ export function ServicesList() {
                 <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
                   <span className="text-primary font-medium text-sm">0{service.id}</span>
                   <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mt-2 mb-4">
-                    {t(`services.${localeSlug}.title`)}
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="hover:text-primary transition-colors inline-flex items-center gap-2 group/title"
+                    >
+                      <span>{t(`services.${localeSlug}.title`)}</span>
+                      <ArrowRight size={22} className="opacity-0 -translate-x-2 group-hover/title:opacity-100 group-hover/title:translate-x-0 transition-all text-primary" />
+                    </Link>
                   </h2>
                   <p className="text-muted-foreground leading-relaxed mb-6">
                     {t(`services.${localeSlug}.desc`)}
@@ -180,17 +193,41 @@ export function ServicesList() {
                     })}
                   </ul>
 
-                  <Button
-                    onClick={() =>
-                      openModal({
-                        eventType: t(`services.${localeSlug}.title`),
-                        step: 2,
-                      })
-                    }
-                    className="bg-primary text-primary-foreground hover:bg-gold-light"
-                  >
-                    {t('servicesPage.getQuoteFor')} {t(`services.${localeSlug}.title`)}
-                  </Button>
+                  <div className="flex flex-wrap items-center gap-3.5">
+                    <Button
+                      asChild
+                      className="bg-primary text-foreground font-semibold hover:bg-gold-light border border-border shadow-sm px-5 py-2.5 rounded-xl transition-all"
+                    >
+                      <Link href={`/services/${service.slug}`} className="inline-flex items-center gap-2">
+                        <span>
+                          {service.slug === 'wedding-planning'
+                            ? 'Explore Wedding Planning'
+                            : service.slug === 'destination-weddings'
+                            ? 'Explore Destination Weddings'
+                            : service.slug === 'corporate-events'
+                            ? 'Explore Corporate Events'
+                            : service.slug === 'birthday-celebrations'
+                            ? 'Explore Birthday Celebrations'
+                            : service.slug === 'anniversary-events'
+                            ? 'Explore Anniversary Events'
+                            : 'View Service'}
+                        </span>
+                        <ArrowRight size={16} />
+                      </Link>
+                    </Button>
+                    <Button
+                      onClick={() =>
+                        openModal({
+                          eventType: t(`services.${localeSlug}.title`),
+                          step: 2,
+                        })
+                      }
+                      variant="outline"
+                      className="border-border/80 hover:bg-muted text-foreground font-medium rounded-xl"
+                    >
+                      {t('servicesPage.getQuoteFor')} {t(`services.${localeSlug}.title`)}
+                    </Button>
+                  </div>
                 </div>
               </motion.div>
             )

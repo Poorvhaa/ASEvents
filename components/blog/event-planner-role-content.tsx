@@ -119,23 +119,23 @@ export function EventPlannerRoleContent() {
           <p className="text-muted-foreground text-base leading-relaxed mb-6">
             AS Events presents its work around bespoke planning, venue curation, and event execution.
             Services include{' '}
-            <Link href="/services#wedding-planning" className={linkClass}>
+            <Link href="/services/wedding-planning" className={linkClass}>
               Wedding Planning
             </Link>
             ,{' '}
-            <Link href="/services#destination-weddings" className={linkClass}>
+            <Link href="/services/destination-weddings" className={linkClass}>
               Destination Weddings
             </Link>
             ,{' '}
-            <Link href="/services#corporate-events" className={linkClass}>
+            <Link href="/services/corporate-events" className={linkClass}>
               Corporate Events
             </Link>
             ,{' '}
-            <Link href="/services#birthday-celebrations" className={linkClass}>
+            <Link href="/services/birthday-celebrations" className={linkClass}>
               Birthday Celebrations
             </Link>
             , and{' '}
-            <Link href="/services#anniversary-events" className={linkClass}>
+            <Link href="/services/anniversary-events" className={linkClass}>
               Anniversary Events
             </Link>
             .
@@ -355,7 +355,7 @@ export function EventPlannerRoleContent() {
         <section className="mb-12">
           <SectionHeading number="8">Destination Event Coordination</SectionHeading>
           <p className="text-muted-foreground text-base leading-relaxed mb-4">
-            <Link href="/services#destination-weddings" className={linkClass}>
+            <Link href="/services/destination-weddings" className={linkClass}>
               Destination events
             </Link>{' '}
             add another layer of logistics because guests, venues, vendors, and schedules may be
@@ -373,7 +373,7 @@ export function EventPlannerRoleContent() {
         <section className="mb-12">
           <SectionHeading number="9">Corporate Event Planning</SectionHeading>
           <p className="text-muted-foreground text-base leading-relaxed mb-4">
-            <Link href="/services#corporate-events" className={linkClass}>
+            <Link href="/services/corporate-events" className={linkClass}>
               Corporate events
             </Link>{' '}
             often have objectives beyond celebration. They may support a conference, networking
@@ -412,11 +412,11 @@ export function EventPlannerRoleContent() {
             Social events can be highly personal. A planner can coordinate the creative and
             operational details while keeping the event connected to the client&apos;s story — whether
             that is a{' '}
-            <Link href="/services#birthday-celebrations" className={linkClass}>
+            <Link href="/services/birthday-celebrations" className={linkClass}>
               birthday celebration
             </Link>{' '}
             or an{' '}
-            <Link href="/services#anniversary-events" className={linkClass}>
+            <Link href="/services/anniversary-events" className={linkClass}>
               anniversary event
             </Link>
             .

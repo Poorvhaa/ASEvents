@@ -164,7 +164,7 @@ export function ArticleContent() {
           <p className="text-muted-foreground text-base leading-relaxed mb-4">
             Experience matters because every event has different requirements. For{' '}
             <Link
-              href="/services#wedding-planning"
+              href="/services/wedding-planning"
               className="text-primary underline hover:text-primary/80 font-medium"
             >
               weddings
@@ -172,7 +172,7 @@ export function ArticleContent() {
             , you may need venue selection, décor, catering, photography, entertainment, guest
             management, vendor coordination, and a detailed timeline.{' '}
             <Link
-              href="/services#corporate-events"
+              href="/services/corporate-events"
               className="text-primary underline hover:text-primary/80 font-medium"
             >
               Corporate events
@@ -442,7 +442,7 @@ export function ArticleContent() {
             Ask about experience working with local partners and coordinating guests and vendors
             across locations. Read more about our destination services on{' '}
             <Link
-              href="/services#destination-weddings"
+              href="/services/destination-weddings"
               className="text-primary underline font-medium"
             >
               Destination Wedding Planning

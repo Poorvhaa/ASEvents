@@ -489,31 +489,31 @@ export function EventTypesShowcase() {
       title: 'Weddings',
       desc: 'From intimate ceremonies to grand multi-day luxury celebrations.',
       image: '/images/portfolio/weddings/wedding 1.jpg',
-      link: '/services#wedding-planning',
+      link: '/services/wedding-planning',
     },
     {
       title: 'Corporate Events',
       desc: 'Conferences, gala awards, networking summits, and product launches.',
       image: '/images/portfolio/corporate/corporate 1.jpg',
-      link: '/services#corporate-events',
+      link: '/services/corporate-events',
     },
     {
       title: 'Birthdays',
       desc: 'Fun, milestone themes and memorable family celebrations.',
       image: '/images/portfolio/birthdays/birthday 1.jpg',
-      link: '/services#birthday-celebrations',
+      link: '/services/birthday-celebrations',
     },
     {
       title: 'Anniversaries',
       desc: 'Elegant romantic milestones celebrated with loved ones.',
       image: '/images/portfolio/anniversaries/anniversary 1.jpg',
-      link: '/services#anniversary-events',
+      link: '/services/anniversary-events',
     },
     {
       title: 'Destination Events',
       desc: 'Scenic palatial venues, beachside retreats, and seamless guest travel.',
       image: '/images/portfolio/weddings/wedding 4.jpg',
-      link: '/services#destination-weddings',
+      link: '/services/destination-weddings',
     },
   ]
 

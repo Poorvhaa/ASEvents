@@ -17,24 +17,30 @@ const services = [
   {
     icon: Heart,
     slug: 'wedding',
+    href: '/services/wedding-planning',
   },
   {
     icon: Plane,
     slug: 'destination',
+    href: '/services/destination-weddings',
   },
   {
     icon: Building2,
     slug: 'corporate',
+    href: '/services/corporate-events',
   },
   {
     icon: Cake,
     slug: 'birthdays',
+    href: '/services/birthday-celebrations',
   },
   {
     icon: Gift,
     slug: 'anniversaries',
+    href: '/services/anniversary-events',
   },
 ]
+
 
 export function Services() {
   const { t, language } = useTranslation()
@@ -96,7 +102,9 @@ export function Services() {
 
                     {/* Title */}
                     <h3 className="text-2xl font-bold text-foreground mb-4 font-serif group-hover:text-primary transition-colors duration-300">
-                      {t(`services.${service.slug}.title`)}
+                      <Link href={service.href} className="hover:underline">
+                        {t(`services.${service.slug}.title`)}
+                      </Link>
                     </h3>
 
                     {/* Description */}
@@ -136,10 +144,10 @@ export function Services() {
                   </div>
 
                   <Link
-                    href="/portfolio"
+                    href={service.href}
                     className="flex items-center justify-between w-full py-3 px-4 bg-primary text-foreground text-sm font-bold rounded-xl hover:bg-primary/90 transition-all duration-300"
                   >
-                    <span>View Portfolio</span>
+                    <span>Explore Service</span>
                     <ArrowRight size={16} />
                   </Link>
                 </div>
