@@ -9,6 +9,7 @@ import { ArticleContent } from '@/components/blog/article-content'
 import { BookingTimelineContent } from '@/components/blog/booking-timeline-content'
 import { ChecklistArticleContent } from '@/components/blog/checklist-article-content'
 import { EventBudgetContent } from '@/components/blog/event-budget-content'
+import { EventCostIndiaContent } from '@/components/blog/event-cost-india-content'
 import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-content'
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
 import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-content'
@@ -22,9 +23,11 @@ import {
   bookingTimelineFaqs,
   eventBudgetFaqs,
   weddingPlanningFaqs,
+  eventCostIndiaFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'how-much-does-event-planning-cost-in-india',
   'how-to-plan-a-successful-wedding',
   'how-to-create-an-event-budget',
   'how-early-should-you-hire-an-event-planner',
@@ -150,6 +153,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'how-much-does-event-planning-cost-in-india' && (
+        <FaqStructuredData faqs={eventCostIndiaFaqs} />
+      )}
       {post.slug === 'how-to-plan-a-successful-wedding' && (
         <FaqStructuredData faqs={weddingPlanningFaqs} />
       )}
@@ -162,7 +168,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'how-to-plan-a-successful-wedding' ? (
+      {post.slug === 'how-much-does-event-planning-cost-in-india' ? (
+        <EventCostIndiaContent />
+      ) : post.slug === 'how-to-plan-a-successful-wedding' ? (
         <WeddingPlanningContent />
       ) : post.slug === 'how-to-create-an-event-budget' ? (
         <EventBudgetContent />

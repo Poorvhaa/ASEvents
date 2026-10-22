@@ -45,6 +45,50 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 108,
+    title: 'How Much Does Event Planning Cost in India?',
+    slug: 'how-much-does-event-planning-cost-in-india',
+    excerpt:
+      'Understand event planning costs in India, including venue, catering, décor, production, planner fees, hidden charges and practical budgeting examples.',
+    image: '/images/blog/how-much-does-event-planning-cost-in-india/hero.jpg',
+    date: 'October 22, 2026',
+    readTime: '14 min read',
+    category: 'Planning Tips',
+    tags: ['Planning Tips', 'Budget', 'Event Management', 'Weddings', 'Corporate'],
+    featured: true,
+    seoTitle:
+      'Event Planning Cost in India (2026): Complete Budget Guide | AS Event Management',
+    metaDescription:
+      'Learn what affects event planning cost in India, compare wedding, corporate and private-event budgets, understand planner fees, hidden costs and how to build a realistic budget.',
+    primaryKeyword: 'event planning cost in India',
+    secondaryKeywords: [
+      'event planning budget',
+      'event management cost in India',
+      'event planner cost India',
+      'wedding event budget India',
+      'corporate event planning cost',
+      'birthday party planning cost',
+      'event cost breakdown India',
+      'how much does event planner charge in India',
+      'event planner fees India',
+      'wedding planner cost in India',
+      'cost to hire event planner India',
+      'event budget template India',
+      '10 lakh event budget India',
+      'event venue cost India',
+      'catering cost per plate India',
+      'event decor cost India',
+      'hidden event costs India',
+      'event planning cost guide',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-much-does-event-planning-cost-in-india',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Event Management',
+    },
+  },
+  {
     id: 107,
     title: 'How to Plan a Successful Wedding: A Step-by-Step Wedding Planning Guide',
     slug: 'how-to-plan-a-successful-wedding',
@@ -629,5 +673,45 @@ export const weddingPlanningFaqs = [
   },
 ]
 
-
-
+export const eventCostIndiaFaqs = [
+  {
+    question: 'What is included in event planning cost in India?',
+    answer:
+      'The total event cost in India may include venue and space rental, food and catering, décor and ambience, sound, lighting and AV production, photography and videography, entertainment, event staffing, transportation, taxes, and a dedicated contingency reserve. Professional planner fees are separate unless a written full-service package explicitly bundles them.',
+  },
+  {
+    question: 'Is an event planner fee the same as an event budget?',
+    answer:
+      'No. An event planner fee compensates the professional team for their time, expertise, vendor coordination, timeline design, budget administration, and on-site execution. The event budget is the total financial amount required to produce the event, covering all third-party vendors, venue fees, rentals, catering, permits, and contingency reserves.',
+  },
+  {
+    question: 'Is DIY event planning always cheaper than hiring an event planner?',
+    answer:
+      'Not necessarily. While DIY planning avoids a professional coordination fee, venue, catering, décor, and technical rental costs remain identical. Moreover, self-planning requires substantial personal time and carries risks of vendor miscommunications, contract oversights, uncoordinated timelines, or rush charges that can quickly erode any perceived savings.',
+  },
+  {
+    question: 'How much should I reserve for unexpected event costs?',
+    answer:
+      'There is no universal fixed percentage, but allocating 5% to 10% of your total budget as an emergency contingency reserve is practical. The required reserve depends on event complexity, outdoor weather contingencies, travel logistics, and quotation certainty. Keep this reserve isolated and define who holds authority to approve release of contingency funds.',
+  },
+  {
+    question: 'What should I compare when vendors send different quotes?',
+    answer:
+      'Ensure each vendor is quoting the exact same written brief, date, guest count, and service scope. Compare itemized inclusions such as taxes, service hours, setup and teardown labor, transport, power, cancellation terms, and overtime rates. Evaluate vendor reliability and demonstrated execution standards rather than selecting solely on the lowest headline price.',
+  },
+  {
+    question: 'Does booking an event planner early always save money?',
+    answer:
+      'Early planning provides time to evaluate competing proposals, secure preferred venues before peak dates sell out, and avoid premium rush surcharges. While discounts are not guaranteed, early planning prevents hurried decisions and allows thorough contractual review, ensuring you lock in transparent rates with clear inclusions.',
+  },
+  {
+    question: 'Can one planner manage a wedding, corporate event and birthday party?',
+    answer:
+      'Experienced full-service event management companies frequently produce diverse celebrations. However, ensure the agency has specialized production expertise for your specific event type—such as multi-day ritual coordination for weddings, strict AV and run-of-show precision for corporate conferences, or safe and engaging setups for milestone private parties.',
+  },
+  {
+    question: 'Should I choose an all-inclusive event package or individual vendors?',
+    answer:
+      'An all-inclusive package simplifies billing and single-point coordination when itemized deliverables and vendor quality are clear. Sourcing individual vendors allows tailored customization but requires dedicated contract and timeline supervision. Review the complete final cost and contractual accountability of both options before committing.',
+  },
+]

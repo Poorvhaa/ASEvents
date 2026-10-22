@@ -66,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/how-much-does-event-planning-cost-in-india`,
+      lastModified: new Date('2026-10-22T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/how-to-plan-a-successful-wedding`,
       lastModified: new Date('2026-10-21T00:00:00+05:30'),
       changeFrequency: 'weekly',
