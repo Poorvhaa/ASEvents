@@ -45,6 +45,53 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 109,
+    title: 'Wedding Planner vs. DIY Wedding Planning: Which Is Right for You?',
+    slug: 'wedding-planner-vs-diy-wedding-planning',
+    excerpt:
+      'Compare DIY wedding planning with professional wedding planning across cost, creative control, vendors, time commitment and wedding-day coordination.',
+    image: '/images/blog/wedding-planner-vs-diy-wedding-planning/hero.jpg',
+    date: 'October 23, 2026',
+    readTime: '15 min read',
+    category: 'Weddings',
+    tags: [
+      'Weddings',
+      'Planning Tips',
+      'Budget',
+      'Event Management',
+      'Luxury Events',
+    ],
+    featured: true,
+    seoTitle:
+      'Wedding Planner vs DIY: Costs, Pros & Cons for Indian Weddings | AS Event Management',
+    metaDescription:
+      'Compare wedding planner vs DIY wedding planning, including costs, creative control, time, vendor coordination and wedding-day support for Indian weddings.',
+    primaryKeyword: 'wedding planner vs DIY',
+    secondaryKeywords: [
+      'DIY wedding planning',
+      'professional wedding planner',
+      'wedding planner vs planning yourself',
+      'wedding planning services',
+      'wedding planner benefits',
+      'wedding planning costs',
+      'day-of wedding coordinator',
+      'wedding day coordinator',
+      'wedding planning checklist',
+      'Indian wedding planning',
+      'wedding vendor coordination',
+      'DIY wedding vs planner',
+      'full-service wedding planner',
+      'partial wedding planning',
+      'wedding coordination services',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/wedding-planner-vs-diy-wedding-planning',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Lead Event Director, AS Event Management',
+    },
+  },
+  {
     id: 108,
     title: 'How Much Does Event Planning Cost in India?',
     slug: 'how-much-does-event-planning-cost-in-india',
@@ -713,5 +760,53 @@ export const eventCostIndiaFaqs = [
     question: 'Should I choose an all-inclusive event package or individual vendors?',
     answer:
       'An all-inclusive package simplifies billing and single-point coordination when itemized deliverables and vendor quality are clear. Sourcing individual vendors allows tailored customization but requires dedicated contract and timeline supervision. Review the complete final cost and contractual accountability of both options before committing.',
+  },
+]
+
+export const weddingPlannerVsDiyFaqs = [
+  {
+    question: 'What does DIY stand for in wedding planning?',
+    answer:
+      'DIY stands for "Do It Yourself." In wedding planning, it means the couple and family take overall responsibility for organizing the celebration—selecting vendors, comparing proposals, managing the budget, and setting schedules—instead of hiring a full-service wedding planner. DIY does not mean cooking the food or building stages yourself; you still hire professional suppliers, but you retain management and coordination control.',
+  },
+  {
+    question: 'Is DIY wedding planning always cheaper?',
+    answer:
+      'Not necessarily. While DIY planning avoids a professional planner’s service fee, third-party expenses for the venue, catering, décor, photography, and music remain identical. Additionally, self-planning requires substantial personal time and risks vendor miscommunications, contract oversights, uncoordinated schedules, or last-minute rush fees that can quickly offset perceived savings.',
+  },
+  {
+    question: 'Can a wedding planner still give us creative control?',
+    answer:
+      'Yes, absolutely. A professional wedding planner acts as an operational partner rather than an artistic substitute. In a well-structured collaboration, the couple defines the aesthetic vision, selects traditions, approves all vendor choices, and retains final authority on spending, while the planner organizes proposals, coordinates logistics, and executes approved decisions.',
+  },
+  {
+    question: 'Is a planner necessary for a small wedding?',
+    answer:
+      'Not automatically. A smaller, straightforward celebration with a single venue and limited vendor team can work wonderfully as DIY if the couple has the time and dependable family help. Even then, many couples hire a day-of wedding coordinator so parents and relatives can enjoy rituals and celebrate rather than directing deliveries and troubleshooting setups.',
+  },
+  {
+    question: 'What if our families want to help?',
+    answer:
+      'Family involvement can make planning deeply personal and joyful, especially for traditional Indian rituals. To keep it positive, assign relatives defined responsibilities matching their strengths, set realistic deadlines, and avoid placing high-pressure operational duties on close family members during sacred ceremonies when they should be participating fully.',
+  },
+  {
+    question: 'Does hiring a wedding planner guarantee lower spending?',
+    answer:
+      'No. While an experienced planner helps structure budgets, spot missing contract clauses, and prevent costly logistical errors, professional planning carries a service fee. Final spending depends on your guest count, venue choice, catering style, and production scope rather than hiring a planner alone.',
+  },
+  {
+    question: 'What is the difference between full planning and day-of coordination?',
+    answer:
+      'Full planning begins months before the event and covers venue sourcing, budget design, vendor vetting, contract negotiations, design curation, and end-to-end execution. Day-of coordination (or month-of coordination) typically begins 4 to 6 weeks before the wedding to consolidate existing vendor agreements, build the master schedule, confirm arrival windows, and manage on-site logistics on event day.',
+  },
+  {
+    question: 'When should couples hire a coordinator?',
+    answer:
+      'Couples should contact a coordinator as soon as they know they will need operational support—ideally 2 to 6 months before the wedding. Even a wedding-day coordinator requires several weeks beforehand to review existing contracts, verify venue load-in rules, assemble the master schedule, and establish emergency backup plans.',
+  },
+  {
+    question: 'How do we choose the right service for an Indian destination wedding?',
+    answer:
+      'Map your celebration’s logistical requirements first: number of functions (Haldi, Mehendi, Sangeet, Ceremony, Reception), guest room allocations, airport transfers, hotel hospitality desks, and multi-venue changeovers. If the operational demands exceed your family’s bandwidth, hire a planner with verified destination expertise to manage local suppliers and guest hospitality.',
   },
 ]

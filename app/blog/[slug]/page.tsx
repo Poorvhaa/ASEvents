@@ -14,6 +14,7 @@ import { EventPlannerRoleContent } from '@/components/blog/event-planner-role-co
 import { GenericArticleContent } from '@/components/blog/generic-article-content'
 import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-content'
 import { WeddingPlanningContent } from '@/components/blog/wedding-planning-content'
+import { WeddingPlannerVsDiyContent } from '@/components/blog/wedding-planner-vs-diy-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -24,9 +25,11 @@ import {
   eventBudgetFaqs,
   weddingPlanningFaqs,
   eventCostIndiaFaqs,
+  weddingPlannerVsDiyFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'wedding-planner-vs-diy-wedding-planning',
   'how-much-does-event-planning-cost-in-india',
   'how-to-plan-a-successful-wedding',
   'how-to-create-an-event-budget',
@@ -153,6 +156,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'wedding-planner-vs-diy-wedding-planning' && (
+        <FaqStructuredData faqs={weddingPlannerVsDiyFaqs} />
+      )}
       {post.slug === 'how-much-does-event-planning-cost-in-india' && (
         <FaqStructuredData faqs={eventCostIndiaFaqs} />
       )}
@@ -168,7 +174,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'how-much-does-event-planning-cost-in-india' ? (
+      {post.slug === 'wedding-planner-vs-diy-wedding-planning' ? (
+        <WeddingPlannerVsDiyContent />
+      ) : post.slug === 'how-much-does-event-planning-cost-in-india' ? (
         <EventCostIndiaContent />
       ) : post.slug === 'how-to-plan-a-successful-wedding' ? (
         <WeddingPlanningContent />
