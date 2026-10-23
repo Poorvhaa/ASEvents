@@ -40,6 +40,11 @@ import {
   Receipt,
   Scale,
   Percent,
+  Plane,
+  Briefcase,
+  PartyPopper,
+  Flame,
+  CheckSquare,
 } from 'lucide-react'
 import { useQuoteModal } from '@/hooks/use-quote-modal'
 import { getBlogPostBySlug, eventCostIndiaFaqs } from '@/lib/data/blog'
@@ -60,7 +65,7 @@ interface CostDriver {
 const costDrivers: CostDriver[] = [
   {
     number: '01',
-    title: 'Location, City Tier & Season',
+    title: 'City Tier, Location & Season',
     subtitle: 'Geography and seasonal demand heavily influence vendor and venue rates',
     points: [
       'Tier 1 metros (Mumbai, Delhi NCR, Bengaluru) command premium venue rates compared to Tier 2 or 3 destinations.',
@@ -178,62 +183,58 @@ const sampleBudgetAllocation: BudgetItem[] = [
   },
 ]
 
-interface ChecklistPhase {
-  phase: string
-  timeframe: string
-  badgeColor: string
-  tasks: string[]
-}
+const hiddenCostItems = [
+  { item: 'Taxes (GST)', desc: '18% on venue, decor, and AV production; 5% on pure outdoor catering.' },
+  { item: 'Service Charges', desc: 'Discretionary venue or hotel banquet service levies (often 5% to 10%).' },
+  { item: 'Overtime Penalties', desc: 'Hourly surcharges for setup delays or late-night teardown past curfew.' },
+  { item: 'Security & Housekeeping', desc: 'Dedicated venue marshals, bag-check personnel, and washroom attendants.' },
+  { item: 'Additional Power & Fuel', desc: 'Diesel consumption for synchronized generator backups during heavy loads.' },
+  { item: 'Furniture & Linen Rentals', desc: 'Extra round tables, chiavari chairs, sofa lounges, and table skirting.' },
+  { item: 'Guest Transportation', desc: 'Airport transfers, late-night shuttle vans, and valet driver staffing.' },
+  { item: 'Shipping & Freight', desc: 'Transportation charges for specialized props, trussing, or bespoke decor pieces.' },
+  { item: 'Vendor Accommodation & Meals', desc: 'Hotel rooms and hot meal packs for photography, DJ, and production crews.' },
+  { item: 'Rehearsal Time', desc: 'Venue access fees for Sangeet dance run-throughs or corporate AV line-checks.' },
+  { item: 'Technical Standby Staff', desc: 'Dedicated on-site sound engineers, LED video switchers, and electricians.' },
+  { item: 'Live-Streaming Hardware', desc: 'High-speed dedicated bonded internet and multi-camera broadcast switchers.' },
+  { item: 'Signage & Directional Displays', desc: 'Wayfinding easels, branded registration backdrops, and parking signboards.' },
+  { item: 'Statutory Permits & Licenses', desc: 'PPL/IPRS/NOVEX music copyrights, local police permissions, and fire NOCs.' },
+  { item: 'Refundable Caution Deposits', desc: 'Venue security deposits held against carpet tears or delayed vacancy.' },
+  { item: 'Cancellation & Modification Terms', desc: 'Non-refundable advance booking policies and date-change penalty clauses.' },
+]
 
-const budgetChecklistPhases: ChecklistPhase[] = [
-  {
-    phase: 'Phase 1: Foundation & Ceiling',
-    timeframe: '6 to 12 Months Before',
-    badgeColor: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
-    tasks: [
-      'Define celebration purpose, core guest experience priorities, and spending ceiling.',
-      'Estimate preliminary guest count range across close family, colleagues, and friends.',
-      'Research dates, venue categories (hotel, resort, lawn), and off-peak vs peak availability.',
-      'Draft preliminary category allocations before paying non-refundable deposits.',
-      'Shortlist professional event planners and request scope-specific service proposals.',
-    ],
-  },
-  {
-    phase: 'Phase 2: Vendor Selection & Quoting',
-    timeframe: '3 to 6 Months Before',
-    badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-    tasks: [
-      'Send identical written briefs to competing caterers, decorators, and AV suppliers.',
-      'Confirm all proposals itemize taxes (GST), generator fuel, setup hours, and teardown terms.',
-      'Finalize core vendor contracts and lock payment milestone schedules in writing.',
-      'Log every deposit paid in a central tracking sheet with date, invoice number, and remaining balance.',
-      'Review catering per-plate formulas and confirm minimum guaranteed guest commitments.',
-    ],
-  },
-  {
-    phase: 'Phase 3: Headcount Lock & Variance Audit',
-    timeframe: '1 to 3 Months Before',
-    badgeColor: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-    tasks: [
-      'Finalize RSVP confirmations and establish final guaranteed headcounts for catering and seating.',
-      'Compare contracted vendor commitments against initial category estimates to measure variance.',
-      'Reallocate surplus from under-budget categories to balance any approved scope upgrades.',
-      'Confirm emergency contingency approval protocol (who holds authority to release reserves).',
-      'Detail weather contingency plans and indoor backup spaces with venue management.',
-    ],
-  },
-  {
-    phase: 'Phase 4: Execution & Financial Settlement',
-    timeframe: 'Final Week & Event Day',
-    badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
-    tasks: [
-      'Reconfirm load-in access hours, delivery timing, sound restrictions, and municipal permissions.',
-      'Distribute final master run-of-show and vendor emergency contact sheet to key stakeholders.',
-      'Assign an authorized point person to verify on-site deliverables before signing completion dockets.',
-      'Disburse scheduled final milestone payments upon verified performance.',
-      'Reconcile invoices post-event, close outstanding security deposits, and archive receipts.',
-    ],
-  },
+const masterChecklistItems = [
+  { step: '01', title: 'Event Brief', desc: 'Define occasion, key goals, target dates, and aesthetic direction.' },
+  { step: '02', title: 'Budget Ceiling', desc: 'Establish non-negotiable financial limit before inquiring with venues.' },
+  { step: '03', title: 'Guest Count Sizing', desc: 'Establish invited, expected, and guaranteed minimum headcount tiers.' },
+  { step: '04', title: 'Venue Landed Cost', desc: 'Compare base rent plus mandatory catering, power, and overtime fees.' },
+  { step: '05', title: 'Catering Inclusions', desc: 'Lock per-plate rates, live cooking stations, and dietary options.' },
+  { step: '06', title: 'Décor & Ambience', desc: 'Prioritize focal zones (entrance, stage, tables) over vast open areas.' },
+  { step: '07', title: 'AV & Technical Production', desc: 'Secure crystal-clear microphones, stage audio, and LED walls.' },
+  { step: '08', title: 'Photography & Media', desc: 'Confirm shooting hours, crew size, deliverables, and copyright terms.' },
+  { step: '09', title: 'Entertainment & Artists', desc: 'Verify rider requirements, sound checks, green rooms, and licenses.' },
+  { step: '10', title: 'Transport & Logistics', desc: 'Coordinate airport transfers, parking marshals, and vendor freight.' },
+  { step: '11', title: 'Planner Professional Fee', desc: 'Delineate management fee separately from third-party vendor charges.' },
+  { step: '12', title: 'Taxes & Statutory Permits', desc: 'Factor in GST (18%/5%), music performance licenses, and fire NOC.' },
+  { step: '13', title: 'Vendor Payment Schedules', desc: 'Log deposit deadlines and milestone payment criteria in contracts.' },
+  { step: '14', title: 'Contingency Reserve', desc: 'Isolate 5% to 10% emergency buffer with strict approval authority.' },
+  { step: '15', title: 'Final Reconciliation', desc: 'Reconcile actual bills, recover caution deposits, and archive receipts.' },
+]
+
+const plannerQuestions = [
+  { q: 'What planning stages are included in your scope?', a: 'Confirm whether the fee covers concept design, vendor procurement, negotiations, and on-site event execution, or purely day-of coordination.' },
+  { q: 'Is there a dedicated event-day lead assigned to our celebration?', a: 'Ensure you know who will physically direct operations, cues, and emergencies on the ground throughout the event.' },
+  { q: 'How many team members will be on-site on event day?', a: 'Ask for the exact crew headcount assigned to manage guest hospitality, vendor load-in, backstage timing, and stage coordination.' },
+  { q: 'Which specific vendors and services are included or excluded?', a: 'Clarify whether decor fabrication, sound equipment, or guest transportation are handled directly or contracted through third-party vendors.' },
+  { q: 'How are changes in guest count or schedule priced?', a: 'Understand the formula and notice period required if guest numbers increase or if ceremonial timings shift.' },
+  { q: 'What is the payment schedule and milestone breakdown?', a: 'Request explicit dates for advance deposits and progress milestones tied to deliverable completions rather than arbitrary calendar dates.' },
+  { q: 'What is your cancellation and date-change policy?', a: 'Review written terms regarding non-refundable deposits, postponement fees, and force majeure event disruptions.' },
+  { q: 'What travel, stay, and per diem expenses apply for out-of-town events?', a: 'Clarify planner flights, hotel accommodations, airport transfers, and crew daily food allowances upfront to prevent unexpected bills.' },
+  { q: 'How are emergencies, weather delays, or vendor defaults handled?', a: 'Evaluate their documented backup protocols for sudden rain on outdoor lawns, generator failure, or delayed sound technicians.' },
+  { q: 'Who owns and shares the master vendor list and run-of-show schedule?', a: 'Ensure you receive transparent access to all vendor contact details, setup arrival schedules, and minute-by-minute cue sheets.' },
+  { q: 'Do you receive vendor commissions or referral kickbacks?', a: 'Ask whether vendor recommendations are based strictly on merit and client value or on undisclosed supplier referral fees.' },
+  { q: 'Can the client review and retain copies of all vendor contracts and invoices?', a: 'Verify that original vendor invoices are shared directly with the client for transparent financial accountability.' },
+  { q: 'How frequently is the central budget ledger updated and shared?', a: 'Confirm whether financial status updates happen weekly, bi-weekly, or in real-time as quotes and deposits are confirmed.' },
+  { q: 'Who has the authority to approve extra expenditures or budget reallocations?', a: 'Establish a strict governance rule so that no vendor or planner commits extra client funds without formal written sign-off.' },
 ]
 
 export function EventCostIndiaContent() {
@@ -262,10 +263,10 @@ export function EventCostIndiaContent() {
                 Quick Answer: How Much Does Event Planning Cost in India?
               </h2>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                There is <strong>no single nationwide fixed rate</strong> for event planning in India. Two celebrations with identical guest headcounts can have completely different budgets based on city tier, season, venue category, and production complexity. An intimate celebration at a local banquet hall differs dramatically from a multi-day luxury wedding or high-stakes corporate conference.
+                There is <strong>no fixed nationwide price</strong> for event planning in India. Total cost depends on the city, venue, date, guest count, number of functions, catering, décor, production, logistics and the level of professional planning support required.
               </p>
               <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                Professional event planner fees in India typically range from <strong>fixed project management fees</strong> for clear scopes to <strong>percentage-based models (often 10% to 15% of managed spend in full-service weddings)</strong> or <strong>service-specific coordination retainers</strong>. Rather than trusting arbitrary online price promises, establishing an accurate event budget begins with defining your specific event brief and requesting itemized, local supplier quotations.
+                Two celebrations with the exact same guest count can have drastically different budgets depending on whether you choose a local banquet hall or a luxury five-star palace resort. Use local itemized quotations to establish a realistic final budget.
               </p>
             </div>
           </div>
@@ -287,14 +288,14 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            Every realistic event budget starts with an explicit event brief: the occasion, intended outcome, expected guest attendance, preferred dates, and desired scale. Rather than a mysterious single price tag, the total investment is governed by four deeply interconnected cost drivers.
+            Every realistic event budget starts with an explicit event brief: the occasion, intended outcome, expected guest attendance, preferred dates, and desired scale. Rather than a mysterious single price tag, the total investment is governed by four deeply interconnected cost drivers:
           </p>
 
           {/* Infographic Banner Image */}
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/cost-drivers-breakdown.jpg"
-              alt="Where the budget goes: 01 City and season, 02 Guest count, 03 Event complexity, 04 Service scope"
+              alt="Event planning budget and cost guide for events in India: 01 City and season, 02 Guest count, 03 Event complexity, 04 Service scope"
               width={1400}
               height={547}
               className="w-full h-auto object-cover"
@@ -332,7 +333,10 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-sm text-muted-foreground leading-relaxed">
-            Understanding how these drivers interact helps you avoid unexpected surprises. For example, selecting a luxury five-star hotel doesn&apos;t just increase venue rental; it often requires using mandatory in-house catering with higher per-plate minimums and strict vendor royalty charges for external decorators.
+            Understanding how these drivers interact helps you avoid unexpected surprises. For example, selecting a luxury five-star hotel doesn&apos;t just increase venue rental; it often requires using mandatory in-house catering with higher per-plate minimums and strict vendor royalty charges for external decorators. For a structured breakdown of early timelines, explore our{' '}
+            <Link href="/blog/how-early-should-you-hire-an-event-planner" className={linkClass}>
+              guide on how early to hire an event planner
+            </Link>.
           </p>
         </section>
 
@@ -355,6 +359,10 @@ export function EventCostIndiaContent() {
             The venue controls virtually every operational parameter of your event: usable floor space, stage sightlines, kitchen accessibility, loading bay timing, air conditioning hours, sound decibel curfews, and municipal safety clearances.
           </p>
 
+          <p className="text-muted-foreground leading-relaxed">
+            When reviewing venue options, <strong>compare the TOTAL landed cost, not only advertised venue rental</strong>. A bare-hall quote that appears inexpensive often requires significant add-on expenses for external generators, vendor kitchen royalties, setup and teardown access fees, furniture rentals, cleaning staff, and overnight security.
+          </p>
+
           {/* Practical Comparison Box */}
           <div className="p-6 rounded-2xl bg-card border border-border/80 shadow-sm space-y-4">
             <h3 className="text-base sm:text-lg font-serif font-semibold text-foreground flex items-center gap-2">
@@ -371,10 +379,10 @@ export function EventCostIndiaContent() {
                   Venue A: Low Rental Illusion
                 </div>
                 <p className="text-muted-foreground">
-                  Quotes a tempting base rental of ₹1,00,000. However, the contract excludes generator diesel (₹35,000), security deposit (₹50,000), outside caterer kitchen royalty (₹40,000), and air-conditioning beyond 4 hours (₹12,000/hr).
+                  Quotes a tempting base rental of ₹1,00,000. However, the contract excludes generator diesel (₹35,000), security caution deposit (₹50,000), outside caterer kitchen royalty (₹40,000), and air-conditioning beyond 4 hours (₹12,000/hr).
                 </p>
                 <div className="font-medium text-foreground pt-1">
-                  Effective Venue Cost: ₹2,00,000+
+                  Effective Landed Venue Cost: ₹2,00,000+
                 </div>
               </div>
 
@@ -392,7 +400,11 @@ export function EventCostIndiaContent() {
               </div>
             </div>
             <p className="text-xs text-muted-foreground italic">
-              Always request itemized venue terms detailing load-in hours, sound curfew times, vendor royalties, and GST rates (typically 18%) before signing.
+              Always request itemized venue terms detailing load-in hours, sound curfew times, vendor royalties, and GST rates (typically 18%) before signing. Check out our{' '}
+              <Link href="/blog/complete-event-planning-checklist" className={linkClass}>
+                complete event planning checklist
+              </Link>{' '}
+              for key venue inspection items.
             </p>
           </div>
         </section>
@@ -413,7 +425,7 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            Guest count is not simply a headcount; it is the master multiplier of your entire event budget. Every additional attendee compounds food consumption, table linens, chair rentals, floral centerpieces, service waiters, welcome kits, and transportation requirements.
+            Guest count is not just a number on the invitation; it is the single most powerful multiplier in event planning. Headcount dictates food and beverage bills, venue capacity, dining table counts, chair rentals, linen quantities, hospitality staff ratios, parking space, and guest transfers.
           </p>
 
           {/* 3-Headcount Framework */}
@@ -458,7 +470,7 @@ export function EventCostIndiaContent() {
           <div className="p-4 rounded-xl bg-muted/40 border border-border/60 text-xs sm:text-sm text-muted-foreground flex items-start gap-3">
             <Calculator className="w-5 h-5 text-primary shrink-0 mt-0.5" />
             <div>
-              <strong>The Math of Guest Creep:</strong> Adding just 25 last-minute guests at an illustrative catering estimate of ₹1,800/plate adds ₹45,000 immediately to food, plus ₹15,000 in additional table rentals, linens, and favors—increasing total spend by ₹60,000 without prior budgeting.
+              <strong>Hypothetical Arithmetic Illustration:</strong> As a simple illustration from planning practice, an extra 25 guests at an assumed all-in per-person food and service estimate of ₹1,500 would add <strong>₹37,500</strong> directly to the catering budget alone, before accounting for additional seating, table centerpieces, favors, or transport.
             </div>
           </div>
         </section>
@@ -479,14 +491,14 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            In Indian celebrations, culinary hospitality is the single most remembered element. Whether planning a traditional regional feast, a lavish multi-cuisine buffet, live artisanal cooking counters, or corporate banquet spreads, food normally accounts for 25% to 35% of overall event investment.
+            In Indian celebrations, culinary hospitality is at the heart of the guest experience. Whether planning regional traditional feasts, lavish multi-cuisine buffets, artisanal live cooking counters, or corporate banquet spreads, food typically represents 25% to 35% of total event spending.
           </p>
 
           {/* Catering Diagram Image */}
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/catering-cost-breakdown.jpg"
-              alt="Food calculate carefully: 01 Guest count x per-plate rate, 02 Menu choices & live counters, 03 Service staff & rentals, 04 Taxes, minimums & extra charges"
+              alt="Catering cost breakdown: 01 Guest count x per-plate rate, 02 Menu choices & live counters, 03 Service staff & rentals, 04 Taxes, minimums & extra charges"
               width={1400}
               height={788}
               className="w-full h-auto object-cover"
@@ -500,24 +512,24 @@ export function EventCostIndiaContent() {
               The Practical Event Catering Formula
             </h3>
             <div className="p-4 rounded-xl bg-background border border-border font-mono text-xs sm:text-sm text-foreground overflow-x-auto">
-              Total Catering Cost = (Guaranteed Guests × Agreed Per-Plate Rate) + Specialty Live Counters + Serving Staff &amp; Chafing Rentals + Applicable GST (5% to 18%)
+              Total Catering Cost = (Expected Billable Guests × Agreed Per-Guest Rate) + Agreed Extras &amp; Specialty Counters + Staffing &amp; Tableware Rentals + Applicable Taxes/Charges
             </div>
             <ul className="grid sm:grid-cols-2 gap-3 text-xs sm:text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                <span><strong>Menu Curating:</strong> Focus on 4-5 signature high-quality items rather than 20 mediocre dishes that drive up waste.</span>
+                <span><strong>Specialized Dietary Needs:</strong> Account for pure vegetarian spreads, strict Jain preparations, allergy-aware items, and dedicated children&apos;s meals.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                <span><strong>Corporate Programs:</strong> Align food breaks with keynotes to prevent cold food and long registration bottlenecks.</span>
+                <span><strong>Service Styles:</strong> Balance plated sit-down service, multi-station buffets, and roaming canapé trays against kitchen staffing limits.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                <span><strong>Staff Ratio:</strong> Ensure a minimum of 1 server per 20–25 banquet guests for seamless hospitality.</span>
+                <span><strong>Infrastructure Rentals:</strong> Include kitchen prep tables, warming chafers, luxury chinaware, cutlery, glassware, and clean linen rentals.</span>
               </li>
               <li className="flex items-start gap-2">
                 <Check className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                <span><strong>Beverage Logistics:</strong> Clarify corkage fees, bartending licenses, and ice/chiller inclusions in writing.</span>
+                <span><strong>Beverage Logistics &amp; Taxes:</strong> Factor in drinking water dispensers, ice chillers, corkage fees, bartending permits, and 5% to 18% GST.</span>
               </li>
             </ul>
           </div>
@@ -545,7 +557,7 @@ export function EventCostIndiaContent() {
           <div className="grid sm:grid-cols-3 gap-4">
             <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
               <div className="text-xs font-bold uppercase tracking-wider text-primary">
-                Level 1: Must-Haves
+                Must Have
               </div>
               <h3 className="font-semibold text-foreground text-sm">
                 Operational Foundation
@@ -557,7 +569,7 @@ export function EventCostIndiaContent() {
 
             <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
               <div className="text-xs font-bold uppercase tracking-wider text-primary">
-                Level 2: Nice-to-Haves
+                Nice to Have
               </div>
               <h3 className="font-semibold text-foreground text-sm">
                 Aesthetic Elevators
@@ -569,7 +581,7 @@ export function EventCostIndiaContent() {
 
             <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
               <div className="text-xs font-bold uppercase tracking-wider text-primary">
-                Level 3: Optional Luxury
+                Optional
               </div>
               <h3 className="font-semibold text-foreground text-sm">
                 Show-Stopping Splurges
@@ -581,7 +593,10 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-sm text-muted-foreground leading-relaxed">
-            For corporate seminars, allocate funds to dependable AV and high-speed delegate Wi-Fi over elaborate floral arrangements. For a wedding reception or Sangeet, prioritize professional sound engineering and dynamic stage lighting over excessive peripheral props.
+            For corporate seminars, allocate funds to dependable AV, presentation switchers, and high-speed delegate Wi-Fi over elaborate floral arrangements. For a wedding reception or Sangeet, prioritize professional sound engineering and dynamic stage lighting over excessive peripheral props. For an in-depth breakdown of budget allocations, read our{' '}
+            <Link href="/blog/how-to-create-an-event-budget" className={linkClass}>
+              guide on how to create an event budget
+            </Link>.
           </p>
         </section>
 
@@ -601,49 +616,103 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            Weddings, corporate conferences, and private milestone celebrations operate on vastly different cost architectures. Rather than quoting a misleading national average, evaluate expenses within the relevant category:
+            Weddings, corporate conferences, private celebrations, and destination events each operate on distinct cost architectures. Rather than quoting a misleading national average, evaluate expenses within the relevant category:
           </p>
 
           {/* Event Types Comparison Image */}
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/event-types-cost-breakdown.jpg"
-              alt="Different events, different needs: Wedding functions, Corporate outcomes, Private celebrations, Destination logistics"
+              alt="Different event types and budget considerations for celebrations across India"
               width={1400}
               height={933}
               className="w-full h-auto object-cover"
             />
           </div>
 
-          <div className="space-y-4 pt-2">
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="text-lg font-serif font-semibold text-foreground">
-                Weddings &amp; Multi-Day Celebrations
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Indian weddings frequently comprise multiple ceremonies across several days (Haldi, Mehendi, Sangeet, Wedding Mandap ceremony, and Grand Reception). In your budget planning, treat each ceremony as a distinct sub-event before rolling up shared expenses like venue rent, hotel room blocks, and planner retainers.
+          <div className="grid sm:grid-cols-2 gap-4 pt-2">
+            {/* Wedding Card */}
+            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-3">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <Flame className="w-5 h-5 text-primary" />
+                <h3 className="text-base font-serif font-bold">
+                  Weddings &amp; Multi-Day Celebrations
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Indian weddings frequently comprise multiple ceremonies across several days: Haldi, Mehendi, Sangeet, Mandap rituals, and a Grand Reception. In your budget, treat each function as a distinct mini-event with its own venue layout, catering requirements, sound setup, and guest hospitality flow. Learn more about our bespoke{' '}
+                <Link href="/services/wedding-planning" className={linkClass}>
+                  wedding planning services
+                </Link>{' '}
+                and our comprehensive{' '}
+                <Link href="/blog/how-to-plan-a-successful-wedding" className={linkClass}>
+                  guide to planning a successful wedding
+                </Link>.
               </p>
-              <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-muted-foreground">
-                <strong>Pricing Note:</strong> While online blogs frequently quote figures like <em>₹5 Lakh to ₹25 Lakh</em> for example smaller or mid-scale celebrations, these must be understood strictly as <strong>hypothetical planning scenarios</strong>, not guaranteed commercial benchmarks. Destination weddings in Udaipur, Goa, or Jaipur involve hotel buyouts and guest logistics that scale significantly higher.
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-muted-foreground">
+                <strong>Pricing Note:</strong> Online figures like <em>₹5 Lakh to ₹25 Lakh</em> for example smaller or mid-scale weddings represent <strong>hypothetical planning scenarios only</strong>, not guaranteed commercial benchmarks.
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="text-lg font-serif font-semibold text-foreground">
-                Corporate Conferences &amp; Product Launches
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Corporate budgets center on brand objectives: stakeholder engagement, lead generation, or employee recognition. Spending focuses on premium tech production (microphones, teleprompters, digital backdrops), delegate registration software, executive catering, keynote speaker logistics, and branded collateral.
+            {/* Corporate Card */}
+            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-3">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <Briefcase className="w-5 h-5 text-primary" />
+                <h3 className="text-base font-serif font-bold">
+                  Corporate Conferences &amp; Product Launches
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Corporate event budgets center on measurable business outcomes: stakeholder communication, lead generation, or team recognition. Spending is focused heavily on dependable AV technology, digital stage backdrops, delegate registration platforms, high-speed Wi-Fi, executive dining, and branded collateral. Explore our dedicated{' '}
+                <Link href="/services/corporate-events" className={linkClass}>
+                  corporate event management services
+                </Link>.
               </p>
+              <div className="p-3 rounded-xl bg-muted/60 border border-border/60 text-xs text-muted-foreground">
+                <strong>Focus:</strong> Reliability and audience flow take precedence over elaborate floral styling.
+              </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="text-lg font-serif font-semibold text-foreground">
-                Birthdays, Anniversaries &amp; Private Parties
-              </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Private celebrations allow hosts to maintain personal connections while strictly bounding complexity. Broad illustrative scenarios like <em>₹20,000 to ₹1 Lakh</em> for intimate home parties or <em>₹1 Lakh to ₹5 Lakh</em> for banquet setups are preliminary scoping bands only. Always establish current vendor quotes before committing.
+            {/* Private Celebrations Card */}
+            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-3">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <PartyPopper className="w-5 h-5 text-primary" />
+                <h3 className="text-base font-serif font-bold">
+                  Birthdays, Anniversaries &amp; Social Parties
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Social gatherings allow hosts to maintain personal connections while strictly bounding complexity. Broad illustrative scenarios like <em>₹20,000 to ₹1 Lakh</em> for intimate home parties or <em>₹1 Lakh to ₹5 Lakh</em> for banquet setups are preliminary scoping bands only. Explore our{' '}
+                <Link href="/services/birthday-celebrations" className={linkClass}>
+                  birthday party planning
+                </Link>{' '}
+                and{' '}
+                <Link href="/services/anniversary-events" className={linkClass}>
+                  anniversary celebration services
+                </Link>.
               </p>
+              <div className="p-3 rounded-xl bg-muted/60 border border-border/60 text-xs text-muted-foreground">
+                <strong>Focus:</strong> For kids&apos; parties, prioritize safety and fun schedules; for anniversaries, focus on accessibility and comfort.
+              </div>
+            </div>
+
+            {/* Destination Events Card */}
+            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-3">
+              <div className="flex items-center gap-2 text-foreground font-semibold">
+                <Plane className="w-5 h-5 text-primary" />
+                <h3 className="text-base font-serif font-bold">
+                  Destination Events &amp; Logistics
+                </h3>
+              </div>
+              <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
+                Destination celebrations in Udaipur, Goa, Jaipur, or international retreats add extensive logistics: guest hotel room blocks, airport shuttle fleets, local vendor scouting, freight haulage, out-of-town crew per diems, and regional municipal clearances. Discover our specialized{' '}
+                <Link href="/services/destination-weddings" className={linkClass}>
+                  destination wedding management services
+                </Link>.
+              </p>
+              <div className="p-3 rounded-xl bg-muted/60 border border-border/60 text-xs text-muted-foreground">
+                <strong>Focus:</strong> Hospitality desks, welcome kits, and local vendor negotiation dominate the logistics budget.
+              </div>
             </div>
           </div>
         </section>
@@ -664,7 +733,14 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            An event planner&apos;s professional fee compensates for planning expertise, contract negotiations, vendor vetting, run-of-show scheduling, and on-site event execution. It is crucial to understand that <strong>an event planner fee is separate from the total event budget</strong> unless a written turnkey contract explicitly bundles them.
+            An event planner&apos;s professional fee compensates for planning expertise, contract negotiations, vendor vetting, run-of-show scheduling, and on-site event execution. It is crucial to understand that <strong>an event planner fee is separate from the total event budget</strong> unless a written turnkey contract explicitly bundles them. For more on responsibilities, read our comparison of{' '}
+            <Link href="/blog/event-planner-vs-event-manager" className={linkClass}>
+              event planners vs event managers
+            </Link>{' '}
+            and overview of{' '}
+            <Link href="/blog/what-does-an-event-planner-do" className={linkClass}>
+              what an event planner does
+            </Link>.
           </p>
 
           {/* Planner Fee Image */}
@@ -686,7 +762,7 @@ export function EventCostIndiaContent() {
                 Percentage-Based Model
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                Commonly advertised around <strong>10% to 15%</strong> of the overall managed budget for full-scale weddings. <em>Note: This is an example model, not a universal industry standard.</em> Ensure the contract states exactly which expenses (venue rent, guest rooms, liquor) are included in the percentage calculation base.
+                Commonly advertised around <strong>10% to 15%</strong> of the overall managed budget for full-scale weddings. <em>Note: This is an example published model, not a universal industry standard.</em> Ensure the contract states exactly which expenses (venue rent, guest rooms, alcohol) are included in the percentage calculation base.
               </p>
             </div>
 
@@ -722,7 +798,10 @@ export function EventCostIndiaContent() {
           </div>
 
           <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 text-xs sm:text-sm text-muted-foreground">
-            <strong>Can a planner save you money?</strong> An experienced planner frequently saves clients money by eliminating duplicate vendor rentals, negotiating fair wholesale rates, avoiding hidden hotel penalty fees, and steering you away from unreliable suppliers. However, their core value is delivering a seamless, stress-free celebration where your investment produces maximum impact.
+            <strong>Can a planner save you money?</strong> An experienced planner frequently saves clients money by eliminating duplicate vendor rentals, negotiating fair wholesale rates, avoiding hidden hotel penalty fees, and steering you away from unreliable suppliers. However, their core value is delivering a seamless, stress-free celebration where your investment produces maximum impact. Read our advice on{' '}
+            <Link href="/blog/how-to-choose-the-right-event-planner-for-your-event" className={linkClass}>
+              how to choose the right event planner
+            </Link>.
           </div>
         </section>
 
@@ -742,13 +821,13 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            To visualize how event funds are allocated, consider a <strong>hypothetical mid-sized celebration with a hard ceiling of ₹10,00,000</strong>.
+            To visualize how event funds are allocated, consider an <strong>Illustrative ₹10 Lakh Event Budget Example</strong> for a hypothetical mid-sized celebration with a hard spending ceiling of ₹10,00,000.
           </p>
 
           <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-muted-foreground flex items-start gap-2.5">
             <Info className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
             <div>
-              <strong>Important Disclaimer:</strong> The breakdown below represents an <em>illustrative planning scenario</em> designed to demonstrate relative category proportions and contingency allocation. It is not an off-the-shelf commercial quotation or a nationwide fixed price promise.
+              <strong>Important Note:</strong> This is a hypothetical planning example, not a current market quotation or universal recommended allocation. Actual distribution will depend on your guest count, city, venue standards, and occasion.
             </div>
           </div>
 
@@ -756,7 +835,7 @@ export function EventCostIndiaContent() {
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/sample-10-lakh-budget-overview.jpg"
-              alt="Example budget: INR 10 lakh - Illustration only, not a market quote"
+              alt="Illustrative 10 lakh event budget breakdown example"
               width={1400}
               height={547}
               className="w-full h-auto object-cover"
@@ -768,7 +847,7 @@ export function EventCostIndiaContent() {
             <div className="p-4 sm:p-5 bg-muted/40 border-b border-border/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="font-serif font-bold text-foreground text-base sm:text-lg">
-                  Illustrative ₹10,00,000 Event Budget Breakdown
+                  Illustrative ₹10,00,000 Event Budget Allocation
                 </h3>
                 <p className="text-xs text-muted-foreground">
                   Hypothetical distribution across 9 core planning categories
@@ -841,60 +920,40 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            Hidden expenses and surprise surcharges are the primary reasons early event estimates derail. A comprehensive quote audit examines proposals across four distinct layers:
+            Unbudgeted expenses are the primary reason event estimates derail. Before signing vendor contracts, review this comprehensive 16-point checklist to uncover hidden liabilities:
           </p>
 
           {/* Hidden Expenses Diagram Image */}
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/hidden-expenses-checklist.jpg"
-              alt="Hidden expenses to verify: 01 Taxes and permissions, 02 Vendor travel and stay, 03 Power and overtime, 04 Breakdown and refunds"
+              alt="Hidden expenses checklist for Indian event planning"
               width={1400}
               height={547}
               className="w-full h-auto object-cover"
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4 pt-2 text-xs sm:text-sm">
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <Receipt className="w-4 h-4 text-primary" />
-                1. Taxes &amp; Statutory Permissions
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Confirm whether vendor prices include GST (18% on venue/production, 5% on pure catering). Inquire about music licensing (PPL, IPRS, NOVEX) and local police/fire NOC permits required for amplified music.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-primary" />
-                2. Vendor Travel &amp; Accommodation
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Out-of-city photographers, makeup artists, and DJs require flight tickets, local cab transfers, driver allowances, and crew meal rooms on-site during production hours.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <Timer className="w-4 h-4 text-primary" />
-                3. Overtime, Fuel &amp; Generator Surcharges
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Venues bill steep hourly penalties for late teardown. Diesel generators consume significant fuel during multi-hour high-draw lighting and air-conditioning setups.
-              </p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-primary" />
-                4. Security Deposits &amp; Damage Waivers
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Venues require refundable caution money (₹25,000 to ₹1,00,000) against potential carpet damage, wall nailing, or delayed load-out. Clarify refund refundability timelines in writing.
-              </p>
-            </div>
+          {/* Scannable Checklist Grid */}
+          <div className="grid sm:grid-cols-2 gap-3 pt-2">
+            {hiddenCostItems.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-3.5 rounded-xl bg-card border border-border/70 hover:border-primary/40 transition-colors shadow-sm flex items-start gap-3"
+              >
+                <div className="p-1 rounded-md bg-primary/10 text-primary shrink-0 mt-0.5">
+                  <CheckSquare className="w-4 h-4" />
+                </div>
+                <div className="space-y-0.5">
+                  <div className="text-xs sm:text-sm font-semibold text-foreground">
+                    {item.item}
+                  </div>
+                  <div className="text-[11px] sm:text-xs text-muted-foreground leading-relaxed">
+                    {item.desc}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -914,52 +973,59 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            An event budget is a living operational control document, not a spreadsheet created once and abandoned. A rigorous framework tracks costs across six progressive financial statuses:
+            An event budget is a living operational control document, not a spreadsheet created once and abandoned. A rigorous framework tracks costs across six progressive financial stages:
           </p>
 
           {/* Track Spending Image */}
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/track-spending-real-time.jpg"
-              alt="Track spending in real time: 01 Estimate, 02 Vendor quote, 03 Committed, 04 Paid and balance"
+              alt="Track spending in real time: 01 Estimate, 02 Vendor quote, 03 Committed, 04 Paid, 05 Balance, 06 Actual"
               width={1400}
               height={547}
               className="w-full h-auto object-cover"
             />
           </div>
 
+          {/* Responsive Process Flow */}
           <div className="p-6 rounded-2xl bg-card border border-border/80 shadow-sm space-y-4">
             <h3 className="text-base font-serif font-semibold text-foreground">
               The 6-Stage Real-Time Financial Ledger
             </h3>
-            <div className="grid sm:grid-cols-3 gap-3 text-xs sm:text-sm">
-              <div className="p-3.5 rounded-xl bg-background border border-border">
-                <span className="font-bold text-primary block mb-1">1. Initial Estimate</span>
-                Preliminary allocation target established during project inception.
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-center text-xs">
+              <div className="p-3 rounded-xl bg-background border border-border/70 space-y-1">
+                <span className="font-mono font-bold text-primary block">01</span>
+                <span className="font-semibold text-foreground block">Estimate</span>
+                <span className="text-[11px] text-muted-foreground block">Target Cap</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-background border border-border">
-                <span className="font-bold text-primary block mb-1">2. Vendor Quote</span>
-                Formal written quote submitted after reviewing event brief.
+              <div className="p-3 rounded-xl bg-background border border-border/70 space-y-1">
+                <span className="font-mono font-bold text-primary block">02</span>
+                <span className="font-semibold text-foreground block">Vendor Quote</span>
+                <span className="text-[11px] text-muted-foreground block">Written Offer</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-background border border-border">
-                <span className="font-bold text-primary block mb-1">3. Committed Amount</span>
-                Legally binding contract amount agreed upon signing.
+              <div className="p-3 rounded-xl bg-background border border-primary/40 space-y-1 shadow-sm">
+                <span className="font-mono font-bold text-primary block">03</span>
+                <span className="font-semibold text-foreground block">Committed</span>
+                <span className="text-[11px] text-muted-foreground block">Signed Contract</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-background border border-border">
-                <span className="font-bold text-primary block mb-1">4. Paid Advances</span>
-                Deposits and progress payments recorded with invoice references.
+              <div className="p-3 rounded-xl bg-background border border-border/70 space-y-1">
+                <span className="font-mono font-bold text-primary block">04</span>
+                <span className="font-semibold text-foreground block">Paid</span>
+                <span className="text-[11px] text-muted-foreground block">Logged Deposits</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-background border border-border">
-                <span className="font-bold text-primary block mb-1">5. Outstanding Balance</span>
-                Remaining financial liability due upon milestone completion.
+              <div className="p-3 rounded-xl bg-background border border-border/70 space-y-1">
+                <span className="font-mono font-bold text-primary block">05</span>
+                <span className="font-semibold text-foreground block">Balance</span>
+                <span className="text-[11px] text-muted-foreground block">Due Milestones</span>
               </div>
-              <div className="p-3.5 rounded-xl bg-background border border-border">
-                <span className="font-bold text-primary block mb-1">6. Final Actual</span>
-                Post-event reconciled expenditure including all adjustments.
+              <div className="p-3 rounded-xl bg-background border border-border/70 space-y-1">
+                <span className="font-mono font-bold text-primary block">06</span>
+                <span className="font-semibold text-foreground block">Actual</span>
+                <span className="text-[11px] text-muted-foreground block">Reconciled Final</span>
               </div>
             </div>
-            <p className="text-xs text-muted-foreground italic">
-              <strong>Managing Variance:</strong> If stage lighting was budgeted at ₹60,000 but the chosen vendor quotes ₹75,000, the ₹15,000 variance must be rebalanced by reducing an optional decor item or formally approving a higher category cap. Never hide variance in an unmonitored miscellaneous line.
+            <p className="text-xs text-muted-foreground italic pt-1">
+              <strong>Explaining Variance:</strong> If stage lighting was estimated at ₹60,000 but the vendor quote comes in at ₹75,000, you have a ₹15,000 variance. You must either reduce another optional line item, negotiate a narrower lighting scope, or formally approve a revised category cap. Never bury variance in miscellaneous!
             </p>
           </div>
         </section>
@@ -987,7 +1053,7 @@ export function EventCostIndiaContent() {
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/food-budget-planning.jpg"
-              alt="Event planner carefully calculating food budget and vendor checklists"
+              alt="Event planner discussing budget and vendor quotations with clients"
               width={1400}
               height={933}
               className="w-full h-auto object-cover"
@@ -1005,6 +1071,7 @@ export function EventCostIndiaContent() {
                 <li>• <strong>Unified Venues:</strong> Host ceremonies and banquets within the same resort to eliminate separate transport and repeated setups.</li>
                 <li>• <strong>Focal Point Décor:</strong> Concentrate premium florals on the entrance arch and main stage rather than sparsely dressing vast peripheral areas.</li>
                 <li>• <strong>Refined Menu Choices:</strong> Eliminate low-demand live stations to cut waste and improve kitchen speed.</li>
+                <li>• <strong>Same-Scope Comparisons:</strong> Always compare vendor proposals against identical written requirements.</li>
               </ul>
             </div>
 
@@ -1014,10 +1081,11 @@ export function EventCostIndiaContent() {
                 Never Compromise On These Items
               </h3>
               <ul className="space-y-2 text-muted-foreground">
-                <li>• <strong>Guest Safety &amp; Egress:</strong> Never compromise on fire safety, emergency exits, or licensed electrical distribution.</li>
-                <li>• <strong>Generator Backup:</strong> Never risk power failure during key ceremonial moments or high-stakes corporate speeches.</li>
-                <li>• <strong>Sound Quality:</strong> Cheap audio that feeds back or muffles vows will ruin the guest experience instantly.</li>
-                <li>• <strong>Catering Hygiene:</strong> High food hygiene and temperature management are fundamental to guest hospitality.</li>
+                <li>• <strong>Guest Safety &amp; Fire Egress:</strong> Never compromise on fire exits, crowd control, or licensed electrical distribution.</li>
+                <li>• <strong>Generator Backup Power:</strong> Never risk power failure during key ceremonial moments or high-stakes corporate speeches.</li>
+                <li>• <strong>Sound &amp; Audio Quality:</strong> Cheap audio that feeds back or muffles vows will ruin the guest experience instantly.</li>
+                <li>• <strong>Catering Hygiene &amp; Clean Water:</strong> High food hygiene and temperature management are fundamental to hospitality.</li>
+                <li>• <strong>Required Municipal Permits:</strong> Always secure sound clearances, police NOCs, and copyright licenses.</li>
               </ul>
             </div>
           </div>
@@ -1039,33 +1107,26 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            A chronological timeline keeps financial decisions structured, avoiding the frantic rushed bookings that inflate vendor charges:
+            A comprehensive 15-item budget checklist to keep your financial planning organized from initial concept through to final post-event reconciliation:
           </p>
 
-          <div className="space-y-4">
-            {budgetChecklistPhases.map((phase, idx) => (
+          <div className="grid sm:grid-cols-3 gap-3">
+            {masterChecklistItems.map((chk, idx) => (
               <div
                 key={idx}
-                className="p-5 sm:p-6 rounded-2xl bg-card border border-border/70 shadow-sm space-y-3"
+                className="p-4 rounded-xl bg-card border border-border/70 shadow-sm space-y-1.5"
               >
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border/40 pb-3">
-                  <h3 className="text-base sm:text-lg font-serif font-semibold text-foreground">
-                    {phase.phase}
-                  </h3>
-                  <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${phase.badgeColor}`}
-                  >
-                    {phase.timeframe}
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-xs font-bold text-primary">
+                    {chk.step}
                   </span>
+                  <h3 className="text-xs sm:text-sm font-semibold text-foreground">
+                    {chk.title}
+                  </h3>
                 </div>
-                <ul className="grid sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-muted-foreground">
-                  {phase.tasks.map((task, tIdx) => (
-                    <li key={tIdx} className="flex items-start gap-2">
-                      <Check className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />
-                      <span>{task}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-[11px] sm:text-xs text-muted-foreground leading-relaxed">
+                  {chk.desc}
+                </p>
               </div>
             ))}
           </div>
@@ -1087,53 +1148,38 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            A quote is only meaningful when you know precisely what it covers. Before signing an event management agreement, interview candidates across three critical accountability pillars:
+            A quotation is only meaningful when you know precisely what it covers. Before signing an event management agreement, interview candidates across these 14 essential accountability questions:
           </p>
 
           {/* Consultation Photo */}
           <div className="rounded-2xl overflow-hidden border border-border/60 shadow-lg bg-card">
             <Image
               src="/images/blog/how-much-does-event-planning-cost-in-india/hiring-event-planner-consultation.jpg"
-              alt="Event planner consultation: 01 Deliverables, 02 Staffing, 03 Changes, 04 Emergency support"
+              alt="Event planner discussing budget and vendor quotations with clients"
               width={1400}
               height={933}
               className="w-full h-auto object-cover"
             />
           </div>
 
-          <div className="grid sm:grid-cols-3 gap-4 pt-2 text-xs sm:text-sm">
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground">
-                1. Deliverables &amp; Staffing
-              </h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• Will there be a dedicated on-site event lead throughout production?</li>
-                <li>• Exactly how many crew members will manage guest hospitality and cueing?</li>
-                <li>• What specific stages (design, sourcing, on-day) are covered in the fee?</li>
-              </ul>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground">
-                2. Procurement &amp; Invoices
-              </h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• Do you share original vendor invoices directly with the client?</li>
-                <li>• Do you accept supplier commissions or referral kickbacks?</li>
-                <li>• Can the client independently approve or replace recommended suppliers?</li>
-              </ul>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-card border border-border/60 space-y-2">
-              <h3 className="font-semibold text-foreground">
-                3. Financial Reporting
-              </h3>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>• How frequently is the central budget ledger shared and updated?</li>
-                <li>• What formal approval process is required before committing extra spend?</li>
-                <li>• What is the protocol and backup plan for weather or vendor defaults?</li>
-              </ul>
-            </div>
+          {/* 14 Specific Questions Accordion / List */}
+          <div className="space-y-3 pt-2">
+            {plannerQuestions.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-xl bg-card border border-border/60 space-y-1"
+              >
+                <div className="flex items-start gap-2.5 font-semibold text-xs sm:text-sm text-foreground">
+                  <span className="text-primary font-mono shrink-0">
+                    {idx + 1 < 10 ? `0${idx + 1}` : idx + 1}.
+                  </span>
+                  <span>{item.q}</span>
+                </div>
+                <p className="text-[11px] sm:text-xs text-muted-foreground pl-6 leading-relaxed">
+                  {item.a}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -1203,10 +1249,22 @@ export function EventCostIndiaContent() {
           </div>
 
           <p className="text-muted-foreground leading-relaxed">
-            The right answer to how much event planning costs in India is never a single static number. It is a structured, transparent financial roadmap built around your occasion, your aesthetic vision, your guest count, and your defined spending ceiling.
+            The right answer to how much event planning costs in India is not a single number: it is a transparent plan based on your celebration, your guests, and your spending limit. Define your priorities, request comparable written quotations, separate the planner&apos;s professional fee from supplier charges, and track estimates against commitments.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            By prioritizing essential guest experiences, requesting comparable itemized written proposals, keeping the professional planner fee clearly identified, and tracking expenses from estimate through to actual execution, you ensure that every rupee spent delivers meaningful hospitality and memorable moments.
+            Whether you are preparing a wedding, corporate conference, birthday, or family celebration, focus on the experience you want guests to remember. Explore our full range of{' '}
+            <Link href="/services" className={linkClass}>
+              event planning services
+            </Link>
+            , browse curated{' '}
+            <Link href="/packages" className={linkClass}>
+              event packages
+            </Link>
+            , or view past celebrations in our{' '}
+            <Link href="/portfolio" className={linkClass}>
+              event portfolio
+            </Link>
+            .
           </p>
         </section>
 
@@ -1231,7 +1289,7 @@ export function EventCostIndiaContent() {
                 href="/blog/how-to-create-an-event-budget"
                 className={linkClass}
               >
-                How to Create an Event Budget
+                How to Create an Event Budget: A Practical Guide for Any Event
               </Link>
             </li>
             <li className="flex items-center gap-2">
@@ -1285,7 +1343,7 @@ export function EventCostIndiaContent() {
                 href="/blog/how-to-choose-the-right-event-planner-for-your-event"
                 className={linkClass}
               >
-                How to Choose the Right Event Planner
+                How to Choose the Right Event Planner for Your Event
               </Link>
             </li>
           </ul>
@@ -1310,7 +1368,7 @@ export function EventCostIndiaContent() {
             </h2>
 
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-              Share your event vision, guest count, city, and priorities with AS Event Management. Our team can help you build a clear, transparent planning scope and realistic budget roadmap tailored to your celebration.
+              Share your event type, location, preferred date, guest count and priorities with AS Event Management. Our team can help you define the scope, understand the services required and prepare for meaningful vendor discussions.
             </p>
 
             {/* CTA Buttons: Primary (gold/tan bg + dark text) | Secondary (dark navy bg + white text) */}
