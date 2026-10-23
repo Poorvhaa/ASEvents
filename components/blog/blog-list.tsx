@@ -2,15 +2,14 @@
 
 import { useState, useMemo } from 'react'
 import { Search, Tag, X } from 'lucide-react'
-import { blogPosts, blogCategories, blogTags, BlogPost } from '@/lib/data/blog'
+import {
+  blogPosts,
+  blogCategories,
+  blogTags,
+  BlogPost,
+  sortBlogPostsByDateDescending,
+} from '@/lib/data/blog'
 import { ArticleCard } from './article-card'
-
-function parsePostDate(dateStr?: string): number {
-  if (!dateStr) return 0
-  const parsed = new Date(dateStr).getTime()
-  return isNaN(parsed) ? 0 : parsed
-}
-
 
 export function BlogList() {
   const [activeCategory, setActiveCategory] = useState<string>('All')
@@ -18,8 +17,9 @@ export function BlogList() {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   // Filter posts based on active category, search query, and selected tag
+  // Guarantees date descending order across all search and filter scenarios
   const filteredPosts = useMemo(() => {
-    return blogPosts.filter((post) => {
+    const matches = blogPosts.filter((post) => {
       const matchesCategory =
         activeCategory === 'All' || post.category.toLowerCase() === activeCategory.toLowerCase()
       const q = searchQuery.trim().toLowerCase()
@@ -32,6 +32,7 @@ export function BlogList() {
       const matchesTag = !selectedTag || post.tags.includes(selectedTag)
       return matchesCategory && matchesSearch && matchesTag
     })
+    return sortBlogPostsByDateDescending(matches)
   }, [activeCategory, searchQuery, selectedTag])
 
   // Order of categories to display
@@ -53,7 +54,7 @@ export function BlogList() {
       )
       if (postsInCat.length > 0) {
         // Sort newest publication date first
-        groups[cat] = [...postsInCat].sort((a, b) => parsePostDate(b.date) - parsePostDate(a.date))
+        groups[cat] = sortBlogPostsByDateDescending(postsInCat)
       }
     }
 
@@ -64,6 +65,11 @@ export function BlogList() {
         if (!found) {
           if (!groups[post.category]) groups[post.category] = []
           groups[post.category].push(post)
+        }
+      }
+      for (const cat of Object.keys(groups)) {
+        if (!categoryOrder.some((c) => c.toLowerCase() === cat.toLowerCase())) {
+          groups[cat] = sortBlogPostsByDateDescending(groups[cat])
         }
       }
     }

@@ -497,18 +497,6 @@ export const blogPosts: BlogPost[] = [
   },
 ]
 
-export function getAllBlogPosts(): BlogPost[] {
-  return blogPosts
-}
-
-export function getBlogPostBySlug(slug: string): BlogPost | undefined {
-  return blogPosts.find((post) => post.slug === slug)
-}
-
-export function getFeaturedBlogPosts(): BlogPost[] {
-  return blogPosts.filter((post) => post.featured)
-}
-
 const ARTICLE_MONTHS = [
   'January',
   'February',
@@ -523,6 +511,77 @@ const ARTICLE_MONTHS = [
   'November',
   'December',
 ] as const
+
+/**
+ * Safely parses an article date string into a timestamp (epoch ms).
+ * Supported formats:
+ *   - "Month DD, YYYY" (e.g. "October 23, 2026", "March 15, 2024")
+ *   - "YYYY-MM-DD" / ISO timestamps
+ *   - Native Date parseable strings
+ * Returns 0 if missing or invalid, ensuring safe placement at the end without crashing.
+ */
+export function parseArticleDate(dateStr?: string): number {
+  if (!dateStr || typeof dateStr !== 'string') return 0
+  const trimmed = dateStr.trim()
+  if (!trimmed) return 0
+
+  // 1. "Month DD, YYYY" format
+  const monthMatch = trimmed.match(/^([A-Za-z]+)\s+(\d{1,2}),\s+(\d{4})$/)
+  if (monthMatch) {
+    const monthIndex = ARTICLE_MONTHS.findIndex(
+      (m) => m.toLowerCase() === monthMatch[1].toLowerCase()
+    )
+    if (monthIndex >= 0) {
+      return Date.UTC(
+        parseInt(monthMatch[3], 10),
+        monthIndex,
+        parseInt(monthMatch[2], 10)
+      )
+    }
+  }
+
+  // 2. "YYYY-MM-DD" format
+  const isoMatch = trimmed.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)
+  if (isoMatch) {
+    return Date.UTC(
+      parseInt(isoMatch[1], 10),
+      parseInt(isoMatch[2], 10) - 1,
+      parseInt(isoMatch[3], 10)
+    )
+  }
+
+  // 3. Fallback to standard Date.parse
+  const timestamp = new Date(trimmed).getTime()
+  return isNaN(timestamp) ? 0 : timestamp
+}
+
+/**
+ * Sorts blog posts descending by publication date (newest first).
+ * Creates and returns a new sorted array, never mutating the original.
+ * Secondary tie-breaker uses id descending.
+ */
+export function sortBlogPostsByDateDescending(posts: BlogPost[]): BlogPost[] {
+  return [...posts].sort((a, b) => {
+    const timeA = parseArticleDate(a.date)
+    const timeB = parseArticleDate(b.date)
+    if (timeB !== timeA) {
+      return timeB - timeA
+    }
+    return (b.id ?? 0) - (a.id ?? 0)
+  })
+}
+
+export function getAllBlogPosts(): BlogPost[] {
+  return sortBlogPostsByDateDescending(blogPosts)
+}
+
+export function getBlogPostBySlug(slug: string): BlogPost | undefined {
+  return blogPosts.find((post) => post.slug === slug)
+}
+
+export function getFeaturedBlogPosts(): BlogPost[] {
+  return sortBlogPostsByDateDescending(blogPosts.filter((post) => post.featured))
+}
 
 /** Converts a display date such as "March 24, 2026" to an IST ISO timestamp. */
 export function toArticleIsoDate(displayDate?: string): string | undefined {
