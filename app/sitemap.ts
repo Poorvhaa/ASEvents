@@ -66,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/destination-wedding-planning-complete-guide`,
+      lastModified: new Date('2026-10-25T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/wedding-planner-vs-diy-wedding-planning`,
       lastModified: new Date('2026-10-23T00:00:00+05:30'),
       changeFrequency: 'weekly',

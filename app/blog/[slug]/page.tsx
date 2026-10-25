@@ -15,6 +15,7 @@ import { GenericArticleContent } from '@/components/blog/generic-article-content
 import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-content'
 import { WeddingPlanningContent } from '@/components/blog/wedding-planning-content'
 import { WeddingPlannerVsDiyContent } from '@/components/blog/wedding-planner-vs-diy-content'
+import { DestinationWeddingPlanningContent } from '@/components/blog/destination-wedding-planning-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -29,6 +30,7 @@ import {
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'destination-wedding-planning-complete-guide',
   'wedding-planner-vs-diy-wedding-planning',
   'how-much-does-event-planning-cost-in-india',
   'how-to-plan-a-successful-wedding',
@@ -174,7 +176,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'wedding-planner-vs-diy-wedding-planning' ? (
+      {post.slug === 'destination-wedding-planning-complete-guide' ? (
+        <DestinationWeddingPlanningContent />
+      ) : post.slug === 'wedding-planner-vs-diy-wedding-planning' ? (
         <WeddingPlannerVsDiyContent />
       ) : post.slug === 'how-much-does-event-planning-cost-in-india' ? (
         <EventCostIndiaContent />

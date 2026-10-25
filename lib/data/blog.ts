@@ -45,6 +45,53 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 110,
+    title: 'Destination Wedding Planning: The Complete Guide for Couples',
+    slug: 'destination-wedding-planning-complete-guide',
+    excerpt:
+      'A complete destination wedding planning guide covering venues, budgets, guest travel, legal checks, vendors, Indian ceremonies, timelines and wedding-day coordination.',
+    image: '/images/blog/destination-wedding-planning-complete-guide/hero.jpg',
+    date: 'October 25, 2026',
+    readTime: '18 min read',
+    category: 'Weddings',
+    tags: [
+      'Weddings',
+      'Destination',
+      'Planning Tips',
+      'Budget',
+      'Event Management',
+      'Luxury Events',
+    ],
+    featured: true,
+    seoTitle:
+      'Destination Wedding Planning: Complete Guide for Couples | AS Event Management',
+    metaDescription:
+      'Explore destination wedding planning with practical ideas, budgeting guidance, venue checks, guest travel tips, timelines, legal considerations and planner advice.',
+    primaryKeyword: 'destination wedding planning',
+    secondaryKeywords: [
+      'destination wedding planner',
+      'destination wedding checklist',
+      'destination wedding budget',
+      'destination wedding ideas',
+      'destination wedding venues',
+      'destination wedding travel planning',
+      'destination wedding planning guide',
+      'Indian destination wedding',
+      'destination wedding planning services',
+      'destination wedding itinerary',
+      'destination wedding costs',
+      'destination wedding guest planning',
+      'destination wedding vendor coordination',
+      'destination wedding timeline',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/destination-wedding-planning-complete-guide',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Creative Director',
+    },
+  },
+  {
     id: 109,
     title: 'Wedding Planner vs. DIY Wedding Planning: Which Is Right for You?',
     slug: 'wedding-planner-vs-diy-wedding-planning',
@@ -867,5 +914,39 @@ export const weddingPlannerVsDiyFaqs = [
     question: 'How do we choose the right service for an Indian destination wedding?',
     answer:
       'Map your celebration’s logistical requirements first: number of functions (Haldi, Mehendi, Sangeet, Ceremony, Reception), guest room allocations, airport transfers, hotel hospitality desks, and multi-venue changeovers. If the operational demands exceed your family’s bandwidth, hire a planner with verified destination expertise to manage local suppliers and guest hospitality.',
+  },
+]
+
+
+export const destinationWeddingPlanningFaqs = [
+  {
+    question: 'Are destination weddings always more expensive?',
+    answer:
+      'No. Overall costs depend on guest count, destination, lodging, number of functions, travel logistics, vendor choices, and which expenses the couple covers. While guest travel, private transfers, and luxury resort buyouts can increase costs, a smaller guest list at a scenic destination may compare favorably to a large local wedding. Couples should compare complete, itemized budgets rather than general impressions.',
+  },
+  {
+    question: 'How early should we begin destination wedding planning?',
+    answer:
+      'Most couples benefit from starting 12 to 18 months in advance, especially for multi-day celebrations or destinations requiring international travel, room blocks, and complex supplier coordination. However, this is a flexible planning guideline rather than a universal rule—actual timelines depend on venue availability, seasonal weather, and legal lead times.',
+  },
+  {
+    question: 'Do we need a destination wedding planner?',
+    answer:
+      'While some couples successfully organize simple gatherings or work directly with an experienced on-site venue coordinator, hiring a professional destination wedding planner is strongly recommended for celebrations with multiple venues, remote suppliers, language barriers, large guest lists, or multi-day cultural rituals. Planners provide local supplier relationships, contract vetting, contingency oversight, and dedicated wedding-day management.',
+  },
+  {
+    question: 'Can we legally marry in another country?',
+    answer:
+      'In many destinations, yes, but eligibility criteria, mandatory documentation, translations, apostilles, residency periods, and legal recognition at home vary significantly by country and nationality. Requirements vary by destination and personal circumstances. Always consult official government authorities and local consulates before making travel commitments. Many couples opt for a legal civil registration in their home country paired with a symbolic or traditional ceremony at the destination.',
+  },
+  {
+    question: 'What should guests know before booking flights?',
+    answer:
+      'Guests need confirmed ceremony dates, recommended arrival airports, transfer options, room block deadlines and booking codes, expected dress codes for each function, local weather expectations, accessibility considerations, and guidance on passport, visa, or health requirements. Couples should also communicate clearly which expenses are hosted and which are the guest’s personal responsibility.',
+  },
+  {
+    question: 'What is the most important backup plan?',
+    answer:
+      'The most essential contingency is a fully vetted, physically usable indoor or covered Plan B space with adequate capacity for all guests, lighting, and sound equipment. In addition, couples should establish a written weather decision deadline, designate a single coordinator with decision authority, and prepare contingency protocols for supplier delays, travel disruptions, and medical needs.',
   },
 ]
