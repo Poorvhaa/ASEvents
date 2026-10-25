@@ -27,6 +27,7 @@ import {
   weddingPlanningFaqs,
   eventCostIndiaFaqs,
   weddingPlannerVsDiyFaqs,
+  destinationWeddingPlanningFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
@@ -158,6 +159,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'destination-wedding-planning-complete-guide' && (
+        <FaqStructuredData faqs={destinationWeddingPlanningFaqs} />
+      )}
       {post.slug === 'wedding-planner-vs-diy-wedding-planning' && (
         <FaqStructuredData faqs={weddingPlannerVsDiyFaqs} />
       )}
