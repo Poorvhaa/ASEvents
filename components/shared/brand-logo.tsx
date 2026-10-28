@@ -89,7 +89,7 @@ export function BrandLogo({
       src={logoSrc}
       alt="AS Events Logo"
       width={400}
-      height={300}
+      height={400}
       priority={priority}
       className={cn('w-auto object-contain', className)}
     />

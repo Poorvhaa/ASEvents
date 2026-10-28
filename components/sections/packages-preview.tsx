@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ArrowRight, Check, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { usePackages } from '@/hooks/use-packages'
+import { packages as staticPackages } from '@/lib/data/packages'
 import { Section, SectionContainer } from '@/components/layout/section-container'
 import { useTranslation } from '@/src/hooks/useTranslation'
 
@@ -25,16 +26,14 @@ const categoryNames: Record<string, string> = {
 
 export function PackagesPreview() {
   const { t } = useTranslation()
-  const { packages: allPackages, loading } = usePackages()
-
-  if (loading) return null
-
-  const previewPackages = allPackages.filter(
+  const { packages: allPackages } = usePackages()
+  const sourcePackages = allPackages && allPackages.length > 0 ? allPackages : staticPackages
+  const previewPackages = sourcePackages.filter(
     (p) => p.popular || ['sangeet', 'product-launch', 'live-concert'].includes(p.id)
   )
 
   return (
-    <Section className="bg-slate-50">
+    <Section className="bg-[#F5EFEB]/40 border-b border-border/20">
       <SectionContainer>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,8 +77,8 @@ export function PackagesPreview() {
               >
                 <Link
                   href={`/packages?category=${categoryParam}`}
-                  className={`relative flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:-translate-y-1 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 ${
-                    pkg.popular ? 'border-primary ring-1 ring-primary/20 hover:shadow-luxury-lg' : 'border-slate-200 hover:border-[var(--primary)] hover:shadow-[0_12px_28px_rgba(184,154,99,0.12)]'
+                  className={`group relative flex flex-col h-full p-5 sm:p-6 rounded-2xl bg-white border shadow-sm transition-all duration-300 hover:-translate-y-1 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] focus-visible:ring-offset-2 ${
+                    pkg.popular ? 'border-primary ring-1 ring-primary/20 hover:shadow-luxury-lg' : 'border-border/40 hover:border-primary/60 hover:shadow-luxury-md'
                   }`}
                 >
                   {pkg.popular && (
@@ -106,9 +105,10 @@ export function PackagesPreview() {
                       )
                     })}
                   </ul>
-                  {/* <p className="text-sm font-bold text-foreground">
-                    {t(`packages.${pkg.id}.price`) || pkg.price}
-                  </p>*/}
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-primary/70 group-hover:text-primary transition-colors mt-auto pt-3 border-t border-border/30">
+                    <span>{t('cta.getStarted') || 'View Details'}</span>
+                    <ArrowRight size={13} className="transition-transform duration-300 group-hover:translate-x-1" />
+                  </div>
                 </Link>
               </motion.div>
             )

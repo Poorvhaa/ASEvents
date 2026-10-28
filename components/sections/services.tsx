@@ -6,6 +6,7 @@ import { Heart, Plane, Building2, Cake, Gift, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { Section, SectionContainer } from '@/components/layout/section-container'
 import { useTranslation } from '@/src/hooks/useTranslation'
+import { cn } from '@/lib/utils'
 
 import en from '@/src/locales/en.json'
 import hi from '@/src/locales/hi.json'
@@ -47,7 +48,7 @@ export function Services() {
   const activeLocale = localesData[language as keyof typeof localesData] || en
 
   return (
-    <Section className="bg-[#FAF8F5] py-20 sm:py-28 border-b border-border/30">
+    <Section className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-b border-border/30">
       <SectionContainer>
         {/* Section Heading */}
         <motion.div
@@ -55,7 +56,7 @@ export function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-16 sm:mb-24"
+          className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
         >
           <span className="text-eyebrow">{t('services.eyebrow')}</span>
           <h2 className="text-section-heading text-foreground mt-3 sm:mt-4 mb-4 sm:mb-6 font-serif">
@@ -70,7 +71,7 @@ export function Services() {
         </motion.div>
 
         {/* Editorial Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 sm:gap-8 justify-center">
           {services.map((service, index) => {
             const IconComponent = service.icon
             // Safely fetch features list from JSON
@@ -86,12 +87,14 @@ export function Services() {
                 transition={{ duration: 0.6, delay: index * 0.08 }}
                 viewport={{ once: true }}
                 className={cn(
-                  "relative h-[360px] rounded-2xl bg-white border border-border/20 shadow-sm overflow-hidden group",
-                  index === 4 && "lg:col-start-2" // Center the 5th item in the 3-column layout on desktop
+                  "relative h-[360px] rounded-2xl bg-white border border-border/20 shadow-sm overflow-hidden group focus-within:ring-2 focus-within:ring-primary/40",
+                  "lg:col-span-2",
+                  index === 3 && "lg:col-start-2",
+                  index === 4 && "md:col-span-2 md:max-w-md md:mx-auto md:w-full lg:col-span-2 lg:col-start-4 lg:max-w-none"
                 )}
               >
                 {/* Standard Card Content */}
-                <div className="p-8 h-full flex flex-col justify-between relative z-10 transition-transform duration-500 group-hover:-translate-y-4">
+                <div className="p-6 sm:p-8 h-full flex flex-col justify-between relative z-10 transition-transform duration-500 group-hover:-translate-y-4">
                   <div>
                     {/* Header */}
                     <div className="flex justify-between items-center mb-6">
@@ -101,7 +104,7 @@ export function Services() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-bold text-foreground mb-4 font-serif group-hover:text-primary transition-colors duration-300">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 font-serif group-hover:text-primary transition-colors duration-300">
                       <Link href={service.href} className="hover:underline">
                         {t(`services.${service.slug}.title`)}
                       </Link>
@@ -121,7 +124,7 @@ export function Services() {
                 </div>
 
                 {/* Hover Overlay Panel containing features & CTA */}
-                <div className="absolute inset-0 bg-[#0B1325]/98 text-white p-8 flex flex-col justify-between translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-20">
+                <div className="absolute inset-0 bg-[#0B1325]/98 text-white p-6 sm:p-8 flex flex-col justify-between translate-y-full group-hover:translate-y-0 group-focus-within:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1] z-20">
                   <div>
                     <span className="text-[10px] font-bold tracking-[0.2em] text-primary uppercase block mb-4 border-b border-white/10 pb-2">
                       Included Services
@@ -160,10 +163,3 @@ export function Services() {
   )
 }
 
-// Utility class merger helper to ensure code builds correctly
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}

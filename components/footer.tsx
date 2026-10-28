@@ -75,7 +75,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.ourServices')}</h2>
+            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.ourServices')}</h3>
             <ul className="space-y-2.5 sm:space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -92,7 +92,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.quickLinks')}</h2>
+            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.quickLinks')}</h3>
             <ul className="space-y-2.5 sm:space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href + link.label}>
@@ -108,7 +108,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-center sm:items-start">
-            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h2>
+            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h3>
             <ul className="space-y-4 w-full max-w-[290px] sm:max-w-none">
               <li className="flex items-start gap-3 text-left min-w-0">
                 <MapPin size={20} className="text-primary mt-1 shrink-0" aria-hidden="true" />

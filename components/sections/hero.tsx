@@ -49,7 +49,7 @@ export function Hero() {
       </div>
 
       {/* Hero Content Container */}
-      <SectionContainer className="relative z-20 text-center py-24 sm:py-32 flex flex-col justify-center items-center">
+      <SectionContainer className="relative z-20 text-center pt-28 pb-20 sm:pt-36 sm:pb-28 lg:py-32 flex flex-col justify-center items-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -85,7 +85,7 @@ export function Hero() {
             <Button
               onClick={() => openModal()}
               size="lg"
-              className="min-h-12 w-full sm:w-auto bg-primary text-foreground hover:bg-primary/90 font-bold px-8 text-base sm:text-lg rounded-xl shadow-xl transition-all duration-300 hover:scale-102 active:scale-98"
+              className="min-h-12 w-full sm:w-auto bg-primary text-foreground hover:bg-primary/90 font-bold px-8 text-base sm:text-lg rounded-xl shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
               {t('hero.getQuote')}
             </Button>
@@ -94,7 +94,7 @@ export function Hero() {
               asChild
               variant="outline"
               size="lg"
-              className="min-h-12 w-full sm:w-auto border-white/40 bg-white/5 text-white hover:bg-white/10 hover:text-white hover:border-white px-8 text-base sm:text-lg rounded-xl backdrop-blur-md transition-all duration-300 hover:scale-102 active:scale-98"
+              className="min-h-12 w-full sm:w-auto border-white/40 bg-white/5 text-white hover:bg-white/10 hover:text-white hover:border-white px-8 text-base sm:text-lg rounded-xl backdrop-blur-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
             >
               <Link href="/portfolio">{t('hero.viewPortfolio')}</Link>
             </Button>

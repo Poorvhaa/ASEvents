@@ -27,7 +27,7 @@ export function CTASection() {
   }
 
   return (
-    <Section className="bg-slate-50 relative py-20 sm:py-28 border-t border-border/20 overflow-hidden">
+    <Section className="bg-[#FAF8F5] relative py-16 sm:py-20 lg:py-24 border-t border-border/20 overflow-hidden">
       {/* Decorative background glow */}
       <div className="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-72 sm:w-[480px] h-72 sm:h-[480px] bg-primary/20 rounded-full blur-3xl" />
@@ -62,7 +62,7 @@ export function CTASection() {
             <div className="w-full max-w-md flex flex-col gap-5 border-t border-border/30 pt-8 mt-2">
               <a 
                 href="tel:+919510324143" 
-                className="flex items-center gap-4 group p-3.5 rounded-xl bg-white border border-border/10 hover:border-primary/20 hover:shadow-md transition-all duration-300 w-full"
+                className="flex items-center gap-4 group p-3.5 rounded-xl bg-white border border-border/30 hover:border-primary/40 hover:shadow-luxury-sm transition-all duration-300 w-full"
               >
                 <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-foreground transition-all duration-300 shrink-0">
                   <Phone size={18} />
@@ -75,14 +75,14 @@ export function CTASection() {
 
               <a 
                 href="mailto:as.eventmanagement2829@gmail.com" 
-                className="flex items-center gap-4 group p-3.5 rounded-xl bg-white border border-border/10 hover:border-primary/20 hover:shadow-md transition-all duration-300 w-full"
+                className="flex items-center gap-4 group p-3.5 rounded-xl bg-white border border-border/30 hover:border-primary/40 hover:shadow-luxury-sm transition-all duration-300 w-full"
               >
                 <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-foreground transition-all duration-300 shrink-0">
                   <Mail size={18} />
                 </div>
-                <div className="text-left truncate min-w-0">
+                <div className="text-left truncate min-w-0 flex-1">
                   <span className="text-[10px] uppercase font-bold text-muted-foreground block tracking-wider">General Inquiries</span>
-                  <span className="text-base sm:text-lg font-semibold text-foreground group-hover:text-primary transition-colors block truncate">as.eventmanagement2829@gmail.com</span>
+                  <span className="text-sm sm:text-base font-semibold text-foreground group-hover:text-primary transition-colors block truncate">as.eventmanagement2829@gmail.com</span>
                 </div>
               </a>
             </div>
@@ -96,7 +96,7 @@ export function CTASection() {
             viewport={{ once: true }}
             className="lg:col-span-6 w-full max-w-lg mx-auto"
           >
-            <div className="bg-white border border-border/20 shadow-xl rounded-3xl p-8 sm:p-10 relative">
+            <div className="bg-white border border-border/30 shadow-luxury-lg rounded-3xl p-6 sm:p-8 md:p-10 relative">
               <span className="text-xs uppercase font-bold text-primary tracking-widest block mb-4 border-b border-border/10 pb-2">
                 Quick Quote Builder
               </span>

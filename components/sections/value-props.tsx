@@ -36,7 +36,7 @@ export function ValueProps() {
   const { t } = useTranslation()
 
   return (
-    <Section className="bg-[#FAF8F5] py-16 sm:py-24 border-b border-border/30">
+    <Section className="bg-[#FAF8F5] py-16 sm:py-20 lg:py-24 border-b border-border/30">
       <SectionContainer>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 lg:gap-16">
           {valueProps.map((prop, index) => {
@@ -53,7 +53,7 @@ export function ValueProps() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.08 }}
                 viewport={{ once: true }}
-                className="group relative flex flex-col items-start gap-4 p-6 sm:p-8 rounded-2xl bg-white border border-border/20 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300"
+                className="group relative flex flex-col items-start gap-4 p-6 sm:p-8 rounded-2xl bg-white border border-border/20 shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300 h-full"
               >
                 {/* Gold-shaded index number & icon */}
                 <div className="flex justify-between items-center w-full mb-2">
@@ -65,9 +65,9 @@ export function ValueProps() {
                   </span>
                 </div>
                 
-                <h2 className="text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
+                <h3 className="text-xl font-bold font-serif text-foreground tracking-tight group-hover:text-primary transition-colors duration-300">
                   {title}
-                </h2>
+                </h3>
                 
                 <p className="text-small text-muted-foreground leading-relaxed font-light">
                   {desc}

@@ -198,8 +198,8 @@ export function PortfolioGrid() {
                 onClick={() => setActiveCategory(category)}
                 className={`shrink-0 min-h-11 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${
                   activeCategory === category
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-white border border-slate-200 text-foreground hover:border-primary/50'
+                    ? 'bg-primary text-foreground font-semibold shadow-luxury-sm'
+                    : 'bg-white border border-border/40 text-foreground hover:border-primary/50 hover:bg-muted/30'
                 }`}
               >
                 {t(`portfolioPage.categories.${category}`) || category}
@@ -211,7 +211,7 @@ export function PortfolioGrid() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4"
+          className="columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4"
         >
           {filteredGallery.map((image, index) => {
             const altKey = `portfolio.gallery.${image.id}.alt`
@@ -239,7 +239,7 @@ export function PortfolioGrid() {
                   duration: 0.3,
                   delay: index * 0.02,
                 }}
-                className="break-inside-avoid cursor-pointer group"
+                className="break-inside-avoid cursor-pointer group mb-3 sm:mb-4"
                 onClick={() => setSelectedImage(image)}
               >
                 <div className="relative overflow-hidden rounded-xl">

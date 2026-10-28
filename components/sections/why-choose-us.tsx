@@ -81,7 +81,7 @@ export function WhyChooseUs() {
   const { t } = useTranslation()
 
   return (
-    <Section className="bg-background">
+    <Section className="bg-[#FAF8F5] border-b border-border/20">
       <SectionContainer>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -114,7 +114,7 @@ export function WhyChooseUs() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.08 }}
               viewport={{ once: true }}
-              className="text-center p-4 sm:p-6 rounded-2xl bg-white border border-slate-200 shadow-sm"
+              className="text-center p-4 sm:p-6 rounded-2xl bg-white border border-border/30 shadow-sm hover:border-primary/40 hover:shadow-luxury-sm transition-all duration-300"
             >
               <AnimatedCounter value={stat.value} suffix={stat.suffix} />
               <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-medium">{t(stat.key)}</p>
@@ -132,13 +132,13 @@ export function WhyChooseUs() {
               viewport={{ once: true }}
               className="group h-full"
             >
-              <div className="h-full p-6 sm:p-8 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-lg hover:border-[var(--primary)] hover:shadow-[0_12px_28px_rgba(184,154,99,0.12)] transition-all duration-300">
+              <div className="h-full p-6 sm:p-8 rounded-2xl bg-white border border-border/30 shadow-sm hover:shadow-luxury-md hover:border-primary/50 transition-all duration-300">
                 <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
                   <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
                     <feature.icon className="w-6 h-6 sm:w-7 sm:h-7 text-primary" />
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3 group-hover:text-primary transition-colors">
+                    <h3 className="text-lg sm:text-xl font-serif font-bold text-foreground mb-2 sm:mb-3 group-hover:text-primary transition-colors">
                       {t(feature.titleKey)}
                     </h3>
                     <p className="text-small text-muted-foreground leading-relaxed">

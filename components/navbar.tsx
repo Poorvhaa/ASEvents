@@ -197,13 +197,15 @@ export function Navbar() {
   // Escape key event listener to close menu overlay
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false)
+      if (e.key === 'Escape') {
+        if (isServicesOpen) setIsServicesOpen(false)
+        if (isLangOpen) setIsLangOpen(false)
+        if (isMenuOpen) setIsMenuOpen(false)
       }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isMenuOpen])
+  }, [isMenuOpen, isServicesOpen, isLangOpen])
 
   const linkClass = cn(
     'text-sm font-semibold transition-colors duration-300 relative group whitespace-nowrap',
@@ -263,7 +265,7 @@ export function Navbar() {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full py-3',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 w-full',
         isScrolled
           ? 'bg-background/80 backdrop-blur-xl border-b border-border shadow-sm py-2'
           : 'bg-transparent py-4',
@@ -271,7 +273,7 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between h-20 lg:h-24">
+        <nav className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
           <Link
             href="/"
             onClick={closeAllMenus}
@@ -291,7 +293,7 @@ export function Navbar() {
 
           {/* Desktop Navigation Links */}
           <div className={cn(
-            "hidden lg:flex items-center gap-6 xl:gap-8 js-navbar-fade-in pointer-events-auto",
+            "hidden lg:flex items-center gap-4 xl:gap-7 js-navbar-fade-in pointer-events-auto",
             isIntroActive && "opacity-0 pointer-events-none"
           )}>
             <Link href="/" className={linkClass}>
@@ -352,7 +354,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 py-2 bg-white rounded-xl shadow-lg border border-border z-50"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 py-2 bg-white rounded-xl shadow-lg border border-border z-50 before:absolute before:-top-3 before:left-0 before:right-0 before:h-3 before:content-['']"
                   >
                     <Link
                       href="/services"
@@ -413,7 +415,7 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.15 }}
-                    className="absolute right-0 mt-2 w-36 py-1 bg-white rounded-xl shadow-lg border border-border z-[60]"
+                    className="absolute right-0 mt-2 w-36 py-1 bg-white rounded-xl shadow-lg border border-border z-[60] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3 before:content-['']"
                   >
                     {[
                       { code: 'en', label: 'English' },
