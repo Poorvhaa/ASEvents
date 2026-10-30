@@ -1000,7 +1000,7 @@ export function DestinationWeddingIndiaContent() {
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <button
-                onClick={openModal}
+                onClick={() => openModal()}
                 type="button"
                 className="px-6 py-3.5 rounded-xl bg-amber-400 text-slate-950 font-bold text-sm shadow-md hover:bg-amber-300 transition-all flex items-center gap-2"
               >

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Instagram, Mail, Phone, MapPin } from 'lucide-react'
 import { SectionContainer } from '@/components/layout/section-container'
 import { useTranslation } from '@/src/hooks/useTranslation'
@@ -75,7 +76,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.ourServices')}</h3>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.ourServices')}</h2>
             <ul className="space-y-2.5 sm:space-y-3">
               {services.map((service) => (
                 <li key={service.label}>
@@ -92,7 +93,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.quickLinks')}</h3>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.quickLinks')}</h2>
             <ul className="space-y-2.5 sm:space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href + link.label}>
@@ -108,7 +109,7 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-center sm:items-start">
-            <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h3>
+            <h2 className="text-base sm:text-lg font-semibold text-slate-100 mb-4 sm:mb-6">{t('footer.contactUs')}</h2>
             <ul className="space-y-4 w-full max-w-[290px] sm:max-w-none">
               <li className="flex items-start gap-3 text-left min-w-0">
                 <MapPin size={20} className="text-primary mt-1 shrink-0" aria-hidden="true" />
@@ -171,6 +172,30 @@ export function Footer() {
               {t('footer.terms')}
             </Link>
           </nav>
+        </div>
+
+        <div className="mt-6 pt-4 border-t border-slate-900/60 flex justify-center sm:justify-start items-center">
+          <a
+            href="https://www.hypercodeit.com/en"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 rounded py-1 px-2 -mx-2 group"
+            aria-label={`${t('footer.poweredBy')} HyperCode, opens in new tab`}
+          >
+            <span className="text-slate-400 group-hover:text-slate-300 transition-colors">
+              {t('footer.poweredBy')}
+            </span>
+            <Image
+              src="/images/brand/hypercode-symbol.png"
+              alt="HyperCode logo"
+              width={16}
+              height={16}
+              className="w-4 h-4 object-contain shrink-0 transition-transform duration-200 group-hover:scale-105"
+            />
+            <span className="font-semibold text-slate-200 group-hover:text-primary transition-colors tracking-tight">
+              HyperCode
+            </span>
+          </a>
         </div>
       </SectionContainer>
     </footer>
