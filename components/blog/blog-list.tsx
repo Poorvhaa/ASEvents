@@ -35,48 +35,6 @@ export function BlogList() {
     return sortBlogPostsByDateDescending(matches)
   }, [activeCategory, searchQuery, selectedTag])
 
-  // Order of categories to display
-  const categoryOrder = useMemo(() => {
-    const defined = ['Planning Tips', 'Weddings', 'Corporate', 'Trends', 'Inspiration']
-    if (activeCategory !== 'All') {
-      return [activeCategory]
-    }
-    return defined
-  }, [activeCategory])
-
-  // Group filtered posts by category, sorted newest first
-  const groupedByCategory = useMemo(() => {
-    const groups: { [cat: string]: BlogPost[] } = {}
-
-    for (const cat of categoryOrder) {
-      const postsInCat = filteredPosts.filter(
-        (p) => p.category.toLowerCase() === cat.toLowerCase()
-      )
-      if (postsInCat.length > 0) {
-        // Sort newest publication date first
-        groups[cat] = sortBlogPostsByDateDescending(postsInCat)
-      }
-    }
-
-    // Also include any posts from other categories if present and activeCategory === 'All'
-    if (activeCategory === 'All') {
-      for (const post of filteredPosts) {
-        const found = categoryOrder.some((c) => c.toLowerCase() === post.category.toLowerCase())
-        if (!found) {
-          if (!groups[post.category]) groups[post.category] = []
-          groups[post.category].push(post)
-        }
-      }
-      for (const cat of Object.keys(groups)) {
-        if (!categoryOrder.some((c) => c.toLowerCase() === cat.toLowerCase())) {
-          groups[cat] = sortBlogPostsByDateDescending(groups[cat])
-        }
-      }
-    }
-
-    return groups
-  }, [filteredPosts, categoryOrder, activeCategory])
-
   const totalResults = filteredPosts.length
   const activeFiltersCount =
     (activeCategory !== 'All' ? 1 : 0) + (searchQuery ? 1 : 0) + (selectedTag ? 1 : 0)
@@ -87,19 +45,36 @@ export function BlogList() {
     setSelectedTag(null)
   }
 
+  // Dynamic section heading reflecting active filter state
+  const sectionTitle = useMemo(() => {
+    if (searchQuery.trim()) {
+      return `Search Results for "${searchQuery.trim()}"`
+    }
+    if (selectedTag && activeCategory === 'All') {
+      return `Articles Tagged: ${selectedTag}`
+    }
+    if (selectedTag && activeCategory !== 'All') {
+      return `${activeCategory} • Tagged: ${selectedTag}`
+    }
+    if (activeCategory === 'All') {
+      return 'Latest Articles'
+    }
+    return activeCategory
+  }, [activeCategory, searchQuery, selectedTag])
+
   return (
     <section className="pt-28 pb-16 sm:pb-24 bg-background">
       <div className="container mx-auto px-4 lg:px-8">
-        {/* Compact Clean Header Area (replaces old oversized hero) */}
+        {/* Compact Clean Header Area */}
         <div className="mb-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold uppercase tracking-wider mb-3">
             Articles &amp; Guides
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-foreground mb-3">
-            Articles
+            Latest Articles
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">
-            Expert planning guides, ideas, and event management insights from AS Events.
+            Explore the latest event planning guides, wedding insights and professional tips from AS Event Management.
           </p>
 
           {activeFiltersCount > 0 && (
@@ -119,38 +94,30 @@ export function BlogList() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-12">
-          {/* Main Category-wise Content Area */}
+          {/* Main Continuous Date-Sorted Card Grid */}
           <div className="lg:col-span-3">
-            {Object.keys(groupedByCategory).length > 0 ? (
-              <div className="space-y-14">
-                {Object.entries(groupedByCategory).map(([catName, posts]) => (
-                  <section
-                    key={catName}
-                    aria-labelledby={`category-heading-${catName.toLowerCase().replace(/\s+/g, '-')}`}
-                    className="space-y-6"
+            {filteredPosts.length > 0 ? (
+              <section aria-labelledby="articles-grid-heading" className="space-y-6">
+                {/* Section Header with Title and Result Count */}
+                <div className="flex items-center justify-between pb-3 border-b border-border/60">
+                  <h2
+                    id="articles-grid-heading"
+                    className="text-2xl font-serif font-bold text-foreground flex items-center gap-2.5"
                   >
-                    {/* Category Section Header */}
-                    <div className="flex items-center justify-between pb-3 border-b border-border/60">
-                      <h2
-                        id={`category-heading-${catName.toLowerCase().replace(/\s+/g, '-')}`}
-                        className="text-2xl font-serif font-bold text-foreground flex items-center gap-2.5"
-                      >
-                        <span>{catName}</span>
-                        <span className="text-xs font-sans font-medium px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                          {posts.length}
-                        </span>
-                      </h2>
-                    </div>
+                    <span>{sectionTitle}</span>
+                    <span className="text-xs font-sans font-medium px-2.5 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                      {totalResults}
+                    </span>
+                  </h2>
+                </div>
 
-                    {/* Standardized 2-Column Responsive Card Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {posts.map((post, idx) => (
-                        <ArticleCard key={post.id} post={post} index={idx} />
-                      ))}
-                    </div>
-                  </section>
-                ))}
-              </div>
+                {/* Single Continuous 2-Column Responsive Card Grid (Newest to Oldest) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {filteredPosts.map((post, idx) => (
+                    <ArticleCard key={post.id} post={post} index={idx} />
+                  ))}
+                </div>
+              </section>
             ) : (
               <div className="text-center py-20 px-4 rounded-2xl bg-card border border-border/70">
                 <p className="text-base text-foreground font-semibold mb-2">
