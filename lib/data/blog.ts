@@ -45,6 +45,62 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 111,
+    title: 'How to Plan a Destination Wedding in India: A Step-by-Step Guide',
+    slug: 'how-to-plan-a-destination-wedding-in-india',
+    excerpt:
+      'A practical India-focused destination wedding guide covering venues, budgets, accommodation, guest travel, vendors, Indian ceremonies and wedding-day coordination.',
+    image: '/images/blog/how-to-plan-a-destination-wedding-in-india/hero.jpg',
+    date: 'October 30, 2026',
+    readTime: '18 min read',
+    category: 'Weddings',
+    tags: [
+      'Weddings',
+      'Destination',
+      'Planning Tips',
+      'Budget',
+      'Event Management',
+      'Luxury Events',
+    ],
+    featured: true,
+    seoTitle:
+      'How to Plan a Destination Wedding in India | Step-by-Step Guide',
+    metaDescription:
+      'Learn how to plan a destination wedding in India, including Rajasthan, Goa and Kerala venues, budgets, guest travel, vendors, ceremonies and wedding-day coordination.',
+    primaryKeyword: 'how to plan a destination wedding in India',
+    secondaryKeywords: [
+      'destination wedding in India',
+      'destination wedding planner India',
+      'destination wedding planner in India',
+      'destination wedding planning India',
+      'Indian destination wedding',
+      'destination wedding venues in India',
+      'destination wedding budget India',
+      'destination wedding checklist India',
+      'India destination wedding guide',
+      'destination wedding planning services',
+      'destination wedding guest planning',
+      'destination wedding itinerary',
+      'destination wedding vendors India',
+      'Rajasthan destination wedding',
+      'Udaipur destination wedding',
+      'Jaipur destination wedding',
+      'Jodhpur destination wedding',
+      'Goa destination wedding',
+      'Kerala destination wedding',
+      'Shimla destination wedding',
+      'Manali destination wedding',
+      'destination wedding venues Rajasthan',
+      'destination wedding venues Goa',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-to-plan-a-destination-wedding-in-india',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Creative Director',
+    },
+  },
+  {
     id: 110,
     title: 'Destination Wedding Planning: The Complete Guide for Couples',
     slug: 'destination-wedding-planning-complete-guide',
@@ -948,5 +1004,48 @@ export const destinationWeddingPlanningFaqs = [
     question: 'What is the most important backup plan?',
     answer:
       'The most essential contingency is a fully vetted, physically usable indoor or covered Plan B space with adequate capacity for all guests, lighting, and sound equipment. In addition, couples should establish a written weather decision deadline, designate a single coordinator with decision authority, and prepare contingency protocols for supplier delays, travel disruptions, and medical needs.',
+  },
+]
+
+export const destinationWeddingIndiaFaqs = [
+  {
+    question: 'How much does a destination wedding cost in India?',
+    answer:
+      'There is no single reliable price because destination wedding costs depend on the city, venue, dates, guest count, number of nights, accommodation standard, number of functions and supplier choices. Ask for a complete itemised estimate that includes rooms, food, event spaces, travel, production, taxes, fees and a contingency. Comparing packages on the same guest and room-night assumptions is much more useful than relying on a promotional starting rate.',
+  },
+  {
+    question: 'How far in advance should we start destination wedding planning?',
+    answer:
+      'Start as early as practical when you have popular dates, a large guest list or international travellers. First establish the broad budget, likely guest count and destination shortlist; then check venues and accommodation capacity before confirming other suppliers. Booking windows vary, so allow enough time for venue inspection, family discussions, travel planning and a careful review of contracts rather than following an inflexible calendar.',
+  },
+  {
+    question: 'Which are popular destinations for Indian destination weddings?',
+    answer:
+      'Couples often consider heritage settings around Udaipur, Jaipur or Jodhpur, coastal celebrations in Goa, tropical or backwater surroundings in Kerala and hill destinations around Shimla or Manali. The best choice is not necessarily the most photographed location. Compare guest travel, room capacity, weather alternatives, supplier capabilities, ceremony requirements and total confirmed cost for your chosen dates.',
+  },
+  {
+    question: 'Who pays for guests’ travel and accommodation at a destination wedding?',
+    answer:
+      'There is no universal rule. Some hosts cover certain rooms or transfers, some arrange group rates and others ask guests to pay for their own travel or stay. Whatever you decide, communicate the arrangement early and clearly. Specify what is included, how to book rooms, how airport transfers work and whom guests should contact with questions so that nobody makes assumptions.',
+  },
+  {
+    question: 'What should we confirm before booking destination wedding venues?',
+    answer:
+      'Check real seating capacity, room availability, the spaces allocated to each function, indoor weather backup, power supply, food policies, outside-vendor rules, sound limits, staff access and accessibility. Get written pricing for accommodation, meals, event areas, taxes, deposits, cancellations and schedule changes. A site visit or live operational walkthrough can help identify issues hidden by promotional photographs.',
+  },
+  {
+    question: 'Do we need a destination wedding planner in India?',
+    answer:
+      'A planner is not mandatory, but professional coordination may be especially useful for multi-day weddings, far-away venues, complex vendor arrangements and many out-of-town guests. Compare the actual scope rather than the service name. Ask who manages budgets, accommodation, transport, ceremonies, supplier briefings and on-site changes, and obtain a written proposal before deciding.',
+  },
+  {
+    question: 'How many functions should we include in our destination wedding itinerary?',
+    answer:
+      'Include the celebrations that matter to your families and fit the time, budget and guest experience you want. Haldi, mehndi, sangeet, wedding ceremony and reception are common examples, but there is no requirement to host them all. Leave time for travel, outfit changes, meals and rest; confirm ritual needs with relevant family members or ceremony leaders before locking the schedule.',
+  },
+  {
+    question: 'What is the best way to manage weather and last-minute changes?',
+    answer:
+      'Ask for a workable indoor or covered alternative before signing the venue contract. Confirm when and who decides to move a function, how decor and technical equipment will be transferred and how guests will be informed. Reserve some budget flexibility, appoint one operational decision-maker and share a current run sheet with suppliers and family coordinators.',
   },
 ]

@@ -314,7 +314,7 @@ export function DestinationWeddingPlanningContent() {
           </div>
 
           <p>
-            When planning an <Link href="/services/destination-weddings" className={linkClass}>Indian destination wedding</Link>, prioritize destinations that provide logistical capability for multi-day ceremonies (Haldi, Mehendi, Sangeet, Wedding, and Reception), rather than booking based on brand prestige alone.
+            If you are specifically <Link href="/blog/how-to-plan-a-destination-wedding-in-india" className={linkClass}>planning a destination wedding in India</Link>, prioritize destinations that provide logistical capability for multi-day ceremonies (Haldi, Mehendi, Sangeet, Wedding, and Reception), rather than booking based on brand prestige alone.
           </p>
 
           {/* Infographic 3 */}
@@ -1397,6 +1397,13 @@ export function DestinationWeddingPlanningContent() {
             Related Wedding Planning Guides &amp; Services
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <Link
+              href="/blog/how-to-plan-a-destination-wedding-in-india"
+              className="p-3.5 rounded-xl border border-border/70 hover:border-primary/50 bg-card hover:bg-muted/40 transition-all font-semibold text-foreground flex items-center justify-between"
+            >
+              <span>How to Plan a Destination Wedding in India</span>
+              <ArrowRight className="w-4 h-4 text-primary" />
+            </Link>
             <Link
               href="/services/destination-weddings"
               className="p-3.5 rounded-xl border border-border/70 hover:border-primary/50 bg-card hover:bg-muted/40 transition-all font-semibold text-foreground flex items-center justify-between"

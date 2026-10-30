@@ -16,6 +16,7 @@ import { PlannerVsManagerContent } from '@/components/blog/planner-vs-manager-co
 import { WeddingPlanningContent } from '@/components/blog/wedding-planning-content'
 import { WeddingPlannerVsDiyContent } from '@/components/blog/wedding-planner-vs-diy-content'
 import { DestinationWeddingPlanningContent } from '@/components/blog/destination-wedding-planning-content'
+import { DestinationWeddingIndiaContent } from '@/components/blog/destination-wedding-india-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -28,9 +29,11 @@ import {
   eventCostIndiaFaqs,
   weddingPlannerVsDiyFaqs,
   destinationWeddingPlanningFaqs,
+  destinationWeddingIndiaFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'how-to-plan-a-destination-wedding-in-india',
   'destination-wedding-planning-complete-guide',
   'wedding-planner-vs-diy-wedding-planning',
   'how-much-does-event-planning-cost-in-india',
@@ -159,6 +162,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'how-to-plan-a-destination-wedding-in-india' && (
+        <FaqStructuredData faqs={destinationWeddingIndiaFaqs} />
+      )}
       {post.slug === 'destination-wedding-planning-complete-guide' && (
         <FaqStructuredData faqs={destinationWeddingPlanningFaqs} />
       )}
@@ -180,7 +186,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'destination-wedding-planning-complete-guide' ? (
+      {post.slug === 'how-to-plan-a-destination-wedding-in-india' ? (
+        <DestinationWeddingIndiaContent />
+      ) : post.slug === 'destination-wedding-planning-complete-guide' ? (
         <DestinationWeddingPlanningContent />
       ) : post.slug === 'wedding-planner-vs-diy-wedding-planning' ? (
         <WeddingPlannerVsDiyContent />

@@ -66,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/how-to-plan-a-destination-wedding-in-india`,
+      lastModified: new Date('2026-10-30T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/destination-wedding-planning-complete-guide`,
       lastModified: new Date('2026-10-25T00:00:00+05:30'),
       changeFrequency: 'weekly',
