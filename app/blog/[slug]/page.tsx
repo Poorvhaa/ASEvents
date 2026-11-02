@@ -33,9 +33,11 @@ import {
   destinationWeddingPlanningFaqs,
   destinationWeddingIndiaFaqs,
   weddingVenueFaqs,
+  corporateEventPlanningFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'corporate-event-planning-complete-guide',
   'how-to-choose-a-wedding-venue-15-things-to-check',
   'how-to-plan-a-destination-wedding-in-india',
   'destination-wedding-planning-complete-guide',
@@ -166,6 +168,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'corporate-event-planning-complete-guide' && (
+        <FaqStructuredData faqs={corporateEventPlanningFaqs} />
+      )}
       {post.slug === 'how-to-choose-a-wedding-venue-15-things-to-check' && (
         <FaqStructuredData faqs={weddingVenueFaqs} />
       )}
