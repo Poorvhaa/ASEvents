@@ -18,6 +18,7 @@ import { WeddingPlannerVsDiyContent } from '@/components/blog/wedding-planner-vs
 import { DestinationWeddingPlanningContent } from '@/components/blog/destination-wedding-planning-content'
 import { DestinationWeddingIndiaContent } from '@/components/blog/destination-wedding-india-content'
 import { WeddingVenueContent } from '@/components/blog/wedding-venue-content'
+import { CorporateEventPlanningContent } from '@/components/blog/corporate-event-planning-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -192,7 +193,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'how-to-choose-a-wedding-venue-15-things-to-check' ? (
+      {post.slug === 'corporate-event-planning-complete-guide' ? (
+        <CorporateEventPlanningContent />
+      ) : post.slug === 'how-to-choose-a-wedding-venue-15-things-to-check' ? (
         <WeddingVenueContent />
       ) : post.slug === 'how-to-plan-a-destination-wedding-in-india' ? (
         <DestinationWeddingIndiaContent />

@@ -219,7 +219,7 @@ export function ChecklistArticleContent() {
             Every successful event begins with a clear reason for existing. Write down the occasion,
             the people you want to bring together, the feeling you want guests to leave with, and
             the practical result you want to achieve. A birthday may be about one person. A
-            corporate event may be about learning or networking. A wedding may be about celebrating
+            corporate event may be about learning or networking (see our in-depth <Link href="/blog/corporate-event-planning-complete-guide" className={linkClass}>corporate event planning guide</Link>). A wedding may be about celebrating
             a relationship. The planning choices should follow that purpose.
           </p>
           <IdeaBriefDiagram />

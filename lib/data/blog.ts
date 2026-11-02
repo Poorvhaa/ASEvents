@@ -45,6 +45,47 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 113,
+    title: 'The Ultimate Guide to Corporate Event Planning',
+    slug: 'corporate-event-planning-complete-guide',
+    excerpt:
+      'A complete corporate event planning guide covering strategy, budgets, venues, vendors, AV, speakers, registration, event-day operations and post-event measurement.',
+    image:
+      '/images/blog/corporate-event-planning-complete-guide/hero.jpg',
+    date: 'November 2, 2026',
+    readTime: '18 min read',
+    category: 'Corporate',
+    tags: [
+      'Corporate',
+      'Planning Tips',
+      'Event Management',
+      'Budget',
+      'Catering',
+      'Entertainment',
+      'Luxury Events',
+    ],
+    featured: true,
+    seoTitle: 'Corporate Event Planning Guide & Checklist | AS Event Management',
+    metaDescription:
+      'Learn corporate event planning step by step, including KPIs, budgets, venues, vendors, speakers, registration, AV, run sheets and post-event reporting.',
+    primaryKeyword: 'corporate event planning',
+    secondaryKeywords: [
+      'corporate event checklist',
+      'corporate event management',
+      'business event planning',
+      'corporate conference planning',
+      'corporate event planning guide',
+      'event run sheet',
+      'corporate event budget',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/corporate-event-planning-complete-guide',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Event Director',
+    },
+  },
+  {
     id: 112,
     title: 'How to Choose a Wedding Venue: 15 Things to Check Before Booking',
     slug: 'how-to-choose-a-wedding-venue-15-things-to-check',
@@ -1154,5 +1195,48 @@ export const weddingVenueFaqs = [
     question: 'Do we need a wedding planner if the venue has a coordinator?',
     answer:
       'A venue coordinator may focus on the venue’s operational responsibilities and may not manage guest travel, external vendors, family ceremonies or the full event schedule. Clarify written scopes and assign any uncovered duties.',
+  },
+]
+
+export const corporateEventPlanningFaqs = [
+  {
+    question: 'What does a corporate event planner actually do?',
+    answer:
+      'A corporate event planner organizes the agreed planning work: strategy support, supplier procurement, budget tracking, program coordination, guest logistics, production planning and event-day operations. Scope varies by engagement, so confirm exactly what is included in writing.',
+  },
+  {
+    question: 'How far in advance should a company start planning?',
+    answer:
+      'The required lead time depends on venue demand, audience size, travel, production complexity, executive and speaker schedules, and procurement approvals. Large public conferences often need 6 to 12 months; smaller internal events may be planned in 4 to 8 weeks.',
+  },
+  {
+    question: 'What belongs in a corporate event checklist?',
+    answer:
+      'At minimum, include business objectives, budget, roles, venue, suppliers, agenda, speaker preparation, invitations, registration, accessibility, safety, catering, technology, run sheet, contingency plans, feedback collection and financial closeout.',
+  },
+  {
+    question: 'How should we calculate a corporate event budget?',
+    answer:
+      'Combine fixed expenses (venue rental, stage build, audio-visual production) and variable expenses (catering, badges, attendee collateral, travel). Record taxes and fee exclusions, track estimates against quotations and signed actuals, and maintain an appropriately sized contingency reserve (typically 10–15%).',
+  },
+  {
+    question: 'Can one employee organize the entire event?',
+    answer:
+      'A simple internal meeting might be manageable by an individual, but events with several external suppliers, technical production and a sizable audience require clearly designated workstream owners. A single person should not be expected to manage registration, AV cues, speaker logistics, supplier calls and emergency responses simultaneously.',
+  },
+  {
+    question: 'What is the difference between corporate event planning and event management?',
+    answer:
+      'Planning defines the goals, budget, vendor sourcing, programming and readiness milestones before the event. Event management emphasizes coordinating live on-site operations, technical cues, crowd flow and incident resolution on event day. Many agencies provide both services under a unified scope.',
+  },
+  {
+    question: 'How can we measure event success?',
+    answer:
+      'Start with business-specific KPIs defined during planning. Compare registrations against actual check-ins, attendee satisfaction scores, session participation rates, qualified leads or meetings booked, sponsor deliverables met and final budget variance, while clearly documenting how each metric was collected.',
+  },
+  {
+    question: 'How can AS Event Management support a corporate event?',
+    answer:
+      'Contact AS Event Management to discuss your event format, preferred city, dates, expected attendance, technical requirements and budget. Our team assists with venue shortlisting, vendor negotiations, production design, speaker management, run-of-show execution and post-event reconciliation.',
   },
 ]
