@@ -66,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/how-to-choose-a-wedding-venue-15-things-to-check`,
+      lastModified: new Date('2026-10-31T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/how-to-plan-a-destination-wedding-in-india`,
       lastModified: new Date('2026-10-30T00:00:00+05:30'),
       changeFrequency: 'weekly',

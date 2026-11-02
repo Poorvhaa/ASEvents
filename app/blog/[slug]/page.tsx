@@ -17,6 +17,7 @@ import { WeddingPlanningContent } from '@/components/blog/wedding-planning-conte
 import { WeddingPlannerVsDiyContent } from '@/components/blog/wedding-planner-vs-diy-content'
 import { DestinationWeddingPlanningContent } from '@/components/blog/destination-wedding-planning-content'
 import { DestinationWeddingIndiaContent } from '@/components/blog/destination-wedding-india-content'
+import { WeddingVenueContent } from '@/components/blog/wedding-venue-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -30,9 +31,11 @@ import {
   weddingPlannerVsDiyFaqs,
   destinationWeddingPlanningFaqs,
   destinationWeddingIndiaFaqs,
+  weddingVenueFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'how-to-choose-a-wedding-venue-15-things-to-check',
   'how-to-plan-a-destination-wedding-in-india',
   'destination-wedding-planning-complete-guide',
   'wedding-planner-vs-diy-wedding-planning',
@@ -162,6 +165,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'how-to-choose-a-wedding-venue-15-things-to-check' && (
+        <FaqStructuredData faqs={weddingVenueFaqs} />
+      )}
       {post.slug === 'how-to-plan-a-destination-wedding-in-india' && (
         <FaqStructuredData faqs={destinationWeddingIndiaFaqs} />
       )}
@@ -186,7 +192,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'how-to-plan-a-destination-wedding-in-india' ? (
+      {post.slug === 'how-to-choose-a-wedding-venue-15-things-to-check' ? (
+        <WeddingVenueContent />
+      ) : post.slug === 'how-to-plan-a-destination-wedding-in-india' ? (
         <DestinationWeddingIndiaContent />
       ) : post.slug === 'destination-wedding-planning-complete-guide' ? (
         <DestinationWeddingPlanningContent />

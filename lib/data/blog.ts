@@ -45,6 +45,75 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 112,
+    title: 'How to Choose a Wedding Venue: 15 Things to Check Before Booking',
+    slug: 'how-to-choose-a-wedding-venue-15-things-to-check',
+    excerpt:
+      'A practical wedding venue checklist covering budget, capacity, location, catering, décor, weather backup, vendor restrictions, contracts and guest comfort.',
+    image:
+      '/images/blog/how-to-choose-a-wedding-venue-15-things-to-check/hero.jpg',
+    date: 'October 31, 2026',
+    readTime: '16 min read',
+    category: 'Weddings',
+    tags: [
+      'Weddings',
+      'Planning Tips',
+      'Budget',
+      'Catering',
+      'Decor',
+      'Destination',
+      'Event Management',
+      'Luxury Events',
+    ],
+    featured: true,
+    seoTitle: 'How to Choose a Wedding Venue: 15 Things to Check',
+    metaDescription:
+      'Choosing a wedding venue? Check 15 essential factors including costs, capacity, catering, accessibility, contracts, vendor rules, weather backup and guest comfort.',
+    primaryKeyword: 'how to choose a wedding venue',
+    secondaryKeywords: [
+      'wedding venue checklist',
+      'wedding venue selection',
+      'wedding venue booking checklist',
+      'questions to ask a wedding venue',
+      'wedding venue costs',
+      'destination wedding venue',
+      'wedding venue capacity',
+      'wedding venue contract',
+      'wedding venue catering',
+      'wedding venue accessibility',
+      'wedding venue weather backup',
+      'wedding venue vendor restrictions',
+      'wedding venue comparison',
+      'Indian wedding venue',
+      'wedding reception venue',
+      'wedding ceremony venue',
+      'wedding venue budget',
+      'wedding venue guest capacity',
+      'wedding seating layout',
+      'wedding venue parking',
+      'wedding guest transportation',
+      'wedding accommodation',
+      'wedding catering policies',
+      'wedding décor restrictions',
+      'wedding sound restrictions',
+      'venue power backup',
+      'outdoor wedding backup plan',
+      'wedding vendor access',
+      'venue cancellation policy',
+      'wedding venue insurance',
+      'wedding venue site visit',
+      'wedding venue floor plan',
+      'wedding venue comparison scorecard',
+      'Indian wedding venue checklist',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-to-choose-a-wedding-venue-15-things-to-check',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Creative Director',
+    },
+  },
+  {
     id: 111,
     title: 'How to Plan a Destination Wedding in India: A Step-by-Step Guide',
     slug: 'how-to-plan-a-destination-wedding-in-india',
@@ -1047,5 +1116,43 @@ export const destinationWeddingIndiaFaqs = [
     question: 'What is the best way to manage weather and last-minute changes?',
     answer:
       'Ask for a workable indoor or covered alternative before signing the venue contract. Confirm when and who decides to move a function, how decor and technical equipment will be transferred and how guests will be informed. Reserve some budget flexibility, appoint one operational decision-maker and share a current run sheet with suppliers and family coordinators.',
+  },
+]
+
+export const weddingVenueFaqs = [
+  {
+    question: 'When should we book a wedding venue?',
+    answer:
+      'Start researching as soon as your date range, guest count and realistic budget are clear. Lead time depends on destination, season and venue popularity. Ask suppliers about availability rather than relying on a universal number of months.',
+  },
+  {
+    question: 'What is the most important question to ask before paying a venue deposit?',
+    answer:
+      'Request a complete written quotation and contract that specify dates, space, guest capacity, food or supplier conditions, access hours, backup arrangements, cancellation terms and the total payment structure.',
+  },
+  {
+    question: 'Does a venue package normally include decoration and catering?',
+    answer:
+      'Packages differ substantially. Some include furniture, décor or in-house meals, while others charge for these separately. Ask for each inclusion and exclusion in writing.',
+  },
+  {
+    question: 'How do we choose between an indoor hall and an outdoor venue?',
+    answer:
+      'Compare the desired atmosphere against weather exposure, climate comfort, guest access, legal restrictions, supplier setup and the quality of the backup venue. A combination of indoor and outdoor spaces may offer flexibility.',
+  },
+  {
+    question: 'Can we bring our own caterer or decorator?',
+    answer:
+      'That depends on the venue. Some properties permit external vendors, while others restrict them or charge access fees. Confirm any required approvals or documents before booking.',
+  },
+  {
+    question: 'How can we compare two venues fairly?',
+    answer:
+      'Use the same guest count, event dates, function list and service requirements when requesting itemized quotations. Compare true cost, policies, comfort, accessibility and reliability, not just appearance.',
+  },
+  {
+    question: 'Do we need a wedding planner if the venue has a coordinator?',
+    answer:
+      'A venue coordinator may focus on the venue’s operational responsibilities and may not manage guest travel, external vendors, family ceremonies or the full event schedule. Clarify written scopes and assign any uncovered duties.',
   },
 ]
