@@ -19,6 +19,7 @@ import { DestinationWeddingPlanningContent } from '@/components/blog/destination
 import { DestinationWeddingIndiaContent } from '@/components/blog/destination-wedding-india-content'
 import { WeddingVenueContent } from '@/components/blog/wedding-venue-content'
 import { CorporateEventPlanningContent } from '@/components/blog/corporate-event-planning-content'
+import { CorporateEventCostContent } from '@/components/blog/corporate-event-cost-content'
 import { CTASection } from '@/components/sections/cta-section'
 import {
   blogPosts,
@@ -34,9 +35,11 @@ import {
   destinationWeddingIndiaFaqs,
   weddingVenueFaqs,
   corporateEventPlanningFaqs,
+  corporateEventCostFaqs,
 } from '@/lib/data/blog'
 
 const CENTRAL_DATE_SLUGS = new Set([
+  'how-much-does-corporate-event-planning-cost-in-india',
   'corporate-event-planning-complete-guide',
   'how-to-choose-a-wedding-venue-15-things-to-check',
   'how-to-plan-a-destination-wedding-in-india',
@@ -168,6 +171,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         dateModified={usesCentralDate ? publishedIso : undefined}
         authorName={post.author?.name || 'Apurv Shah'}
       />
+      {post.slug === 'how-much-does-corporate-event-planning-cost-in-india' && (
+        <FaqStructuredData faqs={corporateEventCostFaqs} />
+      )}
       {post.slug === 'corporate-event-planning-complete-guide' && (
         <FaqStructuredData faqs={corporateEventPlanningFaqs} />
       )}
@@ -198,7 +204,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {post.slug === 'event-planner-vs-event-manager' && (
         <FaqStructuredData faqs={plannerVsManagerFaqs} />
       )}
-      {post.slug === 'corporate-event-planning-complete-guide' ? (
+      {post.slug === 'how-much-does-corporate-event-planning-cost-in-india' ? (
+        <CorporateEventCostContent />
+      ) : post.slug === 'corporate-event-planning-complete-guide' ? (
         <CorporateEventPlanningContent />
       ) : post.slug === 'how-to-choose-a-wedding-venue-15-things-to-check' ? (
         <WeddingVenueContent />

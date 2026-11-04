@@ -66,6 +66,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
     },
     {
+      url: `${baseUrl}/blog/how-much-does-corporate-event-planning-cost-in-india`,
+      lastModified: new Date('2026-11-04T00:00:00+05:30'),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/blog/corporate-event-planning-complete-guide`,
       lastModified: new Date('2026-11-02T00:00:00+05:30'),
       changeFrequency: 'weekly',

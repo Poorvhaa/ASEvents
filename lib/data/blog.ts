@@ -45,6 +45,55 @@ export const blogTags = [
 
 export const blogPosts: BlogPost[] = [
   {
+    id: 114,
+    title: 'How Much Does Corporate Event Planning Cost in India?',
+    slug: 'how-much-does-corporate-event-planning-cost-in-india',
+    excerpt:
+      'Understand corporate event costs in India, including venues, catering, AV, travel, planner fees, budget examples and practical cost-control strategies.',
+    image:
+      '/images/blog/how-much-does-corporate-event-planning-cost-in-india/hero.jpg',
+    date: 'November 4, 2026',
+    readTime: '17 min read',
+    category: 'Corporate',
+    tags: [
+      'Corporate',
+      'Budget',
+      'Planning Tips',
+      'Event Management',
+      'Catering',
+      'Entertainment',
+    ],
+    featured: true,
+    seoTitle:
+      'Corporate Event Planning Cost in India: Complete Budget Guide | AS Event Management',
+    metaDescription:
+      'Understand corporate event planning cost in India, including venue, catering, AV, travel, planner fees, event budgets and practical cost-control tips.',
+    primaryKeyword: 'corporate event planning cost in India',
+    secondaryKeywords: [
+      'corporate event cost India',
+      'corporate event budget India',
+      'corporate event planner cost India',
+      'corporate event management cost India',
+      'corporate event planning fees',
+      'corporate event planner fees',
+      'conference planning cost India',
+      'business event planning cost',
+      'corporate event budget',
+      'corporate conference budget',
+      'event management fees India',
+      'corporate event pricing',
+      'conference cost India',
+      'corporate event package cost',
+      'business event budget',
+    ],
+    canonicalUrl:
+      'https://www.aseventmanagement.com/blog/how-much-does-corporate-event-planning-cost-in-india',
+    author: {
+      name: 'Apurv Shah',
+      role: 'Founder & Event Director',
+    },
+  },
+  {
     id: 113,
     title: 'The Ultimate Guide to Corporate Event Planning',
     slug: 'corporate-event-planning-complete-guide',
@@ -1238,5 +1287,43 @@ export const corporateEventPlanningFaqs = [
     question: 'How can AS Event Management support a corporate event?',
     answer:
       'Contact AS Event Management to discuss your event format, preferred city, dates, expected attendance, technical requirements and budget. Our team assists with venue shortlisting, vendor negotiations, production design, speaker management, run-of-show execution and post-event reconciliation.',
+  },
+]
+
+export const corporateEventCostFaqs = [
+  {
+    question: 'How much does corporate event planning cost in India?',
+    answer:
+      'There is no single fixed national price. Corporate event budgets depend on the business objective, event format, destination city, venue tier, delegate count, AV production scale, catering style, travel logistics and management scope. Planning ranges typically start from ₹50,000 to ₹5,00,000 for small workshops, ₹5,00,000 to ₹25,00,000 for conferences of 50 to 300 delegates, and ₹25,00,000 to over ₹1,00,00,000 for large product launches or annual dealer conventions, with all numbers serving as illustrative starting points rather than fixed quotes.',
+  },
+  {
+    question: 'What factors affect corporate event costs?',
+    answer:
+      'The primary cost drivers are delegate count, venue category and location, event duration, audio-visual and stage production complexity, food and beverage specifications, attendee travel and hotel accommodation, custom branding fabrication, and the professional scope of the event planning team.',
+  },
+  {
+    question: 'Is a per-delegate package the full event budget?',
+    answer:
+      'Usually no. A per-delegate hotel conference package typically covers room hire, lunch, standard tea breaks and basic house furniture. It generally excludes custom stage production, LED displays, sound technicians, event branding, photography, guest transfers, planner fees and statutory taxes.',
+  },
+  {
+    question: 'How are corporate event planner fees calculated?',
+    answer:
+      'Planners generally quote either a fixed project management fee, a percentage of approved supplier expenditure, or a combination of fixed fees and separately priced production services. There is no universal standard percentage in India; fees reflect event complexity, preparation lead time, staffing levels and operational responsibility.',
+  },
+  {
+    question: 'How can we compare corporate event planners fairly?',
+    answer:
+      'Provide each planner with identical event objectives, attendee assumptions, dates, location preferences and deliverable specifications. Compare detailed written line items, on-site staffing allocations, technical standards, exclusions, change protocols and payment terms alongside pricing, rather than comparing top-line figures alone.',
+  },
+  {
+    question: 'Does a larger budget guarantee a better return?',
+    answer:
+      'No. A higher budget does not automatically produce a superior outcome. Return on investment is driven by audience relevance, program design, seamless technical execution, participant engagement and disciplined post-event follow-up aligned with measurable business objectives.',
+  },
+  {
+    question: 'What should be confirmed before approving the budget?',
+    answer:
+      'Before final budget approval, confirm the detailed scope of work, venue capacity layout, guaranteed minimum delegate count, equipment specifications, payment milestone dates, cancellation penalties, applicable taxes and fees, and the designated internal manager authorized to approve scope adjustments.',
   },
 ]
